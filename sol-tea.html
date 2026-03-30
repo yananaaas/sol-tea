@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --cream-bright: #FDFCF9;
+    --sand: #E8E0CC;
+    --green-800: #226F54;
+    --green-500: #7CC44A;
+    --terra: #C4855A;
+    --black: #1C1A14;
+    --gray-800: #4A4538;
+    --gray-500: #7A7060;
+    --gray-300: #B5AFA3;
+    --gray-100: #D9D3C7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  .nav-spacer { flex: 1; }
+  .nav-logo { flex-shrink: 0; }
+  .nav-logo svg { height: 42px; width: auto; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; cursor: pointer; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:hover { background: var(--gray-100); }
+  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search span { font-size: 15px; color: var(--gray-500); }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; }
+  .nav-icon-btn:hover { background: var(--sand); }
+
+  /* SECTION TAG */
+  .section-tag { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 10px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+  .section-tag i { font-size: 16px; }
+  .section-tag-light { background: rgba(253,252,249,0.12); color: var(--cream-bright); }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary i { font-size: 20px; transform: translateX(3px); transition: transform 0.2s; margin-right: -4px; }
+  .btn-primary:hover { background: var(--black); }
+  .btn-primary:hover i { transform: translateX(7px); }
+
+  .btn-secondary { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-secondary i { font-size: 20px; transition: transform 0.2s; }
+  .btn-secondary:hover { background: var(--cream-bright); color: var(--green-800); }
+  .btn-secondary:hover i { transform: translateX(7px); }
+
+  .btn-outline-cream { background: transparent; color: var(--cream-bright); border: 1.5px solid rgba(253,252,249,0.5); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-outline-cream:hover { background: var(--cream-bright); border-color: var(--cream-bright); color: var(--green-800); }
+
+  .btn-filled-cream { background: var(--cream-bright); color: var(--green-800); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-filled-cream i { font-size: 20px; transform: translateX(3px); transition: transform 0.2s; margin-right: -4px; }
+  .btn-filled-cream:hover { background: var(--sand); color: var(--green-800); }
+  .btn-filled-cream:hover i { transform: translateX(7px); }
+
+  .btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; }
+  .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); }
+
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-add i { font-size: 18px; margin-right: -3px; }
+  .btn-add:hover { background: var(--green-800); }
+
+  .btn-link { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--black); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: color 0.2s; text-decoration: none; padding: 14px 0; }
+  .btn-link i { font-size: 22px; transform: translateX(3px); transition: transform 0.2s; }
+  .btn-link:hover { color: var(--green-800); }
+  .btn-link:hover i { transform: translateX(7px); }
+
+  /* HERO */
+  .hero { margin-top: 80px; padding: 16px 48px; background: var(--cream); }
+  .hero-inner { position: relative; border-radius: 24px; overflow: hidden; height: calc(100vh - 80px - 32px); min-height: 580px; background: var(--green-800); }
+  .hero-content { position: absolute; top: 50%; left: 0; transform: translateY(-50%); padding: 0 56px; max-width: 560px; }
+
+  /* Hero tag — форма тегу без тире */
+  .hero-tag {
+    display: inline-flex; align-items: flex-start; gap: 8px;
+    background: rgba(253,252,249,0.15);
+    color: var(--cream-bright);
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 24px;
+    max-width: 160px;
+    line-height: 1.5;
+  }
+  .hero-tag i { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .hero-title { font-family: 'Inter', sans-serif; font-size: clamp(44px, 5.5vw, 76px); font-weight: 900; line-height: 1.05; color: var(--cream-bright); margin-bottom: 18px; letter-spacing: -0.03em; }
+  .hero-sub { font-size: 16px; font-weight: 300; color: rgba(253,252,249,0.75); margin-bottom: 40px; line-height: 1.7; }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* TICKER */
+  .ticker-wrap { overflow: hidden; background: var(--cream); padding: 32px 0; }
+  .ticker-track { display: flex; gap: 10px; width: max-content; animation: ticker 30s linear infinite; }
+  .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-tag { display: inline-flex; align-items: center; border-radius: 40px; padding: 10px 20px; white-space: nowrap; font-size: 13px; font-weight: 500; flex-shrink: 0; background: var(--sand); color: var(--gray-800); cursor: pointer; transition: background 0.2s, color 0.2s; text-decoration: none; }
+  .ticker-tag:hover { background: var(--green-800); color: var(--cream-bright); }
+
+  /* ABOUT */
+  .about-section { padding: 100px 48px 100px; max-width: 1280px; margin: 0 auto; }
+  .about-row { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: stretch; margin-bottom: 120px; }
+  .about-row:last-child { margin-bottom: 0; }
+  .about-row.reverse .about-image { order: -1; }
+  .about-text { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+  .about-text h2 { font-family: 'Inter', sans-serif; font-size: clamp(28px, 3vw, 42px); font-weight: 900; line-height: 1.1; color: var(--black); margin-bottom: 18px; letter-spacing: -0.02em; }
+  .about-text p { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-800); margin-bottom: 14px; }
+  .about-text .btn-primary { margin-top: 16px; }
+  .about-image { background: var(--sand); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; min-height: 400px; }
+
+  /* STATS */
+  .stats { background: var(--green-800); padding: 60px 48px 32px; }
+  .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .stat-card { background: rgba(253,252,249,0.07); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 12px; }
+  .stat-number { font-family: 'Inter', sans-serif; font-size: clamp(52px, 5.5vw, 80px); font-weight: 900; color: var(--green-500); line-height: 1; letter-spacing: -0.04em; }
+  .stat-label { font-size: 16px; font-weight: 500; color: var(--cream-bright); line-height: 1.4; }
+  .stat-sub { font-size: 13px; color: rgba(253,252,249,0.45); }
+
+  /* COLLECTIONS */
+  .collections { background: var(--green-800); padding: 40px 48px 100px; }
+  .collections-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1280px; margin: 0 auto 48px; }
+  .collections-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3.5vw, 46px); font-weight: 900; color: var(--cream-bright); line-height: 1.1; letter-spacing: -0.02em; }
+  .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1280px; margin: 0 auto; }
+  .collection-card { background: var(--cream); border-radius: 20px; overflow: hidden; transition: transform 0.3s; }
+  .collection-card:hover { transform: translateY(-6px); }
+  .collection-img { height: 240px; background: var(--sand); display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .collection-body { padding: 28px; }
+  .collection-tag-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; display: block; }
+  .collection-body h3 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 900; color: var(--black); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .collection-body p { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+
+  /* BESTSELLERS */
+  .bestsellers { padding: 120px 48px; max-width: 1280px; margin: 0 auto; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; }
+  .section-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3.5vw, 46px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; transition: transform 0.3s; }
+  .product-card:hover { transform: translateY(-6px); }
+  .product-img { height: 200px; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+  .product-body { padding: 20px; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.01em; }
+
+  /* RITUAL — two parts */
+  .ritual-top { background: var(--green-800); padding: 120px 48px 80px; }
+  .ritual-top-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  .ritual-top h2 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 900; line-height: 1.05; color: var(--cream-bright); margin-bottom: 20px; letter-spacing: -0.03em; }
+  .ritual-top p { font-size: 16px; font-weight: 300; color: rgba(253,252,249,0.7); line-height: 1.8; margin-bottom: 40px; }
+  .ritual-top .section-tag { display: inline-flex; margin-bottom: 24px; background: rgba(253,252,249,0.15); color: var(--cream-bright); }
+  .ritual-top .section-tag i { color: var(--cream-bright); font-size: 16px; }
+
+  .ritual-bottom { background: var(--green-800); padding: 0 48px 100px; }
+  .ritual-bottom-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ritual-col-right { display: flex; flex-direction: column; gap: 20px; }
+  .ritual-card { background: var(--cream); border-radius: 20px; overflow: hidden; min-height: 280px; position: relative; cursor: pointer; }
+  .ritual-card-photo { position: absolute; inset: 0; background: var(--cream); display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.35s; }
+  .ritual-card-content { position: absolute; inset: 0; padding: 32px; display: flex; flex-direction: column; gap: 16px; justify-content: flex-end; background: var(--green-800); opacity: 0; transition: opacity 0.35s; }
+  .ritual-card:hover .ritual-card-photo { opacity: 0; }
+  .ritual-card:hover .ritual-card-content { opacity: 1; }
+  .ritual-card-icon { width: 48px; height: 48px; background: var(--green-500); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--cream-bright); }
+  .ritual-card h4 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--cream-bright); letter-spacing: -0.01em; }
+  .ritual-card p { font-size: 13px; color: rgba(253,252,249,0.7); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--green-500); padding: 120px 0; overflow: hidden; }
+  .testimonials-header { padding: 0 48px; margin-bottom: 48px; display: flex; align-items: center; gap: 24px; }
+  .testimonials-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3vw, 44px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+
+  /* Avatar stack */
+  .avatar-stack { display: flex; align-items: center; }
+  .avatar-stack-item {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--green-800);
+    border: 3px solid var(--green-500);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800;
+    color: var(--cream-bright);
+    margin-left: -12px;
+    animation: avatarPulse 3s ease-in-out infinite;
+  }
+  .avatar-stack-item:first-child { margin-left: 0; animation-delay: 0s; }
+  .avatar-stack-item:nth-child(2) { animation-delay: 0.4s; }
+  .avatar-stack-item:nth-child(3) { animation-delay: 0.8s; }
+  .avatar-stack-item:nth-child(4) { animation-delay: 1.2s; }
+  .avatar-stack-item:nth-child(5) { background: var(--black); animation-delay: 1.6s; font-size: 11px; }
+  @keyframes avatarPulse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .testimonials-track-wrap { overflow: hidden; }
+  .testimonials-track { display: flex; gap: 24px; width: max-content; animation: marquee 32s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; width: 360px; flex-shrink: 0; }
+  .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
+  .testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
+  .testimonial-user { display: flex; align-items: center; gap: 12px; }
+  .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
+  .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
+  .testimonial-handle { font-size: 12px; color: var(--gray-500); }
+  .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 80px 48px 40px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
+  .footer-brand-logo { margin-bottom: 16px; }
+  .footer-brand-logo svg { height: 40px; width: auto; }
+  .footer-brand p { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 220px; }
+  .footer-col h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { font-size: 14px; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--green-500); }
+  .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .newsletter-form { display: flex; gap: 8px; }
+  .newsletter-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input::placeholder { color: var(--gray-500); }
+  .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: var(--gray-500); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
+  .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); }
+
+  /* PROFILE PANEL */
+  .profile-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .profile-overlay.open { opacity: 1; pointer-events: all; }
+
+  .profile-panel {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+    width: 420px; background: var(--cream-bright);
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+  }
+  .profile-panel.open { transform: translateX(0); }
+
+  .pp-header { background: var(--green-800); padding: 40px 28px 36px; position: relative; }
+  .pp-close { position: absolute; top: 24px; right: 24px; background: rgba(253,252,249,0.12); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--cream-bright); transition: background 0.2s; }
+  .pp-close:hover { background: rgba(253,252,249,0.22); }
+
+  .pp-user { display: flex; align-items: center; gap: 16px; }
+  .pp-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--cream-bright); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--gray-300); flex-shrink: 0; cursor: pointer; }
+
+  .pp-name { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: var(--cream-bright); letter-spacing: -0.01em; }
+  .pp-email { font-size: 13px; color: rgba(253,252,249,0.55); margin-top: 4px; font-family: 'Inter', sans-serif; font-weight: 400; }
+
+  .pp-body { padding: 24px 20px 32px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+  .pp-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-300); padding: 20px 24px 8px; font-family: 'Inter', sans-serif; }
+
+  .pp-item { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 18px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--black); }
+  .pp-item:hover { background: var(--cream); }
+  .pp-item-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; transition: all 0.2s; }
+
+  .pp-item-text { flex: 1; }
+  .pp-item-title { font-size: 15px; font-weight: 400; color: var(--black); font-family: 'Inter', sans-serif; }
+  .pp-item-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; font-family: 'Inter', sans-serif; }
+  .pp-item-badge { background: var(--green-500); color: var(--cream-bright); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 500; font-family: 'Inter', sans-serif; }
+  .pp-item-arrow { font-size: 18px; color: var(--gray-300); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+  .pp-item:hover .pp-item-arrow { opacity: 1; transform: translateX(4px); }
+
+  .pp-logout { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 18px; cursor: pointer; color: #E84A2E; font-size: 15px; font-weight: 400; border: none; background: none; font-family: 'Inter', sans-serif; width: 100%; transition: background 0.2s; margin-top: 12px; }
+  .pp-logout:hover { background: rgba(232,74,46,0.07); }
+  .pp-logout .pp-item-icon { background: rgba(232,74,46,0.1); color: #E84A2E; }
+  .pp-logout:hover .pp-item-icon { background: rgba(232,74,46,0.1); color: #E84A2E; }
+
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-d1 { transition-delay: 0.15s; }
+  .fade-up-d2 { transition-delay: 0.3s; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-tag { animation: fadeUp 0.5s ease 0.1s both; }
+  .hero-title { animation: fadeUp 0.5s ease 0.2s both; }
+  .hero-sub { animation: fadeUp 0.5s ease 0.35s both; }
+  .hero-buttons { animation: fadeUp 0.5s ease 0.5s both; }
+
+
+  /* BURGER MENU */
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
+  .burger-btn:hover { background: var(--sand); }
+
+  .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 201;
+    width: 300px; background: var(--cream-bright);
+    transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+    font-family: 'Inter', sans-serif;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+
+  .mm-header { padding: 24px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .mm-header svg { height: 36px; width: auto; }
+  .mm-close { background: var(--sand); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); transition: background 0.2s; }
+  .mm-close:hover { background: var(--gray-100); }
+
+  .mm-nav { padding: 8px 12px; flex: 1; }
+  .mm-item { display: flex; align-items: center; gap: 16px; padding: 16px 16px; border-radius: 14px; text-decoration: none; color: var(--black); transition: background 0.2s; }
+  .mm-item:hover { background: var(--cream); }
+  .mm-item-title { font-size: 17px; font-weight: 500; font-family: 'Inter', sans-serif; color: var(--black); }
+
+  .mm-footer { padding: 20px 24px 36px; }
+  .mm-footer-text { font-size: 12px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; }
+
+  @media (max-width: 768px) {
+    .burger-btn { display: flex; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .nav-spacer { display: none; }
+    .nav-faq { display: none; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; gap: 12px; height: 68px; }
+    .nav-links { display: none; }
+    .hero { padding: 8px; margin-top: 68px; }
+    .hero-content { padding: 0 28px; max-width: 100%; }
+    .hero-title { font-size: 38px; }
+    .about-section { padding: 60px 24px; }
+    .about-row { grid-template-columns: 1fr; gap: 40px; margin-bottom: 80px; }
+    .about-row.reverse .about-image { order: 0; }
+    .about-image { height: 280px; }
+    .stats { padding: 80px 24px; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .collections { padding: 80px 24px; }
+    .collections-grid { grid-template-columns: 1fr; gap: 24px; }
+    .collections-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .bestsellers { padding: 80px 24px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .ritual-top { padding: 80px 24px 60px; }
+    .ritual-top-inner { grid-template-columns: 1fr; }
+    .ritual-bottom { padding: 0 24px 80px; }
+    .ritual-bottom-inner { grid-template-columns: 1fr; }
+    .testimonials { padding: 80px 0; }
+    .testimonials-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#226F54"/>
+      <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#226F54"/>
+      <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#226F54"/>
+    </svg>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Про нас</a></li>
+    <li><a href="#">Магазин</a></li>
+  </ul>
+  <div class="nav-search">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <span>Пошук чаю, інгредієнтів...</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" title="Кошик"><i class="hgi-stroke hgi-shopping-bag-01"></i></button>
+    <button class="nav-icon-btn nav-faq" title="FAQ"><i class="hgi-stroke hgi-help-circle"></i></button>
+  </div>
+  <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1 class="hero-title">Кожна чашка — своя історія</h1>
+      <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
+      <div class="hero-buttons">
+        <button class="btn-secondary"><i class="hgi-stroke hgi-tea-cup"></i> До колекцій</button>
+        <button class="btn-outline-cream">Наша історія</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <a href="#" class="ticker-tag">Те Гуань Інь</a>
+    <a href="#" class="ticker-tag">Шен Пуер</a>
+    <a href="#" class="ticker-tag">Фенхуан Даньцун</a>
+    <a href="#" class="ticker-tag">Шу Пуер</a>
+    <a href="#" class="ticker-tag">Да Хун Пао</a>
+    <a href="#" class="ticker-tag">Бай Хао Улун</a>
+    <a href="#" class="ticker-tag">Шен 2019</a>
+    <a href="#" class="ticker-tag">Аліша Улун</a>
+    <a href="#" class="ticker-tag">Дун Дін</a>
+    <a href="#" class="ticker-tag">Лао Шу Пуер</a>
+    <a href="#" class="ticker-tag">Фенхуан</a>
+    <a href="#" class="ticker-tag">Цзінь Сюань</a>
+    <a href="#" class="ticker-tag">Те Гуань Інь</a>
+    <a href="#" class="ticker-tag">Шен Пуер</a>
+    <a href="#" class="ticker-tag">Фенхуан Даньцун</a>
+    <a href="#" class="ticker-tag">Шу Пуер</a>
+    <a href="#" class="ticker-tag">Да Хун Пао</a>
+    <a href="#" class="ticker-tag">Бай Хао Улун</a>
+    <a href="#" class="ticker-tag">Шен 2019</a>
+    <a href="#" class="ticker-tag">Аліша Улун</a>
+    <a href="#" class="ticker-tag">Дун Дін</a>
+    <a href="#" class="ticker-tag">Лао Шу Пуер</a>
+    <a href="#" class="ticker-tag">Фенхуан</a>
+    <a href="#" class="ticker-tag">Цзінь Сюань</a>
+  </div>
+</div>
+
+<!-- ABOUT x3 -->
+<section class="about-section">
+  <div class="about-row fade-up">
+    <div class="about-text">
+      <span class="section-tag"><i class="hgi-stroke hgi-leaf-01"></i> Про бренд</span>
+      <h2>Чай — це не просто напій. Це момент.</h2>
+      <p>Söl — це колекція китайських чаїв для тих, хто цінує справжність. Ми шукаємо чай там, де його вирощують з покоління в покоління — в горах Уї, на плантаціях Юньнані та в садах Аньхою.</p>
+      <p>Кожна позиція в нашому магазині пройшла відбір і дегустацію. Ми не продаємо чай — ми ділимось ритуалом.</p>
+      <button class="btn-primary">Дізнатись більше <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+    </div>
+    <div class="about-image">Фото чаю / природи</div>
+  </div>
+
+  <div class="about-row reverse fade-up">
+    <div class="about-text">
+      <span class="section-tag"><i class="hgi-stroke hgi-location-04"></i> Походження</span>
+      <h2>Прямо з джерела — до вашої чашки</h2>
+      <p>Ми особисто відвідуємо регіони і відбираємо чай на місці. Жодних посередників — лише прямий зв'язок із фермерами, які вирощують чай так само, як і їхні батьки.</p>
+      <p>Кожен сорт супроводжується інформацією про регіон, висоту збору і рік врожаю.</p>
+      <button class="btn-primary">Про наших фермерів <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+    </div>
+    <div class="about-image">Фото плантацій</div>
+  </div>
+
+  <div class="about-row fade-up">
+    <div class="about-text">
+      <span class="section-tag"><i class="hgi-stroke hgi-package-delivered"></i> Доставка</span>
+      <h2>Упаковано з турботою, доставлено швидко</h2>
+      <p>Кожне замовлення упаковуємо вручну, щоб чай дістався у ідеальному стані. Відправляємо по всій Україні протягом 1-2 робочих днів.</p>
+      <p>Використовуємо екологічні матеріали — папір, натуральний крафт і мінімум пластику. Тому що турбота про чай починається з турботи про довкілля.</p>
+      <p>Є питання — пишіть нам, відповідаємо швидко і по-людськи.</p>
+      <button class="btn-primary">Умови доставки <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+    </div>
+    <div class="about-image">Фото упаковки</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat-card fade-up">
+      <div class="stat-number">12 000+</div>
+      <div class="stat-label">замовлень на рік</div>
+      <div class="stat-sub">і з кожним роком більше</div>
+    </div>
+    <div class="stat-card fade-up fade-up-d1">
+      <div class="stat-number">68%</div>
+      <div class="stat-label">постійних клієнтів</div>
+      <div class="stat-sub">повертаються знову і знову</div>
+    </div>
+    <div class="stat-card fade-up fade-up-d2">
+      <div class="stat-number">80+</div>
+      <div class="stat-label">сортів у каталозі</div>
+      <div class="stat-sub">включно з рідкісними та сезонними</div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collections">
+  <div class="collections-header">
+    <div>
+      <span class="section-tag section-tag-light"><i class="hgi-stroke hgi-grid-view"></i> Асортимент</span>
+      <h2>Наші колекції</h2>
+    </div>
+    <button class="btn-filled-cream">Переглянути всі <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+  </div>
+  <div class="collections-grid fade-up">
+    <div class="collection-card">
+      <div class="collection-img">Фото</div>
+      <div class="collection-body">
+        <span class="collection-tag-label">Провінція Фуцзянь</span>
+        <h3>Улун</h3>
+        <p>Квіткові і фруктові нотки, легка ферментація. Ідеальний для щоденного ритуалу.</p>
+        <button class="btn-outline-dark">Переглянути</button>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-img">Фото</div>
+      <div class="collection-body">
+        <span class="collection-tag-label">Провінція Юньнань</span>
+        <h3>Пуер</h3>
+        <p>Глибокий землистий смак, роками визрівання. Для справжніх поціновувачів.</p>
+        <button class="btn-outline-dark">Переглянути</button>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-img">Фото</div>
+      <div class="collection-body">
+        <span class="collection-tag-label">Обмежена серія</span>
+        <h3>Сезонне</h3>
+        <p>Перший весняний збір, рідкісні сорти. З'являються раз на рік — і зникають.</p>
+        <button class="btn-outline-dark">Переглянути</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="bestsellers">
+  <div class="section-header">
+    <h2>Хіти продажів</h2>
+    <a href="#" class="btn-link">Всі товари <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade-up">
+      <div class="product-img">Фото<span class="product-region">Фуцзянь</span></div>
+      <div class="product-body">
+        <h4>Те Гуань Інь</h4>
+        <p class="product-desc">Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.</p>
+        <div class="product-footer"><span class="product-price">₴ 480</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+      </div>
+    </div>
+    <div class="product-card fade-up fade-up-d1">
+      <div class="product-img">Фото<span class="product-region">Юньнань</span></div>
+      <div class="product-body">
+        <h4>Шен Пуер 2019</h4>
+        <p class="product-desc">Яскравий, терпкий, з потенціалом до витримки. З гір Іу.</p>
+        <div class="product-footer"><span class="product-price">₴ 920</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+      </div>
+    </div>
+    <div class="product-card fade-up fade-up-d1">
+      <div class="product-img">Фото<span class="product-region">Гуандун</span></div>
+      <div class="product-body">
+        <h4>Фенхуан Даньцун</h4>
+        <p class="product-desc">Персик, медова орхідея. З гір Фенхуан, обмежений збір.</p>
+        <div class="product-footer"><span class="product-price">₴ 680</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+      </div>
+    </div>
+    <div class="product-card fade-up fade-up-d2">
+      <div class="product-img">Фото<span class="product-region">Юньнань</span></div>
+      <div class="product-body">
+        <h4>Шу Пуер Старий</h4>
+        <p class="product-desc">Витриманий шу, м'який і глибокий. Землистий, без гіркоти.</p>
+        <div class="product-footer"><span class="product-price">₴ 560</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL TOP -->
+<section class="ritual-top">
+  <div class="ritual-top-inner">
+    <span class="section-tag section-tag-light"><i class="hgi-stroke hgi-quill-write-02"></i> Філософія</span>
+    <h2>Чай як ритуал</h2>
+    <p>Уповільнись. Відчуй тепло чашки в руках. Зроби перший ковток і дай смаку розкритись. Söl — це запрошення до моменту тиші посеред дня.</p>
+    <button class="btn-filled-cream">Як провести чайну церемонію <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+  </div>
+</section>
+
+<!-- RITUAL BOTTOM — CARDS -->
+<section class="ritual-bottom">
+  <div class="ritual-bottom-inner">
+    <div class="ritual-card">
+      <div class="ritual-card-photo">Фото чаю</div>
+      <div class="ritual-card-content">
+        <div class="ritual-card-icon"><i class="hgi-stroke hgi-tea-cup"></i></div>
+        <h4>Чай</h4>
+        <p>Улун, пуер, сезонні збори. Більше 80 сортів з провінцій Фуцзянь, Юньнань та Гуандун.</p>
+      </div>
+    </div>
+    <div class="ritual-col-right">
+      <div class="ritual-card">
+        <div class="ritual-card-photo">Фото посуду</div>
+        <div class="ritual-card-content">
+          <div class="ritual-card-icon"><i class="hgi-stroke hgi-coffee-02"></i></div>
+          <h4>Посуд</h4>
+          <p>Гайвані, чайники, піали для правильного заварювання.</p>
+        </div>
+      </div>
+      <div class="ritual-card">
+        <div class="ritual-card-photo">Фото аксесуарів</div>
+        <div class="ritual-card-content">
+          <div class="ritual-card-icon"><i class="hgi-stroke hgi-package-01"></i></div>
+          <h4>Аксесуари</h4>
+          <p>Чайні дошки, щипці, воронки та інше приладдя.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <h2>Що кажуть наші?</h2>
+    <div class="avatar-stack">
+      <div class="avatar-stack-item">ОК</div>
+      <div class="avatar-stack-item">МД</div>
+      <div class="avatar-stack-item">МР</div>
+      <div class="avatar-stack-item">АП</div>
+      <div class="avatar-stack-item">+80</div>
+    </div>
+  </div>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track">
+      <div class="testimonial">
+        <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <!-- duplicate -->
+      <div class="testimonial">
+        <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-user"><div class="testimonial-avatar">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
+          <span class="testimonial-rating">★ 5.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#7CC44A"/>
+          <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#7CC44A"/>
+          <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#7CC44A"/>
+        </svg>
+      </div>
+      <p>Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Магазин</h5>
+      <ul>
+        <li><a href="#">Улун</a></li>
+        <li><a href="#">Пуер</a></li>
+        <li><a href="#">Сезонне</a></li>
+        <li><a href="#">Набори</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Про нас</h5>
+      <ul>
+        <li><a href="#">Наша історія</a></li>
+        <li><a href="#">Як заварювати</a></li>
+        <li><a href="#">Блог</a></li>
+        <li><a href="#">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h5>Підписка</h5>
+      <p>Нові надходження та сезонні новинки — першими.</p>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Ваш email">
+        <button class="btn-subscribe">OK</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Söl Tea. Всі права захищені.</p>
+    <div class="footer-socials">
+      <button class="footer-social-btn" title="Instagram"><i class="hgi-stroke hgi-instagram"></i></button>
+      <button class="footer-social-btn" title="Telegram"><i class="hgi-stroke hgi-telegram"></i></button>
+      <button class="footer-social-btn" title="Facebook"><i class="hgi-stroke hgi-facebook-01"></i></button>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-header">
+    <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;">
+      <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705Z" fill="#226F54"/>
+    </svg>
+    <button class="mm-close" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+
+  <div class="mm-nav">
+    <a href="#" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="#" class="mm-item"><span class="mm-item-title">Магазин</span></a>
+  </div>
+
+  <div class="mm-footer">
+    <p class="mm-footer-text">© 2025 Söl Tea</p>
+  </div>
+</div>
+
+<!-- PROFILE OVERLAY -->
+<div class="profile-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+
+<!-- PROFILE PANEL -->
+<div class="profile-panel" id="profilePanel">
+
+  <div class="pp-header">
+    <button class="pp-close" onclick="toggleProfile()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <div class="pp-user">
+      <div class="pp-avatar"><i class="hgi-stroke hgi-user-circle"></i></div>
+      <div>
+        <div class="pp-name">Яна Лізгова</div>
+        <div class="pp-email">lizgovka714@gmail.com</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pp-body">
+    <div class="pp-section-label">Мій акаунт</div>
+
+    <a href="sol-profile.html" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-package-01"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Замовлення</div>
+        <div class="pp-item-sub">Останнє: 23 березня</div>
+      </div>
+      <span class="pp-item-badge">1 нове</span>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <a href="sol-profile.html" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-favourite"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Вішліст</div>
+        <div class="pp-item-sub">8 збережених товарів</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <a href="sol-profile.html" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-location-04"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Адреси доставки</div>
+        <div class="pp-item-sub">3 збережені адреси</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <a href="sol-profile.html" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-star"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Бонуси</div>
+        <div class="pp-item-sub">680 балів накопичено</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <div class="pp-section-label">Налаштування</div>
+
+    <a href="sol-profile.html" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-user-edit-01"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Особисті дані</div>
+        <div class="pp-item-sub">Редагувати профіль</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-credit-card"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Спосіб оплати</div>
+        <div class="pp-item-sub">Картки та платіжні дані</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-lock-password"></i></div>
+      <div class="pp-item-text">
+        <div class="pp-item-title">Безпека</div>
+        <div class="pp-item-sub">Пароль та вхід</div>
+      </div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+
+    <button class="pp-logout">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-logout-01"></i></div>
+      Вийти з акаунту
+    </button>
+  </div>
+
+</div>
+
+<script>
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => scrollObserver.observe(el));
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const isOpen = menu.classList.contains('open');
+  menu.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+function toggleProfile() {
+  const panel = document.getElementById('profilePanel');
+  const overlay = document.getElementById('profileOverlay');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('profilePanel').classList.remove('open');
+    document.getElementById('profileOverlay').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('mobileMenuOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+
+</body>
+</html>
