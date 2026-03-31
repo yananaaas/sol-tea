@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Магазин — Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+  :root {
+    --cream: #F5F0E8; --cream-bright: #FDFCF9; --sand: #E8E0CC;
+    --green-800: #226F54; --green-500: #7CC44A; --terra: #C4855A;
+    --black: #1C1A14; --gray-800: #4A4538; --gray-500: #7A7060;
+    --gray-300: #B5AFA3; --gray-100: #D9D3C7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  .nav-spacer { flex: 1; }
+  .nav-logo svg { height: 42px; width: auto; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-links a.active { color: var(--green-800); font-weight: 500; }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; cursor: pointer; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:hover { background: var(--gray-100); }
+  .nav-search i { font-size: 20px; color: var(--gray-500); }
+  .nav-search span { font-size: 15px; color: var(--gray-500); }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; position: relative; }
+  .nav-icon-btn:hover { background: var(--sand); }
+  .cart-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; background: var(--green-500); border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
+  .cart-badge.visible { display: flex; }
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
+  .burger-btn:hover { background: var(--sand); }
+
+  /* BUTTONS */
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-add i { font-size: 18px; }
+  .btn-add:hover { background: var(--green-800); }
+
+  /* PAGE WRAP */
+  .page-wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* PAGE LOAD ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-h { animation: fadeUp 0.4s ease 0.05s both; }
+  .anim-tabs { animation: fadeUp 0.4s ease 0.15s both; }
+  .anim-filters { animation: fadeUp 0.4s ease 0.22s both; }
+
+  .product-card {
+    background: var(--cream-bright); border-radius: 20px; overflow: hidden;
+    transition: transform 0.3s, opacity 0.4s ease, transform 0.4s ease;
+    cursor: pointer;
+    opacity: 0; transform: translateY(16px);
+  }
+  .product-card.show { opacity: 1; transform: translateY(0); }
+  .product-card.show:hover { transform: translateY(-6px); }
+
+  /* SHOP HEADER */
+  .shop-header { padding-top: 132px; padding-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between; }
+  .shop-header h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 64px); font-weight: 900; color: var(--black); letter-spacing: -0.03em; line-height: 1; }
+  .shop-header-meta { font-size: 14px; color: var(--gray-500); padding-bottom: 8px; }
+
+  /* CUSTOM DROPDOWN */
+  .cat-dropdown {
+    position: relative;
+    flex-shrink: 0;
+    user-select: none;
+    z-index: 200;
+  }
+  .cat-trigger {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--sand);
+    color: var(--gray-800);
+    border: none; border-radius: 40px;
+    padding: 9px 16px 9px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .cat-trigger:hover { background: var(--gray-100); }
+  .cat-trigger i { font-size: 16px; color: var(--gray-500); transition: transform 0.2s; }
+  .cat-dropdown.open .cat-trigger { background: var(--gray-100); }
+  .cat-dropdown.open .cat-trigger i { transform: rotate(180deg); }
+
+  .cat-menu {
+    position: absolute;
+    top: calc(100% + 8px); left: 0;
+    background: var(--sand);
+    border-radius: 20px;
+    padding: 8px;
+    min-width: 180px;
+    display: flex; flex-direction: column; gap: 4px;
+    box-shadow: 0 8px 24px rgba(28,26,20,0.10);
+    opacity: 0; pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 200;
+  }
+  .cat-dropdown.open .cat-menu {
+    opacity: 1; pointer-events: all;
+    transform: translateY(0);
+  }
+  .cat-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--gray-800);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cat-option:hover { background: var(--gray-100); }
+  .cat-option.active {
+    background: var(--green-800);
+    color: var(--cream-bright);
+    font-weight: 500;
+  }
+
+  /* FILTER BAR — категорія + теги в одному рядку */
+  .filter-bar { display: flex; align-items: center; gap: 12px; padding-bottom: 36px; flex-wrap: wrap; position: relative; z-index: 100; }
+  .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+  .filter-pill {
+    background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 9px 18px;
+    font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .filter-pill:hover { background: var(--gray-100); }
+  .filter-pill.active { background: var(--green-800); color: var(--cream-bright); }
+
+  .sort-btn { display: flex; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 20px; font-size: 13px; color: var(--gray-800); cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .sort-btn:hover { background: var(--gray-100); }
+  .sort-btn i { font-size: 18px; }
+
+  /* PRODUCTS GRID */
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; position: relative; z-index: 1; }
+  .product-img { height: 200px; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+  .product-wish { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: var(--gray-300); transition: color 0.2s; line-height: 1; }
+  .product-wish:hover { color: var(--terra); }
+  .product-wish.liked { color: var(--terra); }
+  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
+  .product-body { padding: 20px; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.01em; }
+
+  .empty-state { grid-column: 1/-1; padding: 80px 0; text-align: center; color: var(--gray-300); font-size: 15px; display: none; }
+  .empty-state.visible { display: block; }
+
+  /* PAGINATION */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 60px 0 100px; }
+  .page-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .page-btn:hover { background: var(--gray-100); }
+  .page-btn.active { background: var(--green-800); color: var(--cream-bright); }
+  .page-dots { color: var(--gray-300); font-size: 14px; padding: 0 12px; letter-spacing: 4px; }
+
+  /* SCROLL TO TOP */
+  .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+  .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 80px 48px 40px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
+  .footer-brand-logo { margin-bottom: 16px; }
+  .footer-brand-logo svg { height: 40px; width: auto; }
+  .footer-brand p { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 220px; }
+  .footer-col h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { font-size: 14px; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--green-500); }
+  .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .newsletter-form { display: flex; gap: 8px; }
+  .newsletter-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input::placeholder { color: var(--gray-500); }
+  .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: var(--gray-500); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
+  .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); }
+
+  /* MOBILE MENU */
+  .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+  .mobile-menu { position: fixed; top: 0; left: 0; bottom: 0; z-index: 201; width: 300px; background: var(--cream-bright); transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; }
+  .mobile-menu.open { transform: translateX(0); }
+  .mm-header { padding: 24px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .mm-header svg { height: 36px; width: auto; }
+  .mm-close { background: var(--sand); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); }
+  .mm-close:hover { background: var(--gray-100); }
+  .mm-nav { padding: 8px 12px; flex: 1; }
+  .mm-item { display: flex; align-items: center; padding: 16px; border-radius: 14px; text-decoration: none; color: var(--black); transition: background 0.2s; }
+  .mm-item:hover { background: var(--cream); }
+  .mm-item-title { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 500; }
+  .mm-footer { padding: 20px 24px 36px; }
+  .mm-footer-text { font-size: 12px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; }
+
+  /* PROFILE PANEL */
+  .profile-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .profile-overlay.open { opacity: 1; pointer-events: all; }
+  .profile-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 201; width: 420px; background: var(--cream-bright); transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; overflow-y: auto; font-family: 'Inter', sans-serif; }
+  .profile-panel.open { transform: translateX(0); }
+  .pp-header { background: var(--green-800); padding: 40px 28px 36px; position: relative; }
+  .pp-close { position: absolute; top: 24px; right: 24px; background: rgba(253,252,249,0.12); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--cream-bright); }
+  .pp-close:hover { background: rgba(253,252,249,0.22); }
+  .pp-user { display: flex; align-items: center; gap: 16px; }
+  .pp-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--cream-bright); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--gray-300); flex-shrink: 0; cursor: pointer; }
+  .pp-name { font-size: 17px; font-weight: 700; color: var(--cream-bright); letter-spacing: -0.01em; }
+  .pp-email { font-size: 13px; color: rgba(253,252,249,0.55); margin-top: 4px; }
+  .pp-body { padding: 24px 20px 32px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .pp-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-300); padding: 20px 24px 8px; }
+  .pp-item { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 18px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--black); }
+  .pp-item:hover { background: var(--cream); }
+  .pp-item-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
+  .pp-item-text { flex: 1; }
+  .pp-item-title { font-size: 15px; font-weight: 400; color: var(--black); }
+  .pp-item-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .pp-item-badge { background: var(--green-500); color: var(--cream-bright); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 500; }
+  .pp-item-arrow { font-size: 18px; color: var(--gray-300); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+  .pp-item:hover .pp-item-arrow { opacity: 1; transform: translateX(4px); }
+  .pp-logout { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 18px; cursor: pointer; color: #E84A2E; font-size: 15px; font-weight: 400; border: none; background: none; font-family: 'Inter', sans-serif; width: 100%; transition: background 0.2s; margin-top: 12px; }
+  .pp-logout:hover { background: rgba(232,74,46,0.07); }
+  .pp-logout .pp-item-icon { background: rgba(232,74,46,0.1); color: #E84A2E; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .burger-btn { display: flex; }
+    .nav-links, .nav-search, .nav-spacer, .nav-faq { display: none; }
+    nav { padding: 0 20px; height: 68px; }
+    .page-wrap { padding: 0 24px; }
+    .shop-header { padding-top: 100px; }
+    .section-tabs { flex-wrap: wrap; }
+    .filter-bar { flex-wrap: wrap; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .scroll-top { bottom: 20px; right: 20px; }
+  }
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .products-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><a href="sol-tea.html"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#226F54"/><path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#226F54"/><path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#226F54"/></svg></a></div>
+  <ul class="nav-links">
+    <li><a href="sol-tea.html">Про нас</a></li>
+    <li><a href="sol-shop.html" class="active">Магазин</a></li>
+  </ul>
+  <div class="nav-search"><i class="hgi-stroke hgi-search-01"></i><span>Пошук чаю, інгредієнтів...</span></div>
+  <div class="nav-spacer"></div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge">0</span></button>
+    <button class="nav-icon-btn nav-faq" title="FAQ"><i class="hgi-stroke hgi-help-circle"></i></button>
+  </div>
+  <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
+</nav>
+
+<div class="page-wrap">
+  <div class="shop-header anim-h">
+    <h1>Магазин</h1>
+    <span class="shop-header-meta" id="resultCount">83 товари</span>
+  </div>
+
+  <div class="filter-bar anim-tabs">
+    <div class="cat-dropdown" id="catDropdown">
+      <button class="cat-trigger" onclick="toggleCatDropdown()">
+        <span id="catLabel">Чай</span>
+        <i class="hgi-stroke hgi-arrow-down-01"></i>
+      </button>
+      <div class="cat-menu" id="catMenu">
+        <div class="cat-option active" data-section="tea" onclick="selectCategory(this)">Чай</div>
+        <div class="cat-option" data-section="teaware" onclick="selectCategory(this)">Посуд</div>
+        <div class="cat-option" data-section="boards" onclick="selectCategory(this)">Дошки</div>
+        <div class="cat-option" data-section="accessories" onclick="selectCategory(this)">Аксесуари</div>
+      </div>
+    </div>
+    <div class="filter-pills" id="filterPills"></div>
+    <button class="sort-btn"><i class="hgi-stroke hgi-filter-horizontal"></i> Сортування</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+  <div class="empty-state" id="emptyState">Товарів за обраними фільтрами не знайдено</div>
+
+  <div class="pagination">
+    <button class="page-btn"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <span class="page-dots">···</span>
+    <button class="page-btn">7</button>
+    <button class="page-btn"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
+  </div>
+</div>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#7CC44A"/><path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#7CC44A"/><path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#7CC44A"/></svg></div>
+      <p>Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+    </div>
+    <div class="footer-col"><h5>Магазин</h5><ul><li><a href="#">Чай</a></li><li><a href="#">Посуд</a></li><li><a href="#">Дошки</a></li><li><a href="#">Аксесуари</a></li></ul></div>
+    <div class="footer-col"><h5>Про нас</h5><ul><li><a href="#">Наша історія</a></li><li><a href="#">Як заварювати</a></li><li><a href="#">Блог</a></li><li><a href="#">Контакти</a></li></ul></div>
+    <div class="footer-newsletter">
+      <h5>Підписка</h5>
+      <p>Нові надходження та сезонні новинки — першими.</p>
+      <div class="newsletter-form"><input class="newsletter-input" type="email" placeholder="Ваш email"><button class="btn-subscribe">OK</button></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Söl Tea. Всі права захищені.</p>
+    <div class="footer-socials">
+      <button class="footer-social-btn" title="Instagram"><i class="hgi-stroke hgi-instagram"></i></button>
+      <button class="footer-social-btn" title="Telegram"><i class="hgi-stroke hgi-telegram"></i></button>
+      <button class="footer-social-btn" title="Facebook"><i class="hgi-stroke hgi-facebook-01"></i></button>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-header"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705Z" fill="#226F54"/></svg><button class="mm-close" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-cancel-01"></i></button></div>
+  <div class="mm-nav"><a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a><a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a></div>
+  <div class="mm-footer"><p class="mm-footer-text">© 2025 Söl Tea</p></div>
+</div>
+
+<div class="profile-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+<div class="profile-panel" id="profilePanel">
+  <div class="pp-header">
+    <button class="pp-close" onclick="toggleProfile()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <div class="pp-user"><div class="pp-avatar"><i class="hgi-stroke hgi-user-circle"></i></div><div><div class="pp-name">Яна Лізгова</div><div class="pp-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="375b5e4d5058415c5600060377505a565e5b1954585a">[email&#160;protected]</a></div></div></div>
+  </div>
+  <div class="pp-body">
+    <div class="pp-section-label">Мій акаунт</div>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-package-01"></i></div><div class="pp-item-text"><div class="pp-item-title">Замовлення</div><div class="pp-item-sub">Останнє: 23 березня</div></div><span class="pp-item-badge">1 нове</span><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-favourite"></i></div><div class="pp-item-text"><div class="pp-item-title">Вішліст</div><div class="pp-item-sub">8 збережених товарів</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-location-04"></i></div><div class="pp-item-text"><div class="pp-item-title">Адреси доставки</div><div class="pp-item-sub">3 збережені адреси</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-star"></i></div><div class="pp-item-text"><div class="pp-item-title">Бонуси</div><div class="pp-item-sub">680 балів накопичено</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <div class="pp-section-label">Налаштування</div>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-user-edit-01"></i></div><div class="pp-item-text"><div class="pp-item-title">Особисті дані</div><div class="pp-item-sub">Редагувати профіль</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-credit-card"></i></div><div class="pp-item-text"><div class="pp-item-title">Спосіб оплати</div><div class="pp-item-sub">Картки та платіжні дані</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-lock-password"></i></div><div class="pp-item-text"><div class="pp-item-title">Безпека</div><div class="pp-item-sub">Пароль та вхід</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <button class="pp-logout"><div class="pp-item-icon"><i class="hgi-stroke hgi-logout-01"></i></div>Вийти з акаунту</button>
+  </div>
+</div>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const SECTIONS = {
+  tea: {
+    filters: [
+      {key:'all',label:'Всі'},{key:'oolong',label:'Улун'},
+      {key:'puer',label:'Пуер'},{key:'seasonal',label:'Сезонне'},{key:'sets',label:'Набори'}
+    ],
+    products: [
+      {name:'Те Гуань Інь',     cat:'oolong',  region:'Фуцзянь', desc:'Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.',price:'₴ 480',  bg:'',        badge:null},
+      {name:'Шен Пуер 2019',    cat:'puer',    region:'Юньнань', desc:'Яскравий, терпкий, з потенціалом до витримки. З гір Іу.',         price:'₴ 920',  bg:'#DDD8CC', badge:'new'},
+      {name:'Фенхуан Даньцун',  cat:'oolong',  region:'Гуандун', desc:'Персик, медова орхідея. З гір Фенхуан, обмежений збір.',          price:'₴ 680',  bg:'#E4DDD3', badge:'limited'},
+      {name:'Шу Пуер Старий',   cat:'puer',    region:'Юньнань', desc:"Витриманий шу, м'який і глибокий. Землистий, без гіркоти.",       price:'₴ 560',  bg:'#D5CFCA', badge:null},
+      {name:'Да Хун Пао',       cat:'oolong',  region:'Фуцзянь', desc:'Мінеральний, смажений. Скелі Уї, обмежений збір.',               price:'₴ 740',  bg:'#E8E3D8', badge:null},
+      {name:'Цзінь Сюань',      cat:'oolong',  region:'Тайвань', desc:'Молочний, вершковий. Гірські плантації Тайваню.',                 price:'₴ 520',  bg:'#DDE4D5', badge:'new'},
+      {name:'Лао Шу Пуер',      cat:'puer',    region:'Юньнань', desc:'Зі старих дерев, глибокий і складний. Рідкісний.',               price:'₴ 1 200',bg:'#E0D9CE', badge:null},
+      {name:'Дун Дін',          cat:'oolong',  region:'Тайвань', desc:'Флоральний, легко смажений. Класика тайванського улуну.',         price:'₴ 610',  bg:'#EBE5D8', badge:null},
+      {name:'Шуй Сянь',         cat:'oolong',  region:'Фуцзянь', desc:'Квіти нарциса, тютюн. Витриманий скельний улун.',                price:'₴ 850',  bg:'#D8E0D5', badge:'limited'},
+      {name:'Бін Ча 2021',      cat:'puer',    region:'Юньнань', desc:'Пресований млинець, гори Менхай. Молодий і живий.',              price:'₴ 780',  bg:'#E2DBD0', badge:'new'},
+      {name:'Бай Хао Улун',     cat:'oolong',  region:'Тайвань', desc:'Мускатний виноград, мед. Орієнтальний красень Тайваню.',         price:'₴ 960',  bg:'#E6E0D2', badge:null},
+      {name:'Весняний Збір 2026',cat:'seasonal',region:'Фуцзянь', desc:'Перший зрив, гора Уї. Лише 12 кг. Ніжний і яскравий.',         price:'₴ 1 100',bg:'#DAD4C8', badge:'limited'}
+    ]
+  },
+  teaware: {
+    filters: [
+      {key:'all',label:'Всі'},{key:'gaiwans',label:'Гайвані'},
+      {key:'teapots',label:'Чайники'},{key:'bowls',label:'Піали'},
+      {key:'pitchers',label:'Глечики'},{key:'kettles',label:'Кетлі'}
+    ],
+    products: [
+      {name:'Гайвань біла 120мл',     cat:'gaiwans', region:'Цзиндечжень',desc:'Класична порцелянова гайвань для улуну і пуеру.',     price:'₴ 560',  bg:'#EAE5DC',badge:null},
+      {name:'Гайвань сіра 150мл',     cat:'gaiwans', region:'Цзиндечжень',desc:'Матова глазур, зручний корпус, нейтральний смак.',    price:'₴ 640',  bg:'#D8D3CA',badge:null},
+      {name:'Чайник Ісін 200мл',      cat:'teapots', region:'Ісін',       desc:"Пурпурова глина зі стандартного кар'єру Хуанлун.",    price:'₴ 1 800',bg:'#C9B9A8',badge:'new'},
+      {name:'Чайник Ju-Lun 180мл',    cat:'teapots', region:'Ісін',       desc:'Класична форма Жу Лун Юн. Ідеально для шен пуеру.',  price:'₴ 2 200',bg:'#BFB4A8',badge:null},
+      {name:'Піала 60мл',             cat:'bowls',   region:'Юньнань',    desc:'Тонкостінна піала ручної роботи, глиняний обпал.',    price:'₴ 240',  bg:'#DDD7CC',badge:null},
+      {name:'Піала Небо 80мл',        cat:'bowls',   region:'Юньнань',    desc:'Глазурована в синій, форма широкого рота.',           price:'₴ 320',  bg:'#C8D0D8',badge:null},
+      {name:'Глечик 200мл',           cat:'pitchers',region:'Цзиндечжень',desc:'Ча Хай для зливання рівномірного настою.',            price:'₴ 480',  bg:'#DDD9D2',badge:null},
+      {name:'Глечик скляний 300мл',   cat:'pitchers',region:'Тайвань',    desc:'Жароміцне боросилікатне скло, видно колір чаю.',     price:'₴ 560',  bg:'#D8E0E4',badge:null},
+      {name:'Кетль Hario 800мл',      cat:'kettles', region:'Японія',     desc:'Носик-гусяча шия, точний контроль потоку.',          price:'₴ 1 400',bg:'#D4D0C8',badge:'new'},
+      {name:'Кетль керамічний 600мл', cat:'kettles', region:'Китай',      desc:'Для нагрівання на плиті, рівномірний нагрів.',       price:'₴ 980',  bg:'#CEC8BE',badge:null},
+      {name:'Піала Небо 50мл',        cat:'bowls',   region:'Юньнань',    desc:'Маленька для швидких ковтків. Тонкостінна кераміка.',price:'₴ 200',  bg:'#D4D8D0',badge:null},
+      {name:'Гайвань з квіткою 100мл',cat:'gaiwans', region:'Цзиндечжень',desc:'Ручний розпис у синьо-білій техниці доухай.',        price:'₴ 720',  bg:'#DDE3EB',badge:'limited'}
+    ]
+  },
+  boards: {
+    filters: [
+      {key:'all',label:'Всі'},{key:'bamboo',label:'Бамбук'},
+      {key:'wood',label:'Дерево'},{key:'stone',label:'Камінь'}
+    ],
+    products: [
+      {name:'Дошка бамбукова S',     cat:'bamboo',region:'Китай',  desc:'Компактна, 25×15 см. З дренажним відсіком та шлангом.',  price:'₴ 480',  bg:'#D8D4C4',badge:null},
+      {name:'Дошка бамбукова L',     cat:'bamboo',region:'Китай',  desc:'Простора, 40×25 см. Виїмка для чайника посередині.',    price:'₴ 720',  bg:'#D0CDB8',badge:null},
+      {name:'Дошка горіхова',        cat:'wood',  region:'Тайвань',desc:'Волоський горіх, масло тунгу. Темна і тепла.',          price:'₴ 1 200',bg:'#C0AE98',badge:'new'},
+      {name:'Дошка дубова',          cat:'wood',  region:'Тайвань',desc:'Дуб з широкими річними кільцями, стійкий до вологи.',   price:'₴ 1 050',bg:'#C8B8A0',badge:null},
+      {name:'Дошка кам\'яна сланець',cat:'stone', region:'Китай',  desc:'Натуральний сланець, 30×20 см. Стійкий до температур.',price:'₴ 1 600',bg:'#B8BCB8',badge:'limited'},
+      {name:'Дошка мармурова',       cat:'stone', region:'Китай',  desc:'Білий кара-мармур, 25×16 см. Елегантна поверхня.',      price:'₴ 1 900',bg:'#DDD9D4',badge:'limited'}
+    ]
+  },
+  accessories: {
+    filters: [
+      {key:'all',label:'Всі'},{key:'tools',label:'Інструменти'},
+      {key:'store',label:'Зберігання'},{key:'other',label:'Інше'}
+    ],
+    products: [
+      {name:'Набір ча-дао 6 предметів',cat:'tools',region:'Юньнань',desc:'Щипці, ложка, голка, воронка, кліщі, підставка.',    price:'₴ 680',bg:'#D8D4C8',badge:'new'},
+      {name:'Воронка бамбукова',       cat:'tools',region:'Китай',  desc:'Для засипання листя без розсипу.',                   price:'₴ 120',bg:'#D0CCBA',badge:null},
+      {name:'Ча-пе',                   cat:'tools',region:'Тайвань',desc:'Бамбукова лопатка для виймання листя з пакування.',  price:'₴ 90', bg:'#D4D0C4',badge:null},
+      {name:'Каністра для чаю 100г',   cat:'store',region:'Тайвань',desc:'Алюміній з силіконовим ущільнювачем. Матова чорна.', price:'₴ 320',bg:'#C8C4BC',badge:null}
+    ]
+  }
+};
+
+let currentSection = 'tea';
+let activeFilters = [];
+
+function renderFilters() {
+  const container = document.getElementById('filterPills');
+  container.innerHTML = SECTIONS[currentSection].filters.map(f => {
+    const isAll = f.key === 'all';
+    const active = isAll ? activeFilters.length === 0 : activeFilters.includes(f.key);
+    return `<button class="filter-pill${active ? ' active' : ''}" data-filter="${f.key}" onclick="filterSwitch(this)">${f.label}</button>`;
+  }).join('');
+}
+
+function renderCards() {
+  const { products } = SECTIONS[currentSection];
+  const grid = document.getElementById('productsGrid');
+  const empty = document.getElementById('emptyState');
+  const visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
+
+  const n = visible.length;
+  const lastTwo = n % 100;
+  const lastOne = n % 10;
+  let word;
+  if (lastTwo >= 11 && lastTwo <= 19) word = ' товарів';
+  else if (lastOne === 1) word = ' товар';
+  else if (lastOne >= 2 && lastOne <= 4) word = ' товари';
+  else word = ' товарів';
+  document.getElementById('resultCount').textContent = n + word;
+
+  if (!visible.length) { grid.innerHTML = ''; empty.classList.add('visible'); return; }
+  empty.classList.remove('visible');
+
+  grid.innerHTML = visible.map((p, i) => `
+    <div class="product-card" style="transition-delay:${i * 0.04}s">
+      <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
+        <div class="product-region">${p.region}</div>
+        <div class="product-wish" onclick="toggleWish(this)"><i class="hgi-stroke hgi-favourite"></i></div>
+        ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
+        ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
+      </div>
+      <div class="product-body">
+        <h4>${p.name}</h4>
+        <p class="product-desc">${p.desc}</p>
+        <div class="product-footer">
+          <span class="product-price">${p.price}</span>
+          <button class="btn-add" onclick="addToCart('${p.name.replace(/'/g,"\\'")}',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Trigger animation: two rAF frames so browser paints initial opacity:0 first
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    grid.querySelectorAll('.product-card').forEach(c => c.classList.add('show'));
+  }));
+}
+
+function toggleCatDropdown() {
+  document.getElementById('catDropdown').classList.toggle('open');
+}
+function selectCategory(el) {
+  // Оновити активний пункт
+  document.querySelectorAll('.cat-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  // Оновити лейбл тригера
+  document.getElementById('catLabel').textContent = el.textContent;
+  // Закрити меню
+  document.getElementById('catDropdown').classList.remove('open');
+  // Перемкнути секцію
+  currentSection = el.dataset.section;
+  activeFilters = [];
+  renderFilters();
+  renderCards();
+}
+// Закрити dropdown при кліку поза ним
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('catDropdown');
+  if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+});
+
+function filterSwitch(el) {
+  const key = el.dataset.filter;
+  // Single-select: просто встановлюємо один активний фільтр
+  activeFilters = key === 'all' ? [] : [key];
+  renderFilters();
+  renderCards();
+}
+
+function toggleWish(el) {
+  el.classList.toggle('liked');
+  el.style.color = el.classList.contains('liked') ? 'var(--terra)' : '';
+}
+
+function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')||'[]'); } catch(e) { return []; } }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
+function updateCartBadge() {
+  const b = document.getElementById('cartBadge'); if (!b) return;
+  const t = getCart().reduce((s,i)=>s+i.qty,0);
+  if (t > 0) { b.textContent = t; b.classList.add('visible'); } else b.classList.remove('visible');
+}
+function addToCart(name, btn) {
+  const cart = getCart(); const ex = cart.find(i=>i.name===name);
+  if (ex) ex.qty++; else cart.push({name,qty:1});
+  saveCart(cart); updateCartBadge();
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> Додано';
+  btn.style.background = 'var(--green-800)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1200);
+}
+function goToCart() { window.location.href = 'sol-cart.html'; }
+
+function toggleMobileMenu() {
+  const m = document.getElementById('mobileMenu'), o = document.getElementById('mobileMenuOverlay');
+  const open = m.classList.contains('open');
+  m.classList.toggle('open',!open); o.classList.toggle('open',!open);
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+function toggleProfile() {
+  const p = document.getElementById('profilePanel'), o = document.getElementById('profileOverlay');
+  const open = p.classList.contains('open');
+  p.classList.toggle('open',!open); o.classList.toggle('open',!open);
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
+    document.body.style.overflow = '';
+  }
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+});
+
+renderFilters();
+renderCards();
+updateCartBadge();
+</script>
+</body>
+</html>
