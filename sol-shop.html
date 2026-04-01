@@ -199,20 +199,18 @@
   .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); }
 
   /* MOBILE MENU */
-  .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .mobile-menu-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
   .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
-  .mobile-menu { position: fixed; top: 0; left: 0; bottom: 0; z-index: 201; width: 300px; background: var(--cream-bright); transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; }
-  .mobile-menu.open { transform: translateX(0); }
-  .mm-header { padding: 24px 20px; display: flex; align-items: center; justify-content: space-between; }
-  .mm-header svg { height: 36px; width: auto; }
-  .mm-close { background: var(--sand); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); }
-  .mm-close:hover { background: var(--gray-100); }
-  .mm-nav { padding: 8px 12px; flex: 1; }
-  .mm-item { display: flex; align-items: center; padding: 16px; border-radius: 14px; text-decoration: none; color: var(--black); transition: background 0.2s; }
-  .mm-item:hover { background: var(--cream); }
-  .mm-item-title { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 500; }
-  .mm-footer { padding: 20px 24px 36px; }
-  .mm-footer-text { font-size: 12px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; }
+  .mobile-menu { position: fixed; top: 76px; right: 16px; z-index: 201; width: 240px; background: var(--sand); border-radius: 20px; padding: 8px; box-shadow: 0 8px 32px rgba(28,26,20,0.14); transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; font-family: 'DM Sans', sans-serif; }
+  .mobile-menu.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .mm-header { display: none; }
+  .mm-nav { display: flex; flex-direction: column; gap: 4px; }
+  .mm-item { display: flex; align-items: center; padding: 12px 18px; border-radius: 40px; text-decoration: none; color: var(--gray-800); transition: background 0.15s; }
+  .mm-item:hover { background: var(--gray-100); }
+  .mm-item.active { background: var(--green-800); color: var(--cream-bright); }
+  .mm-item-title { font-size: 14px; font-weight: 500; }
+  .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
+  .mm-footer-text { font-size: 11px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; padding: 8px 0; }
 
   /* PROFILE PANEL */
   .profile-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -244,16 +242,25 @@
   /* MOBILE */
   @media (max-width: 768px) {
     .burger-btn { display: flex; }
-    .nav-links, .nav-search, .nav-spacer, .nav-faq { display: none; }
-    nav { padding: 0 20px; height: 68px; }
-    .page-wrap { padding: 0 24px; }
-    .shop-header { padding-top: 100px; }
-    .section-tabs { flex-wrap: wrap; }
-    .filter-bar { flex-wrap: wrap; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .nav-links, .nav-search, .nav-spacer, .nav-faq, .nav-right { display: none; }
+    nav { padding: 0 20px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .page-wrap { padding: 0 20px; }
+    .shop-header { padding-top: 96px; padding-bottom: 24px; }
+    .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
+    .section-tabs { flex-wrap: wrap; gap: 8px; }
+    .filter-bar { flex-wrap: wrap; gap: 8px; padding-bottom: 24px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
+    .product-card { display: flex; flex-direction: column; }
+    .product-img { aspect-ratio: 5/4; height: auto; }
+    .product-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+    .product-body h4 { font-size: 13px; }
+    .product-desc { font-size: 11px; margin-bottom: 8px; flex: 1; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+    .product-footer { margin-top: auto; }
+    .product-price { font-size: 15px; }
+    .btn-add { padding: 7px 10px; font-size: 11px; gap: 5px; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
-    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
     .scroll-top { bottom: 20px; right: 20px; }
   }
   @media (min-width: 769px) and (max-width: 1100px) {
@@ -274,7 +281,8 @@
   <div class="nav-spacer"></div>
   <div class="nav-right">
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
-    <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge">0</span></button>
+    <button class="nav-icon-btn" title="Вподобані" onclick="toggleWishlist()"><i class="hgi-stroke hgi-favourite"></i></button>
+    <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
     <button class="nav-icon-btn nav-faq" title="FAQ"><i class="hgi-stroke hgi-help-circle"></i></button>
   </div>
   <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
@@ -345,8 +353,10 @@
 
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
-  <div class="mm-header"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705Z" fill="#226F54"/></svg><button class="mm-close" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-cancel-01"></i></button></div>
-  <div class="mm-nav"><a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a><a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a></div>
+  <div class="mm-nav">
+    <a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="sol-shop.html" class="mm-item active"><span class="mm-item-title">Магазин</span></a>
+  </div>
   <div class="mm-footer"><p class="mm-footer-text">© 2025 Söl Tea</p></div>
 </div>
 
@@ -551,11 +561,14 @@ function addToCart(name, btn) {
 }
 function goToCart() { window.location.href = 'sol-cart.html'; }
 
+function toggleWishlist() {
+  // wishlist panel — буде реалізовано пізніше
+}
+
 function toggleMobileMenu() {
   const m = document.getElementById('mobileMenu'), o = document.getElementById('mobileMenuOverlay');
   const open = m.classList.contains('open');
   m.classList.toggle('open',!open); o.classList.toggle('open',!open);
-  document.body.style.overflow = open ? '' : 'hidden';
 }
 function toggleProfile() {
   const p = document.getElementById('profilePanel'), o = document.getElementById('profileOverlay');
