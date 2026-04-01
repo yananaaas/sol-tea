@@ -239,19 +239,35 @@
   .pp-logout:hover { background: rgba(232,74,46,0.07); }
   .pp-logout .pp-item-icon { background: rgba(232,74,46,0.1); color: #E84A2E; }
 
+  /* MOBILE SEARCH OVERLAY */
+  .nav-search-mobile-shop { display: none; }
+  .mobile-search-overlay { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 16px; box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
+  .mobile-search-overlay.open { display: flex; }
+  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--sand); border-radius: 40px; padding: 12px 18px; }
+  .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
+  .mobile-search-input::placeholder { color: var(--gray-500); }
+
   /* MOBILE */
   @media (max-width: 768px) {
     .burger-btn { display: flex; }
-    .nav-links, .nav-search, .nav-spacer, .nav-faq, .nav-right { display: none; }
-    nav { padding: 0 20px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    nav { padding: 0 16px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .nav-spacer { display: none; }
+    .nav-right { display: flex; align-items: center; gap: 0; }
+    .nav-faq { display: none; }
+    .nav-search-mobile-shop { display: flex; }
     .page-wrap { padding: 0 20px; }
     .shop-header { padding-top: 96px; padding-bottom: 24px; }
     .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
     .section-tabs { flex-wrap: wrap; gap: 8px; }
-    .filter-bar { flex-wrap: wrap; gap: 8px; padding-bottom: 24px; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
+    .filter-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding-bottom: 24px; }
+    .filter-pills { flex-wrap: wrap; gap: 8px; }
+    .cat-trigger { padding: 12px 20px; font-size: 14px; }
+    .filter-pill { padding: 12px 18px; font-size: 13px; }
+    .products-grid { grid-template-columns: 1fr; gap: 16px; }
+    .product-img { aspect-ratio: 4/3; height: auto; }
     .product-card { display: flex; flex-direction: column; }
-    .product-img { aspect-ratio: 5/4; height: auto; }
     .product-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
     .product-body h4 { font-size: 13px; }
     .product-desc { font-size: 11px; margin-bottom: 8px; flex: 1; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
@@ -261,6 +277,8 @@
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .footer-newsletter { max-width: 280px; }
+    .newsletter-input { width: auto; max-width: 160px; }
     .scroll-top { bottom: 20px; right: 20px; }
   }
   @media (min-width: 769px) and (max-width: 1100px) {
@@ -280,6 +298,7 @@
   <div class="nav-search"><i class="hgi-stroke hgi-search-01"></i><span>Пошук чаю, інгредієнтів...</span></div>
   <div class="nav-spacer"></div>
   <div class="nav-right">
+    <button class="nav-icon-btn nav-search-mobile-shop" title="Пошук" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
     <button class="nav-icon-btn" title="Вподобані" onclick="toggleWishlist()"><i class="hgi-stroke hgi-favourite"></i></button>
     <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
@@ -287,6 +306,14 @@
   </div>
   <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
 </nav>
+
+<!-- MOBILE SEARCH OVERLAY -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+  <div class="mobile-search-inner">
+    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input">
+    <button class="nav-icon-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+</div>
 
 <div class="page-wrap">
   <div class="shop-header anim-h">
@@ -314,15 +341,7 @@
   <div class="products-grid" id="productsGrid"></div>
   <div class="empty-state" id="emptyState">Товарів за обраними фільтрами не знайдено</div>
 
-  <div class="pagination">
-    <button class="page-btn"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
-    <button class="page-btn active">1</button>
-    <button class="page-btn">2</button>
-    <button class="page-btn">3</button>
-    <span class="page-dots">···</span>
-    <button class="page-btn">7</button>
-    <button class="page-btn"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
-  </div>
+  <div class="pagination" id="paginationContainer"></div>
 </div>
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
@@ -454,6 +473,8 @@ const SECTIONS = {
 
 let currentSection = 'tea';
 let activeFilters = [];
+let currentPage = 1;
+const ITEMS_PER_PAGE = 8;
 
 function renderFilters() {
   const container = document.getElementById('filterPills');
@@ -480,10 +501,15 @@ function renderCards() {
   else word = ' товарів';
   document.getElementById('resultCount').textContent = n + word;
 
-  if (!visible.length) { grid.innerHTML = ''; empty.classList.add('visible'); return; }
+  if (!visible.length) { grid.innerHTML = ''; empty.classList.add('visible'); renderPagination(0); return; }
   empty.classList.remove('visible');
 
-  grid.innerHTML = visible.map((p, i) => `
+  const totalPages = Math.ceil(visible.length / ITEMS_PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const pageItems = visible.slice(start, start + ITEMS_PER_PAGE);
+
+  grid.innerHTML = pageItems.map((p, i) => `
     <div class="product-card" style="transition-delay:${i * 0.04}s">
       <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
         <div class="product-region">${p.region}</div>
@@ -505,6 +531,43 @@ function renderCards() {
   requestAnimationFrame(() => requestAnimationFrame(() => {
     grid.querySelectorAll('.product-card').forEach(c => c.classList.add('show'));
   }));
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const container = document.getElementById('paginationContainer');
+  if (!container) return;
+  if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+  let html = '';
+  html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    if (totalPages > 5 && i > 3 && i < totalPages) {
+      if (i === 4) html += '<span class="page-dots">···</span>';
+      continue;
+    }
+    html += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+  }
+
+  html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
+
+  if (currentPage === totalPages) {
+    html += '<p style="width:100%;text-align:center;color:var(--gray-500);font-size:14px;padding-top:8px;">Більше товарів немає</p>';
+  }
+
+  container.innerHTML = html;
+}
+
+function goToPage(page) {
+  const { products } = SECTIONS[currentSection];
+  const visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
+  const totalPages = Math.ceil(visible.length / ITEMS_PER_PAGE);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderCards();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function toggleCatDropdown() {
@@ -521,6 +584,7 @@ function selectCategory(el) {
   // Перемкнути секцію
   currentSection = el.dataset.section;
   activeFilters = [];
+  currentPage = 1;
   renderFilters();
   renderCards();
 }
@@ -534,6 +598,7 @@ function filterSwitch(el) {
   const key = el.dataset.filter;
   // Single-select: просто встановлюємо один активний фільтр
   activeFilters = key === 'all' ? [] : [key];
+  currentPage = 1;
   renderFilters();
   renderCards();
 }
@@ -565,6 +630,14 @@ function toggleWishlist() {
   // wishlist panel — буде реалізовано пізніше
 }
 
+function openMobileSearch() {
+  document.getElementById('mobileSearchOverlay').classList.add('open');
+  document.querySelector('.mobile-search-input').focus();
+}
+function closeMobileSearch() {
+  document.getElementById('mobileSearchOverlay').classList.remove('open');
+}
+
 function toggleMobileMenu() {
   const m = document.getElementById('mobileMenu'), o = document.getElementById('mobileMenuOverlay');
   const open = m.classList.contains('open');
@@ -578,7 +651,7 @@ function toggleProfile() {
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
+    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay','mobileSearchOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
     document.body.style.overflow = '';
   }
 });

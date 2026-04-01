@@ -294,7 +294,7 @@
   .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
 
   .mobile-menu {
-    position: fixed; top: 80px; right: 16px; z-index: 201;
+    position: fixed; top: 68px; right: 16px; z-index: 201;
     width: 240px; background: var(--sand);
     border-radius: 20px;
     padding: 8px;
@@ -317,27 +317,29 @@
   .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
   .mm-footer-text { font-size: 11px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; padding: 8px 0; }
 
+  /* MOBILE SEARCH OVERLAY */
+  .nav-search-mobile { display: none; }
+  .mobile-search-overlay { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 16px; box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
+  .mobile-search-overlay.open { display: flex; }
+  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--sand); border-radius: 40px; padding: 12px 18px; }
+  .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
+  .mobile-search-input::placeholder { color: var(--gray-500); }
+
   @media (max-width: 768px) {
     .burger-btn { display: flex; flex-shrink: 0; }
     .nav-links { display: none; }
-    .nav-search { display: flex; min-width: 0; margin: 0; max-width: none; border-radius: 40px; padding: 14px 18px; align-items: center; overflow: hidden; }
-    .nav-search span { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--gray-800); }
-    .nav-search i { font-size: 18px; }
     .nav-spacer { display: none; }
     .nav-faq { display: none; }
-    .nav-right { display: none; }
-  }
 
-  /* MOBILE */
-  @media (max-width: 768px) {
     /* NAV */
-    nav { padding: 0 16px; gap: 10px; height: 68px; align-items: center; display: grid; grid-template-columns: auto 1fr auto; }
-    .nav-links { display: none; }
-    .nav-search { flex-shrink: 1; width: auto; }
+    nav { padding: 0 16px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-search { display: none; }
+    .nav-right { display: flex; align-items: center; gap: 0; }
+    .nav-search-mobile { display: flex; }
 
     /* HERO */
     .hero { padding: 8px; margin-top: 68px; }
-    .hero-inner { height: auto; min-height: unset; aspect-ratio: unset; min-height: 380px; display: flex; align-items: center; padding: 40px 32px; box-sizing: border-box; overflow: visible; }
+    .hero-inner { height: calc(100svh - 68px - 16px); min-height: 500px; aspect-ratio: unset; display: flex; align-items: flex-end; padding: 32px; box-sizing: border-box; overflow: hidden; }
     .hero-content { position: relative; top: auto; left: auto; transform: none; padding: 0; max-width: 100%; width: 100%; }
     .hero-title { font-size: 38px; }
     .mobile-br { display: block; }
@@ -349,8 +351,8 @@
     .about-image { height: auto; min-height: unset; aspect-ratio: 1; width: 100%; }
 
     /* STATS */
-    .stats { padding: 40px 24px 24px; }
-    .stats-inner { grid-template-columns: 1fr; gap: 12px; }
+    .stats { padding: 80px 24px 24px; }
+    .stats-inner { grid-template-columns: 1fr; gap: 24px; }
     .stat-card { padding: 24px; gap: 0; }
     .stat-number { font-size: clamp(64px, 18vw, 96px); margin-bottom: 10px; }
     .stat-label { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
@@ -364,7 +366,7 @@
 
     /* BESTSELLERS */
     .bestsellers { padding: 60px 24px; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: stretch; }
+    .products-grid { grid-template-columns: 1fr; gap: 16px; align-items: stretch; }
     .product-card { display: flex; flex-direction: column; height: 100%; }
     .product-img { height: auto; aspect-ratio: 5/4; }
     .product-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
@@ -388,10 +390,11 @@
     /* TESTIMONIALS */
     .testimonials { padding: 60px 0; }
 
-
     /* FOOTER */
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-newsletter { max-width: 280px; }
+    .newsletter-input { width: auto; max-width: 160px; }
   }
 </style>
 </head>
@@ -416,6 +419,7 @@
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-right">
+    <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
     <button class="nav-icon-btn" title="Вподобані" onclick="toggleWishlist()"><i class="hgi-stroke hgi-favourite"></i></button>
     <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
@@ -423,6 +427,14 @@
   </div>
   <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
 </nav>
+
+<!-- MOBILE SEARCH OVERLAY -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+  <div class="mobile-search-inner">
+    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input">
+    <button class="nav-icon-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -898,6 +910,14 @@ const scrollObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.fade-up').forEach(el => scrollObserver.observe(el));
 
+function openMobileSearch() {
+  document.getElementById('mobileSearchOverlay').classList.add('open');
+  document.querySelector('.mobile-search-input').focus();
+}
+function closeMobileSearch() {
+  document.getElementById('mobileSearchOverlay').classList.remove('open');
+}
+
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('mobileMenuOverlay');
@@ -952,6 +972,7 @@ document.addEventListener('keydown', function(e) {
     document.getElementById('profileOverlay').classList.remove('open');
     document.getElementById('mobileMenu').classList.remove('open');
     document.getElementById('mobileMenuOverlay').classList.remove('open');
+    document.getElementById('mobileSearchOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
 });
