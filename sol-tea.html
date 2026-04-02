@@ -121,12 +121,12 @@
   .about-image { background: var(--sand); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; min-height: 400px; }
 
   /* STATS */
-  .stats { background: var(--green-800); padding: 60px 48px 32px; }
+  .stats { background: var(--cream); padding: 60px 48px 32px; }
   .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .stat-card { background: rgba(253,252,249,0.07); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 12px; }
-  .stat-number { font-family: 'Inter', sans-serif; font-size: clamp(52px, 5.5vw, 80px); font-weight: 900; color: var(--green-500); line-height: 1; letter-spacing: -0.04em; }
-  .stat-label { font-size: 16px; font-weight: 500; color: var(--cream-bright); line-height: 1.4; }
-  .stat-sub { font-size: 13px; color: rgba(253,252,249,0.45); }
+  .stat-card { background: var(--sand); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 12px; }
+  .stat-number { font-family: 'Inter', sans-serif; font-size: clamp(52px, 5.5vw, 80px); font-weight: 900; color: var(--green-800); line-height: 1; letter-spacing: -0.04em; }
+  .stat-label { font-size: 16px; font-weight: 500; color: var(--black); line-height: 1.4; }
+  .stat-sub { font-size: 13px; color: var(--gray-500); }
 
   /* COLLECTIONS */
   .collections { background: var(--green-800); padding: 40px 48px 100px; }
@@ -177,31 +177,7 @@
   .ritual-card p { font-size: 13px; color: rgba(253,252,249,0.7); line-height: 1.6; }
 
   /* TESTIMONIALS */
-  .testimonials { background: var(--green-500); padding: 120px 0; overflow: hidden; }
-  .testimonials-header { padding: 0 48px; margin-bottom: 48px; display: flex; align-items: center; gap: 24px; }
-  .testimonials-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3vw, 44px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
-
-  /* Avatar stack */
-  .avatar-stack { display: flex; align-items: center; }
-  .avatar-stack-item {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--green-800);
-    border: 3px solid var(--green-500);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800;
-    color: var(--cream-bright);
-    margin-left: -12px;
-    animation: avatarPulse 3s ease-in-out infinite;
-  }
-  .avatar-stack-item:first-child { margin-left: 0; animation-delay: 0s; }
-  .avatar-stack-item:nth-child(2) { animation-delay: 0.4s; }
-  .avatar-stack-item:nth-child(3) { animation-delay: 0.8s; }
-  .avatar-stack-item:nth-child(4) { animation-delay: 1.2s; }
-  .avatar-stack-item:nth-child(5) { background: var(--black); animation-delay: 1.6s; font-size: 11px; }
-  @keyframes avatarPulse {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
+  .testimonials { background: var(--cream); padding: 120px 0; overflow: hidden; }
 
   .testimonials-track-wrap { overflow: hidden; }
   .testimonials-track { display: flex; gap: 24px; width: max-content; animation: marquee 32s linear infinite; }
@@ -331,7 +307,6 @@
   .mm-header svg { height: 36px; width: auto; }
   .mm-close { background: var(--sand); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); transition: background 0.2s; }
   .mm-close:hover { background: var(--gray-100); }
-
   .mm-nav { padding: 8px 12px; flex: 1; }
   .mm-item { display: flex; align-items: center; gap: 16px; padding: 16px 16px; border-radius: 14px; text-decoration: none; color: var(--black); transition: background 0.2s; }
   .mm-item:hover { background: var(--cream); }
@@ -342,19 +317,19 @@
 
   /* MOBILE */
   @media (max-width: 768px) {
-    nav { padding: 0 16px; gap: 4px; height: 72px; justify-content: space-between; }
+    nav { padding: 0 16px; gap: 4px; height: 72px; }
     .nav-links { display: none; }
     .nav-search { display: none; }
     .nav-spacer { display: none; }
     .nav-faq { display: none; }
     .nav-search-mobile { display: flex; }
-    .nav-right { gap: 0; }
+    .nav-right { gap: 0; margin-left: auto; }
     .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
     .burger-btn { display: flex; }
     .search-overlay { top: 72px; padding: 12px 16px; }
     .hero { padding: 8px; margin-top: 72px; }
     .hero-inner { height: calc(100svh - 72px - 16px); min-height: 500px; }
-    .hero-content { padding: 0 28px; max-width: 100%; }
+    .hero-content { top: auto; bottom: 0; transform: none; padding: 32px 28px; width: 100%; max-width: 100%; }
     .hero-title { font-size: 38px; }
     .about-section { padding: 60px 24px; }
     .about-row { grid-template-columns: 1fr; gap: 40px; margin-bottom: 80px; }
@@ -366,19 +341,20 @@
     .collections-grid { grid-template-columns: 1fr; gap: 24px; }
     .collections-header { flex-direction: column; align-items: flex-start; gap: 16px; }
     .bestsellers { padding: 80px 24px; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .products-grid { grid-template-columns: 1fr; gap: 16px; }
     .product-img { height: auto; aspect-ratio: 3/2; }
-    .product-body { padding: 12px; }
+    .product-body { padding: 16px; }
     .product-body h4 { font-size: 15px; }
     .product-desc { font-size: 13px; }
-    .btn-add { padding: 12px 18px; font-size: 14px; }
+    .btn-add { padding: 14px 28px; font-size: 15px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
     .ritual-bottom-inner { grid-template-columns: 1fr; }
-    .testimonials { padding: 80px 0; }
-    .testimonials-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .ritual-card-photo { opacity: 0; }
+    .ritual-card-content { opacity: 1; }
+    .testimonials { padding: 60px 0; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
@@ -652,16 +628,6 @@
 
 <!-- TESTIMONIALS -->
 <section class="testimonials">
-  <div class="testimonials-header">
-    <h2>Що кажуть наші?</h2>
-    <div class="avatar-stack">
-      <div class="avatar-stack-item">ОК</div>
-      <div class="avatar-stack-item">МД</div>
-      <div class="avatar-stack-item">МР</div>
-      <div class="avatar-stack-item">АП</div>
-      <div class="avatar-stack-item">+80</div>
-    </div>
-  </div>
   <div class="testimonials-track-wrap">
     <div class="testimonials-track">
       <div class="testimonial">
@@ -800,12 +766,10 @@
     </svg>
     <button class="mm-close" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
-
   <div class="mm-nav">
-    <a href="#" class="mm-item"><span class="mm-item-title">Про нас</span></a>
-    <a href="#" class="mm-item"><span class="mm-item-title">Магазин</span></a>
+    <a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a>
   </div>
-
   <div class="mm-footer">
     <p class="mm-footer-text">© 2025 Söl Tea</p>
   </div>
