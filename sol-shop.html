@@ -146,7 +146,7 @@
   .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; position: relative; z-index: 1; }
   .product-img { height: 200px; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
   .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
-  .product-wish { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: var(--gray-300); transition: color 0.2s; line-height: 1; }
+  .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
   .product-wish:hover { color: var(--terra); }
   .product-wish.liked { color: var(--terra); }
   .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -243,9 +243,12 @@
   .nav-search-mobile-shop { display: none; }
   .mobile-search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 48px; box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
   .mobile-search-overlay.open { display: flex; }
-  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; }
-  .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
+  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; border: 1.5px solid transparent; transition: border-color 0.2s; }
+  .mobile-search-inner:focus-within { border-color: var(--green-800); }
+  .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
   .mobile-search-input::placeholder { color: var(--gray-500); }
+  .search-clear-btn { opacity: 0; pointer-events: none; transition: opacity 0.15s; }
+  .search-clear-btn.visible { opacity: 1; pointer-events: all; }
 
   /* MOBILE */
   @media (max-width: 768px) {
@@ -312,8 +315,8 @@
 <!-- MOBILE SEARCH OVERLAY -->
 <div class="mobile-search-overlay" id="mobileSearchOverlay">
   <div class="mobile-search-inner">
-    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input" id="mobileSearchInput" oninput="onSearchInput(this.value)">
-    <button class="nav-icon-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input" id="mobileSearchInput" oninput="onSearchInput(this.value); document.getElementById('shopClearBtn').classList.toggle('visible', this.value.length > 0)">
+    <button class="nav-icon-btn search-clear-btn" id="shopClearBtn" onclick="document.getElementById('mobileSearchInput').value=''; onSearchInput(''); this.classList.remove('visible')"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
 </div>
 
@@ -418,10 +421,14 @@ const SECTIONS = {
       {name:'Цзінь Сюань',      cat:'oolong',  region:'Тайвань', desc:'Молочний, вершковий. Гірські плантації Тайваню.',                 price:'₴ 520',  bg:'#DDE4D5', badge:'new'},
       {name:'Лао Шу Пуер',      cat:'puer',    region:'Юньнань', desc:'Зі старих дерев, глибокий і складний. Рідкісний.',               price:'₴ 1 200',bg:'#E0D9CE', badge:null},
       {name:'Дун Дін',          cat:'oolong',  region:'Тайвань', desc:'Флоральний, легко смажений. Класика тайванського улуну.',         price:'₴ 610',  bg:'#EBE5D8', badge:null},
-      {name:'Шуй Сянь',         cat:'oolong',  region:'Фуцзянь', desc:'Квіти нарциса, тютюн. Витриманий скельний улун.',                price:'₴ 850',  bg:'#D8E0D5', badge:'limited'},
       {name:'Бін Ча 2021',      cat:'puer',    region:'Юньнань', desc:'Пресований млинець, гори Менхай. Молодий і живий.',              price:'₴ 780',  bg:'#E2DBD0', badge:'new'},
       {name:'Бай Хао Улун',     cat:'oolong',  region:'Тайвань', desc:'Мускатний виноград, мед. Орієнтальний красень Тайваню.',         price:'₴ 960',  bg:'#E6E0D2', badge:null},
-      {name:'Весняний Збір 2026',cat:'seasonal',region:'Фуцзянь', desc:'Перший зрив, гора Уї. Лише 12 кг. Ніжний і яскравий.',         price:'₴ 1 100',bg:'#DAD4C8', badge:'limited'}
+      {name:'Менхай Шу 2015',   cat:'puer',    region:'Юньнань', desc:'Витриманий шу з фабрики Менхай. Темний, насичений, без гіркоти.',price:'₴ 1 050',bg:'#D0CAC0', badge:null},
+      {name:'Іу Гу Шу',         cat:'puer',    region:'Юньнань', desc:'Шен зі столітніх дерев Іу. Глибокий, смоляний, складний.',      price:'₴ 1 450',bg:'#C8C2B8', badge:'limited'},
+      {name:'Весняний Збір 2026',cat:'seasonal',region:'Фуцзянь', desc:'Перший зрив, гора Уї. Лише 12 кг. Ніжний і яскравий.',         price:'₴ 1 100',bg:'#DAD4C8', badge:'limited'},
+      {name:'Осінній Фенхуан 2025',cat:'seasonal',region:'Гуандун',desc:'Осінній зрив Да Хун Пао. Димний, мінеральний, тривале послясмаччя.',price:'₴ 920',bg:'#D4CEC4', badge:'limited'},
+      {name:'Набір "Знайомство"',cat:'sets',   region:'Різні',   desc:'5 сортів по 20 г: улун, пуер, сезонне. Ідеально для початку.',  price:'₴ 680',  bg:'#DDD8CC', badge:'new'},
+      {name:'Набір "Пуер"',      cat:'sets',   region:'Юньнань', desc:'Шен 2019, Шу старий, Бін Ча 2021 та Іу Гу Шу. По 25 г.',       price:'₴ 1 200',bg:'#D0CBC0', badge:null}
     ]
   },
   teaware: {
@@ -547,15 +554,20 @@ function renderPagination(totalPages) {
   if (!container) return;
   if (totalPages <= 1) { container.innerHTML = ''; return; }
 
+  // Build set of pages to always show: 1, last, currentPage ±1
+  const show = new Set([1, totalPages, currentPage]);
+  if (currentPage > 1) show.add(currentPage - 1);
+  if (currentPage < totalPages) show.add(currentPage + 1);
+  const sorted = [...show].sort((a, b) => a - b);
+
   let html = '';
   html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
 
-  for (let i = 1; i <= totalPages; i++) {
-    if (totalPages > 5 && i > 3 && i < totalPages) {
-      if (i === 4) html += '<span class="page-dots">···</span>';
-      continue;
-    }
-    html += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) html += '<span class="page-dots">···</span>';
+    html += `<button class="page-btn${p === currentPage ? ' active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+    prev = p;
   }
 
   html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;

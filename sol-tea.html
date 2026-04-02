@@ -150,6 +150,12 @@
   .product-card:hover { transform: translateY(-6px); }
   .product-img { height: 200px; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
   .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+  .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
+  .product-wish:hover { color: var(--terra); }
+  .product-wish.liked { color: var(--terra); }
+  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
   .product-body { padding: 20px; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
@@ -282,10 +288,13 @@
   /* SEARCH OVERLAY */
   .search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 48px; box-shadow: 0 4px 20px rgba(28,26,20,0.08); }
   .search-overlay.open { display: flex; }
-  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; }
+  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; border: 1.5px solid transparent; transition: border-color 0.2s; }
+  .search-overlay-inner:focus-within { border-color: var(--green-800); }
   .search-overlay-inner > i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
   .search-overlay-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
   .search-overlay-input::placeholder { color: var(--gray-500); }
+  .search-clear-btn { opacity: 0; pointer-events: none; transition: opacity 0.15s; }
+  .search-clear-btn.visible { opacity: 1; pointer-events: all; }
 
   /* BURGER MENU */
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
@@ -328,6 +337,7 @@
     .burger-btn { display: flex; }
     .mobile-menu { top: 76px; }
     .search-overlay { top: 72px; padding: 12px 16px; }
+    .search-overlay-input { font-size: 16px; }
     .hero { padding: 8px; margin-top: 72px; }
     .hero-inner { height: calc(100svh - 72px - 16px); min-height: 500px; }
     .hero-content { top: auto; bottom: 0; transform: none; padding: 32px 28px; width: 100%; max-width: 100%; }
@@ -344,7 +354,7 @@
     .bestsellers { padding: 80px 24px; }
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
     .product-card { display: flex; flex-direction: column; }
-    .product-img { height: auto; aspect-ratio: 1/1; }
+    .product-img { height: auto; aspect-ratio: 3/2; }
     .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
     .product-body h4 { font-size: 15px; }
     .product-desc { font-size: 13px; }
@@ -358,12 +368,11 @@
     .ritual-bottom { padding: 0 24px 80px; }
     .ritual-bottom-inner { grid-template-columns: 1fr; }
     .ritual-card { min-height: unset; background: var(--sand); }
-    .ritual-card-photo { position: static; opacity: 1; height: 180px; transition: none; }
+    .ritual-card-photo { position: static; opacity: 1; height: auto; aspect-ratio: 1/1; transition: none; }
     .ritual-card-content { position: static; opacity: 1; background: transparent; padding: 20px 24px; justify-content: flex-start; transition: none; gap: 12px; }
     .ritual-card h4 { color: var(--black); }
     .ritual-card p { color: var(--gray-500); }
     .ritual-card .ritual-card-icon { background: var(--green-800); }
-    .ritual-bottom-inner > .ritual-card .ritual-card-photo { height: auto; aspect-ratio: 1/1; }
     .testimonials { padding: 60px 0; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
@@ -405,8 +414,8 @@
 <div class="search-overlay" id="searchOverlay">
   <div class="search-overlay-inner">
     <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" id="searchInput" placeholder="Пошук чаю, інгредієнтів..." class="search-overlay-input" oninput="filterProducts(this.value)">
-    <button class="nav-icon-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <input type="text" id="searchInput" placeholder="Пошук чаю, інгредієнтів..." class="search-overlay-input" oninput="filterProducts(this.value); document.getElementById('searchClearBtn').classList.toggle('visible', this.value.length > 0)">
+    <button class="nav-icon-btn search-clear-btn" id="searchClearBtn" onclick="document.getElementById('searchInput').value=''; filterProducts(''); this.classList.remove('visible')"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
 </div>
 
@@ -417,7 +426,7 @@
       <h1 class="hero-title">Кожна чашка — своя історія</h1>
       <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
       <div class="hero-buttons">
-        <button class="btn-secondary"><i class="hgi-stroke hgi-tea-cup"></i> До колекцій</button>
+        <button class="btn-secondary"><i class="hgi-stroke hgi-leaf-01"></i> До колекцій</button>
         <button class="btn-outline-cream">Наша історія</button>
       </div>
     </div>
@@ -560,7 +569,7 @@
   </div>
   <div class="products-grid">
     <div class="product-card fade-up">
-      <div class="product-img">Фото<span class="product-region">Фуцзянь</span></div>
+      <div class="product-img">Фото<span class="product-region">Фуцзянь</span><button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button></div>
       <div class="product-body">
         <h4>Те Гуань Інь</h4>
         <p class="product-desc">Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.</p>
@@ -568,7 +577,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span></div>
+      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-new">Новинка</div></div>
       <div class="product-body">
         <h4>Шен Пуер 2019</h4>
         <p class="product-desc">Яскравий, терпкий, з потенціалом до витримки. З гір Іу.</p>
@@ -576,7 +585,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1">
-      <div class="product-img">Фото<span class="product-region">Гуандун</span></div>
+      <div class="product-img">Фото<span class="product-region">Гуандун</span><button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-limited">Обмежений</div></div>
       <div class="product-body">
         <h4>Фенхуан Даньцун</h4>
         <p class="product-desc">Персик, медова орхідея. З гір Фенхуан, обмежений збір.</p>
@@ -584,7 +593,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d2">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span></div>
+      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button></div>
       <div class="product-body">
         <h4>Шу Пуер Старий</h4>
         <p class="product-desc">Витриманий шу, м'який і глибокий. Землистий, без гіркоти.</p>
