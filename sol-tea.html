@@ -54,7 +54,7 @@
   .btn-primary:hover i { transform: translateX(7px); }
 
   .btn-secondary { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-secondary i { font-size: 20px; transition: transform 0.2s; }
+  .btn-secondary i { font-size: 20px; transform: translateX(3px); transition: transform 0.2s; margin-right: -4px; }
   .btn-secondary:hover { background: var(--cream-bright); color: var(--green-800); }
   .btn-secondary:hover i { transform: translateX(7px); }
 
@@ -121,7 +121,7 @@
   .about-image { background: var(--sand); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; min-height: 400px; }
 
   /* STATS */
-  .stats { background: var(--cream); padding: 60px 48px 32px; }
+  .stats { background: var(--cream); padding: 80px 48px; }
   .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
   .stat-card { background: var(--sand); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 12px; }
   .stat-number { font-family: 'Inter', sans-serif; font-size: clamp(52px, 5.5vw, 80px); font-weight: 900; color: var(--black); line-height: 1; letter-spacing: -0.04em; }
@@ -129,7 +129,7 @@
   .stat-sub { font-size: 13px; color: var(--gray-500); }
 
   /* COLLECTIONS */
-  .collections { background: var(--green-800); padding: 40px 48px 100px; }
+  .collections { background: var(--green-800); padding: 80px 48px; }
   .collections-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1280px; margin: 0 auto 48px; }
   .collections-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3.5vw, 46px); font-weight: 900; color: var(--cream-bright); line-height: 1.1; letter-spacing: -0.02em; }
   .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1280px; margin: 0 auto; }
@@ -148,7 +148,7 @@
   .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
   .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; transition: transform 0.3s; }
   .product-card:hover { transform: translateY(-6px); }
-  .product-img { height: 200px; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-img { aspect-ratio: 1/1; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
   .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
   .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
   .product-wish:hover { color: var(--terra); }
@@ -160,7 +160,7 @@
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
   .product-footer { display: flex; justify-content: space-between; align-items: center; }
-  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.01em; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
   /* RITUAL — two parts */
   .ritual-top { background: var(--green-800); padding: 120px 48px 80px; }
@@ -288,13 +288,18 @@
   /* SEARCH OVERLAY */
   .search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 48px; box-shadow: 0 4px 20px rgba(28,26,20,0.08); }
   .search-overlay.open { display: flex; }
-  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; border: 1.5px solid transparent; transition: border-color 0.2s; }
-  .search-overlay-inner:focus-within { border-color: var(--green-800); }
-  .search-overlay-inner > i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 10px 18px; }
+  .search-overlay-inner > i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
   .search-overlay-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
   .search-overlay-input::placeholder { color: var(--gray-500); }
   .search-clear-btn { opacity: 0; pointer-events: none; transition: opacity 0.15s; }
   .search-clear-btn.visible { opacity: 1; pointer-events: all; }
+
+  /* NAV inline search (mobile) */
+  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
+  .nav-search-inline i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
+  .nav-search-inline-input::placeholder { color: var(--gray-500); }
 
   /* BURGER MENU */
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
@@ -354,15 +359,16 @@
     .bestsellers { padding: 80px 24px; }
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
     .product-card { display: flex; flex-direction: column; }
-    .product-img { height: auto; aspect-ratio: 3/2; }
     .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
     .product-body h4 { font-size: 15px; }
     .product-desc { font-size: 13px; }
     .btn-add { padding: 14px 28px; font-size: 15px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .hero-content { padding: 32px 28px 60px; }
-    .hero-buttons { justify-content: center; gap: 12px; }
-    .hero-buttons > * { justify-content: center; }
+    .search-overlay { display: none !important; }
+    nav.search-active .nav-right { display: none; }
+    nav.search-active .burger-btn { display: none !important; }
+    nav.search-active .nav-search-inline { display: flex; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
@@ -393,13 +399,18 @@
   </div>
   <ul class="nav-links">
     <li><a href="#">Про нас</a></li>
-    <li><a href="#">Магазин</a></li>
+    <li><a href="sol-shop.html">Магазин</a></li>
   </ul>
   <div class="nav-search" onclick="openSearch()">
     <i class="hgi-stroke hgi-search-01"></i>
     <span>Пошук чаю, інгредієнтів...</span>
   </div>
   <div class="nav-spacer"></div>
+  <div class="nav-search-inline" id="navSearchInline">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="navSearchInput" placeholder="Пошук чаю..." class="nav-search-inline-input" oninput="filterProducts(this.value)">
+    <button class="nav-icon-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
   <div class="nav-right">
     <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
@@ -426,7 +437,7 @@
       <h1 class="hero-title">Кожна чашка — своя історія</h1>
       <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
       <div class="hero-buttons">
-        <button class="btn-secondary"><i class="hgi-stroke hgi-leaf-01"></i> До колекцій</button>
+        <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
         <button class="btn-outline-cream">Наша історія</button>
       </div>
     </div>
@@ -912,12 +923,20 @@ function toggleProfile() {
 }
 
 function openSearch() {
-  document.getElementById('searchOverlay').classList.add('open');
-  document.getElementById('searchInput').focus();
+  if (window.innerWidth <= 768) {
+    document.querySelector('nav').classList.add('search-active');
+    setTimeout(() => document.getElementById('navSearchInput').focus(), 50);
+  } else {
+    document.getElementById('searchOverlay').classList.add('open');
+    document.getElementById('searchInput').focus();
+  }
 }
 function closeSearch() {
+  document.querySelector('nav').classList.remove('search-active');
+  document.getElementById('navSearchInput').value = '';
   document.getElementById('searchOverlay').classList.remove('open');
   document.getElementById('searchInput').value = '';
+  document.getElementById('searchClearBtn').classList.remove('visible');
   filterProducts('');
 }
 function filterProducts(q) {
@@ -932,6 +951,7 @@ function filterProducts(q) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeSearch();
+    document.querySelector('nav').classList.remove('search-active');
     document.getElementById('profilePanel').classList.remove('open');
     document.getElementById('profileOverlay').classList.remove('open');
     document.getElementById('mobileMenu').classList.remove('open');
