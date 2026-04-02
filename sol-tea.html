@@ -40,6 +40,7 @@
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; }
   .nav-icon-btn:hover { background: var(--sand); }
+  .nav-search-mobile { display: none; }
 
   /* SECTION TAG */
   .section-tag { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 10px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
@@ -105,7 +106,7 @@
   .ticker-track { display: flex; gap: 10px; width: max-content; animation: ticker 30s linear infinite; }
   .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .ticker-tag { display: inline-flex; align-items: center; border-radius: 40px; padding: 10px 20px; white-space: nowrap; font-size: 13px; font-weight: 500; flex-shrink: 0; background: var(--sand); color: var(--gray-800); cursor: pointer; transition: background 0.2s, color 0.2s; text-decoration: none; }
+  .ticker-tag { display: inline-flex; align-items: center; border-radius: 40px; padding: 14px 28px; white-space: nowrap; font-size: 15px; font-weight: 500; flex-shrink: 0; background: var(--sand); color: var(--gray-800); cursor: pointer; transition: background 0.2s, color 0.2s; text-decoration: none; }
   .ticker-tag:hover { background: var(--green-800); color: var(--cream-bright); }
 
   /* ABOUT */
@@ -228,10 +229,10 @@
   .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
   .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
   .newsletter-form { display: flex; gap: 8px; }
-  .newsletter-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input { flex: 1; min-width: 180px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
   .newsletter-input::placeholder { color: var(--gray-500); }
   .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
-  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
   .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); }
   .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
   .footer-bottom p { font-size: 12px; color: var(--gray-500); }
@@ -302,6 +303,14 @@
   .hero-buttons { animation: fadeUp 0.5s ease 0.5s both; }
 
 
+  /* SEARCH OVERLAY */
+  .search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 48px; box-shadow: 0 4px 20px rgba(28,26,20,0.08); }
+  .search-overlay.open { display: flex; }
+  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; }
+  .search-overlay-inner > i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .search-overlay-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
+  .search-overlay-input::placeholder { color: var(--gray-500); }
+
   /* BURGER MENU */
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
   .burger-btn:hover { background: var(--sand); }
@@ -331,19 +340,20 @@
   .mm-footer { padding: 20px 24px 36px; }
   .mm-footer-text { font-size: 12px; color: var(--gray-300); font-family: 'DM Sans', sans-serif; }
 
+  /* MOBILE */
   @media (max-width: 768px) {
-    .burger-btn { display: flex; }
+    nav { padding: 0 16px; gap: 4px; height: 72px; justify-content: space-between; }
     .nav-links { display: none; }
     .nav-search { display: none; }
     .nav-spacer { display: none; }
     .nav-faq { display: none; }
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; gap: 12px; height: 68px; }
-    .nav-links { display: none; }
-    .hero { padding: 8px; margin-top: 68px; }
+    .nav-search-mobile { display: flex; }
+    .nav-right { gap: 0; }
+    .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
+    .burger-btn { display: flex; }
+    .search-overlay { top: 72px; padding: 12px 16px; }
+    .hero { padding: 8px; margin-top: 72px; }
+    .hero-inner { height: calc(100svh - 72px - 16px); min-height: 500px; }
     .hero-content { padding: 0 28px; max-width: 100%; }
     .hero-title { font-size: 38px; }
     .about-section { padding: 60px 24px; }
@@ -356,7 +366,12 @@
     .collections-grid { grid-template-columns: 1fr; gap: 24px; }
     .collections-header { flex-direction: column; align-items: flex-start; gap: 16px; }
     .bestsellers { padding: 80px 24px; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .product-img { height: auto; aspect-ratio: 3/2; }
+    .product-body { padding: 12px; }
+    .product-body h4 { font-size: 15px; }
+    .product-desc { font-size: 13px; }
+    .btn-add { padding: 12px 18px; font-size: 14px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
@@ -385,18 +400,29 @@
     <li><a href="#">Про нас</a></li>
     <li><a href="#">Магазин</a></li>
   </ul>
-  <div class="nav-search">
+  <div class="nav-search" onclick="openSearch()">
     <i class="hgi-stroke hgi-search-01"></i>
     <span>Пошук чаю, інгредієнтів...</span>
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-right">
+    <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" title="Вподобані"><i class="hgi-stroke hgi-favourite"></i></button>
     <button class="nav-icon-btn" title="Кошик"><i class="hgi-stroke hgi-shopping-bag-01"></i></button>
     <button class="nav-icon-btn nav-faq" title="FAQ"><i class="hgi-stroke hgi-help-circle"></i></button>
   </div>
   <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
 </nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-overlay-inner">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="searchInput" placeholder="Пошук чаю, інгредієнтів..." class="search-overlay-input" oninput="filterProducts(this.value)">
+    <button class="nav-icon-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -908,8 +934,27 @@ function toggleProfile() {
   document.body.style.overflow = isOpen ? '' : 'hidden';
 }
 
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('open');
+  document.getElementById('searchInput').focus();
+}
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.getElementById('searchInput').value = '';
+  filterProducts('');
+}
+function filterProducts(q) {
+  const query = q.toLowerCase().trim();
+  document.querySelectorAll('.product-card').forEach(card => {
+    const name = (card.querySelector('h4')?.textContent || '').toLowerCase();
+    const desc = (card.querySelector('.product-desc')?.textContent || '').toLowerCase();
+    card.style.display = (!query || name.includes(query) || desc.includes(query)) ? '' : 'none';
+  });
+}
+
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
+    closeSearch();
     document.getElementById('profilePanel').classList.remove('open');
     document.getElementById('profileOverlay').classList.remove('open');
     document.getElementById('mobileMenu').classList.remove('open');
