@@ -351,18 +351,19 @@
     .btn-add { padding: 14px 28px; font-size: 15px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .hero-content { padding: 32px 28px 60px; }
-    .hero-buttons { flex-direction: column; gap: 10px; }
-    .hero-buttons > * { width: 100%; justify-content: center; }
+    .hero-buttons { justify-content: center; gap: 12px; }
+    .hero-buttons > * { justify-content: center; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
     .ritual-bottom-inner { grid-template-columns: 1fr; }
-    .ritual-card { background: var(--sand); }
-    .ritual-card-photo { opacity: 0; }
-    .ritual-card-content { background: transparent; opacity: 1; }
+    .ritual-card { min-height: unset; background: var(--sand); }
+    .ritual-card-photo { position: static; opacity: 1; height: 180px; transition: none; }
+    .ritual-card-content { position: static; opacity: 1; background: transparent; padding: 20px 24px; justify-content: flex-start; transition: none; gap: 12px; }
     .ritual-card h4 { color: var(--black); }
     .ritual-card p { color: var(--gray-500); }
     .ritual-card .ritual-card-icon { background: var(--green-800); }
+    .ritual-bottom-inner > .ritual-card .ritual-card-photo { height: auto; aspect-ratio: 1/1; }
     .testimonials { padding: 60px 0; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
@@ -642,35 +643,35 @@
       <div class="testimonial">
         <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#226F54">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#C4855A">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#4A4538">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#7A7060">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#1C1A14">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
@@ -678,35 +679,35 @@
       <div class="testimonial">
         <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#226F54">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#C4855A">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#4A4538">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#7A7060">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>
       <div class="testimonial">
         <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
         <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
+          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#1C1A14">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
           <span class="testimonial-rating">★ 5.0</span>
         </div>
       </div>

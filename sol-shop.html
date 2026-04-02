@@ -250,11 +250,11 @@
   /* MOBILE */
   @media (max-width: 768px) {
     .burger-btn { display: flex; }
-    nav { padding: 0 16px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+    nav { padding: 0 16px; height: 72px; gap: 4px; }
     .nav-links { display: none; }
     .nav-search { display: none; }
     .nav-spacer { display: none; }
-    .nav-right { display: flex; align-items: center; gap: 0; }
+    .nav-right { gap: 0; margin-left: auto; }
     .nav-faq { display: none; }
     .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
     .nav-search-mobile-shop { display: flex; }
@@ -263,21 +263,21 @@
     .shop-header { padding-top: 96px; padding-bottom: 24px; }
     .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
     .section-tabs { flex-wrap: wrap; gap: 8px; }
-    .filter-bar { flex-direction: row; flex-wrap: wrap; gap: 8px; padding-bottom: 24px; align-items: center; }
-    .cat-dropdown { order: 1; }
-    .sort-btn { order: 2; }
-    .filter-pills { order: 3; width: 100%; gap: 8px; }
+    .filter-bar { flex-wrap: wrap; gap: 8px; padding-bottom: 24px; align-items: center; }
+    .cat-dropdown { order: 1; flex-shrink: 0; }
+    .sort-btn { order: 2; flex-shrink: 0; }
+    .filter-pills { order: 3; width: 100%; flex: none; gap: 8px; }
     .cat-trigger { padding: 12px 20px; font-size: 14px; }
     .filter-pill { padding: 12px 18px; font-size: 13px; }
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
-    .product-img { aspect-ratio: 3/2; height: auto; }
+    .product-img { aspect-ratio: 1/1; height: auto; }
     .product-card { display: flex; flex-direction: column; }
-    .product-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+    .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
     .product-body h4 { font-size: 15px; }
-    .product-desc { font-size: 13px; margin-bottom: 8px; flex: 1; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+    .product-desc { font-size: 13px; }
     .product-footer { margin-top: auto; }
     .product-price { font-size: 17px; }
-    .btn-add { padding: 12px 18px; font-size: 14px; }
+    .btn-add { padding: 14px 28px; font-size: 15px; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
