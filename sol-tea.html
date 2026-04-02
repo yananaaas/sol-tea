@@ -172,7 +172,7 @@
   .ritual-card-content { position: absolute; inset: 0; padding: 32px; display: flex; flex-direction: column; gap: 16px; justify-content: flex-end; background: var(--green-800); opacity: 0; transition: opacity 0.35s; }
   .ritual-card:hover .ritual-card-photo { opacity: 0; }
   .ritual-card:hover .ritual-card-content { opacity: 1; }
-  .ritual-card-icon { width: 48px; height: 48px; background: var(--green-500); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--cream-bright); }
+  .ritual-card-icon { width: 48px; height: 48px; background: var(--green-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--cream-bright); }
   .ritual-card h4 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--cream-bright); letter-spacing: -0.01em; }
   .ritual-card p { font-size: 13px; color: rgba(253,252,249,0.7); line-height: 1.6; }
 
@@ -343,19 +343,26 @@
     .collections-header { flex-direction: column; align-items: flex-start; gap: 16px; }
     .bestsellers { padding: 80px 24px; }
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
-    .product-img { height: 240px; }
-    .product-body { padding: 16px; }
+    .product-card { display: flex; flex-direction: column; }
+    .product-img { height: auto; aspect-ratio: 1/1; }
+    .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
     .product-body h4 { font-size: 15px; }
     .product-desc { font-size: 13px; }
     .btn-add { padding: 14px 28px; font-size: 15px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-content { padding: 32px 28px 60px; }
+    .hero-buttons { flex-direction: column; gap: 10px; }
+    .hero-buttons > * { width: 100%; justify-content: center; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
     .ritual-bottom-inner { grid-template-columns: 1fr; }
-    .ritual-card { background: var(--green-800); }
+    .ritual-card { background: var(--sand); }
     .ritual-card-photo { opacity: 0; }
-    .ritual-card-content { opacity: 1; }
+    .ritual-card-content { background: transparent; opacity: 1; }
+    .ritual-card h4 { color: var(--black); }
+    .ritual-card p { color: var(--gray-500); }
+    .ritual-card .ritual-card-icon { background: var(--green-800); }
     .testimonials { padding: 60px 0; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
@@ -602,7 +609,7 @@
     <div class="ritual-card">
       <div class="ritual-card-photo">Фото чаю</div>
       <div class="ritual-card-content">
-        <div class="ritual-card-icon"><i class="hgi-stroke hgi-tea-cup"></i></div>
+        <div class="ritual-card-icon"><i class="hgi-stroke hgi-leaf-01"></i></div>
         <h4>Чай</h4>
         <p>Улун, пуер, сезонні збори. Більше 80 сортів з провінцій Фуцзянь, Юньнань та Гуандун.</p>
       </div>
