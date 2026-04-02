@@ -187,10 +187,10 @@
   .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
   .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
   .newsletter-form { display: flex; gap: 8px; }
-  .newsletter-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input { flex: 1; min-width: 180px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
   .newsletter-input::placeholder { color: var(--gray-500); }
   .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
-  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
   .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); }
   .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
   .footer-bottom p { font-size: 12px; color: var(--gray-500); }
@@ -239,46 +239,48 @@
   .pp-logout:hover { background: rgba(232,74,46,0.07); }
   .pp-logout .pp-item-icon { background: rgba(232,74,46,0.1); color: #E84A2E; }
 
-  /* MOBILE SEARCH OVERLAY */
+  /* SEARCH OVERLAY (both desktop + mobile) */
   .nav-search-mobile-shop { display: none; }
-  .mobile-search-overlay { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 16px; box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
+  .mobile-search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px 48px; box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
   .mobile-search-overlay.open { display: flex; }
-  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--sand); border-radius: 40px; padding: 12px 18px; }
+  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 14px 22px; }
   .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
   .mobile-search-input::placeholder { color: var(--gray-500); }
 
   /* MOBILE */
   @media (max-width: 768px) {
     .burger-btn { display: flex; }
-    nav { padding: 0 16px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    nav { padding: 0 16px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
     .nav-links { display: none; }
     .nav-search { display: none; }
     .nav-spacer { display: none; }
     .nav-right { display: flex; align-items: center; gap: 0; }
     .nav-faq { display: none; }
+    .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
     .nav-search-mobile-shop { display: flex; }
-    .page-wrap { padding: 0 20px; }
+    .mobile-search-overlay { top: 72px; padding: 12px 16px; }
+    .page-wrap { padding: 0 16px; overflow-x: hidden; }
     .shop-header { padding-top: 96px; padding-bottom: 24px; }
     .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
     .section-tabs { flex-wrap: wrap; gap: 8px; }
-    .filter-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding-bottom: 24px; }
-    .filter-pills { flex-wrap: wrap; gap: 8px; }
+    .filter-bar { flex-direction: row; flex-wrap: wrap; gap: 8px; padding-bottom: 24px; align-items: center; }
+    .cat-dropdown { order: 1; }
+    .sort-btn { order: 2; }
+    .filter-pills { order: 3; width: 100%; gap: 8px; }
     .cat-trigger { padding: 12px 20px; font-size: 14px; }
     .filter-pill { padding: 12px 18px; font-size: 13px; }
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
-    .product-img { aspect-ratio: 4/3; height: auto; }
+    .product-img { aspect-ratio: 3/2; height: auto; }
     .product-card { display: flex; flex-direction: column; }
     .product-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
-    .product-body h4 { font-size: 13px; }
-    .product-desc { font-size: 11px; margin-bottom: 8px; flex: 1; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+    .product-body h4 { font-size: 15px; }
+    .product-desc { font-size: 13px; margin-bottom: 8px; flex: 1; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
     .product-footer { margin-top: auto; }
-    .product-price { font-size: 15px; }
-    .btn-add { padding: 7px 10px; font-size: 11px; gap: 5px; }
+    .product-price { font-size: 17px; }
+    .btn-add { padding: 12px 18px; font-size: 14px; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .footer-newsletter { max-width: 280px; }
-    .newsletter-input { width: auto; max-width: 160px; }
     .scroll-top { bottom: 20px; right: 20px; }
   }
   @media (min-width: 769px) and (max-width: 1100px) {
@@ -295,7 +297,7 @@
     <li><a href="sol-tea.html">Про нас</a></li>
     <li><a href="sol-shop.html" class="active">Магазин</a></li>
   </ul>
-  <div class="nav-search"><i class="hgi-stroke hgi-search-01"></i><span>Пошук чаю, інгредієнтів...</span></div>
+  <div class="nav-search" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i><span>Пошук чаю, інгредієнтів...</span></div>
   <div class="nav-spacer"></div>
   <div class="nav-right">
     <button class="nav-icon-btn nav-search-mobile-shop" title="Пошук" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
@@ -310,7 +312,7 @@
 <!-- MOBILE SEARCH OVERLAY -->
 <div class="mobile-search-overlay" id="mobileSearchOverlay">
   <div class="mobile-search-inner">
-    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input">
+    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input" id="mobileSearchInput" oninput="onSearchInput(this.value)">
     <button class="nav-icon-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
 </div>
@@ -474,6 +476,7 @@ const SECTIONS = {
 let currentSection = 'tea';
 let activeFilters = [];
 let currentPage = 1;
+let searchQuery = '';
 const ITEMS_PER_PAGE = 8;
 
 function renderFilters() {
@@ -489,7 +492,11 @@ function renderCards() {
   const { products } = SECTIONS[currentSection];
   const grid = document.getElementById('productsGrid');
   const empty = document.getElementById('emptyState');
-  const visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
+  let visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    visible = visible.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+  }
 
   const n = visible.length;
   const lastTwo = n % 100;
@@ -630,12 +637,24 @@ function toggleWishlist() {
   // wishlist panel — буде реалізовано пізніше
 }
 
+function onSearchInput(value) {
+  searchQuery = value;
+  currentPage = 1;
+  renderCards();
+}
 function openMobileSearch() {
-  document.getElementById('mobileSearchOverlay').classList.add('open');
-  document.querySelector('.mobile-search-input').focus();
+  const overlay = document.getElementById('mobileSearchOverlay');
+  overlay.classList.add('open');
+  const input = document.getElementById('mobileSearchInput');
+  input.value = searchQuery;
+  input.focus();
 }
 function closeMobileSearch() {
   document.getElementById('mobileSearchOverlay').classList.remove('open');
+  searchQuery = '';
+  document.getElementById('mobileSearchInput').value = '';
+  currentPage = 1;
+  renderCards();
 }
 
 function toggleMobileMenu() {
