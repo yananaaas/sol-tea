@@ -164,8 +164,6 @@
 
   .empty-state { grid-column: 1/-1; padding: 80px 0; text-align: center; color: var(--gray-300); font-size: 15px; display: none; }
   .empty-state.visible { display: block; }
-  .end-state { display: none; text-align: center; padding: 40px 0 80px; color: var(--gray-500); font-size: 15px; }
-  .end-state.visible { display: block; }
 
   /* PAGINATION */
   .pagination { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 60px 0 100px; flex-wrap: nowrap; }
@@ -253,8 +251,9 @@
   .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
   .mobile-search-input::placeholder { color: var(--gray-500); }
   /* NAV inline search (mobile) */
-  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
+  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
   .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
   .nav-search-inline-input::placeholder { color: var(--gray-500); }
 
@@ -286,11 +285,13 @@
     .mobile-search-overlay { display: none !important; }
     nav.search-active .nav-right { display: none; }
     nav.search-active .burger-btn { display: none !important; }
-    nav.search-active .nav-search-inline { display: flex; flex: 0 1 220px; margin-left: auto; }
-    .product-body h4 { font-size: 15px; }
+    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: auto; flex: 0 0 auto; transition: width 0.28s ease, opacity 0.22s ease, padding 0.28s ease; }
+    nav.search-active .nav-search-inline { opacity: 1; width: 160px; pointer-events: all; padding: 10px 14px; }
+    .product-body h4 { font-size: 16px; }
     .product-desc { font-size: 13px; }
+    .product-price { font-size: 16px; font-weight: 700; }
     .product-footer { margin-top: auto; }
-    .btn-add { padding: 14px 28px; font-size: 15px; }
+    .btn-add { padding: 10px 20px; font-size: 14px; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -319,7 +320,7 @@
   <div class="nav-search-inline" id="navSearchInline">
     <i class="hgi-stroke hgi-search-01"></i>
     <input type="text" id="navSearchInput" placeholder="Пошук чаю..." class="nav-search-inline-input" oninput="onSearchInput(this.value)">
-    <button class="nav-icon-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <button class="search-close-btn" onclick="closeMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-right">
     <button class="nav-icon-btn nav-search-mobile-shop" title="Пошук" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
@@ -366,7 +367,6 @@
   <div class="empty-state" id="emptyState">Товарів за обраними фільтрами не знайдено</div>
 
   <div class="pagination" id="paginationContainer"></div>
-  <div class="end-state" id="endState">Більше товарів немає</div>
 </div>
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
@@ -571,13 +571,7 @@ function renderCards() {
 
 function renderPagination(totalPages) {
   const container = document.getElementById('paginationContainer');
-  const endState = document.getElementById('endState');
   if (!container) return;
-
-  // Show/hide end state message
-  const onLastPage = totalPages === 0 || currentPage >= totalPages;
-  if (endState) endState.classList.toggle('visible', onLastPage);
-
   if (totalPages <= 1) { container.innerHTML = ''; return; }
 
   // Build set of pages to always show: 1, last, currentPage ±1
@@ -682,13 +676,7 @@ function onDesktopShopSearch(val) {
   document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
 }
 function onDesktopShopBlur() {
-  if (window.innerWidth <= 768) return;
-  const inp = document.getElementById('desktopSearchInput');
-  inp.value = '';
-  searchQuery = '';
-  currentPage = 1;
-  renderCards();
-  document.getElementById('desktopSearchClear').classList.remove('visible');
+  // Don't clear on blur — search stays active until X is clicked or Escape pressed
 }
 function clearDesktopShopSearch() {
   const inp = document.getElementById('desktopSearchInput');

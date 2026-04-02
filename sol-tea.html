@@ -307,9 +307,10 @@
   .search-clear-btn.visible { opacity: 1; pointer-events: all; }
 
   /* NAV inline search (mobile) */
-  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
+  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
   .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
+  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
   .nav-search-inline-input::placeholder { color: var(--gray-500); }
 
   /* BURGER MENU */
@@ -371,15 +372,19 @@
     .products-grid { grid-template-columns: 1fr; gap: 16px; }
     .product-card { display: flex; flex-direction: column; }
     .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-    .product-body h4 { font-size: 15px; }
+    .product-body h4 { font-size: 16px; }
     .product-desc { font-size: 13px; }
-    .btn-add { padding: 14px 28px; font-size: 15px; }
+    .product-price { font-size: 16px; font-weight: 700; }
+    .btn-add { padding: 10px 20px; font-size: 14px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .hero-content { padding: 32px 28px 60px; }
+    .hero-buttons { flex-wrap: nowrap; gap: 10px; }
+    .hero-buttons > * { padding: 12px 18px; font-size: 13px; }
     .search-overlay { display: none !important; }
     nav.search-active .nav-right { display: none; }
     nav.search-active .burger-btn { display: none !important; }
-    nav.search-active .nav-search-inline { display: flex; flex: 0 1 220px; margin-left: auto; }
+    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: auto; flex: 0 0 auto; transition: width 0.28s ease, opacity 0.22s ease, padding 0.28s ease; }
+    nav.search-active .nav-search-inline { opacity: 1; width: 160px; pointer-events: all; padding: 10px 14px; }
     .break-mobile { display: block; }
     .scroll-top { bottom: 20px; right: 20px; }
     .ritual-top { padding: 80px 24px 60px; }
@@ -424,7 +429,7 @@
   <div class="nav-search-inline" id="navSearchInline">
     <i class="hgi-stroke hgi-search-01"></i>
     <input type="text" id="navSearchInput" placeholder="Пошук чаю..." class="nav-search-inline-input" oninput="filterProducts(this.value)">
-    <button class="nav-icon-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-right">
     <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
@@ -449,7 +454,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <h1 class="hero-title">Кожна<br class="break-mobile"> чашка<br class="break-mobile"> — своя<br class="break-mobile"> історія</h1>
+      <h1 class="hero-title">Кожна<br class="break-mobile"> чашка<br class="break-mobile"> — своя історія</h1>
       <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
       <div class="hero-buttons">
         <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
@@ -960,11 +965,7 @@ function onDesktopSearchInput(val) {
   document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
 }
 function onDesktopSearchBlur() {
-  if (window.innerWidth <= 768) return;
-  const inp = document.getElementById('desktopSearchInput');
-  inp.value = '';
-  filterProducts('');
-  document.getElementById('desktopSearchClear').classList.remove('visible');
+  // Don't clear on blur — filter stays active until X is clicked or Escape pressed
 }
 function clearDesktopSearch() {
   const inp = document.getElementById('desktopSearchInput');
