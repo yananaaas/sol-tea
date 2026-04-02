@@ -12,7 +12,7 @@
 ```css
 --cream: #F5F0E8        /* фон сторінки */
 --cream-bright: #FDFCF9 /* фон карток */
---sand: #E8E0CC         /* неактивні теги, кнопки, dropdown */
+--sand: #E8E0CC         /* неактивні теги, кнопки, dropdown, stat-card */
 --green-800: #226F54    /* основний акцент */
 --green-500: #7CC44A    /* другорядний акцент, бейджі "Новинка" */
 --terra: #C4855A        /* wishlist активний, бейдж "Обмежений" */
@@ -34,6 +34,9 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 Для wishlist активного стану — лише змінювати `color: var(--terra)`, іконку не міняти.
 
 ### Кнопки
+Розмір кнопок: `padding: 14px 28px; font-size: 15px` — єдиний стандарт для всіх кнопок.
+`border-radius: 40px` (pill) для всіх.
+
 | Клас | Фон | Текст | Hover |
 |------|-----|-------|-------|
 | `.btn-primary` | green-800 | cream-bright | black |
@@ -44,7 +47,6 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `.btn-add` | black | cream-bright | green-800 |
 
 Стрілки в кнопках: `translateX(3px)` → `translateX(7px)` на hover.
-border-radius кнопок: `40px` (pill).
 
 ### Правила
 - Без дівайдерів — тільки блочна структура
@@ -60,8 +62,8 @@ border-radius кнопок: `40px` (pill).
 | Файл | Статус | Опис |
 |------|--------|------|
 | `sol-tea.html` | ✅ Готова | Головна сторінка |
+| `sol-shop.html` | ✅ Готова | Магазин (каталог) |
 | `index.html` | ✅ Готова | Редирект на sol-tea.html |
-| `sol-shop.html` | 🔧 В роботі | Магазин (каталог) |
 | `sol-product.html` | ⬜ Не почата | Картка товару |
 | `sol-cart.html` | ⬜ Не почата | Кошик |
 | `sol-checkout.html` | ⬜ Не почата | Оформлення замовлення |
@@ -85,54 +87,103 @@ border-radius кнопок: `40px` (pill).
 
 ### Що треба виправити в `sol-tea.html`
 - Nav посилання "Магазин" → додати `href="sol-shop.html"`
-- Кнопка "До колекцій" (hero) → додати `href="sol-shop.html"`
+- Кнопка "До колекцій" (hero) → `href="sol-shop.html"`
 - Кнопка "Переглянути всі" (блок Хіти продажів) → `href="sol-shop.html"`
 - Кнопки "Переглянути" (блок Колекції) → `href="sol-shop.html"`
 - Логотип у nav → огорнути в `<a href="sol-tea.html">`
-
-### Як додавати посилання на кнопки
-```html
-<!-- Кнопка-посилання: -->
-<a href="sol-shop.html" class="btn-primary">
-  Переглянути всі <i class="hgi-stroke hgi-arrow-right-01"></i>
-</a>
-
-<!-- Або через onclick: -->
-<button class="btn-primary" onclick="window.location.href='sol-shop.html'">
-  До колекцій
-</button>
-```
 
 ---
 
 ## Структура nav (однакова на всіх сторінках)
 
+**Десктоп** (80px):
 ```
-Логотип (→ sol-tea.html) | Про нас | Магазин | Пошук | [spacer] | Профіль | Кошик | FAQ | Бургер
+Логотип | Про нас | Магазин | [Пошук 280px] | [spacer] | Профіль | Вішліст | Кошик | FAQ
 ```
+
+**Мобілка** (72px):
+```
+Логотип | [margin-left: auto →] Пошук | Профіль | Вішліст | Кошик | Бургер
+```
+- Всі іконки: `44×44px`, `font-size: 22px`, `gap: 0`
+- Бургер відкриває **dropdown** меню (не slide-in панель!) — позиціонується `top: 76px; right: 16px`
+- Dropdown: `width: 240px; background: var(--sand); border-radius: 20px`
+
+### Search overlay (обидві сторінки)
+- Відкривається при кліку на поле пошуку (десктоп) або іконку пошуку (мобілка)
+- Реальний пошук — фільтрує `.product-card` по назві та опису в реальному часі
+- `sol-tea.html`: функція `openSearch()` / `closeSearch()` / `filterProducts(q)`
+- `sol-shop.html`: `openMobileSearch()` / `closeMobileSearch()` / `onSearchInput(value)` → фільтрує через `renderCards()` зі змінною `searchQuery`
 
 ---
 
 ## JS функції — не перейменовувати
 
+### sol-tea.html
 | Функція | Що робить |
 |---------|-----------|
 | `toggleProfile()` | slide-in панель профілю (справа) |
-| `toggleMobileMenu()` | мобільне меню (зліва) |
+| `toggleMobileMenu()` | dropdown меню (права сторона) |
+| `openSearch()` | відкриває search overlay |
+| `closeSearch()` | закриває + скидає фільтр |
+| `filterProducts(q)` | ховає/показує `.product-card` по запиту |
+
+### sol-shop.html
+| Функція | Що робить |
+|---------|-----------|
+| `toggleProfile()` | slide-in панель профілю (справа) |
+| `toggleMobileMenu()` | dropdown меню (права сторона) |
 | `addToCart(name, btn)` | додає товар у sessionStorage, оновлює badge |
 | `updateCartBadge()` | синхронізує badge кошика |
 | `goToCart()` | переходить на sol-cart.html |
-| `toggleWish(el)` | wishlist — міняє колір на terra (не міняє клас іконки!) |
-| `renderFilters()` | рендерить пілюлі підфільтрів (тільки sol-shop) |
-| `renderCards()` | рендерить картки + анімація через rAF (тільки sol-shop) |
-| `toggleCatDropdown()` | відкриває/закриває dropdown категорій (тільки sol-shop) |
-| `selectCategory(el)` | вибір категорії з dropdown (тільки sol-shop) |
-| `filterSwitch(el)` | single-select підфільтр (тільки sol-shop) |
+| `toggleWish(el)` | wishlist — міняє колір на terra |
+| `renderFilters()` | рендерить пілюлі підфільтрів |
+| `renderCards()` | рендерить картки + пагінація + searchQuery фільтр |
+| `toggleCatDropdown()` | відкриває/закриває dropdown категорій |
+| `selectCategory(el)` | вибір категорії з dropdown |
+| `filterSwitch(el)` | single-select підфільтр |
+| `goToPage(page)` | пагінація |
+| `openMobileSearch()` | відкриває search overlay |
+| `closeMobileSearch()` | закриває + скидає searchQuery |
+| `onSearchInput(value)` | оновлює searchQuery → renderCards() |
 
 ### Cart badge
 Зберігається в `sessionStorage` ключ `'solCart'`.
 Формат: `[{ name: "Те Гуань Інь", qty: 2 }, ...]`
-Передається між сторінками автоматично поки відкрита вкладка.
+
+---
+
+## Поточний стан блоків — sol-tea.html
+
+### Hero
+- Десктоп: повна висота `calc(100vh - 80px - 32px)`, контент по центру зліва
+- Мобілка: `calc(100svh - 72px - 16px)`, контент `bottom: 0; padding: 32px 28px`
+- Кнопки на мобілці: горизонтально, по центру
+
+### Stats (блок з цифрами)
+- Фон секції: `var(--cream)` (не зелений!)
+- Картки: `background: var(--sand)`
+- Числа: `color: var(--black)` (чорний, не зелений)
+- Лейбл: `color: var(--black)`
+- Підпис: `color: var(--gray-500)`
+
+### Ticker (бігучий рядок)
+- `padding: 14px 28px; font-size: 15px` — такий самий розмір, як кнопки
+
+### Bestsellers (картки товарів)
+- Десктоп: 4 колонки
+- Мобілка: 1 колонка, `aspect-ratio: 1/1`, `.btn-add` такий самий як решта кнопок (`14px 28px, 15px`)
+
+### Ritual (Чай як ритуал)
+- Десктоп: hover-ефект — фото ховається, з'являється зелений контент
+- Мобілка: статичний layout — фото зверху (180px), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`)
+- На мобілці `transition: none` щоб прибрати hover-анімацію
+
+### Testimonials (відгуки)
+- Фон: `var(--cream)` (не зелений!)
+- Без заголовка (`h2` відсутній)
+- Без аватар-стеку
+- Просто marquee-стрічка з картками відгуків
 
 ---
 
@@ -142,12 +193,22 @@ border-radius кнопок: `40px` (pill).
 1. **Dropdown** `.cat-dropdown` — вибір секції (Чай / Посуд / Дошки / Аксесуари)
 2. **Пілюлі** `.filter-pill` — підфільтри в рядку після dropdown
 
-### Single-select
+### Мобільний filter-bar (два рядки)
+```
+Рядок 1: [Dropdown: Чай ▼]  [Сортування ⊟]
+Рядок 2: [Всі] [Улун] [Пуер] [Да Хун Пао] ...
+```
+CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 100%` для filter-pills.
+
+### Пагінація
+Реальна, функціональна. `ITEMS_PER_PAGE = 8`. Функція `goToPage(page)`.
+
+### Single-select фільтри
 Клік на пілюлю встановлює один активний фільтр. Мультивибору немає.
 
 ### Анімація карток
 Через `requestAnimationFrame` — НЕ через CSS animation-delay.
-Причина: CSS `translate` property ненадійна в Safari, використовується `transform: translateY`.
+Причина: CSS `translate` ненадійна в Safari, використовується `transform: translateY`.
 
 ### z-index стек
 - `.filter-bar`: z-index 100
@@ -158,15 +219,15 @@ border-radius кнопок: `40px` (pill).
 ### Дані товарів
 Зберігаються в JS об'єкті `SECTIONS` всередині файлу.
 Структура кожного товару: `{ name, cat, region, desc, price, bg, badge }`
+Секції: `tea`, `teaware`, `boards`, `accessories`
 
 ---
 
 ## Що не реалізовано (не чіпати)
 
-- **Пошук** — поле є візуально, функціонал не підключений
-- **Пагінація** — кнопки є декоративно, реальна логіка не реалізована
 - **Email підписка** — поле є у футері, відповідь після сабміту не реалізована
-- **Wishlist панель** — серця на картках є, але окрема панель вішліста не зроблена (планується)
+- **Wishlist панель** — серця на картках є, але окрема slide-in панель не зроблена (планується)
+- **sol-tea.html пошук** — фільтрує картки на лендингу, але каталог на окремій сторінці
 
 ---
 
@@ -175,26 +236,21 @@ border-radius кнопок: `40px` (pill).
 - Репозиторій: https://github.com/yananaaas/sol-tea
 - GitHub Pages: https://yananaaas.github.io/sol-tea/
 - Деплой автоматичний через ~1 хв після push
-- Команда для деплою: `git add . && git commit -m "опис змін" && git push`
-- Або в Claude Code: *"залий зміни на GitHub"*
+- Команда: `git add sol-tea.html sol-shop.html && git commit -m "опис" && git push`
 
 ---
 
 ## Що не чіпати без потреби
 
 - SVG paths логотипу (складна геометрія, 3 path)
-- Назви JS функцій з таблиці вище
+- Назви JS функцій з таблиць вище
 - sessionStorage ключ `'solCart'`
 - CDN посилання (Google Fonts, HugeIcons)
 
 ---
 
-## Наступні задачі
+## Наступні сторінки
 
-### Термінові (малі правки в готових файлах)
-1. `sol-tea.html` — виправити посилання в nav і кнопках (див. розділ "Навігація")
-
-### Наступні сторінки
 - `sol-product.html` — картка товару: фото, назва, регіон, ціна, вибір граму, кнопка в кошик
 - `sol-cart.html` — кошик: список з sessionStorage, кількість, ціни, кнопка оформити
 - `sol-checkout.html` — форма: ім'я, Нова Пошта, email, телефон, оплата
