@@ -33,10 +33,14 @@
   .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
   .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--green-800); }
-  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; cursor: pointer; transition: background 0.2s; width: 280px; flex-shrink: 0; }
-  .nav-search:hover { background: var(--gray-100); }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:focus-within { background: var(--gray-100); }
   .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search span { font-size: 15px; color: var(--gray-500); }
+  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
+  .nav-search-input::placeholder { color: var(--gray-500); }
+  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
+  .nav-search-clear:hover { color: var(--black); }
+  .nav-search-clear.visible { display: flex; }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; }
   .nav-icon-btn:hover { background: var(--sand); }
@@ -222,6 +226,11 @@
   .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
   .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); }
 
+  /* SCROLL TO TOP */
+  .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+  .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); }
+
   /* PROFILE PANEL */
   .profile-overlay { position: fixed; inset: 0; background: rgba(28,26,20,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .profile-overlay.open { opacity: 1; pointer-events: all; }
@@ -283,6 +292,8 @@
   .hero-title { animation: fadeUp 0.5s ease 0.2s both; }
   .hero-sub { animation: fadeUp 0.5s ease 0.35s both; }
   .hero-buttons { animation: fadeUp 0.5s ease 0.5s both; }
+  .break-mobile { display: none; }
+  @media (min-width: 769px) { .ritual-col-right .ritual-card { aspect-ratio: 1/1; min-height: unset; } }
 
 
   /* SEARCH OVERLAY */
@@ -368,11 +379,14 @@
     .search-overlay { display: none !important; }
     nav.search-active .nav-right { display: none; }
     nav.search-active .burger-btn { display: none !important; }
-    nav.search-active .nav-search-inline { display: flex; }
+    nav.search-active .nav-search-inline { display: flex; flex: 0 1 220px; margin-left: auto; }
+    .break-mobile { display: block; }
+    .scroll-top { bottom: 20px; right: 20px; }
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
     .ritual-bottom-inner { grid-template-columns: 1fr; }
+    .ritual-col-right .ritual-card { aspect-ratio: unset; }
     .ritual-card { min-height: unset; background: var(--sand); }
     .ritual-card-photo { position: static; opacity: 1; height: auto; aspect-ratio: 1/1; transition: none; }
     .ritual-card-content { position: static; opacity: 1; background: transparent; padding: 20px 24px; justify-content: flex-start; transition: none; gap: 12px; }
@@ -401,9 +415,10 @@
     <li><a href="#">Про нас</a></li>
     <li><a href="sol-shop.html">Магазин</a></li>
   </ul>
-  <div class="nav-search" onclick="openSearch()">
+  <div class="nav-search">
     <i class="hgi-stroke hgi-search-01"></i>
-    <span>Пошук чаю, інгредієнтів...</span>
+    <input type="text" id="desktopSearchInput" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" oninput="onDesktopSearchInput(this.value)" onblur="onDesktopSearchBlur()">
+    <button class="nav-search-clear" id="desktopSearchClear" onmousedown="event.preventDefault()" onclick="clearDesktopSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-search-inline" id="navSearchInline">
@@ -434,7 +449,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <h1 class="hero-title">Кожна чашка — своя історія</h1>
+      <h1 class="hero-title">Кожна<br class="break-mobile"> чашка<br class="break-mobile"> — своя<br class="break-mobile"> історія</h1>
       <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
       <div class="hero-buttons">
         <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
@@ -735,6 +750,8 @@
   </div>
 </section>
 
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -927,17 +944,33 @@ function openSearch() {
     document.querySelector('nav').classList.add('search-active');
     setTimeout(() => document.getElementById('navSearchInput').focus(), 50);
   } else {
-    document.getElementById('searchOverlay').classList.add('open');
-    document.getElementById('searchInput').focus();
+    document.getElementById('desktopSearchInput').focus();
   }
 }
 function closeSearch() {
   document.querySelector('nav').classList.remove('search-active');
   document.getElementById('navSearchInput').value = '';
-  document.getElementById('searchOverlay').classList.remove('open');
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClearBtn').classList.remove('visible');
+  const inp = document.getElementById('desktopSearchInput');
+  if (inp) { inp.value = ''; }
+  document.getElementById('desktopSearchClear').classList.remove('visible');
   filterProducts('');
+}
+function onDesktopSearchInput(val) {
+  filterProducts(val);
+  document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
+}
+function onDesktopSearchBlur() {
+  if (window.innerWidth <= 768) return;
+  const inp = document.getElementById('desktopSearchInput');
+  inp.value = '';
+  filterProducts('');
+  document.getElementById('desktopSearchClear').classList.remove('visible');
+}
+function clearDesktopSearch() {
+  const inp = document.getElementById('desktopSearchInput');
+  inp.value = '';
+  filterProducts('');
+  document.getElementById('desktopSearchClear').classList.remove('visible');
 }
 function filterProducts(q) {
   const query = q.toLowerCase().trim();
@@ -958,6 +991,9 @@ document.addEventListener('keydown', function(e) {
     document.getElementById('mobileMenuOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
 });
 </script>
 
