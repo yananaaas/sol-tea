@@ -36,8 +36,8 @@
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--green-800); transition: background 0.2s; font-size: 20px; position: relative; }
   .nav-icon-btn:hover { background: var(--sand); }
-  .cart-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; background: var(--green-500); border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
-  .cart-badge.visible { display: flex; }
+  .cart-badge, .wish-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; background: var(--green-500); border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
+  .cart-badge.visible, .wish-badge.visible { display: flex; }
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
   .burger-btn:hover { background: var(--sand); }
 
@@ -148,7 +148,7 @@
 
   /* PRODUCTS GRID */
   .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; position: relative; z-index: 1; }
-  .product-img { aspect-ratio: 1/1; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
   .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
   .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
   .product-wish:hover { color: var(--terra); }
@@ -330,9 +330,9 @@
   <div class="nav-right">
     <button class="nav-icon-btn nav-search-mobile-shop" title="Пошук" onclick="openMobileSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
     <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
-    <button class="nav-icon-btn" title="Вподобані" onclick="toggleWishlist()"><i class="hgi-stroke hgi-favourite"></i></button>
+    <button class="nav-icon-btn" title="Вподобані" onclick="toggleWishlist()"><i class="hgi-stroke hgi-favourite"></i><span class="wish-badge" id="wishBadge"></span></button>
     <button class="nav-icon-btn" id="cartBtn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
-    <button class="nav-icon-btn nav-faq" title="FAQ"><i class="hgi-stroke hgi-help-circle"></i></button>
+    <button class="nav-icon-btn nav-faq" title="FAQ" onclick="window.location.href='sol-faq.html'"><i class="hgi-stroke hgi-help-circle"></i></button>
   </div>
   <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
 </nav>
@@ -548,11 +548,15 @@ function renderCards() {
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   const pageItems = visible.slice(start, start + ITEMS_PER_PAGE);
 
-  grid.innerHTML = pageItems.map((p, i) => `
+  const wish = JSON.parse(sessionStorage.getItem('solWish')||'[]');
+  grid.innerHTML = pageItems.map((p, i) => {
+    const liked = wish.includes(p.name);
+    const wishStyle = liked ? ' style="color:var(--terra)"' : '';
+    return `
     <div class="product-card" style="transition-delay:${i * 0.04}s">
       <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
         <div class="product-region">${p.region}</div>
-        <div class="product-wish" onclick="toggleWish(this)"><i class="hgi-stroke hgi-favourite"></i></div>
+        <div class="product-wish${liked ? ' liked' : ''}"${wishStyle} onclick="toggleWish(this,'${p.name.replace(/'/g,"\\'")}')"><i class="hgi-stroke hgi-favourite"></i></div>
         ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
         ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
       </div>
@@ -564,7 +568,8 @@ function renderCards() {
           <button class="btn-add" onclick="addToCart('${p.name.replace(/'/g,"\\'")}',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   // Trigger animation: two rAF frames so browser paints initial opacity:0 first
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -642,9 +647,18 @@ function filterSwitch(el) {
   renderCards();
 }
 
-function toggleWish(el) {
-  el.classList.toggle('liked');
-  el.style.color = el.classList.contains('liked') ? 'var(--terra)' : '';
+function updateWishBadge() {
+  const b = document.getElementById('wishBadge'); if (!b) return;
+  const w = JSON.parse(sessionStorage.getItem('solWish')||'[]');
+  b.textContent = w.length; b.classList.toggle('visible', w.length > 0);
+}
+function toggleWish(el, name) {
+  const wish = JSON.parse(sessionStorage.getItem('solWish')||'[]');
+  const idx = wish.indexOf(name);
+  if (idx === -1) { wish.push(name); el.classList.add('liked'); el.style.color = 'var(--terra)'; }
+  else { wish.splice(idx, 1); el.classList.remove('liked'); el.style.color = ''; }
+  sessionStorage.setItem('solWish', JSON.stringify(wish));
+  updateWishBadge();
 }
 
 function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')||'[]'); } catch(e) { return []; } }
@@ -745,6 +759,7 @@ window.addEventListener('scroll', () => {
 renderFilters();
 renderCards();
 updateCartBadge();
+updateWishBadge();
 </script>
 </body>
 </html>
