@@ -83,10 +83,13 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 ## Навігація між сторінками
 
 - `sol-tea.html` → nav "Магазин" → `sol-shop.html` ✅
-- `sol-tea.html` → логотип → `sol-tea.html` (треба огорнути в `<a>`)
+- `sol-tea.html` → логотип → `sol-tea.html` ✅
+- `sol-tea.html` → "Всі товари" (Хіти продажів) → `sol-shop.html` ✅
+- `sol-tea.html` → FAQ іконка → `sol-faq.html` ✅ (сторінки ще немає)
 - `sol-shop.html` → nav "Про нас" → `sol-tea.html` ✅
 - `sol-shop.html` → логотип → `sol-tea.html` ✅
-- Кнопки "До колекцій", "Переглянути всі", "Переглянути" — ще не мають `href="sol-shop.html"`
+- `sol-shop.html` → FAQ іконка → `sol-faq.html` ✅ (сторінки ще немає)
+- Кнопки "До колекцій", "Переглянути всі", "Переглянути" — ще не мають `href`
 
 ---
 
@@ -120,21 +123,30 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 ### sol-tea.html
 | Функція | Що робить |
 |---------|-----------|
-| `toggleProfile()` | slide-in панель профілю (справа) |
-| `toggleMobileMenu()` | dropdown меню (права сторона) |
+| `toggleProfile()` | dropdown панель профілю |
+| `toggleMobileMenu()` | dropdown бургер-меню |
 | `openSearch()` | десктоп: відкриває `.search-overlay`; мобілка: `nav.search-active` |
 | `closeSearch()` | закриває обидва, скидає фільтр |
 | `filterProducts(q)` | ховає/показує `.product-card` по запиту |
+| `addToCart(name, btn)` | toggle: додає/прибирає з кошика, оновлює badge і стан кнопки |
+| `setCartBtnState(btn, inCart)` | оновлює вигляд кнопки кошика (зелена / чорна) |
+| `updateCartBadge()` | синхронізує badge кошика в nav |
+| `updateWishBadge()` | синхронізує badge вподобаних в nav |
+| `initCartBtns()` | при завантаженні відновлює стан кнопок з sessionStorage |
+| `getCart()` | читає solCart з sessionStorage |
+| `saveCart(c)` | зберігає solCart у sessionStorage |
 
 ### sol-shop.html
 | Функція | Що робить |
 |---------|-----------|
-| `toggleProfile()` | slide-in панель профілю (справа) |
-| `toggleMobileMenu()` | dropdown меню (права сторона) |
-| `addToCart(name, btn)` | додає товар у sessionStorage, оновлює badge |
+| `toggleProfile()` | dropdown панель профілю |
+| `toggleMobileMenu()` | dropdown бургер-меню |
+| `addToCart(name, btn)` | toggle: додає/прибирає з кошика, оновлює badge і стан кнопки |
+| `setCartBtnState(btn, inCart)` | оновлює вигляд кнопки кошика |
 | `updateCartBadge()` | синхронізує badge кошика |
+| `updateWishBadge()` | синхронізує badge вподобаних |
 | `goToCart()` | переходить на sol-cart.html |
-| `toggleWish(el)` | wishlist — міняє колір на terra |
+| `toggleWish(el, name)` | wishlist toggle — колір terra + запис у solWish |
 | `renderFilters()` | рендерить пілюлі підфільтрів |
 | `renderCards()` | рендерить картки + пагінація + searchQuery фільтр |
 | `toggleCatDropdown()` | відкриває/закриває dropdown категорій |
@@ -144,10 +156,14 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `openMobileSearch()` | десктоп: `.mobile-search-overlay`; мобілка: `nav.search-active` |
 | `closeMobileSearch()` | закриває обидва, скидає searchQuery |
 | `onSearchInput(value)` | оновлює searchQuery → renderCards() |
+| `getCart()` | читає solCart з sessionStorage |
+| `saveCart(c)` | зберігає solCart у sessionStorage |
 
-### Cart badge
-Зберігається в `sessionStorage` ключ `'solCart'`.
-Формат: `[{ name: "Те Гуань Інь", qty: 2 }, ...]`
+### sessionStorage
+| Ключ | Формат | Опис |
+|------|--------|------|
+| `'solCart'` | `[{ name: "Те Гуань Інь", qty: 1 }, ...]` | Кошик |
+| `'solWish'` | `["Те Гуань Інь", "Шен Пуер 2019", ...]` | Вподобані |
 
 ---
 
@@ -171,23 +187,23 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - `padding: 14px 28px; font-size: 15px` — такий самий розмір, як кнопки
 
 ### Bestsellers (картки товарів)
-- Десктоп: 4 колонки, `product-img { aspect-ratio: 1/1 }`
-- Мобілка: 1 колонка, `aspect-ratio: 1/1`
+- Десктоп: 4 колонки, `gap: 40px`, `product-img { aspect-ratio: 1/1 }`
+- Мобілка: 1 колонка, `gap: 24px`, `aspect-ratio: 1/1`
+- Картки: `display: flex; flex-direction: column` — рівна висота в ряду, footer завжди внизу
 - Ціна: `font-size: 20px; font-weight: 900; color: var(--green-800)`
-- Кнопка: `.btn-add { padding: 14px 28px; font-size: 15px }`
+- Кнопка `.btn-add`: чорна → клік додає в кошик (зелена, "В кошику") → повторний клік прибирає
 - Серце: `44×44px; font-size: 20px`
 
 ### Ritual (Чай як ритуал)
-- Десктоп: hover-ефект — фото ховається, з'являється зелений контент
-- Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`)
+- Десктоп: hover-ефект — фото ховається, з'являється зелений контент; `gap: 40px`
+- Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`); `gap: 24px`
 - На мобілці `transition: none` щоб прибрати hover-анімацію
 - Іконка на картці: `hgi-leaf-01` (не `hgi-tea-cup` — такого іконки немає)
 
 ### Testimonials (відгуки)
 - Фон: `var(--cream)` (не зелений!)
 - Без заголовка (`h2` відсутній)
-- Без аватар-стеку
-- Просто marquee-стрічка з картками відгуків
+- Marquee-стрічка з картками відгуків, `gap: 40px`
 - Аватарки різних кольорів через inline `style="background: ..."` на кожній картці
 
 ---
@@ -239,8 +255,17 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 ## Що не реалізовано (не чіпати)
 
 - **Email підписка** — поле є у футері, відповідь після сабміту не реалізована
-- **Wishlist панель** — серця на картках є, але окрема slide-in панель не зроблена (планується)
-- **Кнопки навігації** — "До колекцій", "Переглянути всі", "Переглянути" без `href` на `sol-shop.html`
+- **Wishlist панель** — серця і badge є, але окрема slide-in панель не зроблена (планується)
+- **Кнопки навігації** — "До колекцій", "Переглянути всі", "Переглянути" без `href`
+
+## Профіль-панель (однакова на всіх сторінках)
+- Фон: `var(--sand)` — як відкритий дропдаун
+- Хедер (аватар + ім'я): `background: var(--cream-bright)`, `border-radius: 20px 20px 0 0`
+- Ім'я: `var(--black)`, email: `var(--gray-500)`
+- `.pp-item-icon`: `background: var(--green-800)`, `color: var(--cream-bright)`
+- `.pp-item:hover`: `background: var(--gray-100)`
+- Індикатор кошика в nav: `background: var(--green-800)`, `font-weight: 500`
+- Індикатор вподобаних в nav: `background: var(--terra)`, `font-weight: 500`
 
 ---
 
@@ -269,9 +294,9 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ## Наступні таски (черга)
 
-1. **FAQ сторінка** — створити `sol-faq.html` з Частими запитаннями (кнопка в хедері вже веде туди)
-2. **Блоки фото+текст на головній** — вирівняти контейнери 1:1
-9. **Сторінка продукту** `sol-product.html` — розпочати після всіх виправлень вище
+1. **Сторінка продукту** `sol-product.html` — фото, назва, регіон, ціна, вибір граму, кнопка в кошик
+2. **FAQ сторінка** `sol-faq.html` — Часті запитання (кнопка в хедері вже веде туди)
+3. **Блоки фото+текст на головній** — вирівняти контейнери 1:1
 
 ---
 
