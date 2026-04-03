@@ -34,7 +34,7 @@
   .nav-search-clear:hover { color: var(--black); }
   .nav-search-clear.visible { display: flex; }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; position: relative; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--green-800); transition: background 0.2s; font-size: 20px; position: relative; }
   .nav-icon-btn:hover { background: var(--sand); }
   .cart-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; background: var(--green-500); border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
   .cart-badge.visible { display: flex; }
@@ -296,7 +296,7 @@
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
     .scroll-top { bottom: 20px; right: 20px; }
-    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: 68svh; }
+    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
     .pp-header { padding: 14px 14px 12px; }
     .pp-body { padding: 6px 6px 12px; }
     .pp-item { padding: 9px 10px; }
