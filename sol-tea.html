@@ -73,7 +73,7 @@
   .btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; }
   .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); }
 
-  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
   .btn-add i { font-size: 18px; margin-right: -3px; }
   .btn-add:hover { background: var(--green-800); }
 
@@ -161,12 +161,11 @@
   .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .badge-new { background: var(--green-500); color: var(--cream-bright); }
   .badge-limited { background: var(--terra); color: var(--cream-bright); }
-  .product-body { padding: 28px; }
-  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 900; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
-  .product-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.7; }
-  .product-footer { display: flex; flex-direction: column; gap: 12px; }
-  .product-price { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
-  .product-footer .btn-add { width: 100%; justify-content: center; }
+  .product-body { padding: 20px; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
   /* RITUAL — two parts */
   .ritual-top { background: var(--green-800); padding: 120px 48px 80px; }
@@ -238,26 +237,24 @@
   .profile-overlay.open { opacity: 1; pointer-events: all; }
 
   .profile-panel {
-    position: fixed; top: 88px; right: 16px; z-index: 201;
-    width: 380px; max-height: calc(100vh - 108px); background: var(--cream-bright);
-    border-radius: 20px; box-shadow: 0 8px 40px rgba(28,26,20,0.16);
-    transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none;
-    transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+    width: 420px; background: var(--cream-bright);
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
     display: flex; flex-direction: column;
     overflow-y: auto;
     font-family: 'Inter', sans-serif;
   }
-  .profile-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .profile-panel.open { transform: translateX(0); }
 
-  .pp-header { background: var(--sand); padding: 20px 20px 16px; position: relative; border-radius: 20px 20px 0 0; }
-  .pp-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-800); transition: background 0.2s; }
-  .pp-close:hover { background: var(--gray-300); }
+  .pp-header { background: var(--green-800); padding: 40px 28px 36px; position: relative; }
+  .pp-close { position: absolute; top: 24px; right: 24px; background: rgba(253,252,249,0.12); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--cream-bright); transition: background 0.2s; }
+  .pp-close:hover { background: rgba(253,252,249,0.22); }
 
-  .pp-user { display: flex; align-items: center; gap: 14px; }
-  .pp-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--cream-bright); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--gray-300); flex-shrink: 0; cursor: pointer; }
+  .pp-user { display: flex; align-items: center; gap: 16px; }
+  .pp-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--cream-bright); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--gray-300); flex-shrink: 0; cursor: pointer; }
 
-  .pp-name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
-  .pp-email { font-size: 12px; color: var(--gray-500); margin-top: 2px; font-family: 'Inter', sans-serif; font-weight: 400; }
+  .pp-name { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: var(--cream-bright); letter-spacing: -0.01em; }
+  .pp-email { font-size: 13px; color: rgba(253,252,249,0.55); margin-top: 4px; font-family: 'Inter', sans-serif; font-weight: 400; }
 
   .pp-body { padding: 24px 20px 32px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
@@ -402,19 +399,19 @@
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
-    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 96px); }
-    .collection-img { aspect-ratio: 1/1; height: auto; }
   }
 
   /* SEARCH PANEL */
   .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
   .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
   .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
-  .search-panel-header { margin-bottom: 40px; }
+  .search-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
   .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-close { background: var(--sand); border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: var(--gray-800); flex-shrink: 0; }
+  .search-panel-close:hover { background: var(--gray-100); }
   .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
-  .search-highlight { background: var(--green-500); color: var(--cream-bright); border-radius: 40px; padding: 2px 10px; }
+  .search-highlight { background: var(--green-500); color: var(--cream-bright); border-radius: 3px; padding: 0 2px; }
   @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 768px) {
     .search-panel-inner { padding: 96px 24px 60px; }
@@ -958,6 +955,7 @@ function toggleProfile() {
   const isOpen = panel.classList.contains('open');
   panel.classList.toggle('open', !isOpen);
   overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
 }
 
 function openSearch() {
@@ -1041,14 +1039,7 @@ document.addEventListener('keydown', function(e) {
   }
 });
 window.addEventListener('scroll', () => {
-  const btn = document.getElementById('scrollTopBtn');
-  btn.classList.toggle('visible', window.scrollY > 400);
-  const socials = document.querySelector('.footer-socials');
-  if (socials) {
-    const top = socials.getBoundingClientRect().top;
-    const defaultBottom = window.innerWidth <= 768 ? 20 : 32;
-    btn.style.bottom = top < window.innerHeight ? (window.innerHeight - top + 16) + 'px' : defaultBottom + 'px';
-  }
+  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
 });
 </script>
 
@@ -1057,6 +1048,7 @@ window.addEventListener('scroll', () => {
   <div class="search-panel-inner">
     <div class="search-panel-header">
       <span class="search-panel-title">Результати пошуку:</span>
+      <button class="search-panel-close" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
     </div>
     <div id="searchPanelGrid" class="search-panel-grid"></div>
     <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
