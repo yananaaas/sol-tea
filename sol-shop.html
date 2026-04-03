@@ -730,7 +730,16 @@ document.addEventListener('keydown', e => {
   }
 });
 window.addEventListener('scroll', () => {
-  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+  const btn = document.getElementById('scrollTopBtn');
+  btn.classList.toggle('visible', window.scrollY > 400);
+  const socials = document.querySelector('.footer-socials');
+  if (socials) {
+    const socialsTop = socials.getBoundingClientRect().top;
+    const defaultBottom = window.innerWidth <= 768 ? 20 : 32;
+    btn.style.bottom = socialsTop < window.innerHeight
+      ? (window.innerHeight - socialsTop + 16) + 'px'
+      : defaultBottom + 'px';
+  }
 });
 
 renderFilters();
