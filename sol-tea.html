@@ -180,8 +180,8 @@
   .ritual-top .section-tag i { color: var(--cream-bright); font-size: 16px; }
 
   .ritual-bottom { background: var(--green-800); padding: 0 48px 100px; }
-  .ritual-bottom-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .ritual-col-right { display: flex; flex-direction: column; gap: 20px; }
+  .ritual-bottom-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .ritual-col-right { display: flex; flex-direction: column; gap: 40px; }
   .ritual-card { background: var(--cream); border-radius: 20px; overflow: hidden; min-height: 280px; position: relative; cursor: pointer; }
   .ritual-card-photo { position: absolute; inset: 0; background: var(--cream); display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.35s; }
   .ritual-card-content { position: absolute; inset: 0; padding: 32px; display: flex; flex-direction: column; gap: 16px; justify-content: flex-end; background: var(--green-800); opacity: 0; transition: opacity 0.35s; }
@@ -195,7 +195,7 @@
   .testimonials { background: var(--cream); padding: 120px 0; overflow: hidden; }
 
   .testimonials-track-wrap { overflow: hidden; }
-  .testimonials-track { display: flex; gap: 24px; width: max-content; animation: marquee 32s linear infinite; }
+  .testimonials-track { display: flex; gap: 40px; width: max-content; animation: marquee 32s linear infinite; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; width: 360px; flex-shrink: 0; }
   .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
@@ -401,7 +401,8 @@
     .ritual-top { padding: 80px 24px 60px; }
     .ritual-top-inner { grid-template-columns: 1fr; }
     .ritual-bottom { padding: 0 24px 80px; }
-    .ritual-bottom-inner { grid-template-columns: 1fr; }
+    .ritual-bottom-inner { grid-template-columns: 1fr; gap: 24px; }
+    .ritual-col-right { gap: 24px; }
     .ritual-col-right .ritual-card { aspect-ratio: unset; }
     .ritual-card { min-height: unset; background: var(--sand); }
     .ritual-card-photo { position: static; opacity: 1; height: auto; aspect-ratio: 1/1; transition: none; }
