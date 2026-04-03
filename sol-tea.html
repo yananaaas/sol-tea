@@ -409,10 +409,8 @@
   .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
   .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
   .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
-  .search-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .search-panel-header { margin-bottom: 40px; }
   .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
-  .search-panel-close { background: var(--sand); border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: var(--gray-800); flex-shrink: 0; }
-  .search-panel-close:hover { background: var(--gray-100); }
   .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
   .search-highlight { background: var(--green-500); color: var(--cream-bright); border-radius: 3px; padding: 0 2px; }
@@ -1052,7 +1050,6 @@ window.addEventListener('scroll', () => {
   <div class="search-panel-inner">
     <div class="search-panel-header">
       <span class="search-panel-title">Результати пошуку:</span>
-      <button class="search-panel-close" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
     </div>
     <div id="searchPanelGrid" class="search-panel-grid"></div>
     <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
