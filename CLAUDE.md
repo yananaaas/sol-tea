@@ -34,7 +34,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 Для wishlist активного стану — лише змінювати `color: var(--terra)`, іконку не міняти.
 
 ### Кнопки
-Розмір кнопок: `padding: 14px 28px; font-size: 15px` — єдиний стандарт для всіх кнопок.
+Розмір кнопок: `padding: 14px 28px; font-size: 15px` — єдиний стандарт для всіх кнопок, включаючи `.btn-add`.
 `border-radius: 40px` (pill) для всіх.
 
 | Клас | Фон | Текст | Hover |
@@ -83,7 +83,6 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 ## Навігація між сторінками
 
 - `sol-tea.html` → nav "Магазин" → `sol-shop.html` ✅
-- `sol-tea.html` → логотип → `sol-tea.html` (треба огорнути в `<a>`)
 - `sol-shop.html` → nav "Про нас" → `sol-tea.html` ✅
 - `sol-shop.html` → логотип → `sol-tea.html` ✅
 - Кнопки "До колекцій", "Переглянути всі", "Переглянути" — ще не мають `href="sol-shop.html"`
@@ -105,13 +104,20 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - Бургер відкриває **dropdown** меню (не slide-in панель!) — позиціонується `top: 76px; right: 16px`
 - Dropdown: `width: 240px; background: var(--sand); border-radius: 20px`
 
-### Search overlay (десктоп) / inline (мобілка)
-- **Десктоп**: клік на поле пошуку відкриває `.search-overlay` під nav
-- **Мобілка**: клік на іконку пошуку додає клас `search-active` до `<nav>`:
-  - `.nav-right` і `.burger-btn` ховаються
-  - `.nav-search-inline` показується (`display: flex`) — поле прямо в nav
-  - `.search-overlay { display: none !important }` — overlay на мобілці вимкнений
+### Search (десктоп / мобілка)
+- **Десктоп**: клік на поле пошуку відкриває `.search-overlay` під nav + `.search-panel` fullscreen оверлей з результатами
+- **Мобілка**: клік на іконку пошуку → `nav.search-active`: ховає `.nav-right` і `.burger-btn`, показує `.nav-search-inline`
+- Search panel: fullscreen (`position: fixed; inset: 0; z-index: 300`), хрестик-кнопка в хедері панелі **відсутня** — тільки X в інпуті + Escape
+- `search-highlight`: `background: var(--green-500); border-radius: 40px; padding: 2px 10px` — pill-стиль
 - `font-size: 16px` на input — запобігає iOS Safari zoom
+
+### Profile panel
+- Dropdown `top: 88px; right: 16px; border-radius: 20px; width: 380px`
+- Анімація: `translateY(-8px) scale(0.97)` → `translateY(0) scale(1)` + opacity
+- **Шапка** (`pp-header`): `background: var(--sand)` — без зеленого, у стилі dropdown/бургер меню
+- `pp-name`: `color: var(--black)`, `pp-email`: `color: var(--gray-500)`
+- Mobile: `top: 76px; right: 8px; left: 8px; width: auto`
+- `toggleProfile()` **не** лочить `body.style.overflow`
 
 ---
 
@@ -120,16 +126,17 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 ### sol-tea.html
 | Функція | Що робить |
 |---------|-----------|
-| `toggleProfile()` | slide-in панель профілю (справа) |
+| `toggleProfile()` | dropdown панель профілю (top-right) |
 | `toggleMobileMenu()` | dropdown меню (права сторона) |
-| `openSearch()` | десктоп: відкриває `.search-overlay`; мобілка: `nav.search-active` |
-| `closeSearch()` | закриває обидва, скидає фільтр |
-| `filterProducts(q)` | ховає/показує `.product-card` по запиту |
+| `openSearch()` | десктоп: фокус на `.nav-search`; мобілка: `nav.search-active` |
+| `closeSearch()` | закриває search-panel і nav inline search |
+| `filterProducts(q)` | відкриває search-panel, рендерить результати з підсвіченням |
+| `highlightText(text, query)` | обгортає збіги в `<mark class="search-highlight">` |
 
 ### sol-shop.html
 | Функція | Що робить |
 |---------|-----------|
-| `toggleProfile()` | slide-in панель профілю (справа) |
+| `toggleProfile()` | dropdown панель профілю (top-right) |
 | `toggleMobileMenu()` | dropdown меню (права сторона) |
 | `addToCart(name, btn)` | додає товар у sessionStorage, оновлює badge |
 | `updateCartBadge()` | синхронізує badge кошика |
@@ -141,7 +148,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `selectCategory(el)` | вибір категорії з dropdown |
 | `filterSwitch(el)` | single-select підфільтр |
 | `goToPage(page)` | пагінація (без scroll-to-top) |
-| `openMobileSearch()` | десктоп: `.mobile-search-overlay`; мобілка: `nav.search-active` |
+| `openMobileSearch()` | десктоп: overlay; мобілка: `nav.search-active` |
 | `closeMobileSearch()` | закриває обидва, скидає searchQuery |
 | `onSearchInput(value)` | оновлює searchQuery → renderCards() |
 
@@ -156,39 +163,39 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 ### Hero
 - Десктоп: повна висота `calc(100vh - 80px - 32px)`, контент по центру зліва
 - Мобілка: `calc(100svh - 72px - 16px)`, контент `bottom: 0; padding: 32px 28px 60px`
-- Кнопки на мобілці: горизонтально, **ліворуч** (`flex-start`, без justify-content override)
+- Кнопки на мобілці: вертикально, `flex-start`
 - Кнопка "До колекцій": `btn-secondary` з `hgi-arrow-right-01` праворуч від тексту
 
 ### Stats (блок з цифрами)
 - Фон секції: `var(--cream)` (не зелений!)
 - Картки: `background: var(--sand)`
-- Числа: `color: var(--black)` (чорний, не зелений)
-- Лейбл: `color: var(--black)`
-- Підпис: `color: var(--gray-500)`
-- Відступи: `padding: 80px 48px` (десктоп), `padding: 80px 24px` (мобілка) — рівні
-
-### Ticker (бігучий рядок)
-- `padding: 14px 28px; font-size: 15px` — такий самий розмір, як кнопки
+- Числа: `color: var(--black)` (чорний)
+- Відступи: `padding: 80px 48px` (рівні)
 
 ### Bestsellers (картки товарів)
-- Десктоп: 4 колонки, `product-img { aspect-ratio: 1/1 }`
-- Мобілка: 1 колонка, `aspect-ratio: 1/1`
-- Ціна: `font-size: 20px; font-weight: 900; color: var(--green-800)`
-- Кнопка: `.btn-add { padding: 14px 28px; font-size: 15px }`
+- Десктоп і мобілка: однакові стилі (немає mobile overrides)
+- `product-img`: `aspect-ratio: 1/1`
+- `product-body h4`: Inter 900, `font-size: 24px`, `letter-spacing: -0.01em`
+- `product-price`: Inter 900, `font-size: 24px`, `color: var(--green-800)`
+- `btn-add`: `padding: 14px 28px; font-size: 15px` (стандарт)
 - Серце: `44×44px; font-size: 20px`
+
+### Collections (Наші колекції)
+- Desktop: `collection-img { height: 240px }`
+- Mobile: `collection-img { aspect-ratio: 1/1; height: auto }` — квадрат
 
 ### Ritual (Чай як ритуал)
 - Десктоп: hover-ефект — фото ховається, з'являється зелений контент
-- Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`)
-- На мобілці `transition: none` щоб прибрати hover-анімацію
-- Іконка на картці: `hgi-leaf-01` (не `hgi-tea-cup` — такого іконки немає)
+- Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним
 
 ### Testimonials (відгуки)
 - Фон: `var(--cream)` (не зелений!)
-- Без заголовка (`h2` відсутній)
-- Без аватар-стеку
-- Просто marquee-стрічка з картками відгуків
-- Аватарки різних кольорів через inline `style="background: ..."` на кожній картці
+- Marquee-стрічка з картками відгуків, аватарки різних кольорів
+
+### Scroll-to-top кнопка
+- JS listener: коли `.footer-socials` входять у viewport — піднімає кнопку вище них на 16px
+- Default: `bottom: 32px` (десктоп), `bottom: 20px` (мобілка)
+- При скиданні (соціалки поза viewport) — явно встановлює `defaultBottom`, не просто `''`
 
 ---
 
@@ -198,41 +205,24 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 1. **Dropdown** `.cat-dropdown` — вибір секції (Чай / Посуд / Дошки / Аксесуари)
 2. **Пілюлі** `.filter-pill` — підфільтри в рядку після dropdown
 
-### Мобільний filter-bar (два рядки)
-```
-Рядок 1: [Dropdown: Чай ▼]  [Сортування ⊟]
-Рядок 2: [Всі] [Улун] [Пуер] [Да Хун Пао] ...
-```
-CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 100%` для filter-pills.
-
 ### Пагінація
 Реальна, функціональна. `ITEMS_PER_PAGE = 8`. Функція `goToPage(page)`.
-`flex-wrap: nowrap` + `flex-shrink: 0` на `.page-btn` — не деформується.
-`goToPage()` НЕ скролить до верху — просто рендерить нову сторінку.
-
-### Single-select фільтри
-Клік на пілюлю встановлює один активний фільтр. Мультивибору немає.
-
-### Анімація карток
-Через `requestAnimationFrame` — НЕ через CSS animation-delay.
-Причина: CSS `translate` ненадійна в Safari, використовується `transform: translateY`.
+`flex-wrap: nowrap` + `flex-shrink: 0` на `.page-btn`.
+`goToPage()` НЕ скролить до верху.
 
 ### z-index стек
+- `nav`: z-index 400
 - `.filter-bar`: z-index 100
 - `.cat-dropdown`, `.cat-menu`: z-index 200
-- `.products-grid`: z-index 1
 - Панелі (profile, mobile menu): z-index 201
+- `.search-panel`: z-index 300
 
 ### Дані товарів
-Зберігаються в JS об'єкті `SECTIONS` всередині файлу.
-Структура кожного товару: `{ name, cat, region, desc, price, bg, badge }`
+Зберігаються в JS об'єкті `SECTIONS`.
+Структура: `{ name, cat, region, desc, price, bg, badge }`
 Секції: `tea`, `teaware`, `boards`, `accessories`
 
-Поточний контент (чай):
-- Улун: 6 позицій
-- Пуер: 6 позицій
-- Сезонне: 2 позиції
-- Набори: 2 позиції
+Чай: Улун 6 / Пуер 6 / Сезонне 2 / Набори 2
 
 ---
 
@@ -240,7 +230,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 - **Email підписка** — поле є у футері, відповідь після сабміту не реалізована
 - **Wishlist панель** — серця на картках є, але окрема slide-in панель не зроблена (планується)
-- **Кнопки навігації** — "До колекцій", "Переглянути всі", "Переглянути" без `href` на `sol-shop.html`
+- **Кнопки навігації** — "До колекцій", "Переглянути всі", "Переглянути" без `href` на sol-tea.html
 
 ---
 
