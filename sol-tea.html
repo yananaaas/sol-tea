@@ -80,6 +80,8 @@
   .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
   .btn-add i { font-size: 18px; margin-right: -3px; }
   .btn-add:hover { background: var(--green-800); }
+  .btn-add.in-cart { background: var(--green-800); }
+  .btn-add.in-cart:hover { background: var(--black); }
 
   .btn-link { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--black); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: color 0.2s; text-decoration: none; padding: 14px 0; }
   .btn-link i { font-size: 22px; transform: translateX(3px); transition: transform 0.2s; }
@@ -636,7 +638,7 @@
       <div class="product-body">
         <h4>Те Гуань Інь</h4>
         <p class="product-desc">Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.</p>
-        <div class="product-footer"><span class="product-price">₴ 480</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+        <div class="product-footer"><span class="product-price">₴ 480</span><button class="btn-add" onclick="addToCart('Те Гуань Інь',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1">
@@ -644,7 +646,7 @@
       <div class="product-body">
         <h4>Шен Пуер 2019</h4>
         <p class="product-desc">Яскравий, терпкий, з потенціалом до витримки. З гір Іу.</p>
-        <div class="product-footer"><span class="product-price">₴ 920</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+        <div class="product-footer"><span class="product-price">₴ 920</span><button class="btn-add" onclick="addToCart('Шен Пуер 2019',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1">
@@ -652,7 +654,7 @@
       <div class="product-body">
         <h4>Фенхуан Даньцун</h4>
         <p class="product-desc">Персик, медова орхідея. З гір Фенхуан, обмежений збір.</p>
-        <div class="product-footer"><span class="product-price">₴ 680</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+        <div class="product-footer"><span class="product-price">₴ 680</span><button class="btn-add" onclick="addToCart('Фенхуан Даньцун',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
       </div>
     </div>
     <div class="product-card fade-up fade-up-d2">
@@ -660,7 +662,7 @@
       <div class="product-body">
         <h4>Шу Пуер Старий</h4>
         <p class="product-desc">Витриманий шу, м'який і глибокий. Землистий, без гіркоти.</p>
-        <div class="product-footer"><span class="product-price">₴ 560</span><button class="btn-add"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
+        <div class="product-footer"><span class="product-price">₴ 560</span><button class="btn-add" onclick="addToCart('Шу Пуер Старий',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
       </div>
     </div>
   </div>
@@ -1069,10 +1071,31 @@ window.addEventListener('scroll', () => {
 });
 
 function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')||'[]'); } catch(e) { return []; } }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
 function updateCartBadge() {
   const b = document.getElementById('cartBadge'); if (!b) return;
   const t = getCart().reduce((s,i)=>s+i.qty,0);
   b.textContent = t; b.classList.toggle('visible', t > 0);
+}
+function setCartBtnState(btn, inCart) {
+  btn.classList.toggle('in-cart', inCart);
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+function addToCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx !== -1) { cart.splice(idx, 1); } else { cart.push({name, qty: 1}); }
+  saveCart(cart); updateCartBadge();
+  setCartBtnState(btn, idx === -1);
+}
+function initCartBtns() {
+  const cart = getCart();
+  document.querySelectorAll('.btn-add[onclick]').forEach(btn => {
+    const m = btn.getAttribute('onclick').match(/addToCart\('(.+?)'/);
+    if (m && cart.some(i => i.name === m[1])) setCartBtnState(btn, true);
+  });
 }
 function updateWishBadge() {
   const b = document.getElementById('wishBadge'); if (!b) return;
@@ -1081,6 +1104,7 @@ function updateWishBadge() {
 }
 updateCartBadge();
 updateWishBadge();
+initCartBtns();
 </script>
 
 <!-- SEARCH PANEL OVERLAY -->

@@ -47,6 +47,9 @@
   .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
   .btn-add i { font-size: 18px; }
   .btn-add:hover { background: var(--green-800); }
+  .btn-add.in-cart { background: var(--green-800); }
+  .btn-add.in-cart:hover { background: var(--black); }
+  .btn-add:hover { background: var(--green-800); }
 
   /* PAGE WRAP */
   .page-wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
@@ -551,9 +554,11 @@ function renderCards() {
   const pageItems = visible.slice(start, start + ITEMS_PER_PAGE);
 
   const wish = JSON.parse(sessionStorage.getItem('solWish')||'[]');
+  const cart = getCart();
   grid.innerHTML = pageItems.map((p, i) => {
     const liked = wish.includes(p.name);
     const wishStyle = liked ? ' style="color:var(--terra)"' : '';
+    const inCart = cart.some(c => c.name === p.name);
     return `
     <div class="product-card" style="transition-delay:${i * 0.04}s">
       <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
@@ -567,7 +572,7 @@ function renderCards() {
         <p class="product-desc">${p.desc}</p>
         <div class="product-footer">
           <span class="product-price">${p.price}</span>
-          <button class="btn-add" onclick="addToCart('${p.name.replace(/'/g,"\\'")}',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="addToCart('${p.name.replace(/'/g,"\\'")}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
         </div>
       </div>
     </div>`;
@@ -670,14 +675,18 @@ function updateCartBadge() {
   const t = getCart().reduce((s,i)=>s+i.qty,0);
   if (t > 0) { b.textContent = t; b.classList.add('visible'); } else b.classList.remove('visible');
 }
+function setCartBtnState(btn, inCart) {
+  btn.classList.toggle('in-cart', inCart);
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
 function addToCart(name, btn) {
-  const cart = getCart(); const ex = cart.find(i=>i.name===name);
-  if (ex) ex.qty++; else cart.push({name,qty:1});
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx !== -1) { cart.splice(idx, 1); } else { cart.push({name, qty: 1}); }
   saveCart(cart); updateCartBadge();
-  const orig = btn.innerHTML;
-  btn.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> Додано';
-  btn.style.background = 'var(--green-800)';
-  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1200);
+  setCartBtnState(btn, idx === -1);
 }
 function goToCart() { window.location.href = 'sol-cart.html'; }
 
