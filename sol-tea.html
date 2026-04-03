@@ -26,7 +26,7 @@
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
   .nav-spacer { flex: 1; }
   .nav-logo { flex-shrink: 0; }
   .nav-logo svg { height: 42px; width: auto; }
@@ -415,6 +415,7 @@
   .search-panel-close:hover { background: var(--gray-100); }
   .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  .search-highlight { background: var(--green-500); color: var(--cream-bright); border-radius: 3px; padding: 0 2px; }
   @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 768px) {
     .search-panel-inner { padding: 96px 24px 60px; }
@@ -991,6 +992,11 @@ function clearDesktopSearch() {
   filterProducts('');
   document.getElementById('desktopSearchClear').classList.remove('visible');
 }
+function highlightText(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+}
 function filterProducts(q) {
   const query = q.toLowerCase().trim();
   const panel = document.getElementById('searchPanel');
@@ -1009,7 +1015,17 @@ function filterProducts(q) {
     if (name.includes(query) || desc.includes(query)) matches.push(card);
   });
   grid.innerHTML = '';
-  matches.forEach(card => grid.appendChild(card.cloneNode(true)));
+  matches.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.classList.remove('fade-up', 'fade-up-d1', 'fade-up-d2', 'fade-up-d3', 'fade-up-d4');
+    clone.style.opacity = '1';
+    clone.style.transform = 'none';
+    const h4 = clone.querySelector('h4');
+    const descEl = clone.querySelector('.product-desc');
+    if (h4) h4.innerHTML = highlightText(h4.textContent, query);
+    if (descEl) descEl.innerHTML = highlightText(descEl.textContent, query);
+    grid.appendChild(clone);
+  });
   empty.style.display = matches.length === 0 ? 'block' : 'none';
   panel.classList.add('open');
   document.body.style.overflow = 'hidden';
