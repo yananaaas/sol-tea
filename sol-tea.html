@@ -127,7 +127,8 @@
   /* STATS */
   .stats { background: var(--cream); padding: 80px 48px; }
   .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .stat-card { background: var(--sand); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 12px; }
+  .stat-card { background: var(--sand); border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 4px; }
+  .stat-number { margin-bottom: 8px; }
   .stat-number { font-family: 'Inter', sans-serif; font-size: clamp(52px, 5.5vw, 80px); font-weight: 900; color: var(--black); line-height: 1; letter-spacing: -0.04em; }
   .stat-label { font-size: 16px; font-weight: 500; color: var(--black); line-height: 1.4; }
   .stat-sub { font-size: 13px; color: var(--gray-500); }
@@ -374,16 +375,16 @@
     .product-body { flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
     .product-body h4 { font-size: 16px; }
     .product-desc { font-size: 13px; }
-    .product-price { font-size: 16px; font-weight: 700; }
-    .btn-add { padding: 10px 20px; font-size: 14px; }
+    .product-price { font-size: 20px; font-weight: 900; }
+    .btn-add { padding: 14px 28px; font-size: 15px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     .hero-content { padding: 32px 28px 60px; }
-    .hero-buttons { flex-wrap: nowrap; gap: 10px; }
-    .hero-buttons > * { padding: 12px 18px; font-size: 13px; }
+    .hero-buttons { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .hero-buttons > * { padding: 14px 28px; font-size: 15px; }
     .search-overlay { display: none !important; }
     nav.search-active .nav-right { display: none; }
     nav.search-active .burger-btn { display: none !important; }
-    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: auto; flex: 0 0 auto; transition: width 0.28s ease, opacity 0.22s ease, padding 0.28s ease; }
+    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: auto; flex: 0 0 auto; align-self: center; transition: width 0.28s ease, opacity 0.22s ease, padding 0.28s ease; }
     nav.search-active .nav-search-inline { opacity: 1; width: 160px; pointer-events: all; padding: 10px 14px; }
     .break-mobile { display: block; }
     .scroll-top { bottom: 20px; right: 20px; }
@@ -402,6 +403,22 @@
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+  }
+
+  /* SEARCH PANEL */
+  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
+  .search-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-close { background: var(--sand); border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: var(--gray-800); flex-shrink: 0; }
+  .search-panel-close:hover { background: var(--gray-100); }
+  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px) {
+    .search-panel-inner { padding: 96px 24px 60px; }
+    .search-panel-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -454,7 +471,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <h1 class="hero-title">Кожна<br class="break-mobile"> чашка<br class="break-mobile"> — своя історія</h1>
+      <h1 class="hero-title">Кожна<br class="break-mobile"> чашка —<br class="break-mobile"> своя історія</h1>
       <p class="hero-sub">Улун і пуер з гір Китаю. Зібрано вручну, доставлено з турботою до кожного ковтка.</p>
       <div class="hero-buttons">
         <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
@@ -958,7 +975,8 @@ function closeSearch() {
   const inp = document.getElementById('desktopSearchInput');
   if (inp) { inp.value = ''; }
   document.getElementById('desktopSearchClear').classList.remove('visible');
-  filterProducts('');
+  document.getElementById('searchPanel').classList.remove('open');
+  document.body.style.overflow = '';
 }
 function onDesktopSearchInput(val) {
   filterProducts(val);
@@ -975,11 +993,26 @@ function clearDesktopSearch() {
 }
 function filterProducts(q) {
   const query = q.toLowerCase().trim();
-  document.querySelectorAll('.product-card').forEach(card => {
+  const panel = document.getElementById('searchPanel');
+  const grid = document.getElementById('searchPanelGrid');
+  const empty = document.getElementById('searchPanelEmpty');
+  if (!query) {
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+    return;
+  }
+  const allCards = document.querySelectorAll('.bestsellers .product-card');
+  const matches = [];
+  allCards.forEach(card => {
     const name = (card.querySelector('h4')?.textContent || '').toLowerCase();
     const desc = (card.querySelector('.product-desc')?.textContent || '').toLowerCase();
-    card.style.display = (!query || name.includes(query) || desc.includes(query)) ? '' : 'none';
+    if (name.includes(query) || desc.includes(query)) matches.push(card);
   });
+  grid.innerHTML = '';
+  matches.forEach(card => grid.appendChild(card.cloneNode(true)));
+  empty.style.display = matches.length === 0 ? 'block' : 'none';
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 document.addEventListener('keydown', function(e) {
@@ -997,6 +1030,18 @@ window.addEventListener('scroll', () => {
   document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
 });
 </script>
+
+<!-- SEARCH PANEL OVERLAY -->
+<div id="searchPanel" class="search-panel">
+  <div class="search-panel-inner">
+    <div class="search-panel-header">
+      <span class="search-panel-title">Результати пошуку:</span>
+      <button class="search-panel-close" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    </div>
+    <div id="searchPanelGrid" class="search-panel-grid"></div>
+    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
+  </div>
+</div>
 
 </body>
 </html>
