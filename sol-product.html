@@ -81,14 +81,18 @@
   .gallery-viewport { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4/3; background: var(--sand); }
   .gallery-slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-300); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
   .gallery-slide.active { opacity: 1; pointer-events: auto; }
-  .gallery-badge { position: absolute; bottom: 16px; left: 16px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .gallery-badge { position: absolute; bottom: 16px; left: 16px; z-index: 2; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .badge-new { background: var(--green-500); color: var(--cream-bright); }
   .badge-limited { background: var(--terra); color: var(--cream-bright); }
-  .gallery-nav { display: flex; align-items: center; justify-content: center; gap: 6px; padding-top: 20px; }
-  .page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-  .page-btn:hover { background: var(--gray-100); }
-  .page-btn.active { background: var(--green-800); color: var(--cream-bright); }
-  .page-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+  .gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; background: rgba(253,252,249,0.88); border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--black); transition: background 0.2s; }
+  .gallery-arrow-prev { left: 12px; }
+  .gallery-arrow-next { right: 12px; }
+  @media (hover: hover) { .gallery-arrow:hover { background: var(--cream-bright); } }
+  .gallery-arrow:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+  .gallery-nav { display: flex; gap: 8px; padding-top: 12px; }
+  .gallery-thumb { flex: 1; aspect-ratio: 1/1; border-radius: 12px; background: var(--sand); cursor: pointer; overflow: hidden; border: 2px solid transparent; transition: border-color 0.2s, opacity 0.2s; opacity: 0.55; display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--gray-300); letter-spacing: 0.06em; text-transform: uppercase; }
+  .gallery-thumb.active { border-color: var(--green-800); opacity: 1; }
+  @media (hover: hover) { .gallery-thumb:hover { opacity: 0.8; } }
 
   /* PRODUCT INFO */
   .product-info { padding-top: 4px; }
@@ -141,10 +145,7 @@
 
   /* SIMILAR SECTION */
   .similar-section { padding: 80px 48px; background: var(--cream); }
-  .similar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
-  .similar-header h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
-  .similar-scroll-btn { background: var(--sand); border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-800); transition: all 0.2s; flex-shrink: 0; }
-  @media (hover: hover) { .similar-scroll-btn:hover { background: var(--gray-100); color: var(--green-800); } }
+  .similar-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 40px; }
   .similar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
   @media (hover: hover) { .product-card:hover { transform: translateY(-6px); } }
@@ -271,6 +272,8 @@
     .product-body p { font-size: 13px; line-height: 1.7; }
     .product-price { font-size: 24px; }
     .product-img { aspect-ratio: 1/1; }
+    .btn-add-sm { padding: 14px 28px; font-size: 15px; }
+    .btn-add-sm i { font-size: 20px; }
     .search-overlay { display: none !important; }
     .nav-search-btn-mobile { display: flex !important; }
     .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
@@ -343,10 +346,7 @@
 
   <div class="product-hero" id="productHero">
     <div class="product-gallery">
-      <div class="gallery-viewport" id="galleryViewport">
-        <span class="pi-region" id="piRegion"></span>
-        <button class="pi-wish" id="piWish" onclick="toggleProductWish()"><i class="hgi-stroke hgi-favourite"></i></button>
-      </div>
+      <div class="gallery-viewport" id="galleryViewport"></div>
       <div class="gallery-nav" id="galleryNav"></div>
     </div>
     <div class="product-info">
@@ -381,10 +381,7 @@
 </section>
 
 <section class="similar-section" id="similarSection" style="display:none">
-  <div class="similar-header">
-    <h2>Схожі товари</h2>
-    <button class="similar-scroll-btn" onclick="document.getElementById('similarGrid').scrollIntoView({behavior:'smooth',block:'start'})"><i class="hgi-stroke hgi-arrow-down-01"></i></button>
-  </div>
+  <h2>Схожі товари</h2>
   <div class="similar-grid" id="similarGrid"></div>
 </section>
 
@@ -560,19 +557,41 @@ function setSmCartBtnState(btn, inCart) {
 function renderGallery(p) {
   const vp = document.getElementById('galleryViewport');
   const nav = document.getElementById('galleryNav');
+  const total = p.images || 1;
   const bgs = [p.bg || 'var(--sand)', adjustBg(p.bg, -10), adjustBg(p.bg, 10)];
-  let slides = '';
-  for (let i = 0; i < p.images; i++) {
-    slides += `<div class="gallery-slide${i===0?' active':''}" style="background:${bgs[i]||'var(--sand)'}">Фото ${i+1}`;
-    if (i === 0 && p.badge) {
-      slides += `<div class="gallery-badge badge-${p.badge}">${p.badge==='new'?'Новинка':'Обмежений'}</div>`;
-    }
-    slides += '</div>';
+
+  let html = '';
+  for (let i = 0; i < total; i++) {
+    html += `<div class="gallery-slide${i===0?' active':''}" style="background:${bgs[i]||'var(--sand)'}">Фото ${i+1}`;
+    if (i === 0 && p.badge) html += `<div class="gallery-badge badge-${p.badge}">${p.badge==='new'?'Новинка':'Обмежений'}</div>`;
+    html += '</div>';
   }
-  vp.innerHTML = slides;
+  // region + wish overlaid on viewport
+  html += `<span class="pi-region" id="piRegion">${p.region||''}</span>`;
+  html += `<button class="pi-wish" id="piWish" onclick="toggleProductWish()"><i class="hgi-stroke hgi-favourite"></i></button>`;
+  // arrows
+  if (total > 1) {
+    html += `<button class="gallery-arrow gallery-arrow-prev" id="galleryPrev" onclick="changeSlide(-1)"${currentSlide===0?' disabled':''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
+    html += `<button class="gallery-arrow gallery-arrow-next" id="galleryNext" onclick="changeSlide(1)"><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
+  }
+  vp.innerHTML = html;
   currentSlide = 0;
-  if (p.images <= 1) { nav.innerHTML = ''; return; }
-  renderGalleryNav(p.images);
+
+  // thumbnails
+  if (total > 1) {
+    let thumbs = '';
+    for (let i = 0; i < total; i++) {
+      thumbs += `<div class="gallery-thumb${i===0?' active':''}" style="background:${bgs[i]}" onclick="goToSlide(${i})">Фото ${i+1}</div>`;
+    }
+    nav.innerHTML = thumbs;
+  } else {
+    nav.innerHTML = '';
+  }
+
+  // swipe
+  let tx = 0;
+  vp.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('touchend', e => { if (Math.abs(e.changedTouches[0].clientX - tx) > 40) changeSlide(e.changedTouches[0].clientX < tx ? 1 : -1); });
 }
 
 function adjustBg(hex, amt) {
@@ -586,23 +605,19 @@ function adjustBg(hex, amt) {
   } catch { return 'var(--sand)'; }
 }
 
-function renderGalleryNav(total) {
-  const nav = document.getElementById('galleryNav');
-  let html = `<button class="page-btn" onclick="changeSlide(${-1})"${currentSlide===0?' disabled':''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
-  for (let i = 0; i < total; i++) {
-    html += `<button class="page-btn${i===currentSlide?' active':''}" onclick="goToSlide(${i})">${i+1}</button>`;
-  }
-  html += `<button class="page-btn" onclick="changeSlide(${1})"${currentSlide===total-1?' disabled':''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
-  nav.innerHTML = html;
-}
-
 function goToSlide(i) {
   const slides = document.querySelectorAll('.gallery-slide');
   if (!slides[i]) return;
   slides[currentSlide].classList.remove('active');
   slides[i].classList.add('active');
   currentSlide = i;
-  renderGalleryNav(slides.length);
+  // sync thumbs
+  document.querySelectorAll('.gallery-thumb').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  // sync arrows
+  const prev = document.getElementById('galleryPrev');
+  const next = document.getElementById('galleryNext');
+  if (prev) prev.disabled = i === 0;
+  if (next) next.disabled = i === slides.length - 1;
 }
 function changeSlide(dir) {
   const slides = document.querySelectorAll('.gallery-slide');
@@ -711,17 +726,16 @@ function renderSimilar(p) {
 function renderProduct(p) {
   document.title = p.name + ' — Söl Tea';
   document.getElementById('bcName').textContent = p.name;
-  document.getElementById('piRegion').textContent = p.region;
   document.getElementById('piName').textContent = p.name;
   document.getElementById('piDesc').textContent = p.desc;
   document.getElementById('piLongDesc').textContent = p.longDesc;
   document.getElementById('piPrice').textContent = p.price;
-  renderGallery(p);
+  renderGallery(p); // piRegion set inside renderGallery
+  const wish = getWish();
+  if (wish.includes(p.name)) document.getElementById('piWish').classList.add('liked');
   renderGrams(p);
   const cart = getCart();
   setCartBtnState(document.getElementById('piCartBtn'), cart.some(c => c.name === p.name));
-  const wish = getWish();
-  if (wish.includes(p.name)) document.getElementById('piWish').classList.add('liked');
   if (p.brew) renderBrew(p.brew);
   renderReviews(p.reviews);
   renderSimilar(p);
@@ -744,7 +758,16 @@ updateWishBadge();
 
 // Scroll top
 window.addEventListener('scroll', () => {
-  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+  const btn = document.getElementById('scrollTopBtn');
+  btn.classList.toggle('visible', window.scrollY > 400);
+  const socials = document.querySelector('.footer-socials');
+  if (socials) {
+    const socialsTop = socials.getBoundingClientRect().top;
+    const defaultBottom = window.innerWidth <= 768 ? 20 : 32;
+    btn.style.bottom = socialsTop < window.innerHeight
+      ? (window.innerHeight - socialsTop + 16) + 'px'
+      : defaultBottom + 'px';
+  }
 });
 
 // Close search on Escape / outside click
