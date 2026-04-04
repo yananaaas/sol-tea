@@ -90,7 +90,7 @@
   @media (hover: hover) { .gallery-arrow:hover { background: var(--cream-bright); } }
   .gallery-arrow:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
   .gallery-nav { display: flex; gap: 8px; padding-top: 12px; }
-  .gallery-thumb { flex: 1; aspect-ratio: 1/1; border-radius: 12px; background: var(--sand); cursor: pointer; overflow: hidden; border: 2px solid transparent; transition: border-color 0.2s, opacity 0.2s; opacity: 0.55; display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--gray-300); letter-spacing: 0.06em; text-transform: uppercase; }
+  .gallery-thumb { flex: 1; aspect-ratio: 1/1; border-radius: 20px; background: var(--sand); cursor: pointer; overflow: hidden; border: 2px solid transparent; transition: border-color 0.2s, opacity 0.2s; opacity: 0.55; display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--gray-300); letter-spacing: 0.06em; text-transform: uppercase; }
   .gallery-thumb.active { border-color: var(--green-800); opacity: 1; }
   @media (hover: hover) { .gallery-thumb:hover { opacity: 0.8; } }
 
@@ -117,22 +117,17 @@
   .not-found p { color: var(--gray-500); margin-bottom: 32px; }
   .not-found a { color: var(--green-800); text-decoration: none; font-weight: 500; }
 
-  /* BREW SECTION */
-  .brew-section { background: var(--sand); padding: 80px 48px; }
-  .brew-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 40px; }
-  .brew-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .brew-card { background: var(--cream-bright); border-radius: 20px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
-  .brew-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
-  .brew-label { font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.08em; text-transform: uppercase; }
-  .brew-value { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 900; color: var(--black); letter-spacing: -0.01em; line-height: 1.1; }
-  .brew-sub { font-size: 13px; color: var(--gray-500); }
+  /* BREW INLINE */
+  .pi-brew { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--gray-100); }
+  .pi-brew-title { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: var(--black); margin-bottom: 8px; }
+  .pi-brew-text { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
 
   /* REVIEWS SECTION */
   .reviews-section { padding: 80px 48px; background: var(--cream); }
   .reviews-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 40px; }
   .reviews-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
   .reviews-count-lbl { font-size: 14px; color: var(--gray-500); }
-  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .review-card { background: var(--cream-bright); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
   .review-top { display: flex; align-items: center; gap: 12px; }
   .review-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--cream-bright); flex-shrink: 0; }
@@ -165,14 +160,14 @@
   .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); }
 
   /* FOOTER */
-  footer { background: var(--black); color: var(--cream-bright); padding: 80px 48px 40px; }
+  footer { background: var(--black); padding: 80px 48px 40px; }
   .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
   .footer-brand-logo { margin-bottom: 16px; }
   .footer-brand-logo svg { height: 40px; width: auto; }
   .footer-brand p { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 220px; }
   .footer-col h5, .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
   .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .footer-col a { color: var(--cream-bright); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col a { color: var(--gray-500); text-decoration: none; font-size: 14px; transition: color 0.2s; }
   .footer-col a:hover { color: var(--green-500); }
   .footer-newsletter p { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-bottom: 20px; }
   .newsletter-form { display: flex; gap: 8px; }
@@ -258,10 +253,7 @@
     .product-info h1 { font-size: 26px; }
     .pi-bottom { gap: 14px; }
     .pi-price { font-size: 26px; }
-    .brew-section { padding: 60px 16px; }
-    .brew-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .brew-card { padding: 20px 16px; }
-    .brew-value { font-size: 18px; }
+
     .reviews-section { padding: 60px 16px; }
     .reviews-grid { grid-template-columns: 1fr; gap: 24px; }
     .similar-section { padding: 60px 16px; }
@@ -363,13 +355,17 @@
           <i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик
         </button>
       </div>
+      <div class="pi-brew" id="piBrew" style="display:none">
+        <div class="pi-brew-title">Як заварювати?</div>
+        <p class="pi-brew-text" id="piBrewText"></p>
+      </div>
     </div>
   </div>
 </div>
 
-<section class="brew-section" id="brewSection" style="display:none">
-  <h2>Як заварювати?</h2>
-  <div class="brew-grid" id="brewGrid"></div>
+<section class="similar-section" id="similarSection" style="display:none">
+  <h2>Схожі товари</h2>
+  <div class="similar-grid" id="similarGrid"></div>
 </section>
 
 <section class="reviews-section" id="reviewsSection">
@@ -378,11 +374,6 @@
     <span class="reviews-count-lbl" id="reviewsCountLbl"></span>
   </div>
   <div class="reviews-grid" id="reviewsGrid"></div>
-</section>
-
-<section class="similar-section" id="similarSection" style="display:none">
-  <h2>Схожі товари</h2>
-  <div class="similar-grid" id="similarGrid"></div>
 </section>
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
@@ -643,22 +634,10 @@ function selectGram(btn, g) {
 }
 
 function renderBrew(brew) {
-  const section = document.getElementById('brewSection');
-  const grid = document.getElementById('brewGrid');
-  section.style.display = 'block';
-  const items = [
-    {icon:'hgi-stroke hgi-fire-02', label:'Температура', value: brew.temp, sub:'води'},
-    {icon:'hgi-stroke hgi-clock-01', label:'Час', value: brew.time, sub:'заварювання'},
-    {icon:'hgi-stroke hgi-leaf-01', label:'Кількість', value: brew.amount, sub:'на заварку'},
-    {icon:'hgi-stroke hgi-refresh', label:'Проливів', value: brew.steeps, sub:'з одної порції'}
-  ];
-  grid.innerHTML = items.map(it => `
-    <div class="brew-card">
-      <div class="brew-icon"><i class="${it.icon}"></i></div>
-      <div class="brew-label">${it.label}</div>
-      <div class="brew-value">${it.value}</div>
-      <div class="brew-sub">${it.sub}</div>
-    </div>`).join('');
+  const wrap = document.getElementById('piBrew');
+  const text = document.getElementById('piBrewText');
+  wrap.style.display = 'block';
+  text.textContent = `Температура ${brew.temp} · час заварювання ${brew.time} · ${brew.amount} на заварку · до ${brew.steeps} проливів.`;
 }
 
 function renderReviews(reviews) {
