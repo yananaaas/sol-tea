@@ -127,7 +127,7 @@
 
   /* REVIEWS SECTION */
   .reviews-section { padding: 60px 48px; background: var(--cream); }
-  .reviews-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 40px; }
+  .reviews-header { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
   .reviews-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
   .reviews-count-lbl { font-size: 14px; color: var(--gray-500); }
   .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -139,8 +139,7 @@
   .review-date { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
   .review-stars { font-size: 14px; letter-spacing: 1px; }
   .review-text { font-size: 14px; line-height: 1.65; color: var(--gray-800); }
-  .reviews-empty { display: flex; flex-direction: column; align-items: flex-start; }
-  .reviews-empty p { font-size: 15px; color: var(--gray-500); }
+  .reviews-empty { font-size: 15px; color: var(--gray-500); }
 
   /* SIMILAR SECTION */
   .similar-section { padding: 60px 48px; background: var(--cream); }
@@ -380,6 +379,7 @@
   <div class="reviews-header">
     <h2>Відгуки</h2>
     <span class="reviews-count-lbl" id="reviewsCountLbl"></span>
+    <button class="btn-outline-dark" style="margin-left:auto" onclick="alert('Функція незабаром')">Залишити відгук</button>
   </div>
   <div class="reviews-grid" id="reviewsGrid"></div>
 </section>
@@ -653,7 +653,7 @@ function renderReviews(reviews) {
   const grid = document.getElementById('reviewsGrid');
   if (!reviews || reviews.length === 0) {
     lbl.textContent = '';
-    grid.innerHTML = '<div class="reviews-empty"><p>Поки що немає відгуків. Будьте першим!</p><button class="btn-outline-dark" style="margin-top:20px" onclick="alert(\'Функція незабаром\')">Залишити відгук</button></div>';
+    grid.innerHTML = '<p class="reviews-empty">Поки що немає відгуків. Будьте першим!</p>';
     return;
   }
   lbl.textContent = reviews.length + ' ' + pluralUk(reviews.length, 'відгук', 'відгуки', 'відгуків');
