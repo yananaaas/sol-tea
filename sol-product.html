@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Товар — Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+  :root {
+    --cream: #F5F0E8; --cream-bright: #FDFCF9; --sand: #E8E0CC;
+    --green-800: #226F54; --green-500: #7CC44A; --terra: #C4855A;
+    --black: #1C1A14; --gray-800: #4A4538; --gray-500: #7A7060;
+    --gray-300: #B5AFA3; --gray-100: #D9D3C7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  .nav-spacer { flex: 1; }
+  .nav-logo svg { height: 42px; width: auto; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-links a.active { color: var(--green-800); font-weight: 500; }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:focus-within { background: var(--gray-100); }
+  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
+  .nav-search-input::placeholder { color: var(--gray-500); }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; position: relative; }
+  .nav-icon-btn:hover { background: var(--sand); }
+  .cart-badge, .wish-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
+  .cart-badge { background: var(--green-800); }
+  .wish-badge { background: var(--terra); }
+  .cart-badge.visible, .wish-badge.visible { display: flex; }
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
+  .burger-btn:hover { background: var(--sand); }
+  .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
+  .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); min-width: 0; }
+  .nav-search-inline-input::placeholder { color: var(--gray-500); }
+  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 20px; display: flex; align-items: center; padding: 4px; transition: color 0.2s; }
+  .search-close-btn:hover { color: var(--black); }
+
+  /* BUTTONS */
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-add i { font-size: 20px; }
+  .btn-add.in-cart { background: var(--green-800); }
+  @media (hover: hover) {
+    .btn-add:hover { background: var(--green-800); }
+    .btn-add.in-cart:hover { background: var(--black); }
+  }
+  .btn-add-sm { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-add-sm i { font-size: 18px; }
+  .btn-add-sm.in-cart { background: var(--green-800); }
+  @media (hover: hover) {
+    .btn-add-sm:hover { background: var(--green-800); }
+    .btn-add-sm.in-cart:hover { background: var(--black); }
+  }
+
+  /* PAGE WRAP */
+  .product-wrap { padding: 0 48px; margin-top: 80px; }
+
+  /* BREADCRUMB */
+  .product-breadcrumb { display: flex; align-items: center; gap: 10px; padding: 32px 0 28px; font-size: 14px; color: var(--gray-500); }
+  .product-breadcrumb a { color: var(--gray-500); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .product-breadcrumb a:hover { color: var(--green-800); }
+  .product-breadcrumb a i { font-size: 16px; }
+  .bc-sep { color: var(--gray-300); }
+  .bc-current { color: var(--black); font-weight: 500; }
+
+  /* PRODUCT HERO */
+  .product-hero { display: grid; grid-template-columns: 55fr 45fr; gap: 64px; padding-bottom: 80px; align-items: start; }
+
+  /* GALLERY */
+  .product-gallery { position: sticky; top: 100px; }
+  .gallery-viewport { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4/3; background: var(--sand); }
+  .gallery-slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-300); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+  .gallery-slide.active { opacity: 1; pointer-events: auto; }
+  .gallery-badge { position: absolute; bottom: 16px; left: 16px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
+  .gallery-nav { display: flex; align-items: center; justify-content: center; gap: 6px; padding-top: 20px; }
+  .page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .page-btn:hover { background: var(--gray-100); }
+  .page-btn.active { background: var(--green-800); color: var(--cream-bright); }
+  .page-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+  /* PRODUCT INFO */
+  .product-info { padding-top: 4px; }
+  .pi-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .pi-region { background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 6px 16px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .pi-wish { background: var(--sand); border: none; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-300); transition: color 0.2s, background 0.2s; }
+  .pi-wish.liked { color: var(--terra); }
+  @media (hover: hover) { .pi-wish:hover { background: var(--gray-100); color: var(--terra); } }
+  .product-info h1 { font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 900; letter-spacing: -0.02em; color: var(--black); line-height: 1.1; margin-bottom: 14px; }
+  .pi-desc { font-size: 15px; color: var(--gray-500); line-height: 1.55; margin-bottom: 10px; }
+  .pi-longdesc { font-size: 15px; color: var(--gray-800); line-height: 1.65; margin-bottom: 32px; }
+  .pi-price { font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; margin-bottom: 24px; }
+  .pi-gram-label { font-size: 12px; font-weight: 500; color: var(--gray-500); margin-bottom: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .pi-grams { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .gram-pill { background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 9px 18px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap; }
+  .gram-pill:hover { background: var(--gray-100); }
+  .gram-pill.active { background: var(--green-800); color: var(--cream-bright); }
+  .pi-actions { display: flex; align-items: center; gap: 12px; }
+
+  /* NOT FOUND */
+  .not-found { padding: 80px 0; text-align: center; }
+  .not-found h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; margin-bottom: 16px; }
+  .not-found p { color: var(--gray-500); margin-bottom: 32px; }
+  .not-found a { color: var(--green-800); text-decoration: none; font-weight: 500; }
+
+  /* BREW SECTION */
+  .brew-section { background: var(--sand); padding: 80px 48px; }
+  .brew-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 40px; }
+  .brew-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .brew-card { background: var(--cream-bright); border-radius: 20px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .brew-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
+  .brew-label { font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.08em; text-transform: uppercase; }
+  .brew-value { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 900; color: var(--black); letter-spacing: -0.01em; line-height: 1.1; }
+  .brew-sub { font-size: 13px; color: var(--gray-500); }
+
+  /* REVIEWS SECTION */
+  .reviews-section { padding: 80px 48px; background: var(--cream); }
+  .reviews-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 40px; }
+  .reviews-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
+  .reviews-count-lbl { font-size: 14px; color: var(--gray-500); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .review-card { background: var(--cream-bright); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .review-top { display: flex; align-items: center; gap: 12px; }
+  .review-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--cream-bright); flex-shrink: 0; }
+  .review-meta { flex: 1; }
+  .review-author { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
+  .review-date { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .review-stars { font-size: 14px; letter-spacing: 1px; }
+  .review-text { font-size: 14px; line-height: 1.65; color: var(--gray-800); }
+  .reviews-empty { font-size: 15px; color: var(--gray-500); }
+
+  /* SIMILAR SECTION */
+  .similar-section { padding: 80px 48px; background: var(--cream); border-top: 1px solid var(--sand); }
+  .similar-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 40px; }
+  .similar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
+  @media (hover: hover) { .product-card:hover { transform: translateY(-6px); } }
+  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .product-body p { font-size: 13px; color: var(--gray-500); line-height: 1.5; flex: 1; }
+  .product-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 16px; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 900; color: var(--green-800); }
+
+  /* SCROLL TOP */
+  .scroll-top { position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px; border-radius: 50%; background: var(--black); color: var(--cream-bright); border: none; cursor: pointer; font-size: 20px; display: none; align-items: center; justify-content: center; z-index: 300; transition: opacity 0.2s; opacity: 0.7; }
+  .scroll-top:hover { opacity: 1; }
+  .scroll-top.visible { display: flex; }
+
+  /* FOOTER */
+  footer { background: var(--black); color: var(--cream-bright); padding: 80px 48px 48px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand p { font-size: 14px; color: var(--gray-300); line-height: 1.7; margin-top: 20px; max-width: 260px; }
+  .footer-col h5, .footer-newsletter h5 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a { color: var(--cream-bright); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-500); }
+  .footer-newsletter p { font-size: 14px; color: var(--gray-300); line-height: 1.6; margin-bottom: 20px; }
+  .newsletter-form { display: flex; gap: 8px; }
+  .newsletter-input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; }
+  .newsletter-input::placeholder { color: var(--gray-500); }
+  .btn-subscribe { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 12px 22px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .btn-subscribe:hover { background: var(--green-500); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+  .footer-bottom p { font-size: 13px; color: var(--gray-500); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-social-btn { background: rgba(255,255,255,0.08); border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 18px; transition: all 0.2s; }
+  .footer-social-btn:hover { background: var(--green-800); color: var(--cream-bright); }
+
+  /* MOBILE MENU */
+  .mobile-menu-overlay { display: none; position: fixed; inset: 0; background: rgba(28,26,20,0.3); z-index: 399; backdrop-filter: blur(4px); }
+  .mobile-menu-overlay.open { display: block; }
+  .mobile-menu { position: fixed; top: 76px; right: 16px; background: var(--sand); border-radius: 20px; padding: 8px; z-index: 401; transform: scale(0.95) translateY(-8px); opacity: 0; pointer-events: none; transition: transform 0.2s ease, opacity 0.2s ease; min-width: 220px; }
+  .mobile-menu.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .mm-nav { display: flex; flex-direction: column; gap: 2px; }
+  .mm-item { display: flex; align-items: center; padding: 14px 16px; border-radius: 14px; text-decoration: none; color: var(--black); transition: background 0.2s; gap: 12px; }
+  .mm-item:hover, .mm-item.active { background: var(--gray-100); }
+  .mm-item-title { font-size: 15px; font-weight: 500; }
+  .mm-footer { padding: 12px 16px 6px; border-top: 1px solid var(--gray-100); margin-top: 4px; }
+  .mm-footer-text { font-size: 12px; color: var(--gray-500); }
+
+  /* PROFILE PANEL */
+  .profile-overlay { display: none; position: fixed; inset: 0; z-index: 398; }
+  .profile-overlay.open { display: block; }
+  .profile-panel { position: fixed; top: 90px; right: 48px; width: 340px; background: var(--sand); border-radius: 20px; z-index: 401; transform: translateY(-12px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.25s ease, opacity 0.25s ease; overflow: hidden; max-height: calc(100vh - 110px); overflow-y: auto; scrollbar-width: none; }
+  .profile-panel::-webkit-scrollbar { display: none; }
+  .profile-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .pp-header { padding: 16px 16px 14px; position: relative; border-radius: 20px 20px 0 0; background: var(--cream-bright); }
+  .pp-close { position: absolute; top: 12px; right: 12px; background: var(--sand); border: none; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-500); transition: all 0.2s; }
+  .pp-close:hover { background: var(--gray-100); color: var(--black); }
+  .pp-user { display: flex; align-items: center; gap: 12px; }
+  .pp-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-800); flex-shrink: 0; }
+  .pp-name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .pp-email { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .pp-body { padding: 8px 8px 16px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .pp-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); padding: 12px 12px 6px; }
+  .pp-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--black); }
+  .pp-item:hover { background: var(--sand); }
+  .pp-item-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
+  .pp-item-text { flex: 1; }
+  .pp-item-title { font-size: 14px; font-weight: 500; }
+  .pp-item-sub { font-size: 12px; color: var(--gray-500); margin-top: 1px; }
+  .pp-item-badge { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 3px 8px; white-space: nowrap; }
+  .pp-item-arrow { font-size: 16px; color: var(--gray-300); }
+  .pp-logout { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; color: #E84A2E; font-size: 14px; font-weight: 500; border: none; background: none; font-family: 'Inter', sans-serif; width: 100%; transition: background 0.2s; margin-top: 4px; }
+  .pp-logout:hover { background: rgba(232,74,46,0.07); }
+  .pp-logout .pp-item-icon { background: rgba(232,74,46,0.12); color: #E84A2E; }
+  .pp-logout:hover .pp-item-icon { background: rgba(232,74,46,0.18); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; height: 72px; gap: 4px; }
+    .nav-links, .nav-search { display: none; }
+    .nav-spacer { flex: 1; }
+    .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
+    .burger-btn { display: flex; }
+    nav.search-active .nav-spacer { display: none; }
+    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
+    nav.search-active .nav-right { display: none; }
+    nav.search-active .burger-btn { display: none; }
+    .product-wrap { padding: 0 16px; margin-top: 72px; }
+    .product-breadcrumb { padding: 20px 0 16px; font-size: 13px; }
+    .product-hero { grid-template-columns: 1fr; gap: 24px; padding-bottom: 48px; }
+    .product-gallery { position: static; }
+    .gallery-viewport { aspect-ratio: 1/1; }
+    .product-info h1 { font-size: 26px; }
+    .pi-price { font-size: 26px; }
+    .brew-section { padding: 60px 16px; }
+    .brew-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .brew-card { padding: 20px 16px; }
+    .brew-value { font-size: 18px; }
+    .reviews-section { padding: 60px 16px; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 14px; }
+    .similar-section { padding: 60px 16px; }
+    .similar-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .product-img { aspect-ratio: 1/1; }
+    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
+    .pp-header { padding: 14px 14px 12px; }
+    .pp-body { padding: 6px 6px 12px; }
+    .pp-item-icon { width: 44px; height: 44px; font-size: 22px; }
+    .pp-avatar { width: 52px; height: 52px; font-size: 22px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .scroll-top { bottom: 20px; right: 20px; }
+  }
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .similar-grid { grid-template-columns: repeat(3, 1fr); }
+    .product-hero { gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-logo"><a href="sol-tea.html"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#226F54"/><path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#226F54"/><path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#226F54"/></svg></a></div>
+  <ul class="nav-links">
+    <li><a href="sol-tea.html">Про нас</a></li>
+    <li><a href="sol-shop.html" class="active">Магазин</a></li>
+  </ul>
+  <div class="nav-search">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="desktopSearchInput" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" onkeydown="if(event.key==='Enter'&&this.value.trim())window.location='sol-shop.html'">
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-search-inline" id="navSearchInline" style="background:var(--sand);border-radius:40px;">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="navSearchInput" placeholder="Пошук чаю..." class="nav-search-inline-input" onkeydown="if(event.key==='Enter'&&this.value.trim())window.location='sol-shop.html'">
+    <button class="search-close-btn" onclick="closeProductSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" title="Пошук" onclick="openProductSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
+    <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" title="Вподобані"><i class="hgi-stroke hgi-favourite"></i><span class="wish-badge" id="wishBadge"></span></button>
+    <button class="nav-icon-btn" title="Кошик" onclick="goToCart()"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
+    <button class="nav-icon-btn" title="FAQ" onclick="window.location.href='sol-faq.html'"><i class="hgi-stroke hgi-help-circle"></i></button>
+  </div>
+  <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
+</nav>
+
+<div class="product-wrap">
+  <div class="product-breadcrumb">
+    <a href="sol-shop.html"><i class="hgi-stroke hgi-arrow-left-01"></i> Магазин</a>
+    <span class="bc-sep">/</span>
+    <span class="bc-current" id="bcName"></span>
+  </div>
+
+  <div id="notFound" class="not-found" style="display:none">
+    <h2>Товар не знайдено</h2>
+    <p>Можливо, він більше не доступний або адреса некоректна.</p>
+    <a href="sol-shop.html">← Повернутися до магазину</a>
+  </div>
+
+  <div class="product-hero" id="productHero">
+    <div class="product-gallery">
+      <div class="gallery-viewport" id="galleryViewport"></div>
+      <div class="gallery-nav" id="galleryNav"></div>
+    </div>
+    <div class="product-info">
+      <div class="pi-top">
+        <span class="pi-region" id="piRegion"></span>
+        <button class="pi-wish" id="piWish" onclick="toggleProductWish()"><i class="hgi-stroke hgi-favourite"></i></button>
+      </div>
+      <h1 id="piName"></h1>
+      <p class="pi-desc" id="piDesc"></p>
+      <p class="pi-longdesc" id="piLongDesc"></p>
+      <div class="pi-price" id="piPrice"></div>
+      <div id="piGramWrap" style="display:none">
+        <div class="pi-gram-label">Кількість</div>
+        <div class="pi-grams" id="piGrams"></div>
+      </div>
+      <div class="pi-actions">
+        <button class="btn-add" id="piCartBtn" onclick="toggleProductCart()">
+          <i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="brew-section" id="brewSection" style="display:none">
+  <h2>Як заварювати</h2>
+  <div class="brew-grid" id="brewGrid"></div>
+</section>
+
+<section class="reviews-section" id="reviewsSection">
+  <div class="reviews-header">
+    <h2>Відгуки</h2>
+    <span class="reviews-count-lbl" id="reviewsCountLbl"></span>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<section class="similar-section" id="similarSection" style="display:none">
+  <h2>Схожі товари</h2>
+  <div class="similar-grid" id="similarGrid"></div>
+</section>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo"><svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#7CC44A"/><path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#7CC44A"/><path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#7CC44A"/></svg></div>
+      <p>Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+    </div>
+    <div class="footer-col"><h5>Магазин</h5><ul><li><a href="#">Чай</a></li><li><a href="#">Посуд</a></li><li><a href="#">Дошки</a></li><li><a href="#">Аксесуари</a></li></ul></div>
+    <div class="footer-col"><h5>Про нас</h5><ul><li><a href="#">Наша історія</a></li><li><a href="#">Як заварювати</a></li><li><a href="#">Блог</a></li><li><a href="#">Контакти</a></li></ul></div>
+    <div class="footer-newsletter">
+      <h5>Підписка</h5>
+      <p>Нові надходження та сезонні новинки — першими.</p>
+      <div class="newsletter-form"><input class="newsletter-input" type="email" placeholder="Ваш email"><button class="btn-subscribe">OK</button></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Söl Tea. Всі права захищені.</p>
+    <div class="footer-socials">
+      <button class="footer-social-btn" title="Instagram"><i class="hgi-stroke hgi-instagram"></i></button>
+      <button class="footer-social-btn" title="Telegram"><i class="hgi-stroke hgi-telegram"></i></button>
+      <button class="footer-social-btn" title="Facebook"><i class="hgi-stroke hgi-facebook-01"></i></button>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-nav">
+    <a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a>
+  </div>
+  <div class="mm-footer"><p class="mm-footer-text">© 2025 Söl Tea</p></div>
+</div>
+
+<div class="profile-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+<div class="profile-panel" id="profilePanel">
+  <div class="pp-header">
+    <button class="pp-close" onclick="toggleProfile()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <div class="pp-user">
+      <div class="pp-avatar"><i class="hgi-stroke hgi-user-circle"></i></div>
+      <div><div class="pp-name">Яна Лізгова</div><div class="pp-email">yana@sol-tea.com</div></div>
+    </div>
+  </div>
+  <div class="pp-body">
+    <div class="pp-section-label">Мій акаунт</div>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-package-01"></i></div><div class="pp-item-text"><div class="pp-item-title">Замовлення</div><div class="pp-item-sub">Останнє: 23 березня</div></div><span class="pp-item-badge">1 нове</span><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-favourite"></i></div><div class="pp-item-text"><div class="pp-item-title">Вішліст</div><div class="pp-item-sub">8 збережених товарів</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-location-04"></i></div><div class="pp-item-text"><div class="pp-item-title">Адреси доставки</div><div class="pp-item-sub">3 збережені адреси</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-star"></i></div><div class="pp-item-text"><div class="pp-item-title">Бонуси</div><div class="pp-item-sub">680 балів накопичено</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <div class="pp-section-label">Налаштування</div>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-user-edit-01"></i></div><div class="pp-item-text"><div class="pp-item-title">Особисті дані</div><div class="pp-item-sub">Редагувати профіль</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-credit-card"></i></div><div class="pp-item-text"><div class="pp-item-title">Спосіб оплати</div><div class="pp-item-sub">Картки та платіжні дані</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <a href="#" class="pp-item"><div class="pp-item-icon"><i class="hgi-stroke hgi-lock-password"></i></div><div class="pp-item-text"><div class="pp-item-title">Безпека</div><div class="pp-item-sub">Пароль та вхід</div></div><i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i></a>
+    <button class="pp-logout"><div class="pp-item-icon"><i class="hgi-stroke hgi-logout-01"></i></div>Вийти з акаунту</button>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  {name:'Те Гуань Інь',cat:'oolong',section:'tea',region:'Фуцзянь',desc:'Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.',longDesc:'Те Гуань Інь з гір Аньсі — один із найвідоміших улунів світу. Легка ферментація зберігає квіткові нотки орхідеї та жасмину. Чай дарує відчуття свіжості та легкості, а тривале ніжне послясмаччя нагадує про весняний сад.',price:'₴ 480',bg:'',badge:null,grams:[50,100,200],brew:{temp:'90°C',time:'2–3 хв',amount:'5г / 150мл',steeps:'5–7 разів'},images:3,reviews:[{author:'Марія К.',rating:5,date:'Березень 2026',text:'Дуже ніжний і ароматний. П\'ю вже третій раз — кожен раз все більше подобається.'},{author:'Олексій Р.',rating:5,date:'Лютий 2026',text:'Квіткові нотки дуже яскраві, послясмаччя тривале. Рекомендую всім, хто ще не пробував улун.'},{author:'Таня В.',rating:4,date:'Лютий 2026',text:'Гарний чай, але очікувала більш насиченого смаку. Проте аромат неймовірний.'}]},
+  {name:'Шен Пуер 2019',cat:'puer',section:'tea',region:'Юньнань',desc:'Яскравий, терпкий, з потенціалом до витримки. З гір Іу.',longDesc:'Молодий шен пуер 2019 року зі знаменитого регіону Іу в Юньнані. Яскравий і трохи терпкий зараз, але з роками перетвориться на щось значно глибше. Ідеальний для колекціонування або поточного вживання любителями яскравих смаків.',price:'₴ 920',bg:'#DDD8CC',badge:'new',grams:[50,100,200],brew:{temp:'95°C',time:'1–2 хв',amount:'6г / 150мл',steeps:'7–10 разів'},images:3,reviews:[{author:'Павло В.',rating:5,date:'Квітень 2026',text:'Дуже живий і яскравий. Чудово для молодого шена.'},{author:'Ксенія Р.',rating:4,date:'Березень 2026',text:'Гарний потенціал. Буду пробувати через кілька років.'}]},
+  {name:'Фенхуан Даньцун',cat:'oolong',section:'tea',region:'Гуандун',desc:'Персик, медова орхідея. З гір Фенхуан, обмежений збір.',longDesc:'Фенхуан Даньцун — одиничне дерево з гір Фенхуан у Гуандуні. Цей сорт відрізняється яскравим персиковим ароматом з медовими нотками орхідеї. Обмежений збір — лише кілька кілограмів на сезон з одного дерева.',price:'₴ 680',bg:'#E4DDD3',badge:'limited',grams:[25,50,100],brew:{temp:'95°C',time:'1–2 хв',amount:'7г / 150мл',steeps:'6–8 разів'},images:3,reviews:[{author:'Дмитро С.',rating:5,date:'Квітень 2026',text:'Неймовірний персиковий аромат. Це не просто чай — це досвід.'},{author:'Оля Ф.',rating:5,date:'Березень 2026',text:'Купила як подарунок — колега в захваті. Буду брати ще.'}]},
+  {name:'Шу Пуер Старий',cat:'puer',section:'tea',region:'Юньнань',desc:"Витриманий шу, м'який і глибокий. Землистий, без гіркоти.",longDesc:"Стиглий пуер з тривалою витримкою — темний, насичений, без жодної гіркоти. Землистий аромат лісового підліску і смак темного шоколаду. Ідеально заварювати увечері для розслаблення.",price:'₴ 560',bg:'#D5CFCA',badge:null,grams:[50,100,200],brew:{temp:'98°C',time:'3–5 хв',amount:'7г / 200мл',steeps:'5–7 разів'},images:2,reviews:[{author:'Юля М.',rating:5,date:'Лютий 2026',text:'Земля, ліс, шоколад — і все це в одній чашці. Мій вечірній ритуал.'},{author:'Петро Д.',rating:5,date:'Лютий 2026',text:"Без гіркоти, дуже м'який. Ідеально для тих, хто ще не знайомий з пуером."},{author:'Настя К.',rating:4,date:'Січень 2026',text:'Дуже своєрідний смак, але з часом починаєш цінувати.'}]},
+  {name:'Да Хун Пао',cat:'oolong',section:'tea',region:'Фуцзянь',desc:'Мінеральний, смажений. Скелі Уї, обмежений збір.',longDesc:'Да Хун Пао зі скель Уї — один з найвидатніших улунів. Виражена мінеральність скелястого терруару поєднується зі смаженими нотками і темним шоколадом. Глибокий, теплий і стійкий смак.',price:'₴ 740',bg:'#E8E3D8',badge:null,grams:[25,50,100],brew:{temp:'95°C',time:'1–2 хв',amount:'7г / 150мл',steeps:'6–8 разів'},images:2,reviews:[{author:'Ігор М.',rating:5,date:'Березень 2026',text:'Смажений аромат просто казковий. Чай для повільних вечорів.'},{author:'Катя Л.',rating:4,date:'Лютий 2026',text:'Дуже гарний чай. Трохи незвичний, але з кожним проливом відкриваєш щось нове.'}]},
+  {name:'Цзінь Сюань',cat:'oolong',section:'tea',region:'Тайвань',desc:'Молочний, вершковий. Гірські плантації Тайваню.',longDesc:"Цзінь Сюань або Молочний улун з гірських плантацій центрального Тайваню. Природна вершкова текстура і молочні нотки — без жодних добавок. М'який, округлий смак ідеально підходить для тих, хто починає знайомство з улунами.",price:'₴ 520',bg:'#DDE4D5',badge:'new',grams:[50,100,200],brew:{temp:'85°C',time:'2–3 хв',amount:'5г / 200мл',steeps:'4–5 разів'},images:2,reviews:[{author:'Анна П.',rating:5,date:'Квітень 2026',text:'Просто чудовий! М\'який смак, легкий аромат. Мій новий улюблений.'},{author:'Вова К.',rating:5,date:'Березень 2026',text:'Цей чай підкорює з першого проливу. Рекомендую як перший улун.'}]},
+  {name:'Лао Шу Пуер',cat:'puer',section:'tea',region:'Юньнань',desc:'Зі старих дерев, глибокий і складний. Рідкісний.',longDesc:'Шен пуер зі столітніх дерев Юньнаню — рідкісний і коштовний матеріал. Глибина та складність смаку, недосяжна для молодих дерев. Смоляні, медові нотки з тривалим теплим послясмаччям.',price:'₴ 1 200',bg:'#E0D9CE',badge:null,grams:[25,50,100],brew:{temp:'95°C',time:'2–3 хв',amount:'7г / 150мл',steeps:'8–12 разів'},images:2,reviews:[]},
+  {name:'Дун Дін',cat:'oolong',section:'tea',region:'Тайвань',desc:'Флоральний, легко смажений. Класика тайванського улуну.',longDesc:'Дун Дін з гори Замерзлий Вершок у Тайвані — культовий улун середньої ферментації. Легке смаження додає теплоту флоральному профілю. Збалансований, зрілий і дуже медитативний чай.',price:'₴ 610',bg:'#EBE5D8',badge:null,grams:[50,100,200],brew:{temp:'90°C',time:'2–3 хв',amount:'5г / 200мл',steeps:'4–6 разів'},images:2,reviews:[{author:'Роман Б.',rating:5,date:'Березень 2026',text:'Класичний тайванський смак. Якщо шукаєте еталонний улун — це він.'}]},
+  {name:'Бін Ча 2021',cat:'puer',section:'tea',region:'Юньнань',desc:'Пресований млинець, гори Менхай. Молодий і живий.',longDesc:'Пресований млинець шен пуеру 2021 року з гір Менхай. Молодий, живий і трохи квітковий — потребує часу для розкриття. Відмінний вибір для початківців у колекціонуванні пуерів.',price:'₴ 780',bg:'#E2DBD0',badge:'new',grams:[50,100,200],brew:{temp:'95°C',time:'1–2 хв',amount:'6г / 150мл',steeps:'7–10 разів'},images:2,reviews:[{author:'Сергій О.',rating:4,date:'Квітень 2026',text:'Гарний молодий шен. Тримаю один млинець для витримки.'}]},
+  {name:'Бай Хао Улун',cat:'oolong',section:'tea',region:'Тайвань',desc:'Мускатний виноград, мед. Орієнтальний красень Тайваню.',longDesc:'Бай Хао Улун, він же Орієнтальний красень — унікальний чай з Тайваню, що виробляється завдяки укусам цикадок. Виражені нотки мускатного винограду, меду та фруктів. Один з найнезвичніших улунів.',price:'₴ 960',bg:'#E6E0D2',badge:null,grams:[25,50,100],brew:{temp:'85°C',time:'3–4 хв',amount:'5г / 200мл',steeps:'3–4 рази'},images:3,reviews:[{author:'Соня Ч.',rating:5,date:'Квітень 2026',text:'Незвичайний чай — нотки винограду дуже виразні. Купила ще раз.'},{author:'Льоша Г.',rating:5,date:'Квітень 2026',text:'Найкращий улун який я куштував. Фантастичний аромат.'}]},
+  {name:'Менхай Шу 2015',cat:'puer',section:'tea',region:'Юньнань',desc:'Витриманий шу з фабрики Менхай. Темний, насичений, без гіркоти.',longDesc:'Шу пуер 2015 року виробництва культової фабрики Менхай. Десять років витримки зробили смак оксамитовим і глибоким. Темний настій з нотками чорносливу і вологого дерева.',price:'₴ 1 050',bg:'#D0CAC0',badge:null,grams:[50,100,200],brew:{temp:'98°C',time:'3–5 хв',amount:'7г / 200мл',steeps:'5–8 разів'},images:2,reviews:[{author:'Макс Т.',rating:5,date:'Березень 2026',text:'Менхай не підводить. Оксамитовий, темний, глибокий.'},{author:'Іра В.',rating:5,date:'Березень 2026',text:'Найкращий шу пуер який я куштувала. Дякую!'}]},
+  {name:'Іу Гу Шу',cat:'puer',section:'tea',region:'Юньнань',desc:'Шен зі столітніх дерев Іу. Глибокий, смоляний, складний.',longDesc:'Іу Гу Шу — старий шен пуер зі столітніх дерев легендарного регіону Іу. Смоляний, медовий, з нескінченно складним профілем. Для справжніх цінувальників пуеру.',price:'₴ 1 450',bg:'#C8C2B8',badge:'limited',grams:[25,50,100],brew:{temp:'95°C',time:'2–3 хв',amount:'7г / 150мл',steeps:'10+ разів'},images:3,reviews:[{author:'Олег М.',rating:5,date:'Квітень 2026',text:'Найкраще що я купував у цьому магазині. Просто неймовірно.'}]},
+  {name:'Весняний Збір 2026',cat:'seasonal',section:'tea',region:'Фуцзянь',desc:'Перший зрив, гора Уї. Лише 12 кг. Ніжний і яскравий.',longDesc:'Перший весняний збір 2026 року з гори Уї у Фуцзяні. Лише 12 кілограмів цьогорічного врожаю. Ніжний, квітковий, з яскравою свіжістю — щось, що буває лише раз на рік.',price:'₴ 1 100',bg:'#DAD4C8',badge:'limited',grams:[25,50,100],brew:{temp:'85°C',time:'2–3 хв',amount:'5г / 200мл',steeps:'4–5 разів'},images:2,reviews:[]},
+  {name:'Осінній Фенхуан 2025',cat:'seasonal',section:'tea',region:'Гуандун',desc:'Осінній зрив Да Хун Пао. Димний, мінеральний, тривале послясмаччя.',longDesc:'Осінній збір Фенхуан Даньцун 2025 року — рідкісний і особливий. Осіннє листя дає більш концентрований і мінеральний смак. Димні ноти, тривале послясмаччя, характер скелі.',price:'₴ 920',bg:'#D4CEC4',badge:'limited',grams:[25,50,100],brew:{temp:'95°C',time:'1–2 хв',amount:'7г / 150мл',steeps:'6–8 разів'},images:2,reviews:[{author:'Ніна Р.',rating:5,date:'Квітень 2026',text:'Осінні збори завжди особливі. Дуже мінеральний і тривалий.'}]},
+  {name:'Набір "Знайомство"',cat:'sets',section:'tea',region:'Різні',desc:'5 сортів по 20 г: улун, пуер, сезонне. Ідеально для початку.',longDesc:"Набір з п'яти сортів по 20 г кожен: Те Гуань Інь, Цзінь Сюань, Шен Пуер 2019, Шу Пуер Старий і Весняний Збір. Ідеальний спосіб познайомитися з різними стилями китайського чаю.",price:'₴ 680',bg:'#DDD8CC',badge:'new',grams:null,brew:null,images:2,reviews:[{author:'Тетяна Б.',rating:5,date:'Квітень 2026',text:'Ідеальний подарунок! Я нічого не знала про китайський чай, а тепер замовляю окремо.'},{author:'Рома Н.',rating:5,date:'Березень 2026',text:'Взяв для дружини — вона в захваті. Тепер вона знає чай краще за мене.'}]},
+  {name:'Набір "Пуер"',cat:'sets',section:'tea',region:'Юньнань',desc:'Шен 2019, Шу старий, Бін Ча 2021 та Іу Гу Шу. По 25 г.',longDesc:'Набір для занурення у світ пуеру: Шен Пуер 2019, Шу Пуер Старий, Бін Ча 2021 та Іу Гу Шу по 25 г кожен. Від молодого яскравого шена до витриманого стиглого шу — увесь спектр.',price:'₴ 1 200',bg:'#D0CBC0',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Денис С.',rating:5,date:'Квітень 2026',text:'Відмінний спосіб порівняти всі типи пуеру. Рекомендую.'}]},
+  {name:'Гайвань біла 120мл',cat:'gaiwans',section:'teaware',region:'Цзиндечжень',desc:'Класична порцелянова гайвань для улуну і пуеру.',longDesc:"Класична біла порцелянова гайвань об'ємом 120 мл з Цзиндечженю. Нейтральний смак, зручне зіставлення кришечки. Ідеальна для улуну і молодого пуеру.",price:'₴ 560',bg:'#EAE5DC',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Оля П.',rating:5,date:'Березень 2026',text:'Гарна, легка, зручна. Прийшла в ідеальному стані.'}]},
+  {name:'Гайвань сіра 150мл',cat:'gaiwans',section:'teaware',region:'Цзиндечжень',desc:'Матова глазур, зручний корпус, нейтральний смак.',longDesc:'Гайвань 150 мл з матовою сірою глазур\'ю ручного нанесення. Трохи більший об\'єм підходить для тих, хто любить більше настою за один пролив.',price:'₴ 640',bg:'#D8D3CA',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Чайник Ісін 200мл',cat:'teapots',section:'teaware',region:'Ісін',desc:"Пурпурова глина зі стандартного кар'єру Хуанлун.",longDesc:"Чайник з автентичної пурпурової глини Ісін з кар'єру Хуанлун. З часом пористі стінки вбирають аромати чаю і покращують кожен наступний пролив.",price:'₴ 1 800',bg:'#C9B9A8',badge:'new',grams:null,brew:null,images:3,reviews:[{author:'Мирон О.',rating:5,date:'Квітень 2026',text:'Справжня глина Ісін. Відчувається навіть на дотик. Чудова якість.'}]},
+  {name:'Чайник Ju-Lun 180мл',cat:'teapots',section:'teaware',region:'Ісін',desc:'Класична форма Жу Лун Юн. Ідеально для шен пуеру.',longDesc:'Ісінський чайник форми Жу Лун Юн — класика, перевірена часом. 180 мл ідеально для гунфу-ча. Особливо рекомендується для шен пуеру.',price:'₴ 2 200',bg:'#BFB4A8',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Артем В.',rating:5,date:'Березень 2026',text:'Витончена форма, чудове лиття. Для справжнього гунфу-ча.'},{author:'Крістіна Л.',rating:5,date:'Лютий 2026',text:'Замовила як подарунок чоловіку-чайнику. Він в захваті.'}]},
+  {name:'Піала 60мл',cat:'bowls',section:'teaware',region:'Юньнань',desc:'Тонкостінна піала ручної роботи, глиняний обпал.',longDesc:"Невелика піала об'ємом 60 мл ручного формування і глиняного обпалу. Тонкі стінки добре передають температуру і дозволяють відчути чай всіма відчуттями.",price:'₴ 240',bg:'#DDD7CC',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Піала Небо 80мл',cat:'bowls',section:'teaware',region:'Юньнань',desc:'Глазурована в синій, форма широкого рота.',longDesc:"Піала «Небо» з характерною синьою глазур'ю і формою широкого рота — щоб відчути аромат на повну. 80 мл, комфортний розмір для одного ковтка.",price:'₴ 320',bg:'#C8D0D8',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Галя Р.',rating:5,date:'Квітень 2026',text:'Колір просто казковий. І дуже зручна форма.'}]},
+  {name:'Глечик 200мл',cat:'pitchers',section:'teaware',region:'Цзиндечжень',desc:'Ча Хай для зливання рівномірного настою.',longDesc:"Порцеляновий ча хай об'ємом 200 мл для рівномірного розливу настою по піалах. Нейтральний матеріал зберігає смак без змін.",price:'₴ 480',bg:'#DDD9D2',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Глечик скляний 300мл',cat:'pitchers',section:'teaware',region:'Тайвань',desc:'Жароміцне боросилікатне скло, видно колір чаю.',longDesc:"Скляний ча хай з жароміцного боросилікатного скла на 300 мл. Повністю прозорий — можна спостерігати за кольором настою при порівнянні проливів.",price:'₴ 560',bg:'#D8E0E4',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Євген Л.',rating:5,date:'Березень 2026',text:'Люблю бачити колір чаю. Ідеальна річ для цього.'}]},
+  {name:'Кетль Hario 800мл',cat:'kettles',section:'teaware',region:'Японія',desc:'Носик-гусяча шия, точний контроль потоку.',longDesc:"Японський кетль Hario з носиком «гусяча шия» для точного контролю потоку. 800 мл, нержавіюча сталь. Незамінний для гунфу-ча і пуеру.",price:'₴ 1 400',bg:'#D4D0C8',badge:'new',grams:null,brew:null,images:2,reviews:[{author:'Дарина С.',rating:5,date:'Квітень 2026',text:"Чудовий кетль. Контроль потоку на висоті. Обов'язковий інструмент."}]},
+  {name:'Кетль керамічний 600мл',cat:'kettles',section:'teaware',region:'Китай',desc:'Для нагрівання на плиті, рівномірний нагрів.',longDesc:"Керамічний кетль на 600 мл для нагрівання на газовій або керамічній плиті. Рівномірне нагрівання зберігає смак води. Традиційний вибір для пуеру.",price:'₴ 980',bg:'#CEC8BE',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Піала Небо 50мл',cat:'bowls',section:'teaware',region:'Юньнань',desc:'Маленька для швидких ковтків. Тонкостінна кераміка.',longDesc:"Мала версія піали «Небо» на 50 мл для традиційного гунфу-ча. Тонкостінна кераміка нагрівається рівномірно і зберігає температуру напою.",price:'₴ 200',bg:'#D4D8D0',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Гайвань з квіткою 100мл',cat:'gaiwans',section:'teaware',region:'Цзиндечжень',desc:'Ручний розпис у синьо-білій техниці доухай.',longDesc:"Гайвань 100 мл з ручним розписом у класичній синьо-білій техниці доухай. Унікальний квітковий малюнок — кожен виріб трохи відрізняється.",price:'₴ 720',bg:'#DDE3EB',badge:'limited',grams:null,brew:null,images:3,reviews:[{author:'Маша К.',rating:5,date:'Квітень 2026',text:'Неймовірна краса. Малюнок ручний — це відчувається. Справжнє мистецтво.'}]},
+  {name:'Дошка бамбукова S',cat:'bamboo',section:'boards',region:'Китай',desc:'Компактна, 25×15 см. З дренажним відсіком та шлангом.',longDesc:"Компактна бамбукова чайна дошка 25×15 см. Вбудований дренажний відсік і силіконовий шланг для відведення води. Ідеальна для невеликого столу.",price:'₴ 480',bg:'#D8D4C4',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Дошка бамбукова L',cat:'bamboo',section:'boards',region:'Китай',desc:'Простора, 40×25 см. Виїмка для чайника посередині.',longDesc:"Велика бамбукова чайна дошка 40×25 см з виїмкою для чайника по центру і дренажним лотком по периметру. Комфортно розмістить всі елементи церемонії.",price:'₴ 720',bg:'#D0CDB8',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Богдан К.',rating:5,date:'Березень 2026',text:'Простора і зручна. Бамбук якісний, без запаху.'}]},
+  {name:'Дошка горіхова',cat:'wood',section:'boards',region:'Тайвань',desc:'Волоський горіх, масло тунгу. Темна і тепла.',longDesc:'Чайна дошка з масиву волоського горіха, оброблена олією тунгу. Темне, тепле дерево з виразним малюнком. Ручна робота тайванських майстрів, кожна унікальна.',price:'₴ 1 200',bg:'#C0AE98',badge:'new',grams:null,brew:null,images:3,reviews:[{author:'Аліна Г.',rating:5,date:'Квітень 2026',text:'Просто красень. Темне дерево з чудовим малюнком.'}]},
+  {name:'Дошка дубова',cat:'wood',section:'boards',region:'Тайвань',desc:'Дуб з широкими річними кільцями, стійкий до вологи.',longDesc:'Дубова чайна дошка з широкими річними кільцями. Підвищена стійкість до вологи і деформації. Масло тунгу, ручне полірування.',price:'₴ 1 050',bg:'#C8B8A0',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:"Дошка кам'яна сланець",cat:'stone',section:'boards',region:'Китай',desc:'Натуральний сланець, 30×20 см. Стійкий до температур.',longDesc:"Чайна дошка з натурального сланцю 30×20 см. Витримує будь-які температури, не вбирає запахи. Текстура природного каменю — кожна дошка унікальна.",price:'₴ 1 600',bg:'#B8BCB8',badge:'limited',grams:null,brew:null,images:2,reviews:[{author:'Вікторія П.',rating:5,date:'Квітень 2026',text:'Важка, але дуже красива. Каміння і чай — ідеальне поєднання.'}]},
+  {name:'Дошка мармурова',cat:'stone',section:'boards',region:'Китай',desc:'Білий кара-мармур, 25×16 см. Елегантна поверхня.',longDesc:"Чайна дошка з білого кара-мармуру 25×16 см. Прожилки кожної плити унікальні. Елегантний вигляд, прохолодна поверхня, стійкість до забруднень.",price:'₴ 1 900',bg:'#DDD9D4',badge:'limited',grams:null,brew:null,images:3,reviews:[]},
+  {name:'Набір ча-дао 6 предметів',cat:'tools',section:'accessories',region:'Юньнань',desc:'Щипці, ложка, голка, воронка, кліщі, підставка.',longDesc:'Повний набір інструментів ча-дао з 6 предметів: щипці, ложка для листя, голка для прочищення носика, воронка, кліщі і підставка. Бамбук і нержавіюча сталь.',price:'₴ 680',bg:'#D8D4C8',badge:'new',grams:null,brew:null,images:2,reviews:[{author:'Антон Б.',rating:5,date:'Березень 2026',text:'Все що потрібно в одному наборі. Якість на рівні.'}]},
+  {name:'Воронка бамбукова',cat:'tools',section:'accessories',region:'Китай',desc:'Для засипання листя без розсипу.',longDesc:'Проста і корисна бамбукова воронка для точного засипання чайного листя в гайвань або чайник без розсипу.',price:'₴ 120',bg:'#D0CCBA',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Ча-пе',cat:'tools',section:'accessories',region:'Тайвань',desc:'Бамбукова лопатка для виймання листя з пакування.',longDesc:'Ча-пе — бамбукова лопатка для дбайливого виймання чайного листя з паперового або фольгованого пакування. Зберігає структуру листя нетронутою.',price:'₴ 90',bg:'#D4D0C4',badge:null,grams:null,brew:null,images:2,reviews:[]},
+  {name:'Каністра для чаю 100г',cat:'store',section:'accessories',region:'Тайвань',desc:'Алюміній з силіконовим ущільнювачем. Матова чорна.',longDesc:'Алюмінієва каністра для зберігання 100 г чаю з подвійним силіконовим ущільнювачем. Захищає від вологи, світла і сторонніх запахів.',price:'₴ 320',bg:'#C8C4BC',badge:null,grams:null,brew:null,images:2,reviews:[{author:'Юля Д.',rating:5,date:'Лютий 2026',text:'Якісна і гарна. Чай тепер зберігається правильно.'}]}
+];
+
+const AVATAR_COLORS = ['#226F54','#C4855A','#4A4538','#7A7060','#7CC44A','#B5AFA3'];
+let currentSlide = 0;
+let currentProduct = null;
+let selectedGrams = null;
+
+function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')) || []; } catch(e) { return []; } }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
+function getWish() { try { return JSON.parse(sessionStorage.getItem('solWish')) || []; } catch(e) { return []; } }
+function saveWish(w) { sessionStorage.setItem('solWish', JSON.stringify(w)); }
+
+function updateCartBadge() {
+  const n = getCart().length;
+  const el = document.getElementById('cartBadge');
+  el.textContent = n;
+  el.classList.toggle('visible', n > 0);
+}
+function updateWishBadge() {
+  const n = getWish().length;
+  const el = document.getElementById('wishBadge');
+  el.textContent = n;
+  el.classList.toggle('visible', n > 0);
+}
+function goToCart() { window.location.href = 'sol-cart.html'; }
+function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
+
+function setCartBtnState(btn, inCart) {
+  btn.classList.toggle('in-cart', inCart);
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+function toggleProductCart() {
+  if (!currentProduct) return;
+  const btn = document.getElementById('piCartBtn');
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === currentProduct.name);
+  if (idx !== -1) { cart.splice(idx, 1); } else { cart.push({name: currentProduct.name, qty: 1, grams: selectedGrams}); }
+  saveCart(cart);
+  updateCartBadge();
+  setCartBtnState(btn, idx === -1);
+}
+
+function toggleProductWish() {
+  if (!currentProduct) return;
+  const btn = document.getElementById('piWish');
+  const wish = getWish();
+  const idx = wish.indexOf(currentProduct.name);
+  if (idx !== -1) { wish.splice(idx, 1); btn.classList.remove('liked'); }
+  else { wish.push(currentProduct.name); btn.classList.add('liked'); }
+  saveWish(wish);
+  updateWishBadge();
+}
+
+function toggleSmCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx !== -1) { cart.splice(idx, 1); } else { cart.push({name, qty: 1}); }
+  saveCart(cart);
+  updateCartBadge();
+  setSmCartBtnState(btn, idx === -1);
+}
+function setSmCartBtnState(btn, inCart) {
+  btn.classList.toggle('in-cart', inCart);
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+function renderGallery(p) {
+  const vp = document.getElementById('galleryViewport');
+  const nav = document.getElementById('galleryNav');
+  const bgs = [p.bg || 'var(--sand)', adjustBg(p.bg, -10), adjustBg(p.bg, 10)];
+  let slides = '';
+  for (let i = 0; i < p.images; i++) {
+    slides += `<div class="gallery-slide${i===0?' active':''}" style="background:${bgs[i]||'var(--sand)'}">Фото ${i+1}`;
+    if (i === 0 && p.badge) {
+      slides += `<div class="gallery-badge badge-${p.badge}">${p.badge==='new'?'Новинка':'Обмежений'}</div>`;
+    }
+    slides += '</div>';
+  }
+  vp.innerHTML = slides;
+  currentSlide = 0;
+  if (p.images <= 1) { nav.innerHTML = ''; return; }
+  renderGalleryNav(p.images);
+}
+
+function adjustBg(hex, amt) {
+  if (!hex) return 'var(--sand)';
+  try {
+    const n = parseInt(hex.slice(1), 16);
+    const r = Math.min(255, Math.max(0, (n >> 16) + amt));
+    const g = Math.min(255, Math.max(0, ((n >> 8) & 0xff) + amt));
+    const b = Math.min(255, Math.max(0, (n & 0xff) + amt));
+    return '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('');
+  } catch { return 'var(--sand)'; }
+}
+
+function renderGalleryNav(total) {
+  const nav = document.getElementById('galleryNav');
+  let html = `<button class="page-btn" onclick="changeSlide(${-1})"${currentSlide===0?' disabled':''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
+  for (let i = 0; i < total; i++) {
+    html += `<button class="page-btn${i===currentSlide?' active':''}" onclick="goToSlide(${i})">${i+1}</button>`;
+  }
+  html += `<button class="page-btn" onclick="changeSlide(${1})"${currentSlide===total-1?' disabled':''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
+  nav.innerHTML = html;
+}
+
+function goToSlide(i) {
+  const slides = document.querySelectorAll('.gallery-slide');
+  if (!slides[i]) return;
+  slides[currentSlide].classList.remove('active');
+  slides[i].classList.add('active');
+  currentSlide = i;
+  renderGalleryNav(slides.length);
+}
+function changeSlide(dir) {
+  const slides = document.querySelectorAll('.gallery-slide');
+  const next = currentSlide + dir;
+  if (next < 0 || next >= slides.length) return;
+  goToSlide(next);
+}
+
+function renderGrams(p) {
+  const wrap = document.getElementById('piGramWrap');
+  const container = document.getElementById('piGrams');
+  if (!p.grams) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  selectedGrams = p.grams[1] || p.grams[0];
+  container.innerHTML = p.grams.map((g, i) =>
+    `<button class="gram-pill${i===1||p.grams.length===1?' active':''}" onclick="selectGram(this, ${g})">${g}г</button>`
+  ).join('');
+}
+function selectGram(btn, g) {
+  document.querySelectorAll('.gram-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  selectedGrams = g;
+}
+
+function renderBrew(brew) {
+  const section = document.getElementById('brewSection');
+  const grid = document.getElementById('brewGrid');
+  section.style.display = 'block';
+  const items = [
+    {icon:'hgi-stroke hgi-fire-02', label:'Температура', value: brew.temp, sub:'води'},
+    {icon:'hgi-stroke hgi-clock-01', label:'Час', value: brew.time, sub:'заварювання'},
+    {icon:'hgi-stroke hgi-leaf-01', label:'Кількість', value: brew.amount, sub:'на заварку'},
+    {icon:'hgi-stroke hgi-refresh', label:'Проливів', value: brew.steeps, sub:'з одної порції'}
+  ];
+  grid.innerHTML = items.map(it => `
+    <div class="brew-card">
+      <div class="brew-icon"><i class="${it.icon}"></i></div>
+      <div class="brew-label">${it.label}</div>
+      <div class="brew-value">${it.value}</div>
+      <div class="brew-sub">${it.sub}</div>
+    </div>`).join('');
+}
+
+function renderReviews(reviews) {
+  const lbl = document.getElementById('reviewsCountLbl');
+  const grid = document.getElementById('reviewsGrid');
+  if (!reviews || reviews.length === 0) {
+    lbl.textContent = '';
+    grid.innerHTML = '<p class="reviews-empty">Поки що немає відгуків. Будьте першим!</p>';
+    return;
+  }
+  lbl.textContent = reviews.length + ' ' + pluralUk(reviews.length, 'відгук', 'відгуки', 'відгуків');
+  grid.innerHTML = reviews.map((r, i) => {
+    const initials = r.author.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    const stars = Array.from({length:5},(_,j)=>`<span style="color:${j<r.rating?'var(--green-800)':'var(--gray-300)'}">\u2605</span>`).join('');
+    return `<div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar" style="background:${color}">${initials}</div>
+        <div class="review-meta"><div class="review-author">${r.author}</div><div class="review-date">${r.date}</div></div>
+      </div>
+      <div class="review-stars">${stars}</div>
+      <p class="review-text">${r.text}</p>
+    </div>`;
+  }).join('');
+}
+
+function pluralUk(n, one, few, many) {
+  const mod10 = n % 10, mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+  return many;
+}
+
+function renderSimilar(p) {
+  const section = document.getElementById('similarSection');
+  const grid = document.getElementById('similarGrid');
+  let similar = PRODUCTS.filter(x => x.name !== p.name && x.cat === p.cat);
+  if (similar.length < 2) similar = PRODUCTS.filter(x => x.name !== p.name && x.section === p.section);
+  similar = similar.slice(0, 4);
+  if (similar.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  const cart = getCart();
+  grid.innerHTML = similar.map(s => {
+    const inCart = cart.some(c => c.name === s.name);
+    return `<div class="product-card" onclick="goToProduct('${s.name.replace(/'/g,"\\'")}')">
+      <div class="product-img"${s.bg?` style="background:${s.bg}"`:''}>Фото
+        <div class="product-region">${s.region}</div>
+        ${s.badge==='new'?'<div class="product-badge badge-new">Новинка</div>':''}
+        ${s.badge==='limited'?'<div class="product-badge badge-limited">Обмежений</div>':''}
+      </div>
+      <div class="product-body">
+        <h4>${s.name}</h4>
+        <p>${s.desc}</p>
+        <div class="product-footer">
+          <span class="product-price">${s.price}</span>
+          <button class="btn-add-sm${inCart?' in-cart':''}" onclick="event.stopPropagation();toggleSmCart('${s.name.replace(/'/g,"\\'")}',this)">
+            <i class="hgi-stroke hgi-${inCart?'checkmark-circle-02':'shopping-bag-add'}"></i> ${inCart?'В кошику':'Кошик'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderProduct(p) {
+  document.title = p.name + ' — Söl Tea';
+  document.getElementById('bcName').textContent = p.name;
+  document.getElementById('piRegion').textContent = p.region;
+  document.getElementById('piName').textContent = p.name;
+  document.getElementById('piDesc').textContent = p.desc;
+  document.getElementById('piLongDesc').textContent = p.longDesc;
+  document.getElementById('piPrice').textContent = p.price;
+  renderGallery(p);
+  renderGrams(p);
+  const cart = getCart();
+  setCartBtnState(document.getElementById('piCartBtn'), cart.some(c => c.name === p.name));
+  const wish = getWish();
+  if (wish.includes(p.name)) document.getElementById('piWish').classList.add('liked');
+  if (p.brew) renderBrew(p.brew);
+  renderReviews(p.reviews);
+  renderSimilar(p);
+}
+
+// INIT
+const params = new URLSearchParams(window.location.search);
+const productName = decodeURIComponent(params.get('name') || '');
+currentProduct = PRODUCTS.find(p => p.name === productName);
+
+if (!currentProduct) {
+  document.getElementById('notFound').style.display = 'block';
+  document.getElementById('productHero').style.display = 'none';
+  document.getElementById('reviewsSection').style.display = 'none';
+} else {
+  renderProduct(currentProduct);
+}
+updateCartBadge();
+updateWishBadge();
+
+// Scroll top
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+});
+
+// Profile & mobile menu
+function toggleProfile() {
+  document.getElementById('profilePanel').classList.toggle('open');
+  document.getElementById('profileOverlay').classList.toggle('open');
+}
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobileMenuOverlay').classList.toggle('open');
+}
+function openProductSearch() {
+  document.querySelector('nav').classList.add('search-active');
+  document.getElementById('navSearchInput').focus();
+}
+function closeProductSearch() {
+  document.querySelector('nav').classList.remove('search-active');
+  document.getElementById('navSearchInput').value = '';
+}
+</script>
+</body>
+</html>

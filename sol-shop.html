@@ -568,10 +568,10 @@ function renderCards() {
     const wishStyle = liked ? ' style="color:var(--terra)"' : '';
     const inCart = cart.some(c => c.name === p.name);
     return `
-    <div class="product-card" style="transition-delay:${i * 0.04}s">
+    <div class="product-card" style="transition-delay:${i * 0.04}s;cursor:pointer" onclick="goToProduct('${p.name.replace(/'/g,"\\'")}')">
       <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
         <div class="product-region">${p.region}</div>
-        <div class="product-wish${liked ? ' liked' : ''}"${wishStyle} onclick="toggleWish(this,'${p.name.replace(/'/g,"\\'")}')"><i class="hgi-stroke hgi-favourite"></i></div>
+        <div class="product-wish${liked ? ' liked' : ''}"${wishStyle} onclick="event.stopPropagation();toggleWish(this,'${p.name.replace(/'/g,"\\'")}')"><i class="hgi-stroke hgi-favourite"></i></div>
         ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
         ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
       </div>
@@ -580,7 +580,7 @@ function renderCards() {
         <p class="product-desc">${p.desc}</p>
         <div class="product-footer">
           <span class="product-price">${p.price}</span>
-          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="addToCart('${p.name.replace(/'/g,"\\'")}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
+          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();addToCart('${p.name.replace(/'/g,"\\'")}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
         </div>
       </div>
     </div>`;
@@ -697,6 +697,7 @@ function addToCart(name, btn) {
   setCartBtnState(btn, idx === -1);
 }
 function goToCart() { window.location.href = 'sol-cart.html'; }
+function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
 
 function toggleWishlist() {
   // wishlist panel — буде реалізовано пізніше

@@ -65,7 +65,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `sol-tea.html` | ✅ Готова | Головна сторінка |
 | `sol-shop.html` | ✅ Готова | Магазин (каталог) |
 | `index.html` | ✅ Готова | Редирект на sol-tea.html |
-| `sol-product.html` | ⬜ Не почата | Картка товару |
+| `sol-product.html` | ✅ Готова | Сторінка товару (динамічна, ?name=...) |
 | `sol-cart.html` | ⬜ Не почата | Кошик |
 | `sol-checkout.html` | ⬜ Не почата | Оформлення замовлення |
 
@@ -280,7 +280,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Репозиторій: https://github.com/yananaaas/sol-tea
 - GitHub Pages: https://yananaaas.github.io/sol-tea/
 - Деплой автоматичний через ~1 хв після push
-- Команда: `git add sol-tea.html sol-shop.html sol-product.html && git commit -m "опис" && git push`
+- Команда: `git add sol-tea.html sol-shop.html sol-product.html CLAUDE.md && git commit -m "опис" && git push`
 
 ---
 
@@ -298,11 +298,21 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ---
 
+## sol-product.html — специфіка
+
+- URL: `sol-product.html?name=Те+Гуань+Інь`
+- Дані товарів у JS масиві `PRODUCTS` (розширена версія SECTIONS з sol-shop.html)
+- Кожен товар: `{name, cat, section, region, desc, longDesc, price, bg, badge, grams, brew, images, reviews}`
+- `brew`: `{temp, time, amount, steeps}` — для чаїв; `null` для посуду/дошок/аксесуарів
+- `grams`: масив `[50, 100, 200]` або `null` (для наборів і не-чаю)
+- Галерея: кольорові плейсхолдери, пагінація стилю page-btn (як у магазині)
+- `goToProduct(name)` — є в usіх трьох файлах (sol-tea, sol-shop, sol-product)
+- Схожі товари: спочатку same `cat`, fallback — same `section`, max 4
+
 ## Наступні таски (черга)
 
-1. **Сторінка продукту** `sol-product.html` — фото, назва, регіон, ціна, вибір граму, кнопка в кошик
-2. **FAQ сторінка** `sol-faq.html` — Часті запитання (кнопка в хедері вже веде туди)
-3. **Блоки фото+текст на головній** — вирівняти контейнери 1:1
+1. **FAQ сторінка** `sol-faq.html` — Часті запитання (кнопка в хедері вже веде туди)
+2. **Блоки фото+текст на головній** — вирівняти контейнери 1:1
 
 ---
 
