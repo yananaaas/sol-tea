@@ -115,6 +115,8 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
   - `.nav-search-inline` показується (`display: flex`) — поле прямо в nav
   - `.search-overlay { display: none !important }` — overlay на мобілці вимкнений
 - `font-size: 16px` на input — запобігає iOS Safari zoom
+- `.focus()` викликається **синхронно** (без `setTimeout`) — інакше iOS не відкриває клавіатуру
+- При активному пошуку `margin-left: 12px` між логотипом і інпутом (рівний відступу сторінки)
 
 ---
 
@@ -187,11 +189,12 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - `padding: 14px 28px; font-size: 15px` — такий самий розмір, як кнопки
 
 ### Bestsellers (картки товарів)
-- Десктоп: 4 колонки, `gap: 40px`, `product-img { aspect-ratio: 1/1 }`
-- Мобілка: 1 колонка, `gap: 24px`, `aspect-ratio: 1/1`
+- Десктоп: 4 колонки, `gap: 40px`, `product-img { aspect-ratio: 4/3 }`
+- Мобілка: 1 колонка, `gap: 24px`, override `aspect-ratio: 1/1`
 - Картки: `display: flex; flex-direction: column` — рівна висота в ряду, footer завжди внизу
 - Ціна: `font-size: 20px; font-weight: 900; color: var(--green-800)`
 - Кнопка `.btn-add`: чорна → клік додає в кошик (зелена, "В кошику") → повторний клік прибирає
+- `.btn-add` hover загорнутий у `@media (hover: hover)` — щоб iOS не застрягав на зеленому після тапу
 - Серце: `44×44px; font-size: 20px`
 
 ### Ritual (Чай як ритуал)
@@ -262,8 +265,11 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Фон: `var(--sand)` — як відкритий дропдаун
 - Хедер (аватар + ім'я): `background: var(--cream-bright)`, `border-radius: 20px 20px 0 0`
 - Ім'я: `var(--black)`, email: `var(--gray-500)`
-- `.pp-item-icon`: `background: var(--green-800)`, `color: var(--cream-bright)`
-- `.pp-item:hover`: `background: var(--gray-100)`
+- `.pp-avatar`: `44×44px` десктоп, `52×52px` мобілка (override у `@media (max-width: 768px)`)
+- `.pp-item-icon`: `40×40px, font-size: 20px` десктоп; `44×44px, font-size: 22px` мобілка
+- `.pp-item-icon` базово: `background: var(--sand)`, `color: var(--green-800)`
+- `.pp-item:hover`: `background: var(--sand)`
+- Аватар — плейсхолдер `hgi-user-circle` поки немає фото
 - Індикатор кошика в nav: `background: var(--green-800)`, `font-weight: 500`
 - Індикатор вподобаних в nav: `background: var(--terra)`, `font-weight: 500`
 
@@ -274,7 +280,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Репозиторій: https://github.com/yananaaas/sol-tea
 - GitHub Pages: https://yananaaas.github.io/sol-tea/
 - Деплой автоматичний через ~1 хв після push
-- Команда: `git add sol-tea.html sol-shop.html && git commit -m "опис" && git push`
+- Команда: `git add sol-tea.html sol-shop.html sol-product.html && git commit -m "опис" && git push`
 
 ---
 
