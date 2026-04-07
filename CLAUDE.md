@@ -45,6 +45,11 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `.btn-filled-cream` | cream-bright | green-800 | sand |
 | `.btn-outline-dark` | прозорий | green-800 | green-800 fill |
 | `.btn-add` | black | cream-bright | green-800 |
+| `.btn-leave-review` | — | — | — |
+
+`.btn-leave-review` — підклас для кнопки "Залишити відгук" в sol-product.html. Розширює `.btn-outline-dark`. Десктоп: `margin-left: auto` (права сторона хедера відгуків). Мобілка: `margin-left: 0` (новий рядок).
+
+> **Увага:** `.btn-outline-dark` визначений лише в `sol-product.html`. В `sol-tea.html` і `sol-shop.html` його немає.
 
 Стрілки в кнопках: `translateX(3px)` → `translateX(7px)` на hover.
 `.btn-secondary i { transform: translateX(3px); margin-right: -4px; }` — для arrow-right-01.
@@ -201,6 +206,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - Десктоп: hover-ефект — фото ховається, з'являється зелений контент; `gap: 40px`
 - Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`); `gap: 24px`
 - На мобілці `transition: none` щоб прибрати hover-анімацію
+- **Важливо:** `.ritual-card-photo` на мобілці обов'язково потребує `width: 100%` — без нього плейсхолдер фото звужується
 - Іконка на картці: `hgi-leaf-01` (не `hgi-tea-cup` — такого іконки немає)
 
 ### Testimonials (відгуки)
@@ -339,7 +345,26 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ### Nav на sol-product.html
 - FAQ кнопка має клас `nav-faq` → прихована на мобілці (`.nav-faq { display: none }`)
+- `.nav-right { gap: 0 }` на мобілці — як на sol-tea.html і sol-shop.html
 - Решта nav — ідентична sol-tea.html і sol-shop.html
+
+### Мобільна специфіка sol-product.html
+- `.product-hero { grid-template-columns: 1fr }` — **не** `display: flex`, звичайний 1-колонковий грід
+- `.gallery-sticky { position: static }` — знімаємо sticky на мобілці
+- `.gallery-viewport { aspect-ratio: 1/1 }` — квадрат на мобілці
+- `.product-info { padding-top: 24px }` — відступ між галереєю і назвою товару
+- `.product-breadcrumb { font-size: 15px; font-weight: 500 }` — як `.mm-item-title` (пункти бургер-меню)
+- `.similar-grid { gap: 24px }` — як на сторінці Магазин
+- `.reviews-section`, `.similar-section { padding: 40px 16px }`
+- `.reviews-header { flex-wrap: wrap }` + `.btn-leave-review { margin-left: 0 }` — кнопка на новому рядку
+
+### Десктопна специфіка sol-product.html
+- `.product-hero { grid-template-columns: 55fr 45fr; column-gap: 64px; padding-bottom: 60px }`
+- `.gallery-col` — перша колонка (55fr); всередині: `.gallery-sticky` (sticky top:100px) + `.pi-brew`
+- `.gallery-nav { gap: 24px }` — мініатюри з великим відступом
+- `.gallery-thumb { border-radius: 20px }` — консистентно з картками
+- `.similar-section`, `.reviews-section { padding: 60px 48px }`
+- `@media (min-width: 769px) and (max-width: 1100px)` — similar-grid 3 колонки
 
 ### JS функції — sol-product.html
 | Функція | Що робить |
@@ -367,7 +392,6 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ## Наступні сторінки
 
-- `sol-product.html` — картка товару: фото, назва, регіон, ціна, вибір граму, кнопка в кошик
 - `sol-cart.html` — кошик: список з sessionStorage, кількість, ціни, кнопка оформити
 - `sol-checkout.html` — форма: ім'я, Нова Пошта, email, телефон, оплата
 
