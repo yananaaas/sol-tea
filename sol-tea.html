@@ -412,7 +412,7 @@
     .ritual-col-right { gap: 24px; }
     .ritual-col-right .ritual-card { aspect-ratio: unset; }
     .ritual-card { min-height: unset; background: var(--sand); }
-    .ritual-card-photo { position: static; opacity: 1; width: 100%; height: auto; aspect-ratio: 1/1; transition: none; }
+    .ritual-card-photo { position: static; opacity: 1; width: 100%; height: calc(100vw - 48px); transition: none; }
     .ritual-card-content { position: static; opacity: 1; background: transparent; padding: 20px 24px; justify-content: flex-start; transition: none; gap: 12px; }
     .ritual-card h4 { color: var(--black); }
     .ritual-card p { color: var(--gray-500); }
@@ -642,7 +642,7 @@
   </div>
   <div class="products-grid">
     <div class="product-card fade-up" style="cursor:pointer" onclick="goToProduct('Те Гуань Інь')">
-      <div class="product-img">Фото<span class="product-region">Фуцзянь</span><button class="product-wish" onclick="event.stopPropagation();this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button></div>
+      <div class="product-img">Фото<span class="product-region">Фуцзянь</span><button class="product-wish" onclick="solToggleWish(event,this,'teg')"><i class="hgi-stroke hgi-favourite"></i></button></div>
       <div class="product-body">
         <h4>Те Гуань Інь</h4>
         <p class="product-desc">Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.</p>
@@ -650,7 +650,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1" style="cursor:pointer" onclick="goToProduct('Шен Пуер 2019')">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="event.stopPropagation();this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-new">Новинка</div></div>
+      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="solToggleWish(event,this,'shen')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-new">Новинка</div></div>
       <div class="product-body">
         <h4>Шен Пуер 2019</h4>
         <p class="product-desc">Яскравий, терпкий, з потенціалом до витримки. З гір Іу.</p>
@@ -658,7 +658,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d1" style="cursor:pointer" onclick="goToProduct('Фенхуан Даньцун')">
-      <div class="product-img">Фото<span class="product-region">Гуандун</span><button class="product-wish" onclick="event.stopPropagation();this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-limited">Обмежений</div></div>
+      <div class="product-img">Фото<span class="product-region">Гуандун</span><button class="product-wish" onclick="solToggleWish(event,this,'feng')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-limited">Обмежений</div></div>
       <div class="product-body">
         <h4>Фенхуан Даньцун</h4>
         <p class="product-desc">Персик, медова орхідея. З гір Фенхуан, обмежений збір.</p>
@@ -666,7 +666,7 @@
       </div>
     </div>
     <div class="product-card fade-up fade-up-d2" style="cursor:pointer" onclick="goToProduct('Шу Пуер Старий')">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="event.stopPropagation();this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button></div>
+      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="solToggleWish(event,this,'shu')"><i class="hgi-stroke hgi-favourite"></i></button></div>
       <div class="product-body">
         <h4>Шу Пуер Старий</h4>
         <p class="product-desc">Витриманий шу, м'який і глибокий. Землистий, без гіркоти.</p>
@@ -1110,6 +1110,15 @@ function updateWishBadge() {
   const b = document.getElementById('wishBadge'); if (!b) return;
   const w = JSON.parse(sessionStorage.getItem('solWish')||'[]');
   b.textContent = w.length; b.classList.toggle('visible', w.length > 0);
+}
+function solToggleWish(event, btn, id) {
+  event.stopPropagation();
+  const w = JSON.parse(sessionStorage.getItem('solWish')||'[]');
+  const i = w.indexOf(id);
+  if (i === -1) w.push(id); else w.splice(i, 1);
+  sessionStorage.setItem('solWish', JSON.stringify(w));
+  btn.classList.toggle('liked', w.includes(id));
+  updateWishBadge();
 }
 updateCartBadge();
 updateWishBadge();
