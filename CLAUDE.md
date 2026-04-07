@@ -305,9 +305,58 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Кожен товар: `{name, cat, section, region, desc, longDesc, price, bg, badge, grams, brew, images, reviews}`
 - `brew`: `{temp, time, amount, steeps}` — для чаїв; `null` для посуду/дошок/аксесуарів
 - `grams`: масив `[50, 100, 200]` або `null` (для наборів і не-чаю)
-- Галерея: кольорові плейсхолдери, пагінація стилю page-btn (як у магазині)
-- `goToProduct(name)` — є в usіх трьох файлах (sol-tea, sol-shop, sol-product)
+- `images`: завжди `3` для всіх товарів
+- `goToProduct(name)` — є в усіх трьох файлах (sol-tea, sol-shop, sol-product)
 - Схожі товари: спочатку same `cat`, fallback — same `section`, max 4
+
+### Галерея
+- `.gallery-col > .gallery-sticky` — sticky-обгортка лише для gallery-viewport + gallery-nav
+- `.gallery-viewport`: `position: relative; aspect-ratio: 4/3` (десктоп), `1/1` (мобілка)
+- `.gallery-slide`: `position: absolute; inset: 0; opacity: 0` → `.active { opacity: 1 }`
+- Стрілки `.gallery-arrow-prev/next` — абсолютно поверх viewport, `z-index: 3`
+- Мініатюри `.gallery-thumb` — під viewport, `flex: 1; aspect-ratio: 1/1; gap: 24px`
+- `.pi-region` і `.pi-wish` — JS-інжектяться всередину `vp.innerHTML` в `renderGallery()`
+- Свайп на мобілці: `touchstart/touchend` → `changeSlide()` при delta > 40px
+- `let currentSlide = 0` — глобальна змінна
+
+### Блок "Як заварювати?"
+- `.pi-brew` — всередині `.product-info`, після `.pi-bottom` (ціна + кошик)
+- Заголовок `.pi-brew-title`: Inter 900, 22px (підзаголовок)
+- Текст `.pi-brew-text`: "Нагрійте воду до X, засипте Y і заваріть протягом Z. Можна повторити N."
+- Показується тільки якщо `p.brew != null`
+
+### Відгуки
+- Хедер `.reviews-header`: h2 + лічильник + кнопка `.btn-leave-review` (margin-left: auto)
+- На мобілці `.btn-leave-review` переноситься на новий рядок (flex-wrap: wrap)
+- Порожній стан: текст "Поки що немає відгуків. Будьте першим!"
+- Кнопка "Залишити відгук" — завжди видима, незалежно від наявності відгуків
+
+### Порядок секцій на сторінці
+1. Hero (галерея + інфо з brew)
+2. Схожі товари `.similar-section`
+3. Відгуки `.reviews-section`
+4. Footer
+
+### Nav на sol-product.html
+- FAQ кнопка має клас `nav-faq` → прихована на мобілці (`.nav-faq { display: none }`)
+- Решта nav — ідентична sol-tea.html і sol-shop.html
+
+### JS функції — sol-product.html
+| Функція | Що робить |
+|---------|-----------|
+| `renderProduct(p)` | рендерить всю сторінку по об'єкту продукту |
+| `renderGallery(p)` | вставляє слайди + region + wish + стрілки в vp.innerHTML |
+| `goToSlide(i)` | перемикає активний слайд, синхронізує thumbs і стрілки |
+| `changeSlide(dir)` | +1/-1 від currentSlide |
+| `renderGrams(p)` | рендерить пілюлі вибору грамів |
+| `selectGram(btn, g)` | active-стан пілюлі |
+| `renderBrew(brew)` | заповнює `.pi-brew-text` текстом інструкції |
+| `renderReviews(reviews)` | рендерить карток відгуків або порожній стан |
+| `renderSimilar(p)` | схожі товари (same cat → same section → max 4) |
+| `toggleProductCart()` | toggle кошика для поточного товару |
+| `toggleProductWish()` | toggle wishlist для поточного товару |
+| `adjustBg(hex, amount)` | світліше/темніше фон для слайдів 2 і 3 |
+| `goToProduct(name)` | `window.location.href` з name param |
 
 ## Наступні таски (черга)
 
