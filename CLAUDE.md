@@ -139,6 +139,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `setCartBtnState(btn, inCart)` | оновлює вигляд кнопки кошика (зелена / чорна) |
 | `updateCartBadge()` | синхронізує badge кошика в nav |
 | `updateWishBadge()` | синхронізує badge вподобаних в nav |
+| `solToggleWish(event, btn, id)` | toggle wishlist для карток Хітів продажів: пише в solWish, оновлює badge, toggles .liked |
 | `initCartBtns()` | при завантаженні відновлює стан кнопок з sessionStorage |
 | `getCart()` | читає solCart з sessionStorage |
 | `saveCart(c)` | зберігає solCart у sessionStorage |
@@ -170,7 +171,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | Ключ | Формат | Опис |
 |------|--------|------|
 | `'solCart'` | `[{ name: "Те Гуань Інь", qty: 1 }, ...]` | Кошик |
-| `'solWish'` | `["Те Гуань Інь", "Шен Пуер 2019", ...]` | Вподобані |
+| `'solWish'` | `["teg", "shen", ...]` | Вподобані (короткі id для sol-tea.html, повні імена для sol-shop/product) |
 
 ---
 
@@ -181,6 +182,12 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - Мобілка: `calc(100svh - 72px - 16px)`, контент `bottom: 0; padding: 32px 28px 60px`
 - Кнопки на мобілці: горизонтально, **ліворуч** (`flex-start`, без justify-content override)
 - Кнопка "До колекцій": `btn-secondary` з `hgi-arrow-right-01` праворуч від тексту
+
+### About (блоки фото + текст, 3 штуки)
+- Секція після hero: "Чай — це не просто напій. Це момент.", "Прямо з джерела — до вашої чашки", "Упаковано з турботою, доставлено швидко"
+- Десктоп: `grid-template-columns: 1fr 1fr; gap: 80px`, `.about-image { aspect-ratio: 1/1 }`
+- Другий блок `.about-row.reverse`: на десктопі фото зліва (`.about-image { order: -1 }`), на мобілці скидається до `order: 0` (фото після тексту)
+- **Мобілка**: `grid-template-columns: 1fr`, `.about-image { height: calc(100vw - 48px) }` — явна висота замість `aspect-ratio`, бо flex-контейнер без контенту ігнорує aspect-ratio
 
 ### Stats (блок з цифрами)
 - Фон секції: `var(--cream)` (не зелений!)
@@ -201,12 +208,14 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - Кнопка `.btn-add`: чорна → клік додає в кошик (зелена, "В кошику") → повторний клік прибирає
 - `.btn-add` hover загорнутий у `@media (hover: hover)` — щоб iOS не застрягав на зеленому після тапу
 - Серце: `44×44px; font-size: 20px`
+- **Wishlist:** кнопки викликають `solToggleWish(event, this, 'id')` з короткими id: `'teg'`, `'shen'`, `'feng'`, `'shu'`
+- `.product-wish:hover` загорнутий у `@media (hover: hover)` — щоб на iOS серце не залишалось теракотовим після тапу
 
 ### Ritual (Чай як ритуал)
 - Десктоп: hover-ефект — фото ховається, з'являється зелений контент; `gap: 40px`
-- Мобілка: статичний layout — фото зверху (`aspect-ratio: 1/1`), контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`); `gap: 24px`
+- Мобілка: статичний layout — фото зверху, контент під ним, картка `background: var(--sand)`, текст темний (`var(--black)`); `gap: 24px`
 - На мобілці `transition: none` щоб прибрати hover-анімацію
-- **Важливо:** `.ritual-card-photo` на мобілці обов'язково потребує `width: 100%` — без нього плейсхолдер фото звужується
+- **Важливо:** `.ritual-card-photo` на мобілці: `width: 100%; height: calc(100vw - 48px)` — явна висота, бо flex-контейнер без контенту ігнорує `aspect-ratio`
 - Іконка на картці: `hgi-leaf-01` (не `hgi-tea-cup` — такого іконки немає)
 
 ### Testimonials (відгуки)
@@ -383,10 +392,11 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 | `adjustBg(hex, amount)` | світліше/темніше фон для слайдів 2 і 3 |
 | `goToProduct(name)` | `window.location.href` з name param |
 
+---
+
 ## Наступні таски (черга)
 
 1. **FAQ сторінка** `sol-faq.html` — Часті запитання (кнопка в хедері вже веде туди)
-2. **Блоки фото+текст на головній** — вирівняти контейнери 1:1
 
 ---
 
