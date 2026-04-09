@@ -256,7 +256,8 @@
     /* FAQ MOBILE */
     .faq-hero { margin-top: 72px; padding: 24px 24px 16px; }
     .anchor-nav { top: 72px; padding: 12px 16px; }
-    .anchor-nav-inner { gap: 6px; }
+    .anchor-nav-inner { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .anchor-nav-inner::-webkit-scrollbar { display: none; }
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
     .faq-section { padding: 28px 24px; scroll-margin-top: 120px; }
     .faq-section-header { margin-bottom: 28px; }
