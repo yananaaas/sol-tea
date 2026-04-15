@@ -56,8 +56,11 @@
   .section-tag i { font-size: 16px; }
 
   /* BUTTONS */
-  .btn-outline-cream { background: transparent; color: var(--cream-bright); border: 1.5px solid rgba(253,252,249,0.5); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-outline-cream:hover { background: var(--cream-bright); border-color: var(--cream-bright); color: var(--green-800); }
+  .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .btn-primary:hover { background: var(--black); }
+  .btn-primary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+  .btn-primary:hover i { transform: translateX(7px); }
+  .faq-hero-inner .btn-primary { margin-top: 32px; }
 
   /* SCROLL TO TOP */
   .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
@@ -177,7 +180,7 @@
 
   /* ANCHOR NAV */
   .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 14px 48px; }
-  .anchor-nav-inner { display: flex; gap: 8px; max-width: 800px; flex-wrap: wrap; }
+  .anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; margin: 0 auto; flex-wrap: wrap; }
   .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
   .anchor-pill i { font-size: 16px; }
   .anchor-pill:hover { background: var(--gray-100); }
@@ -185,7 +188,7 @@
 
   /* FAQ SECTIONS */
   .faq-section { padding: 64px 48px; }
-  .faq-section-inner { }
+  .faq-section-inner { max-width: 1280px; margin: 0 auto; }
   .faq-section-header { margin-bottom: 32px; }
   .faq-section-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
   .faq-section + .faq-section { border-top: none; }
@@ -205,22 +208,6 @@
   /* SCROLL MARGIN for anchor nav + sticky nav */
   .faq-section { scroll-margin-top: 148px; }
 
-  /* CONTACT SECTION */
-  .faq-contact-wrap { background: var(--cream); padding: 0 48px 80px; }
-  .faq-contact-card { background: var(--black); border-radius: 24px; padding: 60px; max-width: 1280px; margin: 0 auto; }
-  .faq-contact-inner { }
-  .faq-contact-card h2 { font-family: 'Inter', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: var(--cream-bright); letter-spacing: -0.02em; margin-bottom: 12px; }
-  .faq-contact-sub { font-size: 16px; font-weight: 300; color: var(--gray-500); margin-bottom: 40px; line-height: 1.6; }
-
-  .contact-form { display: flex; flex-direction: column; gap: 16px; }
-  .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .contact-input { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; width: 100%; }
-  .contact-textarea { background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 16px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; width: 100%; resize: none; height: 140px; }
-  .contact-input::placeholder, .contact-textarea::placeholder { color: var(--gray-500); }
-  .contact-input:focus, .contact-textarea:focus { border-color: rgba(124,196,74,0.5); }
-  .contact-success { display: none; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 32px; text-align: center; }
-  .contact-success i { font-size: 32px; color: var(--green-500); display: block; margin-bottom: 12px; }
-  .contact-success p { font-size: 16px; font-weight: 400; color: var(--cream-bright); line-height: 1.6; }
 
   /* MOBILE */
   @media (max-width: 768px) {
@@ -263,9 +250,6 @@
     .faq-section-header { margin-bottom: 24px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
-    .faq-contact-wrap { padding: 0 16px 60px; }
-    .faq-contact-card { border-radius: 20px; padding: 40px 24px; }
-    .contact-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -309,7 +293,7 @@
 <section class="faq-hero">
   <div class="faq-hero-inner fade-up">
     <h1>Часті запитання</h1>
-    <p>Знайдіть відповідь на ваше питання нижче.<br>Якщо не знайшли — напишіть нам особисто.</p>
+    <a href="mailto:hello@sol-tea.com" class="btn-primary">Поставити запитання <i class="hgi-stroke hgi-arrow-right-01"></i></a>
   </div>
 </section>
 
@@ -501,32 +485,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="faq-contact-wrap">
-  <div class="faq-contact-card">
-  <div class="faq-contact-inner">
-    <h2>Не знайшли відповідь?</h2>
-    <p class="faq-contact-sub">Напишіть нам — відповімо протягом 24 годин.</p>
-
-    <div id="contactFormWrap">
-      <form class="contact-form" onsubmit="submitContact(event)">
-        <div class="contact-row">
-          <input class="contact-input" type="text" placeholder="Ваше ім'я" required>
-          <input class="contact-input" type="email" placeholder="Email" required>
-        </div>
-        <textarea class="contact-textarea" placeholder="Ваше запитання..."></textarea>
-        <div style="margin-top: 8px;">
-          <button type="submit" class="btn-outline-cream">Надіслати <i class="hgi-stroke hgi-arrow-right-01" style="font-size:18px;transform:translateX(3px);transition:transform 0.2s;margin-right:-4px"></i></button>
-        </div>
-      </form>
-    </div>
-    <div class="contact-success" id="contactSuccess">
-      <i class="hgi-stroke hgi-checkmark-circle-02"></i>
-      <p>Дякуємо! Ми зв'яжемося з вами найближчим часом.</p>
-    </div>
-  </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>
@@ -815,13 +773,6 @@ sectionIds.forEach(id => {
   if (el) anchorObserver.observe(el);
 });
 
-// CONTACT FORM
-function submitContact(e) {
-  e.preventDefault();
-  document.getElementById('contactFormWrap').style.display = 'none';
-  const s = document.getElementById('contactSuccess');
-  s.style.display = 'block';
-}
 </script>
 </body>
 </html>
