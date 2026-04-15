@@ -103,6 +103,25 @@
   .badge-new { background: var(--green-500); color: var(--cream-bright); }
   .badge-limited { background: var(--terra); color: var(--cream-bright); }
 
+  /* NAV SEARCH CLEAR */
+  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
+  @media (hover: hover) { .nav-search-clear:hover { color: var(--black); } }
+  .nav-search-clear.visible { display: flex; }
+
+  /* SEARCH PANEL */
+  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
+  .search-panel-header { margin-bottom: 40px; }
+  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px) {
+    .search-panel-inner { padding: 96px 24px 60px; }
+    .search-panel-grid { grid-template-columns: 1fr; }
+  }
+
   /* SCROLL TO TOP */
   .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
   .scroll-top.visible { opacity: 1; pointer-events: all; }
@@ -148,7 +167,7 @@
   .tab-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .tab-pill.active { background: var(--green-800); color: var(--cream-bright); }
   @media (hover: hover) { .tab-pill:hover:not(.active) { background: var(--gray-100); } }
-  .tab-count { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-500); }
+  .tab-count { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--green-800); }
   .tab-count.wish-count { color: var(--terra); }
   .tab-pill.active .tab-count, .tab-pill.active .tab-count.wish-count { color: var(--cream-bright); }
 
@@ -192,7 +211,7 @@
   .summary-row { display: flex; justify-content: space-between; align-items: flex-start; }
   .summary-label { font-size: 14px; color: var(--gray-500); }
   .summary-value { font-size: 14px; font-weight: 500; color: var(--black); text-align: right; }
-  .summary-value.free { color: var(--green-800); font-weight: 600; }
+  .summary-value.free { color: var(--green-800); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
   .summary-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 6px; }
   .summary-total-label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; color: var(--black); }
   .summary-total-value { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 900; color: var(--green-800); }
@@ -317,12 +336,13 @@
   </ul>
   <div class="nav-search">
     <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" oninput="onCartSearch(this.value)">
+    <input type="text" id="desktopSearchInput" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" oninput="onDesktopSearchInput(this.value)" onblur="onDesktopSearchBlur()">
+    <button class="nav-search-clear" id="desktopSearchClear" onmousedown="event.preventDefault()" onclick="clearDesktopSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-search-inline" id="navSearchInline">
     <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" placeholder="Пошук..." class="nav-search-inline-input" oninput="onCartSearch(this.value)">
+    <input type="text" id="navSearchInput" placeholder="Пошук..." class="nav-search-inline-input" oninput="filterProducts(this.value)">
     <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-right">
@@ -428,6 +448,17 @@
 </footer>
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
+<!-- SEARCH PANEL -->
+<div id="searchPanel" class="search-panel">
+  <div class="search-panel-inner">
+    <div class="search-panel-header">
+      <span class="search-panel-title">Результати пошуку:</span>
+    </div>
+    <div id="searchPanelGrid" class="search-panel-grid"></div>
+    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
+  </div>
+</div>
 
 <!-- MOBILE MENU OVERLAY -->
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
@@ -838,29 +869,91 @@ function toggleMobileMenu() {
 function openSearch() {
   if (window.innerWidth <= 768) {
     document.querySelector('nav').classList.add('search-active');
-    const inp = document.getElementById('navSearchInline').querySelector('input');
-    if (inp) inp.focus();
+    document.getElementById('navSearchInput').focus();
+  } else {
+    document.getElementById('desktopSearchInput').focus();
   }
 }
 function closeSearch() {
   document.querySelector('nav').classList.remove('search-active');
-  document.querySelectorAll('.nav-search-input, .nav-search-inline-input').forEach(i => { i.value = ''; });
-  onCartSearch('');
+  const navInp = document.getElementById('navSearchInput');
+  const deskInp = document.getElementById('desktopSearchInput');
+  const clear = document.getElementById('desktopSearchClear');
+  if (navInp) navInp.value = '';
+  if (deskInp) deskInp.value = '';
+  if (clear) clear.classList.remove('visible');
+  document.getElementById('searchPanel').classList.remove('open');
+  document.body.style.overflow = '';
 }
-
-function onCartSearch(value) {
-  const q = value.trim().toLowerCase();
-  if (activeTab === 'wish') {
-    document.querySelectorAll('#wishGrid .product-card').forEach(card => {
-      const h4 = card.querySelector('h4');
-      card.style.display = (!q || (h4 && h4.textContent.toLowerCase().includes(q))) ? '' : 'none';
-    });
-  } else {
-    document.querySelectorAll('.cart-item').forEach(item => {
-      const name = item.querySelector('.cart-item-name');
-      item.style.display = (!q || (name && name.textContent.toLowerCase().includes(q))) ? '' : 'none';
-    });
+function onDesktopSearchInput(val) {
+  filterProducts(val);
+  document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
+}
+function onDesktopSearchBlur() {}
+function clearDesktopSearch() {
+  const inp = document.getElementById('desktopSearchInput');
+  inp.value = '';
+  filterProducts('');
+  document.getElementById('desktopSearchClear').classList.remove('visible');
+}
+function highlightText(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark style="background:var(--green-500);color:var(--cream-bright);border-radius:2px;padding:0 2px">$1</mark>');
+}
+function filterProducts(q) {
+  const query = q.trim().toLowerCase();
+  const panel = document.getElementById('searchPanel');
+  const grid = document.getElementById('searchPanelGrid');
+  const empty = document.getElementById('searchPanelEmpty');
+  if (!query) {
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+    return;
   }
+  const matches = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
+  );
+  const cart = getCart();
+  grid.innerHTML = matches.map(p => {
+    const inCart = cart.some(c => c.name === p.name);
+    const safeN = p.name.replace(/'/g, "\\'");
+    return `
+      <div class="product-card show" onclick="goToProduct('${safeN}')">
+        <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
+          ${p.region ? `<div class="product-region">${p.region}</div>` : ''}
+          ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
+          ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
+        </div>
+        <div class="product-body">
+          <h4>${highlightText(p.name, query)}</h4>
+          <p class="product-desc">${highlightText(p.desc, query)}</p>
+          <div class="product-footer">
+            <span class="product-price">₴ ${p.price.toLocaleString('uk-UA')}</span>
+            <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();toggleSearchCart('${safeN}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+  empty.style.display = matches.length === 0 ? 'block' : 'none';
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function toggleSearchCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(c => c.name === name);
+  if (idx === -1) {
+    cart.push({ name, qty: 1 });
+    btn.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику';
+    btn.classList.add('in-cart');
+  } else {
+    cart.splice(idx, 1);
+    btn.innerHTML = '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+    btn.classList.remove('in-cart');
+  }
+  saveCart(cart);
+  updateCartBadge();
+  updateCartTabCount();
 }
 
 document.addEventListener('keydown', e => {
