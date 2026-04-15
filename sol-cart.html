@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кошик — Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+  :root {
+    --cream: #F5F0E8; --cream-bright: #FDFCF9; --sand: #E8E0CC;
+    --green-800: #226F54; --green-500: #7CC44A; --terra: #C4855A;
+    --black: #1C1A14; --gray-800: #4A4538; --gray-500: #7A7060;
+    --gray-300: #B5AFA3; --gray-100: #D9D3C7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  .nav-spacer { flex: 1; }
+  .nav-logo { flex-shrink: 0; }
+  .nav-logo svg { height: 42px; width: auto; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  @media (hover: hover) { .nav-links a:hover { color: var(--green-800); } }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:focus-within { background: var(--gray-100); }
+  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
+  .nav-search-input::placeholder { color: var(--gray-500); }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; position: relative; }
+  @media (hover: hover) { .nav-icon-btn:hover { background: var(--sand); } }
+  .nav-icon-btn.active { background: var(--sand); }
+  .cart-badge, .wish-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
+  .cart-badge { background: var(--green-800); }
+  .wish-badge { background: var(--terra); }
+  .cart-badge.visible, .wish-badge.visible { display: flex; }
+  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
+  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
+  .nav-search-inline-input::placeholder { color: var(--gray-500); }
+  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
+  .nav-search-mobile { display: none; }
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
+  @media (hover: hover) { .burger-btn:hover { background: var(--sand); } }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  @media (hover: hover) { .btn-primary:hover { background: var(--black); } }
+  .btn-primary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+  @media (hover: hover) { .btn-primary:hover i { transform: translateX(7px); } }
+  .btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  @media (hover: hover) { .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); } }
+  .btn-outline-dark i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+  @media (hover: hover) { .btn-outline-dark:hover i { transform: translateX(7px); } }
+
+  /* PROFILE PANEL */
+  .profile-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
+  .profile-overlay.open { opacity: 1; pointer-events: all; }
+  .profile-panel { position: fixed; top: 88px; right: 16px; z-index: 201; width: 360px; max-height: calc(100vh - 108px); background: var(--cream-bright); border-radius: 20px; box-shadow: 0 12px 32px rgba(28,26,20,0.12); transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; font-family: 'Inter', sans-serif; }
+  .profile-panel::-webkit-scrollbar { display: none; }
+  .profile-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .pp-header { padding: 16px 16px 14px; position: relative; border-radius: 20px 20px 0 0; background: var(--cream-bright); }
+  .pp-close { position: absolute; top: 12px; right: 12px; background: var(--sand); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--gray-800); transition: background 0.2s; }
+  @media (hover: hover) { .pp-close:hover { background: var(--gray-100); } }
+  .pp-user { display: flex; align-items: center; gap: 12px; }
+  .pp-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-800); flex-shrink: 0; }
+  .pp-name { font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .pp-email { font-size: 12px; color: var(--gray-500); margin-top: 2px; font-weight: 400; }
+  .pp-body { padding: 8px 8px 16px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .pp-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); padding: 14px 12px 6px; }
+  .pp-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--black); }
+  @media (hover: hover) { .pp-item:hover { background: var(--sand); } }
+  .pp-item-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
+  .pp-item-text { flex: 1; }
+  .pp-item-title { font-size: 14px; font-weight: 500; color: var(--black); }
+  .pp-item-sub { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+  .pp-item-badge { background: var(--green-500); color: var(--cream-bright); border-radius: 20px; padding: 4px 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+  .pp-item-arrow { font-size: 16px; color: var(--gray-300); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+  @media (hover: hover) { .pp-item:hover .pp-item-arrow { opacity: 1; transform: translateX(4px); } }
+  .pp-logout { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; color: #E84A2E; font-size: 14px; font-weight: 500; border: none; background: none; font-family: 'Inter', sans-serif; width: 100%; transition: background 0.2s; margin-top: 4px; }
+  @media (hover: hover) { .pp-logout:hover { background: rgba(232,74,46,0.07); } }
+  .pp-logout .pp-item-icon { background: rgba(232,74,46,0.12); color: #E84A2E; }
+
+  /* BURGER / MOBILE MENU */
+  .mobile-menu-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
+  .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+  .mobile-menu { position: fixed; top: 80px; right: 16px; z-index: 201; width: 240px; background: var(--sand); border-radius: 20px; padding: 8px; box-shadow: 0 8px 32px rgba(28,26,20,0.14); transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; font-family: 'DM Sans', sans-serif; }
+  .mobile-menu.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .mm-nav { display: flex; flex-direction: column; gap: 4px; }
+  .mm-item { display: flex; align-items: center; padding: 12px 18px; border-radius: 40px; text-decoration: none; color: var(--gray-800); transition: background 0.15s; }
+  @media (hover: hover) { .mm-item:hover { background: var(--gray-100); } }
+  .mm-item.active { background: var(--green-800); color: var(--cream-bright); }
+  .mm-item-title { font-size: 14px; font-weight: 500; }
+  .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
+  .mm-footer-text { font-size: 11px; color: var(--gray-300); padding: 8px 0; }
+
+  /* BADGES */
+  .item-badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
+
+  /* SCROLL TO TOP */
+  .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+  @media (hover: hover) { .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); } }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 80px 48px 40px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
+  .footer-brand-logo { margin-bottom: 16px; }
+  .footer-brand-logo svg { height: 40px; width: auto; }
+  .footer-brand p { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 220px; }
+  .footer-col h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { font-size: 14px; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  @media (hover: hover) { .footer-col ul li a:hover { color: var(--green-500); } }
+  .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .newsletter-form { display: flex; gap: 8px; }
+  .newsletter-input { flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input::placeholder { color: var(--gray-500); }
+  .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  @media (hover: hover) { .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); } }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: var(--gray-500); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
+  @media (hover: hover) { .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); } }
+
+  /* ============================
+     CART PAGE
+     ============================ */
+
+  /* HERO */
+  .cart-hero { margin-top: 80px; padding: 52px 48px 24px; }
+  .cart-hero-inner { max-width: 1280px; margin: 0 auto; }
+  .cart-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--black); }
+
+  /* TAB BAR */
+  .tab-bar { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 36px; }
+  .tab-bar-inner { display: flex; gap: 8px; max-width: 1280px; margin: 0 auto; }
+  .tab-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .tab-pill.active { background: var(--green-800); color: var(--cream-bright); }
+  @media (hover: hover) { .tab-pill:hover:not(.active) { background: var(--gray-100); } }
+  .tab-count { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; border-radius: 20px; background: rgba(0,0,0,0.12); color: inherit; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; padding: 0 5px; line-height: 1; }
+  .tab-pill.active .tab-count { background: rgba(255,255,255,0.2); }
+  .tab-count.wish-count { background: rgba(196,133,90,0.18); color: var(--terra); }
+  .tab-pill.active .tab-count.wish-count { background: rgba(255,255,255,0.2); color: inherit; }
+
+  /* CART SECTION */
+  .cart-section { padding: 0 48px 60px; }
+  .cart-section-inner { max-width: 1280px; margin: 0 auto; }
+  .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
+
+  /* CART ITEMS */
+  .cart-items { display: flex; flex-direction: column; }
+  .cart-item { display: flex; align-items: flex-start; gap: 20px; padding: 24px 0; border-bottom: 0.5px solid var(--gray-100); }
+  .cart-item:first-child { padding-top: 0; }
+  .cart-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .cart-item-img { width: 88px; height: 88px; border-radius: 16px; background: var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gray-500); font-family: 'Inter', sans-serif; cursor: pointer; overflow: hidden; }
+  .cart-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .cart-item-info { display: flex; flex-direction: column; gap: 4px; }
+  .cart-item-name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; cursor: pointer; transition: color 0.2s; display: inline; }
+  @media (hover: hover) { .cart-item-name:hover { color: var(--green-800); } }
+  .cart-item-desc { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+  .cart-item-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+  .cart-item-price { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; color: var(--green-800); margin-right: auto; }
+
+  /* QTY CONTROL */
+  .qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
+  .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-800); transition: background 0.15s; flex-shrink: 0; }
+  @media (hover: hover) { .qty-btn:hover { background: var(--gray-100); } }
+  .qty-btn:disabled { opacity: 0.35; cursor: default; }
+  @media (hover: hover) { .qty-btn:disabled:hover { background: transparent; } }
+  .qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
+
+  /* REMOVE BUTTON */
+  .cart-item-remove { width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--gray-300); transition: all 0.2s; flex-shrink: 0; }
+  @media (hover: hover) { .cart-item-remove:hover { background: rgba(232,74,46,0.08); color: #E84A2E; } }
+
+  /* CART SUMMARY */
+  .cart-summary { background: var(--cream-bright); border-radius: 24px; padding: 28px; position: sticky; top: 168px; }
+  .summary-title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; margin-bottom: 24px; }
+  .summary-rows { display: flex; flex-direction: column; gap: 14px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: flex-start; }
+  .summary-label { font-size: 14px; color: var(--gray-500); }
+  .summary-value { font-size: 14px; font-weight: 500; color: var(--black); text-align: right; }
+  .summary-value.free { color: var(--green-800); font-weight: 600; }
+  .summary-divider { height: 0.5px; background: var(--gray-100); margin: 8px 0; }
+  .summary-total-row { display: flex; justify-content: space-between; align-items: center; }
+  .summary-total-label { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; color: var(--black); }
+  .summary-total-value { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 900; color: var(--green-800); }
+  .btn-checkout { display: flex; width: 100%; align-items: center; justify-content: center; gap: 10px; background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 16px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 20px; text-decoration: none; transition: background 0.2s; }
+  @media (hover: hover) { .btn-checkout:hover { background: var(--black); } }
+  .btn-checkout i { transition: transform 0.2s; }
+  @media (hover: hover) { .btn-checkout:hover i { transform: translateX(4px); } }
+  .summary-note { margin-top: 14px; font-size: 12px; color: var(--gray-500); text-align: center; line-height: 1.6; }
+  .delivery-progress { margin: 16px 0 4px; }
+  .delivery-progress-bar { height: 4px; background: var(--gray-100); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .delivery-progress-fill { height: 100%; background: var(--green-800); border-radius: 4px; transition: width 0.4s ease; }
+  .delivery-progress-text { font-size: 12px; color: var(--gray-500); }
+  .delivery-progress-text strong { color: var(--black); }
+
+  /* EMPTY STATE */
+  .empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 40px; background: var(--cream-bright); border-radius: 20px; gap: 16px; }
+  .empty-state-icon { font-size: 52px; color: var(--gray-300); }
+  .empty-state h3 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .empty-state p { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 260px; }
+  .empty-state-btn { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-top: 8px; }
+  @media (hover: hover) { .empty-state-btn:hover { background: var(--black); } }
+  .empty-state-btn i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+  @media (hover: hover) { .empty-state-btn:hover i { transform: translateX(7px); } }
+
+  /* WISHLIST SECTION */
+  .wish-section { padding: 0 48px 60px; }
+  .wish-section-inner { max-width: 1280px; margin: 0 auto; }
+  .wish-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .wish-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: transform 0.25s; }
+  @media (hover: hover) { .wish-card:hover { transform: translateY(-5px); } }
+  .wish-card-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--gray-500); font-family: 'Inter', sans-serif; overflow: hidden; }
+  .wish-card-badge { position: absolute; top: 12px; left: 12px; }
+  .wish-card-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .wish-card-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; line-height: 1.3; }
+  .wish-card-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; flex: 1; }
+  .wish-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+  .wish-card-price { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; color: var(--green-800); flex-shrink: 0; }
+  .wish-card-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .btn-wish-cart { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .btn-wish-cart.in-cart { background: var(--green-800); }
+  @media (hover: hover) {
+    .btn-wish-cart:hover { background: var(--green-800); }
+    .btn-wish-cart.in-cart:hover { background: var(--black); }
+  }
+  .btn-wish-remove { background: transparent; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--terra); cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  @media (hover: hover) { .btn-wish-remove:hover { background: rgba(196,133,90,0.1); } }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; gap: 4px; height: 72px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .nav-spacer { display: none; }
+    .nav-faq { display: none; }
+    .nav-search-mobile { display: flex; }
+    .nav-right { gap: 0; margin-left: auto; }
+    .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
+    .burger-btn { display: flex; }
+    .mobile-menu { top: 76px; }
+    nav.search-active .nav-right { display: none; }
+    nav.search-active .burger-btn { display: none !important; }
+    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
+    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
+    .scroll-top { bottom: 20px; right: 20px; }
+    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
+    .pp-header { padding: 14px 14px 12px; }
+    .pp-body { padding: 6px 6px 12px; }
+    .pp-item-icon { width: 44px; height: 44px; font-size: 22px; }
+    .pp-avatar { width: 52px; height: 52px; font-size: 22px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+
+    /* CART MOBILE */
+    .cart-hero { margin-top: 72px; padding: 24px 24px 20px; }
+    .cart-hero h1 { font-size: clamp(28px, 8vw, 40px); }
+    .tab-bar { top: 72px; padding: 0 16px 24px; }
+    .tab-bar-inner { gap: 6px; }
+    .tab-pill { font-size: 13px; padding: 9px 16px; }
+    .cart-section { padding: 0 16px 48px; }
+    .cart-layout { grid-template-columns: 1fr; gap: 0; }
+    .cart-item { gap: 14px; padding: 20px 0; }
+    .cart-item-img { width: 72px; height: 72px; border-radius: 14px; }
+    .cart-item-name { font-size: 14px; }
+    .cart-summary { position: static; margin-top: 24px; border-radius: 20px; padding: 24px; }
+    .wish-section { padding: 0 16px 48px; }
+    .wish-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .wish-card-img { aspect-ratio: 1/1; }
+    .wish-card-body { padding: 12px; }
+    .wish-card-price { font-size: 14px; }
+    .empty-state { padding: 60px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .wish-grid { grid-template-columns: 1fr; }
+    .wish-card-img { aspect-ratio: 4/3; }
+  }
+
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .wish-grid { grid-template-columns: repeat(3, 1fr); }
+    .cart-layout { grid-template-columns: 1fr 340px; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="sol-tea.html" class="nav-logo">
+    <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#226F54"/>
+      <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#226F54"/>
+      <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#226F54"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="sol-tea.html">Про нас</a></li>
+    <li><a href="sol-shop.html">Магазин</a></li>
+  </ul>
+  <div class="nav-search">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input">
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-search-inline" id="navSearchInline">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" placeholder="Пошук..." class="nav-search-inline-input">
+    <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
+    <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" title="Вподобані" onclick="switchTab('wish')"><i class="hgi-stroke hgi-favourite"></i><span class="wish-badge" id="wishBadge"></span></button>
+    <button class="nav-icon-btn active" title="Кошик" onclick="switchTab('cart')"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
+    <button class="nav-icon-btn nav-faq" title="FAQ" onclick="window.location.href='sol-faq.html'"><i class="hgi-stroke hgi-help-circle"></i></button>
+  </div>
+  <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
+</nav>
+
+<!-- HERO -->
+<header class="cart-hero">
+  <div class="cart-hero-inner">
+    <h1>Кошик</h1>
+  </div>
+</header>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-pill active" id="tabCart" onclick="switchTab('cart')">
+      Кошик
+      <span class="tab-count" id="cartTabCount" style="display:none"></span>
+    </button>
+    <button class="tab-pill" id="tabWish" onclick="switchTab('wish')">
+      Вподобане
+      <span class="tab-count wish-count" id="wishTabCount" style="display:none"></span>
+    </button>
+  </div>
+</div>
+
+<!-- CART PANE -->
+<div id="cartPane">
+  <section class="cart-section">
+    <div class="cart-section-inner">
+      <div class="cart-layout" id="cartLayout">
+        <div class="cart-items" id="cartItems"></div>
+        <div id="cartSummary"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- WISHLIST PANE -->
+<div id="wishPane" style="display:none">
+  <section class="wish-section">
+    <div class="wish-section-inner">
+      <div class="wish-grid" id="wishGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#7CC44A"/>
+          <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#7CC44A"/>
+          <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#7CC44A"/>
+        </svg>
+      </div>
+      <p>Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Магазин</h5>
+      <ul>
+        <li><a href="#">Улун</a></li>
+        <li><a href="#">Пуер</a></li>
+        <li><a href="#">Сезонне</a></li>
+        <li><a href="#">Набори</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Про нас</h5>
+      <ul>
+        <li><a href="#">Наша історія</a></li>
+        <li><a href="#">Як заварювати</a></li>
+        <li><a href="#">Блог</a></li>
+        <li><a href="sol-faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h5>Підписка</h5>
+      <p>Нові надходження та сезонні новинки — першими.</p>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Ваш email">
+        <button class="btn-subscribe">OK</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Söl Tea. Всі права захищені.</p>
+    <div class="footer-socials">
+      <button class="footer-social-btn" title="Instagram"><i class="hgi-stroke hgi-instagram"></i></button>
+      <button class="footer-social-btn" title="Telegram"><i class="hgi-stroke hgi-telegram"></i></button>
+      <button class="footer-social-btn" title="Facebook"><i class="hgi-stroke hgi-facebook-01"></i></button>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-nav">
+    <a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a>
+    <a href="sol-faq.html" class="mm-item"><span class="mm-item-title">FAQ</span></a>
+  </div>
+  <div class="mm-footer">
+    <p class="mm-footer-text">© 2025 Söl Tea</p>
+  </div>
+</div>
+
+<!-- PROFILE OVERLAY -->
+<div class="profile-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+
+<!-- PROFILE PANEL -->
+<div class="profile-panel" id="profilePanel">
+  <div class="pp-header">
+    <button class="pp-close" onclick="toggleProfile()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <div class="pp-user">
+      <div class="pp-avatar"><i class="hgi-stroke hgi-user-circle"></i></div>
+      <div>
+        <div class="pp-name">Яна Лізгова</div>
+        <div class="pp-email">lizgovka714@gmail.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="pp-body">
+    <div class="pp-section-label">Мій акаунт</div>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-package-01"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Замовлення</div><div class="pp-item-sub">Останнє: 23 березня</div></div>
+      <span class="pp-item-badge">1 нове</span>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-favourite"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Вішліст</div><div class="pp-item-sub">8 збережених товарів</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-location-04"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Адреси доставки</div><div class="pp-item-sub">3 збережені адреси</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-star"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Бонуси</div><div class="pp-item-sub">680 балів накопичено</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <div class="pp-section-label">Налаштування</div>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-user-edit-01"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Особисті дані</div><div class="pp-item-sub">Редагувати профіль</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-credit-card"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Спосіб оплати</div><div class="pp-item-sub">Картки та платіжні дані</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-lock-password"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Безпека</div><div class="pp-item-sub">Пароль та вхід</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <button class="pp-logout">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-logout-01"></i></div>
+      Вийти з акаунту
+    </button>
+  </div>
+</div>
+
+<script>
+// ========================
+// PRODUCT DATA
+// ========================
+const PRODUCTS = [
+  {name:'Те Гуань Інь', price:480, bg:'#EEE9DF', badge:null, desc:'Квіткові нотки, ніжне послясмаччя.'},
+  {name:'Шен Пуер 2019', price:920, bg:'#DDD8CC', badge:'new', desc:'Яскравий, терпкий, з потенціалом до витримки.'},
+  {name:'Фенхуан Даньцун', price:680, bg:'#E4DDD3', badge:'limited', desc:'Персик, медова орхідея.'},
+  {name:'Шу Пуер Старий', price:560, bg:'#D5CFCA', badge:null, desc:"М'який і глибокий. Землистий, без гіркоти."},
+  {name:'Да Хун Пао', price:740, bg:'#E8E3D8', badge:null, desc:'Мінеральний, смажений. Скелі Уї.'},
+  {name:'Цзінь Сюань', price:520, bg:'#DDE4D5', badge:'new', desc:'Молочний, вершковий.'},
+  {name:'Лао Шу Пуер', price:1200, bg:'#E0D9CE', badge:null, desc:'Зі старих дерев, глибокий і складний.'},
+  {name:'Дун Дін', price:610, bg:'#EBE5D8', badge:null, desc:'Флоральний, легко смажений.'},
+  {name:'Бін Ча 2021', price:780, bg:'#E2DBD0', badge:'new', desc:'Пресований млинець, гори Менхай.'},
+  {name:'Бай Хао Улун', price:960, bg:'#E6E0D2', badge:null, desc:'Мускатний виноград, мед.'},
+  {name:'Менхай Шу 2015', price:1050, bg:'#D0CAC0', badge:null, desc:'Витриманий шу з фабрики Менхай.'},
+  {name:'Іу Гу Шу', price:1450, bg:'#C8C2B8', badge:'limited', desc:'Шен зі столітніх дерев Іу.'},
+  {name:'Весняний Збір 2026', price:1100, bg:'#DAD4C8', badge:'limited', desc:'Перший зрив, гора Уї.'},
+  {name:'Осінній Фенхуан 2025', price:920, bg:'#D4CEC4', badge:'limited', desc:'Осінній зрив Да Хун Пао.'},
+  {name:'Набір "Знайомство"', price:680, bg:'#DDD8CC', badge:'new', desc:'5 сортів по 20 г.'},
+  {name:'Набір "Пуер"', price:1200, bg:'#D0CBC0', badge:null, desc:'4 сорти пуеру по 25 г.'},
+  {name:'Гайвань біла 120мл', price:560, bg:'#EAE5DC', badge:null, desc:'Класична порцелянова гайвань.'},
+  {name:'Гайвань сіра 150мл', price:640, bg:'#D8D3CA', badge:null, desc:'Матова глазур, зручний корпус.'},
+  {name:'Чайник Ісін 200мл', price:1800, bg:'#C9B9A8', badge:'new', desc:'Пурпурова глина Хуанлун.'},
+  {name:'Чайник Ju-Lun 180мл', price:2200, bg:'#BFB4A8', badge:null, desc:'Класична форма Жу Лун Юн.'},
+  {name:'Піала 60мл', price:240, bg:'#DDD7CC', badge:null, desc:'Тонкостінна піала ручної роботи.'},
+  {name:'Піала Небо 80мл', price:320, bg:'#C8D0D8', badge:null, desc:'Глазурована в синій.'},
+  {name:'Піала Небо 50мл', price:200, bg:'#D4D8D0', badge:null, desc:'Маленька для швидких ковтків.'},
+  {name:'Глечик 200мл', price:480, bg:'#DDD9D2', badge:null, desc:'Ча Хай для рівномірного розливу.'},
+  {name:'Глечик скляний 300мл', price:560, bg:'#D8E0E4', badge:null, desc:'Боросилікатне скло.'},
+  {name:'Кетль Hario 800мл', price:1400, bg:'#D4D0C8', badge:'new', desc:'Носик-гусяча шия.'},
+  {name:'Кетль керамічний 600мл', price:980, bg:'#CEC8BE', badge:null, desc:'Для нагрівання на плиті.'},
+  {name:'Гайвань з квіткою 100мл', price:720, bg:'#DDE3EB', badge:'limited', desc:'Ручний розпис у техниці доухай.'},
+  {name:'Дошка бамбукова S', price:480, bg:'#D8D4C4', badge:null, desc:'Компактна, 25×15 см.'},
+  {name:'Дошка бамбукова L', price:720, bg:'#D0CDB8', badge:null, desc:'Простора, 40×25 см.'},
+  {name:'Дошка горіхова', price:1200, bg:'#C0AE98', badge:'new', desc:'Волоський горіх, олія тунгу.'},
+  {name:'Дошка дубова', price:1050, bg:'#C8B8A0', badge:null, desc:'Дуб, стійкий до вологи.'},
+  {name:"Дошка кам'яна сланець", price:1600, bg:'#B8BCB8', badge:'limited', desc:'Натуральний сланець.'},
+  {name:'Дошка мармурова', price:1900, bg:'#DDD9D4', badge:'limited', desc:'Білий кара-мармур.'},
+  {name:'Набір ча-дао 6 предметів', price:680, bg:'#D8D4C8', badge:'new', desc:'Щипці, ложка, голка, воронка.'},
+  {name:'Воронка бамбукова', price:120, bg:'#D0CCBA', badge:null, desc:'Для засипання листя.'},
+  {name:'Ча-пе', price:90, bg:'#D4D0C4', badge:null, desc:'Бамбукова лопатка.'},
+  {name:'Каністра для чаю 100г', price:320, bg:'#C8C4BC', badge:null, desc:'Алюміній з ущільнювачем.'}
+];
+
+const PRODUCT_MAP = {};
+PRODUCTS.forEach(p => { PRODUCT_MAP[p.name] = p; });
+
+const BADGE_LABELS = { new: 'Новинка', limited: 'Обмежений' };
+
+// Short IDs from sol-tea.html wishlist
+const WISH_ID_MAP = {
+  teg: 'Те Гуань Інь',
+  shen: 'Шен Пуер 2019',
+  feng: 'Фенхуан Даньцун',
+  shu: 'Шу Пуер Старий'
+};
+
+const FREE_DELIVERY_THRESHOLD = 1000;
+
+// ========================
+// STORAGE
+// ========================
+function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')) || []; } catch(e) { return []; } }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
+function getWish() { try { return JSON.parse(sessionStorage.getItem('solWish')) || []; } catch(e) { return []; } }
+function saveWish(w) { sessionStorage.setItem('solWish', JSON.stringify(w)); }
+
+// ========================
+// BADGES
+// ========================
+function updateCartBadge() {
+  const n = getCart().reduce((s, i) => s + i.qty, 0);
+  const el = document.getElementById('cartBadge');
+  if (!el) return;
+  el.textContent = n;
+  el.classList.toggle('visible', n > 0);
+}
+function updateWishBadge() {
+  const n = getWish().length;
+  const el = document.getElementById('wishBadge');
+  if (!el) return;
+  el.textContent = n;
+  el.classList.toggle('visible', n > 0);
+}
+function updateCartTabCount() {
+  const n = getCart().reduce((s, i) => s + i.qty, 0);
+  const el = document.getElementById('cartTabCount');
+  if (!el) return;
+  el.textContent = n;
+  el.style.display = n > 0 ? '' : 'none';
+}
+function updateWishTabCount() {
+  const n = getWish().length;
+  const el = document.getElementById('wishTabCount');
+  if (!el) return;
+  el.textContent = n;
+  el.style.display = n > 0 ? '' : 'none';
+}
+
+// ========================
+// TAB SWITCHING
+// ========================
+let activeTab = 'cart';
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.getElementById('tabCart').classList.toggle('active', tab === 'cart');
+  document.getElementById('tabWish').classList.toggle('active', tab === 'wish');
+  document.getElementById('cartPane').style.display = tab === 'cart' ? '' : 'none';
+  document.getElementById('wishPane').style.display = tab === 'wish' ? '' : 'none';
+  if (tab === 'cart') renderCart();
+  else renderWishlist();
+}
+
+// ========================
+// CART RENDERING
+// ========================
+function renderCart() {
+  const cart = getCart();
+  const itemsEl = document.getElementById('cartItems');
+  const summaryEl = document.getElementById('cartSummary');
+
+  updateCartTabCount();
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `
+      <div class="empty-state">
+        <i class="hgi-stroke hgi-shopping-bag-01 empty-state-icon"></i>
+        <h3>Кошик порожній</h3>
+        <p>Додайте щось зі свого вподобаного або перегляньте колекцію</p>
+        <a href="sol-shop.html" class="empty-state-btn">До магазину <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+      </div>`;
+    summaryEl.innerHTML = '';
+    return;
+  }
+
+  const subtotal = cart.reduce((s, i) => {
+    const p = PRODUCT_MAP[i.name];
+    return s + (p ? p.price * i.qty : 0);
+  }, 0);
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+  const freeDelivery = subtotal >= FREE_DELIVERY_THRESHOLD;
+  const progress = Math.min(subtotal / FREE_DELIVERY_THRESHOLD, 1);
+  const toFree = FREE_DELIVERY_THRESHOLD - subtotal;
+
+  itemsEl.innerHTML = cart.map(item => {
+    const p = PRODUCT_MAP[item.name] || {};
+    const itemTotal = (p.price || 0) * item.qty;
+    const safeN = item.name.replace(/'/g, "\\'");
+    const badgeHtml = p.badge ? `<span class="item-badge badge-${p.badge}">${BADGE_LABELS[p.badge] || ''}</span>` : '';
+    return `
+      <div class="cart-item">
+        <div class="cart-item-img" style="${p.bg ? 'background:' + p.bg : ''}" onclick="goToProduct('${safeN}')">Фото</div>
+        <div class="cart-item-main">
+          <div class="cart-item-info">
+            <span class="cart-item-name" onclick="goToProduct('${safeN}')">${item.name}</span>
+            ${p.desc ? `<div class="cart-item-desc">${p.desc}</div>` : ''}
+            ${badgeHtml ? `<div class="cart-item-meta">${badgeHtml}</div>` : ''}
+          </div>
+          <div class="cart-item-controls">
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="changeQty('${safeN}', -1)" ${item.qty <= 1 ? 'disabled' : ''}>
+                <i class="hgi-stroke hgi-minus-sign"></i>
+              </button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty('${safeN}', 1)">
+                <i class="hgi-stroke hgi-plus-sign"></i>
+              </button>
+            </div>
+            <span class="cart-item-price">₴ ${(itemTotal).toLocaleString('uk-UA')}</span>
+            <button class="cart-item-remove" title="Видалити" onclick="removeFromCart('${safeN}')">
+              <i class="hgi-stroke hgi-cancel-01"></i>
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const deliveryHtml = freeDelivery
+    ? `<div class="summary-row"><span class="summary-label">Доставка</span><span class="summary-value free"><i class="hgi-stroke hgi-checkmark-circle-02"></i> Безкоштовна</span></div>`
+    : `<div class="summary-row"><span class="summary-label">Доставка</span><span class="summary-value">Нова Пошта</span></div>
+       <div class="delivery-progress">
+         <div class="delivery-progress-bar"><div class="delivery-progress-fill" style="width:${progress * 100}%"></div></div>
+         <div class="delivery-progress-text">До безкоштовної доставки: <strong>₴ ${toFree.toLocaleString('uk-UA')}</strong></div>
+       </div>`;
+
+  summaryEl.innerHTML = `
+    <div class="cart-summary">
+      <div class="summary-title">Ваше замовлення</div>
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span class="summary-label">Товари (${totalQty} шт.)</span>
+          <span class="summary-value">₴ ${subtotal.toLocaleString('uk-UA')}</span>
+        </div>
+        ${deliveryHtml}
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-total-row">
+        <span class="summary-total-label">До оплати</span>
+        <span class="summary-total-value">₴ ${subtotal.toLocaleString('uk-UA')}</span>
+      </div>
+      <a href="sol-checkout.html" class="btn-checkout">Оформити замовлення <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+      <p class="summary-note">Оплата карткою або при отриманні</p>
+    </div>`;
+}
+
+// ========================
+// CART OPERATIONS
+// ========================
+function changeQty(name, delta) {
+  const cart = getCart();
+  const item = cart.find(c => c.name === name);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  saveCart(cart);
+  renderCart();
+  updateCartBadge();
+}
+
+function removeFromCart(name) {
+  let cart = getCart();
+  cart = cart.filter(c => c.name !== name);
+  saveCart(cart);
+  renderCart();
+  updateCartBadge();
+}
+
+// ========================
+// WISHLIST RENDERING
+// ========================
+function renderWishlist() {
+  const wish = getWish();
+  const grid = document.getElementById('wishGrid');
+  const cart = getCart();
+
+  updateWishTabCount();
+
+  if (wish.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <i class="hgi-stroke hgi-favourite empty-state-icon"></i>
+        <h3>Вподобаних немає</h3>
+        <p>Натисніть на серце поруч з товаром, щоб зберегти його тут</p>
+        <a href="sol-shop.html" class="empty-state-btn">Переглянути колекцію <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = wish.map(id => {
+    const name = WISH_ID_MAP[id] || id;
+    const p = PRODUCT_MAP[name] || {};
+    const inCart = cart.some(c => c.name === name);
+    const safeN = name.replace(/'/g, "\\'");
+    const safeId = id.replace(/'/g, "\\'");
+    const badgeHtml = p.badge ? `<span class="item-badge badge-${p.badge} wish-card-badge">${BADGE_LABELS[p.badge] || ''}</span>` : '';
+    const priceHtml = p.price ? `<span class="wish-card-price">₴ ${p.price.toLocaleString('uk-UA')}</span>` : '<span class="wish-card-price">—</span>';
+    return `
+      <div class="wish-card" onclick="goToProduct('${safeN}')">
+        <div class="wish-card-img" style="${p.bg ? 'background:' + p.bg : ''}">
+          ${badgeHtml}
+          Фото
+        </div>
+        <div class="wish-card-body">
+          <div class="wish-card-name">${name}</div>
+          ${p.desc ? `<div class="wish-card-desc">${p.desc}</div>` : ''}
+          <div class="wish-card-footer">
+            ${priceHtml}
+            <div class="wish-card-actions" onclick="event.stopPropagation()">
+              <button class="btn-wish-cart${inCart ? ' in-cart' : ''}" title="${inCart ? 'В кошику' : 'В кошик'}" onclick="toggleWishCart('${safeN}', this)">
+                <i class="hgi-stroke ${inCart ? 'hgi-checkmark-circle-02' : 'hgi-shopping-bag-add'}"></i>
+              </button>
+              <button class="btn-wish-remove" title="Видалити з вподобаних" onclick="removeFromWish('${safeId}')">
+                <i class="hgi-stroke hgi-favourite"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ========================
+// WISHLIST OPERATIONS
+// ========================
+function toggleWishCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(c => c.name === name);
+  if (idx === -1) {
+    cart.push({ name, qty: 1 });
+    btn.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i>';
+    btn.classList.add('in-cart');
+    btn.title = 'В кошику';
+  } else {
+    cart.splice(idx, 1);
+    btn.innerHTML = '<i class="hgi-stroke hgi-shopping-bag-add"></i>';
+    btn.classList.remove('in-cart');
+    btn.title = 'В кошик';
+  }
+  saveCart(cart);
+  updateCartBadge();
+  updateCartTabCount();
+}
+
+function removeFromWish(id) {
+  let wish = getWish();
+  wish = wish.filter(w => w !== id);
+  saveWish(wish);
+  updateWishBadge();
+  renderWishlist();
+}
+
+// ========================
+// NAVIGATION
+// ========================
+function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
+
+// ========================
+// NAV: PROFILE + MENU + SEARCH
+// ========================
+function toggleProfile() {
+  const p = document.getElementById('profilePanel'), o = document.getElementById('profileOverlay');
+  const open = p.classList.contains('open');
+  p.classList.toggle('open', !open); o.classList.toggle('open', !open);
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+function toggleMobileMenu() {
+  const m = document.getElementById('mobileMenu'), o = document.getElementById('mobileMenuOverlay');
+  const open = m.classList.contains('open');
+  m.classList.toggle('open', !open); o.classList.toggle('open', !open);
+}
+function openSearch() {
+  if (window.innerWidth <= 768) {
+    document.querySelector('nav').classList.add('search-active');
+    const inp = document.getElementById('navSearchInline').querySelector('input');
+    if (inp) inp.focus();
+  }
+}
+function closeSearch() {
+  document.querySelector('nav').classList.remove('search-active');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSearch();
+    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  btn.classList.toggle('visible', window.scrollY > 400);
+  const socials = document.querySelector('.footer-socials');
+  if (socials) {
+    const socialsTop = socials.getBoundingClientRect().top;
+    const defaultBottom = window.innerWidth <= 768 ? 20 : 32;
+    btn.style.bottom = socialsTop < window.innerHeight
+      ? (window.innerHeight - socialsTop + 16) + 'px'
+      : defaultBottom + 'px';
+  }
+});
+
+// ========================
+// INIT
+// ========================
+(function init() {
+  // Check URL param ?tab=wish
+  const params = new URLSearchParams(window.location.search);
+  const tabParam = params.get('tab');
+
+  updateCartBadge();
+  updateWishBadge();
+  updateCartTabCount();
+  updateWishTabCount();
+
+  if (tabParam === 'wish') {
+    switchTab('wish');
+  } else {
+    renderCart();
+  }
+})();
+</script>
+</body>
+</html>
