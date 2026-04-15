@@ -175,15 +175,16 @@
   /* HERO */
   .faq-hero { margin-top: 80px; background: var(--cream); padding: 52px 48px 24px; }
   .faq-hero-inner { max-width: 800px; }
-  .faq-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 72px); font-weight: 900; line-height: 1.05; color: var(--black); letter-spacing: -0.03em; }
+  .faq-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 64px); font-weight: 900; line-height: 1.05; color: var(--black); letter-spacing: -0.03em; }
 
   /* ANCHOR NAV */
-  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 12px; }
+  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px; }
   .anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
   .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; }
   .anchor-pill:hover { background: var(--gray-100); }
   .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
-  .anchor-pill-cta { background: var(--black); color: var(--cream-bright); }
+  .anchor-pill-cta { background: var(--black); color: var(--cream-bright); gap: 8px; }
+  .anchor-pill-cta i { font-size: 16px; }
   .anchor-pill-cta:hover { background: var(--green-800); }
 
   /* FAQ SECTIONS */
@@ -206,7 +207,7 @@
   .faq-answer-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
 
   /* SCROLL MARGIN for anchor nav + sticky nav */
-  .faq-section { scroll-margin-top: 124px; }
+  .faq-section { scroll-margin-top: 116px; }
 
 
   /* MOBILE */
@@ -241,12 +242,13 @@
     .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
 
     /* FAQ MOBILE */
-    .faq-hero { margin-top: 72px; padding: 32px 24px 20px; }
-    .anchor-nav { top: 72px; padding: 0 16px 8px; }
+    .faq-hero { margin-top: 72px; padding: 24px 24px 20px; }
+    .faq-hero h1 { font-size: clamp(28px, 8vw, 40px); }
+    .anchor-nav { top: 72px; padding: 0 16px; }
     .anchor-nav-inner { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .anchor-nav-inner::-webkit-scrollbar { display: none; }
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
-    .faq-section { padding: 28px 24px; scroll-margin-top: 112px; }
+    .faq-section { padding: 28px 24px; scroll-margin-top: 108px; }
     .faq-section-header { margin-bottom: 24px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
@@ -303,7 +305,7 @@
     <button class="anchor-pill" id="pill-payment" onclick="scrollToSection('faq-payment')">Оплата</button>
     <button class="anchor-pill" id="pill-products" onclick="scrollToSection('faq-products')">Товари</button>
     <button class="anchor-pill" id="pill-returns" onclick="scrollToSection('faq-returns')">Повернення</button>
-    <button class="anchor-pill anchor-pill-cta" id="pill-cta" onclick="scrollToSection('faq-cta')">Написати нам</button>
+    <button class="anchor-pill anchor-pill-cta" id="pill-cta" onclick="scrollToSection('faq-cta')"><i class="hgi-stroke hgi-message-01"></i> Написати нам</button>
   </div>
 </nav>
 
