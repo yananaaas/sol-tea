@@ -174,9 +174,8 @@
 
   /* HERO */
   .faq-hero { margin-top: 80px; background: var(--cream); padding: 52px 48px 32px; }
-  .faq-hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .faq-hero-inner { max-width: 800px; }
   .faq-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 72px); font-weight: 900; line-height: 1.05; color: var(--black); letter-spacing: -0.03em; }
-  .faq-hero-inner .btn-primary { margin-top: 0; flex-shrink: 0; }
 
   /* ANCHOR NAV */
   .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 14px 48px; }
@@ -185,6 +184,8 @@
   .anchor-pill i { font-size: 16px; }
   .anchor-pill:hover { background: var(--gray-100); }
   .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
+  .anchor-pill-cta { background: var(--black); color: var(--cream-bright); }
+  .anchor-pill-cta:hover { background: var(--green-800); }
 
   /* FAQ SECTIONS */
   .faq-section { padding: 64px 48px; }
@@ -242,7 +243,6 @@
 
     /* FAQ MOBILE */
     .faq-hero { margin-top: 72px; padding: 32px 24px 20px; }
-    .faq-hero-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
     .anchor-nav { top: 72px; padding: 12px 16px; }
     .anchor-nav-inner { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .anchor-nav-inner::-webkit-scrollbar { display: none; }
@@ -294,7 +294,6 @@
 <section class="faq-hero">
   <div class="faq-hero-inner fade-up">
     <h1>Часті запитання</h1>
-    <a href="mailto:hello@sol-tea.com" class="btn-primary">Поставити запитання <i class="hgi-stroke hgi-arrow-right-01"></i></a>
   </div>
 </section>
 
@@ -312,6 +311,9 @@
     </button>
     <button class="anchor-pill" id="pill-returns" onclick="scrollToSection('faq-returns')">
       <i class="hgi-stroke hgi-exchange-01"></i> Повернення
+    </button>
+    <button class="anchor-pill anchor-pill-cta" id="pill-cta" onclick="scrollToSection('faq-cta')">
+      <i class="hgi-stroke hgi-message-01"></i> Поставити запитання
     </button>
   </div>
 </nav>
@@ -486,6 +488,13 @@
   </div>
 </section>
 
+
+<!-- CTA -->
+<section class="faq-section" id="faq-cta">
+  <div class="faq-section-inner">
+    <a href="mailto:hello@sol-tea.com" class="btn-primary fade-up">Поставити запитання <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
@@ -731,12 +740,13 @@ function toggleFaq(btn) {
 }
 
 // ANCHOR NAV
-const sectionIds = ['faq-delivery', 'faq-payment', 'faq-products', 'faq-returns'];
+const sectionIds = ['faq-delivery', 'faq-payment', 'faq-products', 'faq-returns', 'faq-cta'];
 const pillMap = {
   'faq-delivery': 'pill-delivery',
   'faq-payment': 'pill-payment',
   'faq-products': 'pill-products',
-  'faq-returns': 'pill-returns'
+  'faq-returns': 'pill-returns',
+  'faq-cta': 'pill-cta'
 };
 
 let pillLocked = false;
