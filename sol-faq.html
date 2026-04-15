@@ -56,8 +56,8 @@
   .section-tag i { font-size: 16px; }
 
   /* BUTTONS */
-  .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-  .btn-primary:hover { background: var(--black); }
+  .btn-primary { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .btn-primary:hover { background: var(--green-800); }
   .btn-primary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
   .btn-primary:hover i { transform: translateX(7px); }
   .faq-hero-inner .btn-primary { margin-top: 32px; }
@@ -173,22 +173,21 @@
      ============================ */
 
   /* HERO */
-  .faq-hero { margin-top: 80px; background: var(--cream); padding: 52px 48px 32px; }
+  .faq-hero { margin-top: 80px; background: var(--cream); padding: 52px 48px 24px; }
   .faq-hero-inner { max-width: 800px; }
   .faq-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 72px); font-weight: 900; line-height: 1.05; color: var(--black); letter-spacing: -0.03em; }
 
   /* ANCHOR NAV */
-  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 14px 48px; }
+  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 12px; }
   .anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
-  .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-  .anchor-pill i { font-size: 16px; }
+  .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; }
   .anchor-pill:hover { background: var(--gray-100); }
   .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
   .anchor-pill-cta { background: var(--black); color: var(--cream-bright); }
   .anchor-pill-cta:hover { background: var(--green-800); }
 
   /* FAQ SECTIONS */
-  .faq-section { padding: 64px 48px; }
+  .faq-section { padding: 36px 48px; }
   .faq-section-inner { max-width: 1280px; margin: 0 auto; }
   .faq-section-header { margin-bottom: 32px; }
   .faq-section-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
@@ -207,7 +206,7 @@
   .faq-answer-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
 
   /* SCROLL MARGIN for anchor nav + sticky nav */
-  .faq-section { scroll-margin-top: 148px; }
+  .faq-section { scroll-margin-top: 124px; }
 
 
   /* MOBILE */
@@ -243,11 +242,11 @@
 
     /* FAQ MOBILE */
     .faq-hero { margin-top: 72px; padding: 32px 24px 20px; }
-    .anchor-nav { top: 72px; padding: 12px 16px; }
+    .anchor-nav { top: 72px; padding: 0 16px 8px; }
     .anchor-nav-inner { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .anchor-nav-inner::-webkit-scrollbar { display: none; }
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
-    .faq-section { padding: 48px 24px; scroll-margin-top: 132px; }
+    .faq-section { padding: 28px 24px; scroll-margin-top: 112px; }
     .faq-section-header { margin-bottom: 24px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
@@ -300,21 +299,11 @@
 <!-- ANCHOR NAV -->
 <nav class="anchor-nav" id="anchorNav">
   <div class="anchor-nav-inner">
-    <button class="anchor-pill active" id="pill-delivery" onclick="scrollToSection('faq-delivery')">
-      <i class="hgi-stroke hgi-delivery-truck-01"></i> Доставка
-    </button>
-    <button class="anchor-pill" id="pill-payment" onclick="scrollToSection('faq-payment')">
-      <i class="hgi-stroke hgi-credit-card"></i> Оплата
-    </button>
-    <button class="anchor-pill" id="pill-products" onclick="scrollToSection('faq-products')">
-      <i class="hgi-stroke hgi-package-01"></i> Товари
-    </button>
-    <button class="anchor-pill" id="pill-returns" onclick="scrollToSection('faq-returns')">
-      <i class="hgi-stroke hgi-exchange-01"></i> Повернення
-    </button>
-    <button class="anchor-pill anchor-pill-cta" id="pill-cta" onclick="scrollToSection('faq-cta')">
-      <i class="hgi-stroke hgi-message-01"></i> Поставити запитання
-    </button>
+    <button class="anchor-pill active" id="pill-delivery" onclick="scrollToSection('faq-delivery')">Доставка</button>
+    <button class="anchor-pill" id="pill-payment" onclick="scrollToSection('faq-payment')">Оплата</button>
+    <button class="anchor-pill" id="pill-products" onclick="scrollToSection('faq-products')">Товари</button>
+    <button class="anchor-pill" id="pill-returns" onclick="scrollToSection('faq-returns')">Повернення</button>
+    <button class="anchor-pill anchor-pill-cta" id="pill-cta" onclick="scrollToSection('faq-cta')">Написати нам</button>
   </div>
 </nav>
 
