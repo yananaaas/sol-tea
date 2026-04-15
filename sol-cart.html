@@ -148,9 +148,9 @@
   .tab-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .tab-pill.active { background: var(--green-800); color: var(--cream-bright); }
   @media (hover: hover) { .tab-pill:hover:not(.active) { background: var(--gray-100); } }
-  .tab-count { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; opacity: 0.6; }
+  .tab-count { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-500); }
   .tab-count.wish-count { color: var(--terra); }
-  .tab-pill.active .tab-count.wish-count { color: inherit; }
+  .tab-pill.active .tab-count, .tab-pill.active .tab-count.wish-count { color: var(--cream-bright); }
 
   /* CART SECTION */
   .cart-section { padding: 0 48px 60px; }
@@ -164,13 +164,14 @@
   .cart-item:last-child { padding-bottom: 0; }
   .cart-item-img { width: 88px; height: 88px; border-radius: 16px; background: var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gray-500); font-family: 'Inter', sans-serif; cursor: pointer; overflow: hidden; }
   .cart-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-  .cart-item-info { display: flex; flex-direction: column; gap: 4px; }
+  .cart-item-top { display: flex; align-items: flex-start; gap: 8px; }
+  .cart-item-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .cart-item-name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; cursor: pointer; transition: color 0.2s; display: inline; }
   @media (hover: hover) { .cart-item-name:hover { color: var(--green-800); } }
   .cart-item-desc { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
   .cart-item-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .cart-item-controls { display: flex; align-items: center; gap: 10px; }
-  .cart-item-price { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; color: var(--green-800); margin-right: auto; }
+  .cart-item-price { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; color: var(--green-800); }
 
   /* QTY CONTROL */
   .qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
@@ -210,7 +211,7 @@
   .cart-empty-layout { grid-template-columns: 1fr !important; }
   .empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 40px; gap: 16px; }
   .empty-state h3 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
-  .empty-state p { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 260px; }
+  .empty-state p { font-size: 15px; color: var(--gray-500); line-height: 1.6; }
   .empty-state-btn { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-top: 8px; }
   @media (hover: hover) { .empty-state-btn:hover { background: var(--black); } }
   .empty-state-btn i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
@@ -316,12 +317,12 @@
   </ul>
   <div class="nav-search">
     <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input">
+    <input type="text" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" oninput="onCartSearch(this.value)">
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-search-inline" id="navSearchInline">
     <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" placeholder="Пошук..." class="nav-search-inline-input">
+    <input type="text" placeholder="Пошук..." class="nav-search-inline-input" oninput="onCartSearch(this.value)">
     <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
   </div>
   <div class="nav-right">
@@ -660,10 +661,15 @@ function renderCart() {
       <div class="cart-item">
         <div class="cart-item-img" style="${p.bg ? 'background:' + p.bg : ''}" onclick="goToProduct('${safeN}')">Фото</div>
         <div class="cart-item-main">
-          <div class="cart-item-info">
-            <span class="cart-item-name" onclick="goToProduct('${safeN}')">${item.name}</span>
-            ${p.desc ? `<div class="cart-item-desc">${p.desc}</div>` : ''}
-            ${badgeHtml ? `<div class="cart-item-meta">${badgeHtml}</div>` : ''}
+          <div class="cart-item-top">
+            <div class="cart-item-info">
+              <span class="cart-item-name" onclick="goToProduct('${safeN}')">${item.name}</span>
+              ${p.desc ? `<div class="cart-item-desc">${p.desc}</div>` : ''}
+              ${badgeHtml ? `<div class="cart-item-meta">${badgeHtml}</div>` : ''}
+            </div>
+            <button class="cart-item-remove" title="Видалити" onclick="removeFromCart('${safeN}')">
+              <i class="hgi-stroke hgi-cancel-01"></i>
+            </button>
           </div>
           <div class="cart-item-controls">
             <div class="qty-ctrl">
@@ -676,9 +682,6 @@ function renderCart() {
               </button>
             </div>
             <span class="cart-item-price">₴ ${(itemTotal).toLocaleString('uk-UA')}</span>
-            <button class="cart-item-remove" title="Видалити" onclick="removeFromCart('${safeN}')">
-              <i class="hgi-stroke hgi-cancel-01"></i>
-            </button>
           </div>
         </div>
       </div>`;
@@ -841,6 +844,23 @@ function openSearch() {
 }
 function closeSearch() {
   document.querySelector('nav').classList.remove('search-active');
+  document.querySelectorAll('.nav-search-input, .nav-search-inline-input').forEach(i => { i.value = ''; });
+  onCartSearch('');
+}
+
+function onCartSearch(value) {
+  const q = value.trim().toLowerCase();
+  if (activeTab === 'wish') {
+    document.querySelectorAll('#wishGrid .product-card').forEach(card => {
+      const h4 = card.querySelector('h4');
+      card.style.display = (!q || (h4 && h4.textContent.toLowerCase().includes(q))) ? '' : 'none';
+    });
+  } else {
+    document.querySelectorAll('.cart-item').forEach(item => {
+      const name = item.querySelector('.cart-item-name');
+      item.style.display = (!q || (name && name.textContent.toLowerCase().includes(q))) ? '' : 'none';
+    });
+  }
 }
 
 document.addEventListener('keydown', e => {

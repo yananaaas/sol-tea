@@ -781,6 +781,9 @@ renderFilters();
 renderCards();
 updateCartBadge();
 updateWishBadge();
+
+// Re-render when restored from bfcache (browser back button)
+window.addEventListener('pageshow', (e) => { if (e.persisted) renderCards(); });
 </script>
 </body>
 </html>
