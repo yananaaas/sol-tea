@@ -54,10 +54,49 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 Стрілки в кнопках: `translateX(3px)` → `translateX(7px)` на hover.
 `.btn-secondary i { transform: translateX(3px); margin-right: -4px; }` — для arrow-right-01.
 
-### Правила
+### Правила дизайну
 - Без дівайдерів — тільки блочна структура
 - border-radius карток: `20–24px`
 - Чергування блоків: cream → green-800 → cream → green-800
+- **Hover ефекти** — загортати в `@media (hover: hover)` скрізь де є зміна кольору/фону на інтерактивних елементах. Інакше iOS застряє у hover-стані після тапу.
+
+---
+
+## Система відступів (стандарт сайту)
+
+Виведена на основі sol-shop.html і застосована на всіх сторінках.
+
+### Горизонтальні відступи
+- Десктоп: `padding: 0 48px` або `padding: X 48px`
+- Мобілка: `padding: 0 16px` або `padding: X 24px` (24px для контентних секцій, 16px для nav і sticky елементів)
+- Максимальна ширина контенту: `max-width: 1280px; margin: 0 auto`
+
+### Вертикальні відступи — сторінки типу "каталог/список" (shop, faq)
+```
+Nav bottom → h1:        52px desktop / 24px mobile  (padding-top на header)
+h1 → pills/filter bar:  24px  (padding-bottom на header)
+Pills → контент:        36px desktop / 24px mobile  (padding-bottom на pill-bar, 0 top на секціях)
+Між секціями:           36px desktop / 28px mobile  (padding-bottom на секції, padding-top: 0)
+```
+
+**Модель: gap завжди через `padding-bottom` попереднього елемента, наступний має `padding-top: 0`.**
+Так само як shop: `filter-bar { padding-bottom: 36px }` + products без `padding-top`.
+
+### Вертикальні відступи — "важкі" секції (sol-tea.html)
+- Секції: `padding: 80px 48px` desktop, `padding: 60px–80px 24px` mobile
+
+### h1 заголовки сторінок
+- Розмір: `clamp(40px, 5vw, 64px)` Inter 900, `letter-spacing: -0.03em`, `line-height: 1`
+- Мобілка: `clamp(28px, 8vw, 40px)`
+- **Без анімації** — h1 з'являється миттєво без fade/slide. Клас `anim-h` і подібні не використовувати на h1.
+
+### Пілюлі (filter-pill, anchor-pill)
+- Десктоп: `padding: 9px 18px; font-size: 13px; font-weight: 500; border-radius: 40px`
+- Мобілка: `padding: 12px 18px; font-size: 13px`
+- Active: `background: var(--green-800); color: var(--cream-bright)`
+- Hover: тільки в `@media (hover: hover)` — `background: var(--gray-100)`
+- Іконка всередині пілюлі: `font-size: 16px`, gap: `7–8px`
+- Іконка типу "сортування/дія": `font-size: 18px`, `gap: 8px` (як sort-btn в shop)
 
 ---
 
@@ -71,6 +110,7 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `sol-shop.html` | ✅ Готова | Магазин (каталог) |
 | `index.html` | ✅ Готова | Редирект на sol-tea.html |
 | `sol-product.html` | ✅ Готова | Сторінка товару (динамічна, ?name=...) |
+| `sol-faq.html` | ✅ Готова | Часті запитання |
 | `sol-cart.html` | ⬜ Не почата | Кошик |
 | `sol-checkout.html` | ⬜ Не почата | Оформлення замовлення |
 
@@ -90,10 +130,11 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - `sol-tea.html` → nav "Магазин" → `sol-shop.html` ✅
 - `sol-tea.html` → логотип → `sol-tea.html` ✅
 - `sol-tea.html` → "Всі товари" (Хіти продажів) → `sol-shop.html` ✅
-- `sol-tea.html` → FAQ іконка → `sol-faq.html` ✅ (сторінки ще немає)
+- `sol-tea.html` → FAQ іконка → `sol-faq.html` ✅
 - `sol-shop.html` → nav "Про нас" → `sol-tea.html` ✅
 - `sol-shop.html` → логотип → `sol-tea.html` ✅
-- `sol-shop.html` → FAQ іконка → `sol-faq.html` ✅ (сторінки ще немає)
+- `sol-shop.html` → FAQ іконка → `sol-faq.html` ✅
+- `sol-faq.html` → "Написати нам" кнопка → `mailto:hello@sol-tea.com`
 - Кнопки "До колекцій", "Переглянути всі", "Переглянути" — ще не мають `href`
 
 ---
@@ -112,6 +153,8 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 - Всі іконки: `44×44px`, `font-size: 22px`, `gap: 0`
 - Бургер відкриває **dropdown** меню (не slide-in панель!) — позиціонується `top: 76px; right: 16px`
 - Dropdown: `width: 240px; background: var(--sand); border-radius: 20px`
+- FAQ іконка (`nav-faq`) прихована на мобілці — замість неї пункт у бургер-меню
+- Активна сторінка в бургер-меню: клас `active` на відповідному `.mm-item`
 
 ### Search overlay (десктоп) / inline (мобілка)
 - **Десктоп**: клік на поле пошуку відкриває `.search-overlay` під nav
@@ -166,6 +209,19 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 | `onSearchInput(value)` | оновлює searchQuery → renderCards() |
 | `getCart()` | читає solCart з sessionStorage |
 | `saveCart(c)` | зберігає solCart у sessionStorage |
+
+### sol-faq.html
+| Функція | Що робить |
+|---------|-----------|
+| `toggleProfile()` | dropdown панель профілю |
+| `toggleMobileMenu()` | dropdown бургер-меню |
+| `openSearch()` | мобілка: `nav.search-active` |
+| `toggleFaq(btn)` | toggle акордеону — клас `open` на `.faq-item` |
+| `scrollToSection(id)` | smooth scroll до секції + активує пілюлю + lock 900ms |
+| `setActivePill(id)` | знімає/ставить `.active` на anchor-pill |
+| `updateCartBadge()` | синхронізує badge кошика |
+| `updateWishBadge()` | синхронізує badge вподобаних |
+| `getCart()` | читає solCart з sessionStorage |
 
 ### sessionStorage
 | Ключ | Формат | Опис |
@@ -270,6 +326,61 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ---
 
+## sol-faq.html — специфіка
+
+### Структура сторінки
+1. Nav (ідентична іншим сторінкам, `nav-faq` кнопка має клас `active`)
+2. Hero: `h1` "Часті запитання" — **без анімації**
+3. Anchor nav (sticky)
+4. 4 FAQ-секції: Доставка, Оплата, Товари, Повернення
+5. CTA-секція: кнопка "Написати нам"
+6. Footer
+
+### Anchor nav
+```css
+.anchor-nav { position: sticky; top: 80px/72px; z-index: 99; background: var(--cream);
+              padding: 0 48px 36px; /* desktop */ / padding: 0 16px 24px; /* mobile */ }
+```
+- 5 пілюль: Доставка, Оплата, Товари, Повернення + "Написати нам" (остання)
+- Активна пілюля підсвічується через `IntersectionObserver` з `pillLocked` механізмом (900ms після кліку)
+- scroll-margin-top: `148px` desktop / `136px` mobile
+
+### "Написати нам" пілюля (`.anchor-pill-cta`)
+- Стиль як звичайна пілюля (sand фон), але з іконкою `hgi-message-01`
+- Іконка: `font-size: 18px` (як sort-btn), `gap: 8px`
+- Active стан: `background: var(--black)` (не зелений!)
+- Hover: `@media (hover: hover)` тільки
+
+### FAQ секції
+```css
+.faq-section { padding: 0 48px 36px; }          /* desktop */
+.faq-section { padding: 0 24px 28px; }           /* mobile */
+.faq-section-inner { max-width: 1280px; margin: 0 auto; }
+.faq-section-header h2 { clamp(26px, 3vw, 38px) } /* desktop */
+.faq-section-header h2 { font-size: 22px; }        /* mobile */
+```
+- **padding-top: 0** на секціях — gap дає `padding-bottom` anchor nav (36px/24px)
+
+### Акордеон
+- `.faq-item.open` — клас через `toggleFaq(btn)`
+- Відповідь: `max-height: 0 → 400px`, `transition: 0.35s cubic-bezier`
+- Іконка: `hgi-add-01`, при відкритті `rotate(45deg)`
+- Питання: `padding: 28px` desktop / `22px` mobile, Inter 600 16px/15px
+- Відповідь-inner: `padding: 0 28px 32px` / `0 22px 24px`
+
+### CTA секція
+```html
+<section class="faq-section" id="faq-cta">
+  <a href="mailto:hello@sol-tea.com" class="btn-primary">Написати нам →</a>
+</section>
+```
+- `.btn-primary` в FAQ: `background: var(--black)`, hover → `var(--green-800)` (локальне визначення в файлі)
+
+### Мобільний бургер
+- Пункт FAQ має клас `active` в бургер-меню
+
+---
+
 ## Що не реалізовано (не чіпати)
 
 - **Email підписка** — поле є у футері, відповідь після сабміту не реалізована
@@ -295,7 +406,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Репозиторій: https://github.com/yananaaas/sol-tea
 - GitHub Pages: https://yananaaas.github.io/sol-tea/
 - Деплой автоматичний через ~1 хв після push
-- Команда: `git add sol-tea.html sol-shop.html sol-product.html CLAUDE.md && git commit -m "опис" && git push`
+- Команда: `git add sol-tea.html sol-shop.html sol-product.html sol-faq.html CLAUDE.md && git commit -m "опис" && git push`
 
 ---
 
@@ -396,7 +507,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ## Наступні таски (черга)
 
-1. **FAQ сторінка** `sol-faq.html` — Часті запитання (кнопка в хедері вже веде туди)
+1. **`sol-cart.html`** — Кошик
 
 ---
 
