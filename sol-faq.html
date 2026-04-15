@@ -178,15 +178,16 @@
   .faq-hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 64px); font-weight: 900; line-height: 1.05; color: var(--black); letter-spacing: -0.03em; }
 
   /* ANCHOR NAV */
-  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px; }
+  .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 36px; }
   .anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
   .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; }
   .anchor-pill:hover { background: var(--gray-100); }
   .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
+  .anchor-pill-cta { gap: 8px; }
   .anchor-pill-cta i { font-size: 16px; }
 
   /* FAQ SECTIONS */
-  .faq-section { padding: 36px 48px; }
+  .faq-section { padding: 0 48px 36px; }
   .faq-section-inner { max-width: 1280px; margin: 0 auto; }
   .faq-section-header { margin-bottom: 32px; }
   .faq-section-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
@@ -205,7 +206,7 @@
   .faq-answer-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
 
   /* SCROLL MARGIN for anchor nav + sticky nav */
-  .faq-section { scroll-margin-top: 116px; }
+  .faq-section { scroll-margin-top: 148px; }
 
 
   /* MOBILE */
@@ -242,11 +243,11 @@
     /* FAQ MOBILE */
     .faq-hero { margin-top: 72px; padding: 24px 24px 20px; }
     .faq-hero h1 { font-size: clamp(28px, 8vw, 40px); }
-    .anchor-nav { top: 72px; padding: 0 16px; }
+    .anchor-nav { top: 72px; padding: 0 16px 24px; }
     .anchor-nav-inner { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .anchor-nav-inner::-webkit-scrollbar { display: none; }
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
-    .faq-section { padding: 28px 24px; scroll-margin-top: 108px; }
+    .faq-section { padding: 0 24px 28px; scroll-margin-top: 136px; }
     .faq-section-header { margin-bottom: 24px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
@@ -481,7 +482,7 @@
 <!-- CTA -->
 <section class="faq-section" id="faq-cta">
   <div class="faq-section-inner">
-    <a href="mailto:hello@sol-tea.com" class="btn-primary fade-up">Поставити запитання <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+    <a href="mailto:hello@sol-tea.com" class="btn-primary fade-up">Написати нам <i class="hgi-stroke hgi-arrow-right-01"></i></a>
   </div>
 </section>
 
