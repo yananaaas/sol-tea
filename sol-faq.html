@@ -181,8 +181,8 @@
   .anchor-nav { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 36px; }
   .anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
   .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; }
-  .anchor-pill:hover { background: var(--gray-100); }
   .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
+  @media (hover: hover) { .anchor-pill:hover { background: var(--gray-100); } }
   .anchor-pill-cta { gap: 8px; }
   .anchor-pill-cta i { font-size: 18px; }
   .anchor-pill-cta.active { background: var(--black); color: var(--cream-bright); }
@@ -250,6 +250,7 @@
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
     .faq-section { padding: 0 24px 28px; scroll-margin-top: 136px; }
     .faq-section-header { margin-bottom: 24px; }
+    .faq-section-header h2 { font-size: 28px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
   }
