@@ -143,6 +143,13 @@
   .fade-up-d2 { transition-delay: 0.2s; }
   .fade-up-d3 { transition-delay: 0.3s; }
 
+  /* HERO ANIMATION — same as shop */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-h { animation: fadeUp 0.4s ease 0.05s both; }
+
   /* FOOTER */
   footer { background: var(--black); padding: 80px 48px 40px; }
   .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
@@ -250,7 +257,7 @@
     .anchor-pill { padding: 12px 18px; font-size: 13px; }
     .faq-section { padding: 0 24px 28px; scroll-margin-top: 136px; }
     .faq-section-header { margin-bottom: 24px; }
-    .faq-section-header h2 { font-size: 28px; }
+    .faq-section-header h2 { font-size: 22px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
   }
@@ -294,7 +301,7 @@
 
 <!-- HERO -->
 <section class="faq-hero">
-  <div class="faq-hero-inner fade-up">
+  <div class="faq-hero-inner anim-h">
     <h1>Часті запитання</h1>
   </div>
 </section>
