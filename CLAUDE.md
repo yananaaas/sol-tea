@@ -406,7 +406,7 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 - Репозиторій: https://github.com/yananaaas/sol-tea
 - GitHub Pages: https://yananaaas.github.io/sol-tea/
 - Деплой автоматичний через ~1 хв після push
-- Команда: `git add sol-tea.html sol-shop.html sol-product.html sol-faq.html CLAUDE.md && git commit -m "опис" && git push`
+- Команда: `git add sol-tea.html sol-shop.html sol-product.html sol-faq.html sol-cart.html CLAUDE.md && git commit -m "опис" && git push`
 
 ---
 
@@ -505,16 +505,89 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ---
 
+## sol-cart.html — специфіка
+
+### Структура сторінки
+1. Nav (ідентична іншим, кнопка кошика має клас `active`)
+2. Hero: `h1` "Кошик" — без анімації
+3. Tab bar (sticky, top: 80px/72px): таби Кошик / Вподобане
+4. `#cartPane` або `#wishPane` — залежно від активного таба
+5. Footer
+
+### Tab bar
+```css
+.tab-bar { position: sticky; top: 80px; z-index: 99; background: var(--cream); padding: 0 48px 36px; }
+.tab-pill.active { background: var(--green-800); color: var(--cream-bright); }
+.tab-count { color: var(--green-800); } /* cart */
+.tab-count.wish-count { color: var(--terra); } /* wish */
+.tab-pill.active .tab-count { color: var(--cream-bright); } /* обидва активні */
+```
+- URL `?tab=wish` → відкривається одразу вкладка Вподобане
+- Числа в пілюлях — просто текст, не badge-кружечок
+
+### Кошик (cart pane)
+- Layout: `grid-template-columns: 1fr 380px; gap: 48px` (десктоп) → `1fr` на мобілці
+- При порожньому кошику: `cart-empty-layout` клас → `grid-template-columns: 1fr !important`, по центру
+- Елемент товару: `.cart-item-top` (назва + X кнопка) + `.cart-item-controls` (qty + ціна)
+- X кнопка (`.cart-item-remove`) — у верхній частині поряд з назвою, **не** в рядку з qty
+- Qty контрол: sand background, rounded 40px, minus/plus кнопки по 32px
+- Summary: `position: sticky; top: 168px` (враховує nav + tab-bar)
+- Прогрес-бар до безкоштовної доставки: threshold `1000 ₴`
+- `.summary-value.free`: `display: inline-flex; align-items: center; gap: 6px` — галочка вирівняна
+
+### Вподобане (wish pane)
+- Картки — точна копія компонента з sol-shop.html (`.product-card`, `.product-img`, `.product-wish`, `.product-badge`, `.product-body`, `.product-footer`, `.btn-add`)
+- Grid: 4 колонки → 3 (1100px) → 2 (768px) → 1 (480px)
+- Анімація: double rAF → `.show` клас
+- Серце `.product-wish.liked` — завжди `color: var(--terra)` (вже в вподобаних)
+- Кнопка "В кошику" → `toggleWishCart(name, btn)` — додає/прибирає з кошика без видалення з wishlist
+
+### Пошук
+- Повноекранна панель `.search-panel` — як на sol-tea.html
+- Desktop: `oninput` на `#desktopSearchInput` → `onDesktopSearchInput()` → `filterProducts(q)`
+- Mobile: `openSearch()` → `nav.search-active` → `#navSearchInput` → `filterProducts(q)`
+- `filterProducts(q)` шукає по масиву PRODUCTS (38 позицій), показує картки в панелі
+- Підсвічування тексту: `<mark style="background:var(--green-500)...">`
+- Кнопка "В кошику" прямо в результатах → `toggleSearchCart(name, btn)`
+
+### Дані
+- Масив `PRODUCTS` (38 позицій) — `{name, price, bg, badge, region, desc}`
+- `PRODUCT_MAP` — lookup по name
+- `WISH_ID_MAP` — маппінг коротких id з sol-tea.html: `{teg, shen, feng, shu}` → повне ім'я
+
+### JS функції — sol-cart.html
+| Функція | Що робить |
+|---------|-----------|
+| `switchTab(tab)` | перемикає таби cart/wish, рендерить контент |
+| `renderCart()` | рендерить список товарів або empty-state |
+| `renderWishlist()` | рендерить картки вподобаного або empty-state |
+| `changeQty(name, delta)` | ±1 кількість товару в кошику |
+| `removeFromCart(name)` | видаляє товар з кошика |
+| `toggleWishCart(name, btn)` | додає/прибирає wishlist-товар з кошика |
+| `removeFromWish(id)` | видаляє з wishlist |
+| `toggleSearchCart(name, btn)` | toggle кошика з панелі пошуку |
+| `filterProducts(q)` | пошук по PRODUCTS, показує `.search-panel` |
+| `onDesktopSearchInput(val)` | desktop input → filterProducts + clear btn |
+| `clearDesktopSearch()` | скидає десктоп-пошук |
+| `openSearch()` | мобілка: `nav.search-active`; десктоп: фокус |
+| `closeSearch()` | закриває пошук, скидає обидва inputs |
+| `toggleProfile()` | dropdown панель профілю |
+| `toggleMobileMenu()` | dropdown бургер-меню |
+| `updateCartBadge()` | синхронізує badge кошика |
+| `updateWishBadge()` | синхронізує badge вподобаних |
+| `updateCartTabCount()` | оновлює цифру в пілюлі Кошика |
+| `updateWishTabCount()` | оновлює цифру в пілюлі Вподобаного |
+| `getCart()` / `saveCart(c)` | читає/зберігає solCart |
+| `getWish()` / `saveWish(w)` | читає/зберігає solWish |
+| `goToProduct(name)` | перехід на sol-product.html?name=... |
+
+---
+
 ## Наступні таски (черга)
 
 1. **`sol-checkout.html`** — Оформлення замовлення
 
 ---
-
-## Наступні сторінки
-
-- `sol-cart.html` — кошик: список з sessionStorage, кількість, ціни, кнопка оформити
-- `sol-checkout.html` — форма: ім'я, Нова Пошта, email, телефон, оплата
 
 ### Пізніше
 - Додати wishlist панель (slide-in як профіль) з іконкою серця в nav
