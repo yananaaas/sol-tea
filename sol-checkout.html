@@ -159,10 +159,13 @@
 
   .checkout-page { margin-top: 80px; }
 
+  .co-page-header { max-width: 1280px; margin: 0 auto; padding: 52px 48px 24px; }
+  .co-page-header h1 { font-family: 'Inter', sans-serif; font-size: clamp(40px, 5vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--black); }
+
   .checkout-layout {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 48px 48px 80px;
+    padding: 0 48px 80px;
     display: grid;
     grid-template-columns: 55fr 45fr;
     gap: 56px;
@@ -177,7 +180,7 @@
   .back-link i { font-size: 16px; }
 
   .co-section { display: flex; flex-direction: column; gap: 20px; }
-  .co-section-title { font-family: 'Inter', sans-serif; font-size: clamp(22px, 2.5vw, 30px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; color: var(--black); }
+  .co-section-title { font-family: 'Inter', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; color: var(--black); }
 
   .co-fields { display: flex; flex-direction: column; gap: 14px; }
   .co-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -328,7 +331,10 @@
     .search-panel-grid { grid-template-columns: 1fr; }
 
     .checkout-page { margin-top: 72px; }
-    .checkout-layout { grid-template-columns: 1fr; gap: 0; padding: 28px 16px 60px; }
+    .co-page-header { padding: 24px 24px 24px; }
+    .co-page-header h1 { font-size: clamp(28px, 8vw, 40px); }
+    .co-section-title { font-size: 22px; }
+    .checkout-layout { grid-template-columns: 1fr; gap: 0; padding: 0 16px 60px; }
     .checkout-left { gap: 40px; }
     .back-link { margin-bottom: -20px; }
     .co-row-2 { grid-template-columns: 1fr; gap: 14px; }
@@ -387,6 +393,9 @@
 <!-- CHECKOUT PAGE -->
 <div class="checkout-page">
   <div id="checkoutMain">
+    <div class="co-page-header">
+      <h1>Оформлення замовлення</h1>
+    </div>
     <div class="checkout-layout">
 
       <!-- LEFT COLUMN -->
