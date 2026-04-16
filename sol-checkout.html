@@ -270,7 +270,7 @@
   /* ITEMS */
   .co-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
   .co-item { display: flex; align-items: center; gap: 14px; }
-  .co-item-img { width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0; cursor: pointer; transition: opacity 0.2s; }
+  .co-item-img { width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0; cursor: pointer; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-300); }
   @media (hover: hover) { .co-item-img:hover { opacity: 0.8; } }
   .co-item-info { flex: 1; min-width: 0; }
   .co-item-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s; }
@@ -456,7 +456,7 @@
                   </div>
                   <div class="delivery-opt-expand">
                     <div class="delivery-opt-carrier">
-                      <img src="https://play-lh.googleusercontent.com/mtyOm0Rp0PeG_BWE7M5j9gBWuU1Du34LLj-dLdSE1-006_BkFg32W3Cca00l2BBvNM0" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                      <img src="https://to4ka.fun/wp-content/uploads/2023/05/Nova-Poshta-2.jpg" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
                       <div class="delivery-carrier-info">
                         <div class="delivery-carrier-title">Нова Пошта</div>
                         <div class="delivery-carrier-desc">2–3 дні після відправлення</div>
@@ -475,7 +475,7 @@
                   </div>
                   <div class="delivery-opt-expand">
                     <div class="delivery-opt-carrier">
-                      <img src="https://play-lh.googleusercontent.com/mtyOm0Rp0PeG_BWE7M5j9gBWuU1Du34LLj-dLdSE1-006_BkFg32W3Cca00l2BBvNM0" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                      <img src="https://to4ka.fun/wp-content/uploads/2023/05/Nova-Poshta-2.jpg" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
                       <div class="delivery-carrier-info">
                         <div class="delivery-carrier-title">Нова Пошта Кур'єр</div>
                         <div class="delivery-carrier-desc">1–2 дні, доставка до дверей</div>
@@ -774,7 +774,7 @@ function renderSummary() {
     if (!p) return '';
     const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     return '<div class="co-item">' +
-      '<div class="co-item-img" style="background:' + p.bg + '" onclick="goToProduct(\'' + sn + '\')"></div>' +
+      '<div class="co-item-img" style="background:' + p.bg + '" onclick="goToProduct(\'' + sn + '\')">Фото</div>' +
       '<div class="co-item-info">' +
         '<div class="co-item-name" onclick="goToProduct(\'' + sn + '\')">' + esc(p.name) + '</div>' +
         '<div class="co-item-qty">' + i.qty + '\u00a0шт · ' + p.region + '</div>' +
@@ -961,7 +961,7 @@ function filterProducts(q) {
     const inCart = cart.some(c => c.name === p.name);
     const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     return '<div class="product-card show" onclick="goToProduct(\'' + sn + '\')">' +
-      '<div class="product-img" style="background:' + p.bg + '">' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
+      '<div class="product-img" style="background:' + p.bg + '">Фото' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
       '<div class="product-body"><h4>' + hi(esc(p.name)) + '</h4><p class="product-desc">' + hi(esc(p.desc)) + '</p>' +
       '<div class="product-footer"><span class="product-price">₴\u00a0' + fmt(p.price) + '</span>' +
       '<button class="btn-add' + (inCart ? ' in-cart' : '') + '" onclick="event.stopPropagation();toggleSearchCart(\'' + sn + '\',this)">' + (inCart ? 'В кошику' : '+ В кошик') + '</button>' +
