@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Оформлення — Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+  :root {
+    --cream: #F5F0E8; --cream-bright: #FDFCF9; --sand: #E8E0CC;
+    --green-800: #226F54; --green-500: #7CC44A; --terra: #C4855A;
+    --black: #1C1A14; --gray-800: #4A4538; --gray-500: #7A7060;
+    --gray-300: #B5AFA3; --gray-100: #D9D3C7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); padding: 0 48px; height: 80px; display: flex; align-items: center; gap: 32px; }
+  .nav-spacer { flex: 1; }
+  .nav-logo { flex-shrink: 0; }
+  .nav-logo svg { height: 42px; width: auto; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  @media (hover: hover) { .nav-links a:hover { color: var(--green-800); } }
+  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
+  .nav-search:focus-within { background: var(--gray-100); }
+  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; }
+  .nav-search-input::placeholder { color: var(--gray-500); }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 20px; position: relative; }
+  @media (hover: hover) { .nav-icon-btn:hover { background: var(--sand); } }
+  .nav-icon-btn.active { background: var(--sand); }
+  .cart-badge, .wish-badge { position: absolute; top: 6px; right: 6px; min-width: 18px; height: 18px; border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: var(--cream-bright); padding: 0 5px; line-height: 1; }
+  .cart-badge { background: var(--green-800); }
+  .wish-badge { background: var(--terra); }
+  .cart-badge.visible, .wish-badge.visible { display: flex; }
+  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
+  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
+  .nav-search-inline-input::placeholder { color: var(--gray-500); }
+  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
+  .nav-search-mobile { display: none; }
+  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
+  @media (hover: hover) { .nav-search-clear:hover { color: var(--black); } }
+  .nav-search-clear.visible { display: flex; }
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
+  @media (hover: hover) { .burger-btn:hover { background: var(--sand); } }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  @media (hover: hover) { .btn-primary:hover { background: var(--black); } }
+  .btn-primary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+  @media (hover: hover) { .btn-primary:hover i { transform: translateX(7px); } }
+  .btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  @media (hover: hover) { .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); } }
+
+  /* PROFILE PANEL */
+  .profile-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
+  .profile-overlay.open { opacity: 1; pointer-events: all; }
+  .profile-panel { position: fixed; top: 88px; right: 16px; z-index: 201; width: 360px; max-height: calc(100vh - 108px); background: var(--cream-bright); border-radius: 20px; box-shadow: 0 12px 32px rgba(28,26,20,0.12); transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; font-family: 'Inter', sans-serif; }
+  .profile-panel::-webkit-scrollbar { display: none; }
+  .profile-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .pp-header { padding: 16px 16px 14px; position: relative; border-radius: 20px 20px 0 0; background: var(--cream-bright); }
+  .pp-close { position: absolute; top: 12px; right: 12px; background: var(--sand); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--gray-800); transition: background 0.2s; }
+  @media (hover: hover) { .pp-close:hover { background: var(--gray-100); } }
+  .pp-user { display: flex; align-items: center; gap: 12px; }
+  .pp-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gray-800); flex-shrink: 0; }
+  .pp-name { font-size: 15px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .pp-email { font-size: 12px; color: var(--gray-500); margin-top: 2px; font-weight: 400; }
+  .pp-body { padding: 8px 8px 16px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .pp-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); padding: 14px 12px 6px; }
+  .pp-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--black); }
+  @media (hover: hover) { .pp-item:hover { background: var(--sand); } }
+  .pp-item-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--green-800); flex-shrink: 0; }
+  .pp-item-text { flex: 1; }
+  .pp-item-title { font-size: 14px; font-weight: 500; color: var(--black); }
+  .pp-item-sub { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+  .pp-item-badge { background: var(--green-500); color: var(--cream-bright); border-radius: 20px; padding: 4px 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+  .pp-item-arrow { font-size: 16px; color: var(--gray-300); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+  @media (hover: hover) { .pp-item:hover .pp-item-arrow { opacity: 1; transform: translateX(4px); } }
+  .pp-logout { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; cursor: pointer; color: #E84A2E; font-size: 14px; font-weight: 500; border: none; background: none; font-family: 'Inter', sans-serif; width: 100%; transition: background 0.2s; margin-top: 4px; }
+  @media (hover: hover) { .pp-logout:hover { background: rgba(232,74,46,0.07); } }
+  .pp-logout .pp-item-icon { background: rgba(232,74,46,0.12); color: #E84A2E; }
+
+  /* MOBILE MENU */
+  .mobile-menu-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
+  .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+  .mobile-menu { position: fixed; top: 80px; right: 16px; z-index: 201; width: 240px; background: var(--sand); border-radius: 20px; padding: 8px; box-shadow: 0 8px 32px rgba(28,26,20,0.14); transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; }
+  .mobile-menu.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .mm-nav { display: flex; flex-direction: column; gap: 4px; }
+  .mm-item { display: flex; align-items: center; padding: 12px 18px; border-radius: 40px; text-decoration: none; color: var(--gray-800); transition: background 0.15s; }
+  @media (hover: hover) { .mm-item:hover { background: var(--gray-100); } }
+  .mm-item.active { background: var(--green-800); color: var(--cream-bright); }
+  .mm-item-title { font-size: 14px; font-weight: 500; }
+  .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
+  .mm-footer-text { font-size: 11px; color: var(--gray-300); padding: 8px 0; }
+
+  /* SEARCH PANEL */
+  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
+  .search-panel-header { margin-bottom: 40px; }
+  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .search-panel-empty { font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(16px); display: flex; flex-direction: column; transition: opacity 0.4s ease, transform 0.4s ease; }
+  .product-card.show { opacity: 1; transform: translateY(0); }
+  @media (hover: hover) { .product-card.show:hover { transform: translateY(-6px); } }
+  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
+  .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .btn-add.in-cart { background: var(--green-800); }
+  @media (hover: hover) { .btn-add:hover { background: var(--green-800); } .btn-add.in-cart:hover { background: var(--black); } }
+
+  /* SCROLL TO TOP */
+  .scroll-top { position: fixed; bottom: 32px; right: 40px; z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+  @media (hover: hover) { .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); } }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 80px 48px 40px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px; }
+  .footer-brand-logo { margin-bottom: 16px; }
+  .footer-brand-logo svg { height: 40px; width: auto; }
+  .footer-brand p { font-size: 13px; color: var(--gray-500); line-height: 1.7; max-width: 220px; }
+  .footer-col h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { font-size: 14px; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  @media (hover: hover) { .footer-col ul li a:hover { color: var(--green-500); } }
+  .footer-newsletter h5 { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 20px; }
+  .footer-newsletter p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .newsletter-form { display: flex; gap: 8px; }
+  .newsletter-input { flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream-bright); outline: none; transition: border-color 0.2s; }
+  .newsletter-input::placeholder { color: var(--gray-500); }
+  .newsletter-input:focus { border-color: rgba(124,196,74,0.5); }
+  .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  @media (hover: hover) { .btn-subscribe:hover { background: var(--cream-bright); color: var(--green-800); } }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: var(--gray-500); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
+  @media (hover: hover) { .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); } }
+
+  /* ============================
+     CHECKOUT
+     ============================ */
+
+  .checkout-page { margin-top: 80px; }
+
+  .checkout-layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* LEFT */
+  .checkout-left { display: flex; flex-direction: column; gap: 52px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--gray-500); text-decoration: none; transition: color 0.2s; align-self: flex-start; margin-bottom: -28px; }
+  @media (hover: hover) { .back-link:hover { color: var(--black); } }
+  .back-link i { font-size: 16px; }
+
+  .co-section { display: flex; flex-direction: column; gap: 20px; }
+  .co-section-title { font-family: 'Inter', sans-serif; font-size: clamp(22px, 2.5vw, 30px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; color: var(--black); }
+
+  .co-fields { display: flex; flex-direction: column; gap: 14px; }
+  .co-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* FORM INPUTS — no border, background only */
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+  .form-label { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+  .form-input { width: 100%; background: var(--cream-bright); border: none; outline: none; border-radius: 40px; padding: 17px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); transition: background 0.2s; appearance: none; }
+  .form-input::placeholder { color: var(--gray-300); }
+  .form-input:focus { background: var(--sand); }
+  .form-input.error { background: rgba(232,74,46,0.1); }
+  .form-hint { font-size: 12px; color: var(--gray-500); }
+
+  /* DELIVERY OPTIONS */
+  .delivery-opts { display: flex; flex-direction: column; gap: 8px; }
+
+  .delivery-opt { background: var(--cream-bright); border-radius: 20px; padding: 18px 20px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: background 0.2s; }
+  @media (hover: hover) { .delivery-opt:not(.selected):hover { background: var(--sand); } }
+
+  .radio-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--gray-100); flex-shrink: 0; margin-top: 1px; transition: border-color 0.2s; position: relative; }
+  .radio-dot::after { content: ''; display: block; width: 12px; height: 12px; border-radius: 50%; background: transparent; margin: 2px; transition: background 0.2s; }
+  .delivery-opt.selected .radio-dot { border-color: var(--green-800); }
+  .delivery-opt.selected .radio-dot::after { background: var(--green-800); }
+
+  .delivery-opt-body { flex: 1; min-width: 0; }
+  .delivery-opt-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .delivery-opt-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .delivery-opt-price { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--black); white-space: nowrap; flex-shrink: 0; }
+  .delivery-opt-price.free { color: var(--green-800); display: inline-flex; align-items: center; gap: 5px; }
+
+  .delivery-opt-expand { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.25s ease; margin-top: 0; }
+  .delivery-opt.selected .delivery-opt-expand { max-height: 80px; opacity: 1; margin-top: 12px; }
+  .delivery-opt-carrier { display: flex; align-items: center; gap: 12px; }
+  .cnl { width: 52px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cnl-np { background: #ED1C24; }
+  .cnl-up { background: #F5A623; }
+  .cnl svg { display: block; }
+  .delivery-carrier-info { display: flex; flex-direction: column; gap: 2px; }
+  .delivery-carrier-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--black); }
+  .delivery-carrier-desc { font-size: 12px; color: var(--gray-500); }
+
+  /* PAYMENT OPTIONS — same pattern as delivery */
+  .pay-opts { display: flex; flex-direction: column; gap: 8px; }
+  .pay-opt { background: var(--cream-bright); border-radius: 20px; padding: 18px 20px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: background 0.2s; }
+  .liqpay-icon { width: 36px; height: 36px; border-radius: 8px; background: #67B346; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; text-align: center; }
+  @media (hover: hover) { .pay-opt:not(.selected):hover { background: var(--sand); } }
+  .pay-opt.selected .radio-dot { border-color: var(--green-800); }
+  .pay-opt.selected .radio-dot::after { background: var(--green-800); }
+
+  .pay-opt-body { flex: 1; min-width: 0; }
+  .pay-opt-header { display: flex; align-items: center; gap: 12px; }
+  .pay-opt-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; }
+  .pay-opt-sub { font-size: 12px; color: var(--gray-500); margin-top: 1px; }
+
+  .pay-opt-expand { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease; margin-top: 0; }
+  .pay-opt.selected .pay-opt-expand { max-height: 200px; opacity: 1; margin-top: 14px; }
+
+  /* PAYMENT METHOD PILLS */
+  .pay-method-logos { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pay-pill { width: 40px; height: 40px; border-radius: 8px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .pay-pill img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .pay-pill.pp-visa { background: #FFFFFF; }
+  .pay-pill.pp-mc { background: #F0EFEB; }
+  .pay-pill.pp-apple { background: #FFFFFF; }
+  .pay-pill.pp-gpay { background: #EFEFF1; }
+  .pay-pill.pp-privat { background: #EBEBEB; }
+
+  /* BRANCH DROPDOWN */
+  .branch-wrap { position: relative; }
+  .branch-dropdown { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--cream-bright); border-radius: 20px; max-height: 220px; overflow-y: auto; z-index: 50; box-shadow: 0 8px 32px rgba(28,26,20,0.12); display: none; }
+  .branch-dropdown.open { display: block; }
+  .branch-dropdown-item { padding: 13px 20px; font-size: 14px; color: var(--black); cursor: pointer; border-radius: 0; transition: background 0.15s; }
+  .branch-dropdown-item:first-child { border-radius: 20px 20px 0 0; }
+  .branch-dropdown-item:last-child { border-radius: 0 0 20px 20px; }
+  .branch-dropdown-item:only-child { border-radius: 20px; }
+  @media (hover: hover) { .branch-dropdown-item:hover { background: var(--sand); } }
+
+  /* CASH NOTE */
+  .pay-cash-note { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
+
+  /* RIGHT — STICKY SUMMARY */
+  .checkout-right { position: sticky; top: 104px; }
+
+  .co-summary { background: var(--cream-bright); border-radius: 24px; padding: 28px; }
+  .co-summary-title { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: -0.02em; color: var(--black); margin-bottom: 24px; }
+
+  /* ITEMS */
+  .co-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+  .co-item { display: flex; align-items: center; gap: 14px; }
+  .co-item-img { width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0; cursor: pointer; transition: opacity 0.2s; }
+  @media (hover: hover) { .co-item-img:hover { opacity: 0.8; } }
+  .co-item-info { flex: 1; min-width: 0; }
+  .co-item-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s; }
+  @media (hover: hover) { .co-item-name:hover { color: var(--green-800); } }
+  .co-item-qty { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .co-item-price { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 900; color: var(--black); white-space: nowrap; flex-shrink: 0; }
+
+  /* BREAKDOWN */
+  .co-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .co-row { display: flex; justify-content: space-between; align-items: center; }
+  .co-row-label { font-size: 14px; color: var(--gray-500); }
+  .co-row-val { font-size: 14px; font-weight: 500; color: var(--black); }
+  .co-row-val.free { color: var(--green-800); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .co-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-bottom: 20px; }
+  .co-total-label { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: var(--black); }
+  .co-total-value { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 900; color: var(--green-800); }
+  .btn-submit { display: flex; width: 100%; align-items: center; justify-content: center; gap: 10px; background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 16px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  @media (hover: hover) { .btn-submit:hover { background: var(--black); } }
+  .btn-submit i { transition: transform 0.2s; }
+  @media (hover: hover) { .btn-submit:hover i { transform: translateX(4px); } }
+  .co-summary-note { margin-top: 12px; font-size: 12px; color: var(--gray-500); text-align: center; line-height: 1.6; }
+
+  /* SUCCESS */
+  #checkoutSuccess { display: none; }
+  .success-wrap { max-width: 520px; margin: 0 auto; padding: 80px 48px; text-align: center; }
+  .success-icon { width: 72px; height: 72px; background: var(--green-800); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 32px; color: var(--cream-bright); }
+  .success-title { font-family: 'Inter', sans-serif; font-size: clamp(26px, 4vw, 38px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px; }
+  .success-subtitle { font-size: 16px; color: var(--gray-500); line-height: 1.6; margin-bottom: 8px; }
+  .success-order-num { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gray-300); letter-spacing: 0.05em; margin-bottom: 36px; }
+  .success-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; gap: 4px; height: 72px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .nav-spacer { display: none; }
+    .nav-faq { display: none; }
+    .nav-search-mobile { display: flex; }
+    .nav-right { gap: 0; margin-left: auto; }
+    .nav-icon-btn { width: 44px; height: 44px; font-size: 22px; }
+    .burger-btn { display: flex; }
+    .mobile-menu { top: 76px; }
+    nav.search-active .nav-right { display: none; }
+    nav.search-active .burger-btn { display: none !important; }
+    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
+    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
+    .scroll-top { bottom: 20px; right: 20px; }
+    .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
+    .pp-header { padding: 14px 14px 12px; }
+    .pp-body { padding: 6px 6px 12px; }
+    .pp-item-icon { width: 44px; height: 44px; font-size: 22px; }
+    .pp-avatar { width: 52px; height: 52px; font-size: 22px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .search-panel-inner { padding: 96px 24px 60px; }
+    .search-panel-grid { grid-template-columns: 1fr; }
+
+    .checkout-page { margin-top: 72px; }
+    .checkout-layout { grid-template-columns: 1fr; gap: 0; padding: 28px 16px 60px; }
+    .checkout-left { gap: 40px; }
+    .back-link { margin-bottom: -20px; }
+    .co-row-2 { grid-template-columns: 1fr; gap: 14px; }
+    .checkout-right { position: static; margin-top: 12px; }
+    .pay-method-logos { gap: 6px; }
+    .pay-pill { width: 36px; height: 36px; }
+    .branch-dropdown { border-radius: 16px; }
+    .branch-dropdown-item:first-child { border-radius: 16px 16px 0 0; }
+    .branch-dropdown-item:last-child { border-radius: 0 0 16px 16px; }
+    .branch-dropdown-item:only-child { border-radius: 16px; }
+    .success-wrap { padding: 60px 24px; }
+    .success-actions { flex-direction: column; align-items: center; }
+  }
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .checkout-layout { grid-template-columns: 1fr 380px; gap: 40px; }
+    .search-panel-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="sol-tea.html" class="nav-logo">
+    <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#226F54"/>
+      <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#226F54"/>
+      <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#226F54"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="sol-tea.html">Про нас</a></li>
+    <li><a href="sol-shop.html">Магазин</a></li>
+  </ul>
+  <div class="nav-search">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="desktopSearchInput" placeholder="Пошук чаю, інгредієнтів..." class="nav-search-input" oninput="onDesktopSearchInput(this.value)" onblur="onDesktopSearchBlur()">
+    <button class="nav-search-clear" id="desktopSearchClear" onmousedown="event.preventDefault()" onclick="clearDesktopSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-search-inline" id="navSearchInline">
+    <i class="hgi-stroke hgi-search-01"></i>
+    <input type="text" id="navSearchInput" placeholder="Пошук..." class="nav-search-inline-input" oninput="filterProducts(this.value)">
+    <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn nav-search-mobile" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
+    <button class="nav-icon-btn" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
+    <button class="nav-icon-btn" onclick="window.location.href='sol-cart.html?tab=wish'"><i class="hgi-stroke hgi-favourite"></i><span class="wish-badge" id="wishBadge"></span></button>
+    <button class="nav-icon-btn active" onclick="window.location.href='sol-cart.html'"><i class="hgi-stroke hgi-shopping-bag-01"></i><span class="cart-badge" id="cartBadge"></span></button>
+    <button class="nav-icon-btn nav-faq" onclick="window.location.href='sol-faq.html'"><i class="hgi-stroke hgi-help-circle"></i></button>
+  </div>
+  <button class="burger-btn" onclick="toggleMobileMenu()"><i class="hgi-stroke hgi-menu-01"></i></button>
+</nav>
+
+<!-- CHECKOUT PAGE -->
+<div class="checkout-page">
+  <div id="checkoutMain">
+    <div class="checkout-layout">
+
+      <!-- LEFT COLUMN -->
+      <div class="checkout-left">
+
+        <a href="sol-cart.html" class="back-link">
+          <i class="hgi-stroke hgi-arrow-left-01"></i> Назад до кошика
+        </a>
+
+        <!-- 1. Delivery information -->
+        <div class="co-section">
+          <h2 class="co-section-title">Інформація про доставку</h2>
+          <div class="co-fields">
+            <div class="co-row-2">
+              <div class="form-group">
+                <label class="form-label" for="fieldName">Ім'я та прізвище</label>
+                <input class="form-input" type="text" id="fieldName" required placeholder="Яна Лізгова" oninput="clearError(this)">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="fieldEmail">Email</label>
+                <input class="form-input" type="email" id="fieldEmail" required placeholder="your@email.com" oninput="clearError(this)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fieldPhone">Номер телефону</label>
+              <input class="form-input" type="tel" id="fieldPhone" required placeholder="+380 93 123 45 67" oninput="clearError(this)">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Shipping services -->
+        <div class="co-section">
+          <h2 class="co-section-title">Доставка</h2>
+          <div class="co-fields">
+            <div class="co-row-2">
+              <div class="form-group">
+                <label class="form-label" for="fieldCity">Місто</label>
+                <input class="form-input" type="text" id="fieldCity" required placeholder="Київ" oninput="clearError(this)">
+              </div>
+              <div class="form-group">
+                <label class="form-label" id="labelBranch" for="fieldBranch">Відділення</label>
+                <div class="branch-wrap">
+                  <input class="form-input" type="text" id="fieldBranch" required placeholder="Наприклад, 7" oninput="onBranchInput(this.value)" onfocus="openBranchDropdown()" autocomplete="off">
+                  <div class="branch-dropdown" id="branchDropdown"></div>
+                </div>
+              </div>
+            </div>
+            <p class="form-hint" id="deliveryHint">Доставка Новою Поштою. Вкажіть номер або адресу відділення.</p>
+
+            <!-- Shipping method options -->
+            <div class="delivery-opts">
+              <div class="delivery-opt selected" data-type="branch" onclick="selectDelivery('branch', this)">
+                <div class="radio-dot"></div>
+                <div class="delivery-opt-body">
+                  <div class="delivery-opt-header">
+                    <span class="delivery-opt-name">Нова Пошта — відділення</span>
+                    <span class="delivery-opt-price free" id="branchPriceLabel">Безкоштовно</span>
+                  </div>
+                  <div class="delivery-opt-expand">
+                    <div class="delivery-opt-carrier">
+                      <img src="https://play-lh.googleusercontent.com/mtyOm0Rp0PeG_BWE7M5j9gBWuU1Du34LLj-dLdSE1-006_BkFg32W3Cca00l2BBvNM0" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                      <div class="delivery-carrier-info">
+                        <div class="delivery-carrier-title">Нова Пошта</div>
+                        <div class="delivery-carrier-desc">2–3 дні після відправлення</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="delivery-opt" data-type="courier" onclick="selectDelivery('courier', this)">
+                <div class="radio-dot"></div>
+                <div class="delivery-opt-body">
+                  <div class="delivery-opt-header">
+                    <span class="delivery-opt-name">Нова Пошта — кур'єр</span>
+                    <span class="delivery-opt-price">₴&nbsp;80</span>
+                  </div>
+                  <div class="delivery-opt-expand">
+                    <div class="delivery-opt-carrier">
+                      <img src="https://play-lh.googleusercontent.com/mtyOm0Rp0PeG_BWE7M5j9gBWuU1Du34LLj-dLdSE1-006_BkFg32W3Cca00l2BBvNM0" alt="Нова Пошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                      <div class="delivery-carrier-info">
+                        <div class="delivery-carrier-title">Нова Пошта Кур'єр</div>
+                        <div class="delivery-carrier-desc">1–2 дні, доставка до дверей</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="delivery-opt" data-type="ukrposhta" onclick="selectDelivery('ukrposhta', this)">
+                <div class="radio-dot"></div>
+                <div class="delivery-opt-body">
+                  <div class="delivery-opt-header">
+                    <span class="delivery-opt-name">Укрпошта</span>
+                    <span class="delivery-opt-price">₴&nbsp;50</span>
+                  </div>
+                  <div class="delivery-opt-expand">
+                    <div class="delivery-opt-carrier">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSje5W8lhhgryRSCBd5ZL40IKAjdfNTphWIjA&s" alt="Укрпошта" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                      <div class="delivery-carrier-info">
+                        <div class="delivery-carrier-title">Укрпошта</div>
+                        <div class="delivery-carrier-desc">3–5 днів після відправлення</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Payment method -->
+        <div class="co-section">
+          <h2 class="co-section-title">Спосіб оплати</h2>
+          <div class="pay-opts">
+
+            <!-- LiqPay online -->
+            <div class="pay-opt selected" data-pay="card" onclick="selectPayment('card', this)">
+              <div class="radio-dot"></div>
+              <div class="pay-opt-body">
+                <div class="pay-opt-header">
+                  <span class="pay-opt-name">Карткою онлайн <span style="font-weight:400;color:var(--gray-500)">(LiqPay)</span></span>
+                </div>
+                <div class="pay-opt-expand">
+                  <div class="pay-method-logos">
+                    <div class="pay-pill pp-visa"><img src="https://mnd-assets.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782/ysgsk5bhfjqp0pi7n2wh" alt="Visa"></div>
+                    <div class="pay-pill pp-mc"><img src="https://brandingmonitor.pl/wp-content/uploads/2016/07/nowe-logo-mastercard.png" alt="Mastercard"></div>
+                    <div class="pay-pill pp-apple"><img src="https://fondpravmir.ru/wp-content/uploads/2018/08/og_image.png" alt="Apple Pay"></div>
+                    <div class="pay-pill pp-gpay"><img src="https://lh3.googleusercontent.com/DPbfJWwWFTgdSL6Es2cmhca4LpqkCi3GneH1Me1_HgDIFyORB7SoyESiRdGhFx-AYKKQL1YzihgjKMlz-EdmiimEb6owdugqchCLig=s0" alt="Google Pay"></div>
+                    <div class="pay-pill pp-privat"><img src="https://onlinebank.dp.ua/images/article/privatpay/PrivatPay.JPG" alt="Privat Pay 24"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cash on delivery -->
+            <div class="pay-opt" data-pay="cash" onclick="selectPayment('cash', this)">
+              <div class="radio-dot"></div>
+              <div class="pay-opt-body">
+                <div class="pay-opt-header">
+                  <span class="pay-opt-name">При отриманні</span>
+                </div>
+                <div class="pay-opt-expand">
+                  <p class="pay-cash-note">Готівкою або карткою на термінальному пристрої при отриманні у відділенні.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN — STICKY SUMMARY -->
+      <div class="checkout-right">
+        <div class="co-summary">
+          <div class="co-summary-title">Замовлення</div>
+          <div class="co-items" id="coItems"></div>
+          <div class="co-rows">
+            <div class="co-row">
+              <span class="co-row-label">Підсумок</span>
+              <span class="co-row-val" id="coSubtotal">—</span>
+            </div>
+            <div class="co-row">
+              <span class="co-row-label">Доставка</span>
+              <span class="co-row-val" id="coDelivery">—</span>
+            </div>
+          </div>
+          <div class="co-total-row">
+            <span class="co-total-label">Разом</span>
+            <span class="co-total-value" id="coTotal">—</span>
+          </div>
+          <button class="btn-submit" onclick="submitOrder()">
+            Підтвердити замовлення <i class="hgi-stroke hgi-arrow-right-01"></i>
+          </button>
+          <p class="co-summary-note">Без реєстрації. Ми зв'яжемося для підтвердження.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div id="checkoutSuccess">
+    <div class="success-wrap">
+      <div class="success-icon"><i class="hgi-stroke hgi-checkmark-circle-01"></i></div>
+      <div class="success-title">Дякуємо за замовлення!</div>
+      <div class="success-subtitle">Ми зв'яжемося з вами найближчим часом для підтвердження деталей.</div>
+      <div class="success-order-num" id="successOrderNum"></div>
+      <div class="success-actions">
+        <a href="sol-shop.html" class="btn-primary">До магазину <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+        <a href="sol-tea.html" class="btn-outline-dark">Про нас</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <svg width="242" height="249" viewBox="0 0 242 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="#7CC44A"/>
+          <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="#7CC44A"/>
+          <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="#7CC44A"/>
+        </svg>
+      </div>
+      <p>Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Магазин</h5>
+      <ul>
+        <li><a href="#">Улун</a></li><li><a href="#">Пуер</a></li>
+        <li><a href="#">Сезонне</a></li><li><a href="#">Набори</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Про нас</h5>
+      <ul>
+        <li><a href="#">Наша історія</a></li><li><a href="#">Як заварювати</a></li>
+        <li><a href="#">Блог</a></li><li><a href="sol-faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h5>Підписка</h5>
+      <p>Нові надходження та сезонні новинки — першими.</p>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Ваш email">
+        <button class="btn-subscribe">OK</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Söl Tea. Всі права захищені.</p>
+    <div class="footer-socials">
+      <button class="footer-social-btn"><i class="hgi-stroke hgi-instagram"></i></button>
+      <button class="footer-social-btn"><i class="hgi-stroke hgi-telegram"></i></button>
+      <button class="footer-social-btn"><i class="hgi-stroke hgi-facebook-01"></i></button>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
+
+<!-- SEARCH PANEL -->
+<div id="searchPanel" class="search-panel">
+  <div class="search-panel-inner">
+    <div class="search-panel-header"><span class="search-panel-title">Результати пошуку:</span></div>
+    <div id="searchPanelGrid" class="search-panel-grid"></div>
+    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
+  </div>
+</div>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-nav">
+    <a href="sol-tea.html" class="mm-item"><span class="mm-item-title">Про нас</span></a>
+    <a href="sol-shop.html" class="mm-item"><span class="mm-item-title">Магазин</span></a>
+    <a href="sol-faq.html" class="mm-item"><span class="mm-item-title">FAQ</span></a>
+  </div>
+  <div class="mm-footer"><p class="mm-footer-text">© 2025 Söl Tea</p></div>
+</div>
+
+<div class="profile-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+<div class="profile-panel" id="profilePanel">
+  <div class="pp-header">
+    <button class="pp-close" onclick="toggleProfile()"><i class="hgi-stroke hgi-cancel-01"></i></button>
+    <div class="pp-user">
+      <div class="pp-avatar"><i class="hgi-stroke hgi-user-circle"></i></div>
+      <div><div class="pp-name">Яна Лізгова</div><div class="pp-email">lizgovka714@gmail.com</div></div>
+    </div>
+  </div>
+  <div class="pp-body">
+    <div class="pp-section-label">Мій акаунт</div>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-package-01"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Замовлення</div><div class="pp-item-sub">Останнє: 23 березня</div></div>
+      <span class="pp-item-badge">1 нове</span>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-favourite"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Вподобане</div><div class="pp-item-sub">3 товари</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <a href="#" class="pp-item">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-settings-01"></i></div>
+      <div class="pp-item-text"><div class="pp-item-title">Налаштування</div></div>
+      <i class="hgi-stroke hgi-arrow-right-01 pp-item-arrow"></i>
+    </a>
+    <button class="pp-logout">
+      <div class="pp-item-icon"><i class="hgi-stroke hgi-logout-01"></i></div>
+      Вийти з акаунту
+    </button>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  {name:'Те Гуань Інь', price:480, bg:'#EEE9DF', badge:null, region:'Фуцзянь', desc:'Квіткові нотки, ніжне послясмаччя.'},
+  {name:'Шен Пуер 2019', price:920, bg:'#DDD8CC', badge:'new', region:'Юньнань', desc:'Яскравий, терпкий, з потенціалом до витримки.'},
+  {name:'Фенхуан Даньцун', price:680, bg:'#E4DDD3', badge:'limited', region:'Гуандун', desc:'Персик, медова орхідея.'},
+  {name:'Шу Пуер Старий', price:560, bg:'#D5CFCA', badge:null, region:'Юньнань', desc:"М'який і глибокий. Землистий, без гіркоти."},
+  {name:'Да Хун Пао', price:740, bg:'#E8E3D8', badge:null, region:'Фуцзянь', desc:'Мінеральний, смажений. Скелі Уї.'},
+  {name:'Цзінь Сюань', price:520, bg:'#DDE4D5', badge:'new', region:'Тайвань', desc:'Молочний, вершковий.'},
+  {name:'Лао Шу Пуер', price:1200, bg:'#E0D9CE', badge:null, region:'Юньнань', desc:'Зі старих дерев, глибокий і складний.'},
+  {name:'Дун Дін', price:610, bg:'#EBE5D8', badge:null, region:'Тайвань', desc:'Флоральний, легко смажений.'},
+  {name:'Бін Ча 2021', price:780, bg:'#E2DBD0', badge:'new', region:'Юньнань', desc:'Пресований млинець, гори Менхай.'},
+  {name:'Бай Хао Улун', price:960, bg:'#E6E0D2', badge:null, region:'Тайвань', desc:'Мускатний виноград, мед.'},
+  {name:'Менхай Шу 2015', price:1050, bg:'#D0CAC0', badge:null, region:'Юньнань', desc:'Витриманий шу з фабрики Менхай.'},
+  {name:'Іу Гу Шу', price:1450, bg:'#C8C2B8', badge:'limited', region:'Юньнань', desc:'Шен зі столітніх дерев Іу.'},
+  {name:'Весняний Збір 2026', price:1100, bg:'#DAD4C8', badge:'limited', region:'Фуцзянь', desc:'Перший зрив, гора Уї.'},
+  {name:'Осінній Фенхуан 2025', price:920, bg:'#D4CEC4', badge:'limited', region:'Гуандун', desc:'Осінній зрив Да Хун Пао.'},
+  {name:'Набір "Знайомство"', price:680, bg:'#DDD8CC', badge:'new', region:'Різні', desc:'5 сортів по 20 г.'},
+  {name:'Набір "Пуер"', price:1200, bg:'#D0CBC0', badge:null, region:'Юньнань', desc:'4 сорти пуеру по 25 г.'},
+  {name:'Гайвань біла 120мл', price:560, bg:'#EAE5DC', badge:null, region:'Цзиндечжень', desc:'Класична порцелянова гайвань.'},
+  {name:'Гайвань сіра 150мл', price:640, bg:'#D8D3CA', badge:null, region:'Цзиндечжень', desc:'Матова глазур, зручний корпус.'},
+  {name:'Чайник Ісін 200мл', price:1800, bg:'#C9B9A8', badge:'new', region:'Ісін', desc:'Пурпурова глина Хуанлун.'},
+  {name:'Чайник Ju-Lun 180мл', price:2200, bg:'#BFB4A8', badge:null, region:'Ісін', desc:'Класична форма Жу Лун Юн.'},
+  {name:'Піала 60мл', price:240, bg:'#DDD7CC', badge:null, region:'Юньнань', desc:'Тонкостінна піала ручної роботи.'},
+  {name:'Піала Небо 80мл', price:320, bg:'#C8D0D8', badge:null, region:'Юньнань', desc:'Глазурована в синій.'},
+  {name:'Піала Небо 50мл', price:200, bg:'#D4D8D0', badge:null, region:'Юньнань', desc:'Маленька для швидких ковтків.'},
+  {name:'Глечик 200мл', price:480, bg:'#DDD9D2', badge:null, region:'Цзиндечжень', desc:'Ча Хай для рівномірного розливу.'},
+  {name:'Глечик скляний 300мл', price:560, bg:'#D8E0E4', badge:null, region:'Тайвань', desc:'Боросилікатне скло.'},
+  {name:'Кетль Hario 800мл', price:1400, bg:'#D4D0C8', badge:'new', region:'Японія', desc:'Носик-гусяча шия.'},
+  {name:'Кетль керамічний 600мл', price:980, bg:'#CEC8BE', badge:null, region:'Китай', desc:'Для нагрівання на плиті.'},
+  {name:'Гайвань з квіткою 100мл', price:720, bg:'#DDE3EB', badge:'limited', region:'Цзиндечжень', desc:'Ручний розпис у техниці доухай.'},
+  {name:'Дошка бамбукова S', price:480, bg:'#D8D4C4', badge:null, region:'Китай', desc:'Компактна, 25×15 см.'},
+  {name:'Дошка бамбукова L', price:720, bg:'#D0CDB8', badge:null, region:'Китай', desc:'Простора, 40×25 см.'},
+  {name:'Дошка горіхова', price:1200, bg:'#C0AE98', badge:'new', region:'Тайвань', desc:'Волоський горіх, олія тунгу.'},
+  {name:'Дошка дубова', price:1050, bg:'#C8B8A0', badge:null, region:'Тайвань', desc:'Дуб, стійкий до вологи.'},
+  {name:"Дошка кам'яна сланець", price:1600, bg:'#B8BCB8', badge:'limited', region:'Китай', desc:'Натуральний сланець.'},
+  {name:'Дошка мармурова', price:1900, bg:'#DDD9D4', badge:'limited', region:'Китай', desc:'Білий кара-мармур.'},
+  {name:'Набір ча-дао 6 предметів', price:680, bg:'#D8D4C8', badge:'new', region:'Юньнань', desc:'Щипці, ложка, голка, воронка.'},
+  {name:'Воронка бамбукова', price:120, bg:'#D0CCBA', badge:null, region:'Китай', desc:'Для засипання листя.'},
+  {name:'Ча-пе', price:90, bg:'#D4D0C4', badge:null, region:'Тайвань', desc:'Бамбукова лопатка.'},
+  {name:'Каністра для чаю 100г', price:320, bg:'#C8C4BC', badge:null, region:'Тайвань', desc:'Алюміній з ущільнювачем.'}
+];
+const PRODUCT_MAP = {};
+PRODUCTS.forEach(p => { PRODUCT_MAP[p.name] = p; });
+const BADGE_LABELS = { new: 'Новинка', limited: 'Обмежений' };
+const FREE_DELIVERY_THRESHOLD = 1000;
+const COURIER_COST = 80;
+const UKRPOSHTA_COST = 50;
+
+let deliveryType = 'branch';
+let paymentType = 'card';
+
+function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')) || []; } catch(e) { return []; } }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
+function getWish() { try { return JSON.parse(sessionStorage.getItem('solWish')) || []; } catch(e) { return []; } }
+function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); }
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
+
+function updateCartBadge() {
+  const n = getCart().reduce((s, i) => s + i.qty, 0);
+  const el = document.getElementById('cartBadge');
+  if (el) { el.textContent = n; el.classList.toggle('visible', n > 0); }
+}
+function updateWishBadge() {
+  const n = getWish().length;
+  const el = document.getElementById('wishBadge');
+  if (el) { el.textContent = n; el.classList.toggle('visible', n > 0); }
+}
+
+function renderSummary() {
+  const cart = getCart();
+  if (!cart.length) { window.location.href = 'sol-cart.html'; return; }
+  const subtotal = cart.reduce((s, i) => { const p = PRODUCT_MAP[i.name]; return s + (p ? p.price * i.qty : 0); }, 0);
+
+  // Items
+  document.getElementById('coItems').innerHTML = cart.map(i => {
+    const p = PRODUCT_MAP[i.name];
+    if (!p) return '';
+    const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return '<div class="co-item">' +
+      '<div class="co-item-img" style="background:' + p.bg + '" onclick="goToProduct(\'' + sn + '\')"></div>' +
+      '<div class="co-item-info">' +
+        '<div class="co-item-name" onclick="goToProduct(\'' + sn + '\')">' + esc(p.name) + '</div>' +
+        '<div class="co-item-qty">' + i.qty + '\u00a0шт · ' + p.region + '</div>' +
+      '</div>' +
+      '<div class="co-item-price">₴\u00a0' + fmt(p.price * i.qty) + '</div>' +
+    '</div>';
+  }).join('');
+
+  updateSummaryRows(subtotal);
+}
+
+function updateSummaryRows(subtotal) {
+  if (subtotal === undefined) {
+    const cart = getCart();
+    subtotal = cart.reduce((s, i) => { const p = PRODUCT_MAP[i.name]; return s + (p ? p.price * i.qty : 0); }, 0);
+  }
+
+  let deliveryCost = 0;
+  if (deliveryType === 'courier') deliveryCost = COURIER_COST;
+  else if (deliveryType === 'ukrposhta') deliveryCost = UKRPOSHTA_COST;
+  else if (deliveryType === 'branch' && subtotal < FREE_DELIVERY_THRESHOLD) deliveryCost = 0;
+
+  // Update branch option label
+  const branchLabel = document.getElementById('branchPriceLabel');
+  if (branchLabel) {
+    if (subtotal >= FREE_DELIVERY_THRESHOLD) {
+      branchLabel.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> Безкоштовно';
+      branchLabel.className = 'delivery-opt-price free';
+    } else {
+      branchLabel.textContent = 'Від\u00a0₴\u00a01\u00a0000 — безкоштовно';
+      branchLabel.className = 'delivery-opt-price';
+    }
+  }
+
+  document.getElementById('coSubtotal').textContent = '₴\u00a0' + fmt(subtotal);
+
+  const delivEl = document.getElementById('coDelivery');
+  if (deliveryType === 'courier') {
+    delivEl.textContent = '₴\u00a0' + fmt(COURIER_COST);
+    delivEl.className = 'co-row-val';
+  } else if (deliveryType === 'ukrposhta') {
+    delivEl.textContent = '₴\u00a0' + fmt(UKRPOSHTA_COST);
+    delivEl.className = 'co-row-val';
+  } else if (deliveryType === 'branch' && subtotal >= FREE_DELIVERY_THRESHOLD) {
+    delivEl.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> Безкоштовно';
+    delivEl.className = 'co-row-val free';
+  } else {
+    delivEl.textContent = 'За тарифами НП';
+    delivEl.className = 'co-row-val';
+  }
+
+  document.getElementById('coTotal').textContent = '₴\u00a0' + fmt(subtotal + deliveryCost);
+}
+
+const DELIVERY_META = {
+  branch:    { hint: 'Доставка Новою Поштою. Вкажіть номер або адресу відділення.', label: 'Відділення', placeholder: 'Наприклад, 7', dropdown: true },
+  courier:   { hint: 'Кур\'єр Нової Пошти доставить замовлення до ваших дверей.', label: 'Адреса доставки', placeholder: 'Вулиця, будинок, квартира', dropdown: false },
+  ukrposhta: { hint: 'Доставка Укрпоштою. Вкажіть номер відділення або поштовий індекс.', label: 'Відділення або індекс', placeholder: 'Наприклад, 01001', dropdown: true }
+};
+
+const BRANCH_DATA = {
+  branch: [
+    'Відділення №1 (вул. Хрещатик, 22)',
+    'Відділення №2 (вул. Велика Васильківська, 5)',
+    'Відділення №3 (просп. Перемоги, 42)',
+    'Відділення №5 (вул. Антоновича, 13)',
+    'Відділення №7 (вул. Льва Толстого, 9)',
+    'Відділення №12 (вул. Саксаганського, 17)',
+    'Поштомат №101 (ТЦ Ocean Plaza)',
+    'Поштомат №102 (Сільпо, вул. Дмитрівська)',
+    'Поштомат №103 (АЗС ОККО, просп. Бажана)',
+    'Поштомат №104 (ТЦ Lavina Mall)',
+  ],
+  ukrposhta: [
+    'Відділення №1 (01001, вул. Хрещатик, 1)',
+    'Відділення №2 (01004, вул. Велика Васильківська, 4)',
+    'Відділення №3 (01014, вул. Звіринецька, 63)',
+    'Відділення №4 (01023, вул. Мечникова, 10)',
+    'Відділення №5 (01030, вул. Богдана Хмельницького, 32)',
+  ]
+};
+
+function selectDelivery(type, el) {
+  deliveryType = type;
+  document.querySelectorAll('.delivery-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const meta = DELIVERY_META[type];
+  document.getElementById('deliveryHint').textContent = meta.hint;
+  document.getElementById('labelBranch').textContent = meta.label;
+  const inp = document.getElementById('fieldBranch');
+  inp.placeholder = meta.placeholder;
+  inp.value = '';
+  closeBranchDropdown();
+
+  updateSummaryRows();
+}
+
+let branchDropdownOpen = false;
+
+function openBranchDropdown() {
+  const meta = DELIVERY_META[deliveryType];
+  if (!meta.dropdown) return;
+  renderBranchDropdown('');
+  document.getElementById('branchDropdown').classList.add('open');
+  branchDropdownOpen = true;
+}
+
+function closeBranchDropdown() {
+  document.getElementById('branchDropdown').classList.remove('open');
+  branchDropdownOpen = false;
+}
+
+function onBranchInput(val) {
+  clearError(document.getElementById('fieldBranch'));
+  const meta = DELIVERY_META[deliveryType];
+  if (!meta.dropdown) return;
+  renderBranchDropdown(val);
+  document.getElementById('branchDropdown').classList.add('open');
+  branchDropdownOpen = true;
+}
+
+function renderBranchDropdown(query) {
+  const key = deliveryType === 'ukrposhta' ? 'ukrposhta' : 'branch';
+  const items = BRANCH_DATA[key] || [];
+  const q = query.trim().toLowerCase();
+  const filtered = q ? items.filter(i => i.toLowerCase().includes(q)) : items;
+  const dd = document.getElementById('branchDropdown');
+  if (!filtered.length) { dd.innerHTML = '<div class="branch-dropdown-item" style="color:var(--gray-500)">Нічого не знайдено</div>'; return; }
+  dd.innerHTML = filtered.map(i => `<div class="branch-dropdown-item" onmousedown="selectBranch('${i.replace(/'/g, "\\'")}')">${i}</div>`).join('');
+}
+
+function selectBranch(val) {
+  document.getElementById('fieldBranch').value = val;
+  closeBranchDropdown();
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.branch-wrap')) closeBranchDropdown();
+});
+
+function selectPayment(type, el) {
+  paymentType = type;
+  document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function clearError(inp) { inp.classList.remove('error'); }
+
+function submitOrder() {
+  const fields = ['fieldName','fieldEmail','fieldPhone','fieldCity','fieldBranch'];
+  let valid = true;
+  fields.forEach(id => {
+    const inp = document.getElementById(id);
+    if (!inp.value.trim()) { inp.classList.add('error'); valid = false; }
+    else inp.classList.remove('error');
+  });
+  if (!valid) { const first = document.querySelector('.form-input.error'); if (first) first.focus(); return; }
+
+  const orderNum = 'SOL-' + Math.floor(1000 + Math.random() * 9000);
+  saveCart([]);
+  updateCartBadge();
+  document.getElementById('checkoutMain').style.display = 'none';
+  document.getElementById('checkoutSuccess').style.display = 'block';
+  document.getElementById('successOrderNum').textContent = 'Замовлення ' + orderNum;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// SEARCH
+function filterProducts(q) {
+  const panel = document.getElementById('searchPanel');
+  const grid = document.getElementById('searchPanelGrid');
+  const empty = document.getElementById('searchPanelEmpty');
+  if (!q.trim()) { panel.classList.remove('open'); return; }
+  panel.classList.add('open');
+  const lq = q.toLowerCase();
+  const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.region.toLowerCase().includes(lq));
+  if (!results.length) { grid.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  const cart = getCart();
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+  const hi = s => s.replace(re, m => '<mark style="background:var(--green-500);color:var(--cream-bright);border-radius:3px;padding:0 2px">' + m + '</mark>');
+  grid.innerHTML = results.slice(0,12).map(p => {
+    const inCart = cart.some(c => c.name === p.name);
+    const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return '<div class="product-card show" onclick="goToProduct(\'' + sn + '\')">' +
+      '<div class="product-img" style="background:' + p.bg + '">' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
+      '<div class="product-body"><h4>' + hi(esc(p.name)) + '</h4><p class="product-desc">' + hi(esc(p.desc)) + '</p>' +
+      '<div class="product-footer"><span class="product-price">₴\u00a0' + fmt(p.price) + '</span>' +
+      '<button class="btn-add' + (inCart ? ' in-cart' : '') + '" onclick="event.stopPropagation();toggleSearchCart(\'' + sn + '\',this)">' + (inCart ? 'В кошику' : '+ В кошик') + '</button>' +
+      '</div></div></div>';
+  }).join('');
+}
+function toggleSearchCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx >= 0) { cart.splice(idx,1); btn.classList.remove('in-cart'); btn.textContent = '+ В кошик'; }
+  else { cart.push({name, qty:1}); btn.classList.add('in-cart'); btn.textContent = 'В кошику'; }
+  saveCart(cart); updateCartBadge();
+}
+function onDesktopSearchInput(val) {
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.toggle('visible', val.length > 0);
+  filterProducts(val);
+}
+function onDesktopSearchBlur() {}
+function clearDesktopSearch() {
+  const inp = document.getElementById('desktopSearchInput');
+  if (inp) inp.value = '';
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.remove('visible');
+  document.getElementById('searchPanel').classList.remove('open');
+}
+function openSearch() {
+  if (window.innerWidth <= 768) {
+    document.querySelector('nav').classList.add('search-active');
+    const inp = document.getElementById('navSearchInput');
+    if (inp) inp.focus();
+  } else {
+    const inp = document.getElementById('desktopSearchInput');
+    if (inp) inp.focus();
+  }
+}
+function closeSearch() {
+  document.querySelector('nav').classList.remove('search-active');
+  document.getElementById('searchPanel').classList.remove('open');
+  ['desktopSearchInput','navSearchInput'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.remove('visible');
+}
+
+// PANELS
+function toggleProfile() {
+  const panel = document.getElementById('profilePanel');
+  const overlay = document.getElementById('profileOverlay');
+  const open = panel.classList.contains('open');
+  panel.classList.toggle('open', !open);
+  overlay.classList.toggle('open', !open);
+  if (!open) toggleMobileMenu(true);
+}
+function toggleMobileMenu(forceClose) {
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const open = menu.classList.contains('open');
+  const next = forceClose ? false : !open;
+  menu.classList.toggle('open', next);
+  overlay.classList.toggle('open', next);
+}
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSummary();
+  updateCartBadge();
+  updateWishBadge();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  closeSearch();
+  const pp = document.getElementById('profilePanel');
+  if (pp && pp.classList.contains('open')) toggleProfile();
+  const mm = document.getElementById('mobileMenu');
+  if (mm && mm.classList.contains('open')) toggleMobileMenu(true);
+});
+</script>
+</body>
+</html>
