@@ -585,11 +585,87 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 
 ---
 
-## Наступні таски (черга)
+## sol-checkout.html — специфіка
+
+### Структура сторінки
+1. Nav (ідентична іншим)
+2. `.checkout-layout` — двоколонковий грід (55fr / 45fr, десктоп), 1 колонка (мобілка)
+3. Ліва колонка `.checkout-left`: breadcrumb "← Кошик" + 3 секції
+4. Права колонка `.checkout-right`: sticky `.co-summary` (Замовлення)
+5. `#checkoutSuccess` — екран після оформлення (прихований до сабміту)
+6. Footer
+
+### Breadcrumb
+- `← Кошик` — посилання на `sol-cart.html`, стиль як `.product-breadcrumb` на sol-product.html
+- Відступи: `padding: 32px 0 28px` desktop / `20px 0 16px` mobile
+
+### Секції форми
+1. **Інформація про доставку** — Ім'я, Email, Телефон
+2. **Доставка** — вибір способу (НП відділення / НП кур'єр / Укрпошта) + поле Міста + поле Відділення з dropdown
+3. **Спосіб оплати** — Карткою онлайн (LiqPay) / При отриманні
+
+### Delivery dropdown
+- Відкривається при фокусі на полі Відділення
+- Закривається при кліку поза `.branch-wrap`
+- Mock-дані: 10 НП відділень/поштоматів, 5 Укрпошта
+- `DELIVERY_META` — об'єкт з hint текстом, лейблом і плейсхолдером для кожного типу
+- При зміні типу доставки: оновлюється hint, лейбл поля, плейсхолдер, очищається значення
+
+### Логотипи доставки (inline img)
+- Розмір: `28×28px; border-radius: 6px; object-fit: contain`
+- НП: `images/logo-np.jpg`
+- Укрпошта: `images/logo-ukrposhta.webp`
+
+### Payment pills (.pay-pill)
+- Розмір: `28×28px; border-radius: 6px` desktop / `24×24px` mobile
+- Фон: `#F2F0ED` (всі однаковий)
+- `object-fit: contain; padding: 2px` (базово)
+- Apple Pay: `object-fit: cover; padding: 3px`
+- Privat24: `padding: 4px`
+- Файли: `images/logo-visa.png`, `logo-mastercard.png`, `logo-applepay.png`, `logo-gpay.png`, `logo-privat24.png`
+
+### Summary (права колонка)
+- `position: sticky; top: 168px` (враховує nav + відступ)
+- `.co-summary-title` "Замовлення": `clamp(26px, 3vw, 38px)` — як `.co-section-title`
+- `.co-item-img`: `88×88px; border-radius: 16px` desktop / `72×72px; border-radius: 14px` mobile
+- Placeholder "ФОТО": `font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-300)`
+- Безкоштовна доставка з `1000 ₴` — checkmark `hgi-checkmark-circle-02`
+
+### Валідація форми
+- `submitOrder()` перевіряє поля: `fieldName`, `fieldEmail`, `fieldPhone`, `fieldCity`, `fieldBranch`
+- Помилка: `background: rgba(232,74,46,0.1)` на інпуті (без border)
+- Успіх: ховає `#checkoutMain`, показує `#checkoutSuccess` з номером замовлення
+
+### JS функції — sol-checkout.html
+| Функція | Що робить |
+|---------|-----------|
+| `selectDelivery(type, el)` | вибір способу доставки, оновлює hint/лейбл/placeholder |
+| `selectPayment(type, el)` | вибір способу оплати |
+| `openBranchDropdown()` | відкриває dropdown відділень |
+| `closeBranchDropdown()` | закриває dropdown |
+| `onBranchInput(val)` | фільтрує список відділень |
+| `renderBranchDropdown(query)` | рендерить пункти dropdown |
+| `selectBranch(val)` | заповнює поле і закриває dropdown |
+| `updateSummaryRows()` | перераховує підсумок, доставку, суму |
+| `submitOrder()` | валідація + перехід до success-екрану |
+| `clearError(inp)` | знімає стан помилки з інпута |
+| `updateCartBadge()` / `updateWishBadge()` | синхронізують badges |
+| `getCart()` / `saveCart(c)` | читають/зберігають solCart |
+| `goToProduct(name)` | перехід на sol-product.html?name=... |
 
 ---
 
+## Наступні таски (черга)
+
+### Висока пріоритетність
+- **Max-width cap** — обмежити сайт шириною MacBook Air (~1440px), на ширших екранах додавати заливку по боках. Жодних деформацій контенту.
+- **Чистота коду** — перевірити всі HTML файли: прибрати дублі, мертвий CSS, вирівняти консистентність між сторінками.
+
+### Середня пріоритетність
+- **sol-design-system.html** — окрема сторінка-документація дизайн системи: кольори, типографіка, кнопки, інпути, іконки, компоненти — з живими прикладами і кодом. В стилі сайту.
+- Нормалізувати PNG-логотипи доставки/оплат — однаковий внутрішній відступ у Figma, однаковий оптичний розмір.
+
 ### Пізніше
-- Додати wishlist панель (slide-in як профіль) з іконкою серця в nav
-- Підключити реальні зображення з папки `/images/`
+- Wishlist панель (slide-in як профіль) з іконкою серця в nav
 - Email підписка — показувати повідомлення після сабміту
+- Розглянути архітектуру для реалізації (Supabase + Next.js або статичний MVP з localStorage)
