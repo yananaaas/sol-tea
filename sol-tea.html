@@ -115,7 +115,7 @@
   .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
 
   /* TICKER */
-  .ticker-wrap { overflow: hidden; background: var(--cream); padding: 32px 0; }
+  .ticker-wrap { overflow: hidden; background: var(--cream); padding: 32px 0; width: max(100%, 100vw); margin-left: min(0px, calc((1440px - 100vw) / 2)); }
   .ticker-track { display: flex; gap: 10px; width: max-content; animation: ticker 30s linear infinite; }
   .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -142,7 +142,7 @@
   .stat-sub { font-size: 13px; color: var(--gray-500); }
 
   /* COLLECTIONS */
-  .collections { background: var(--green-800); padding: 80px 48px; }
+  .collections { background: var(--green-800); padding: 80px 48px; width: max(100%, 100vw); margin-left: min(0px, calc((1440px - 100vw) / 2)); }
   .collections-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1280px; margin: 0 auto 48px; }
   .collections-header h2 { font-family: 'Inter', sans-serif; font-size: clamp(30px, 3.5vw, 46px); font-weight: 900; color: var(--cream-bright); line-height: 1.1; letter-spacing: -0.02em; }
   .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1280px; margin: 0 auto; }
@@ -176,14 +176,14 @@
   .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
   /* RITUAL — two parts */
-  .ritual-top { background: var(--green-800); padding: 120px 48px 80px; }
+  .ritual-top { background: var(--green-800); padding: 120px 48px 80px; width: max(100%, 100vw); margin-left: min(0px, calc((1440px - 100vw) / 2)); }
   .ritual-top-inner { max-width: 800px; margin: 0 auto; text-align: center; }
   .ritual-top h2 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 900; line-height: 1.05; color: var(--cream-bright); margin-bottom: 20px; letter-spacing: -0.03em; }
   .ritual-top p { font-size: 16px; font-weight: 300; color: rgba(253,252,249,0.7); line-height: 1.8; margin-bottom: 40px; }
   .ritual-top .section-tag { display: inline-flex; margin-bottom: 24px; background: rgba(253,252,249,0.15); color: var(--cream-bright); }
   .ritual-top .section-tag i { color: var(--cream-bright); font-size: 16px; }
 
-  .ritual-bottom { background: var(--green-800); padding: 0 48px 100px; }
+  .ritual-bottom { background: var(--green-800); padding: 0 48px 100px; width: max(100%, 100vw); margin-left: min(0px, calc((1440px - 100vw) / 2)); }
   .ritual-bottom-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .ritual-col-right { display: flex; flex-direction: column; gap: 40px; }
   .ritual-card { background: var(--cream); border-radius: 20px; overflow: hidden; min-height: 280px; position: relative; cursor: pointer; }
@@ -196,7 +196,7 @@
   .ritual-card p { font-size: 13px; color: rgba(253,252,249,0.7); line-height: 1.6; }
 
   /* TESTIMONIALS */
-  .testimonials { background: var(--cream); padding: 120px 0; overflow: hidden; }
+  .testimonials { background: var(--cream); padding: 120px 0; overflow: hidden; width: max(100%, 100vw); margin-left: min(0px, calc((1440px - 100vw) / 2)); }
 
   .testimonials-track-wrap { overflow: hidden; }
   .testimonials-track { display: flex; gap: 40px; width: max-content; animation: marquee 32s linear infinite; }
