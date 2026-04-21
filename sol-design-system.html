@@ -200,6 +200,67 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .rule-body { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
 .rule-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; background: var(--sand); color: var(--gray-800); padding: 2px 6px; border-radius: 6px; }
 
+/* ── CAT DROPDOWN (1:1 з sol-shop) ── */
+.cat-dropdown { position: relative; user-select: none; z-index: 10; flex-shrink: 0; }
+.cat-trigger { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 16px 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.cat-trigger i { font-size: 16px; color: var(--gray-500); transition: transform 0.2s; }
+@media (hover: hover) { .cat-trigger:hover { background: var(--gray-100); } }
+.cat-dropdown.open .cat-trigger { background: var(--gray-100); }
+.cat-dropdown.open .cat-trigger i { transform: rotate(180deg); }
+.cat-menu { position: absolute; top: calc(100% + 8px); left: 0; background: var(--sand); border-radius: 20px; padding: 8px; min-width: 180px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 8px 24px rgba(28,26,20,0.10); opacity: 0; pointer-events: none; transform: translateY(-6px); transition: opacity 0.18s ease, transform 0.18s ease; z-index: 200; }
+.cat-dropdown.open .cat-menu { opacity: 1; pointer-events: all; transform: translateY(0); }
+.cat-option { display: flex; align-items: center; padding: 12px 18px; border-radius: 40px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--gray-800); cursor: pointer; transition: background 0.15s; }
+@media (hover: hover) { .cat-option:hover { background: var(--gray-100); } }
+.cat-option.active { background: var(--green-800); color: var(--cream-bright); }
+
+/* ── PREVIEW FRAMES ── */
+.ds-preview-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.ds-preview-tab { background: var(--sand); border: none; border-radius: 40px; padding: 7px 16px; font-size: 12px; font-weight: 500; color: var(--gray-800); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.ds-preview-tab.active { background: var(--black); color: var(--cream-bright); }
+.ds-preview-frame { border-radius: 20px; overflow: hidden; border: 1px solid var(--gray-100); }
+.ds-preview-frame.dark { border-color: rgba(255,255,255,0.06); }
+.ds-preview-mobile-wrap { width: 390px; max-width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--gray-100); }
+
+/* ── NAV PREVIEW ── */
+.nav-pv { display: flex; align-items: center; gap: 32px; padding: 0 48px; height: 80px; background: var(--cream); }
+.nav-pv-mobile { display: flex; align-items: center; gap: 0; padding: 0 16px; height: 72px; background: var(--cream); }
+.nav-pv-logo { flex-shrink: 0; display: flex; align-items: center; }
+.nav-pv-logo svg { height: 42px; width: 41px; display: block; }
+.nav-pv-links { display: flex; gap: 36px; list-style: none; }
+.nav-pv-links a { font-size: 14px; color: var(--gray-800); text-decoration: none; }
+.nav-pv-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; width: 280px; flex-shrink: 0; }
+.nav-pv-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+.nav-pv-search span { font-size: 15px; color: var(--gray-500); }
+.nav-pv-spacer { flex: 1; }
+.nav-pv-right { display: flex; align-items: center; gap: 0; }
+.nav-pv-btn { background: none; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; position: relative; flex-shrink: 0; }
+.nav-pv-badge { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--cream-bright); padding: 0 4px; line-height: 1; }
+.nav-pv-badge.cart { background: var(--green-800); }
+.nav-pv-badge.wish { background: var(--terra); }
+.nav-pv-burger { display: none; }
+
+/* ── ACCORDION ── */
+.accordion-demo { display: flex; flex-direction: column; gap: 4px; max-width: 720px; }
+.faq-demo-item { }
+.faq-demo-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--cream-bright); border: none; border-radius: 20px; padding: 24px 28px; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--black); text-align: left; cursor: pointer; transition: background 0.2s; }
+.faq-demo-item.open .faq-demo-q { border-radius: 20px 20px 0 0; }
+.faq-demo-q i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; transition: transform 0.3s; }
+.faq-demo-item.open .faq-demo-q i { transform: rotate(45deg); }
+.faq-demo-a { background: var(--cream-bright); border-radius: 0 0 20px 20px; overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+.faq-demo-item.open .faq-demo-a { max-height: 200px; }
+.faq-demo-a-inner { padding: 0 28px 28px; font-size: 14px; color: var(--gray-800); line-height: 1.7; }
+
+/* ── REVIEW CARDS ── */
+.reviews-demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.review-card { background: var(--cream-bright); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.review-stars { display: flex; gap: 3px; color: var(--green-800); font-size: 15px; }
+.review-text-body { font-size: 14px; color: var(--gray-800); line-height: 1.7; flex: 1; }
+.review-author { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 4px; }
+.review-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--cream-bright); flex-shrink: 0; font-family: 'Inter', sans-serif; font-weight: 700; }
+.review-author-info {}
+.review-author-name { font-size: 13px; font-weight: 600; color: var(--black); font-family: 'Inter', sans-serif; }
+.review-author-date { font-size: 12px; color: var(--gray-300); margin-top: 1px; }
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .ds-header { padding: 40px 24px 0; }
@@ -228,6 +289,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .spacing-grid { grid-template-columns: 1fr 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
+  .reviews-demo-grid { grid-template-columns: 1fr; }
+  .accordion-demo { max-width: 100%; }
 }
 </style>
 </head>
@@ -267,8 +330,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#pills"      class="anchor-pill">Пілюлі</a>
     <a href="#icons"      class="anchor-pill">Іконки</a>
     <a href="#cards"      class="anchor-pill">Картки</a>
-    <a href="#spacing"    class="anchor-pill">Відступи та розміри</a>
-    <a href="#rules"      class="anchor-pill">Правила</a>
+    <a href="#spacing"       class="anchor-pill">Відступи та розміри</a>
+    <a href="#rules"         class="anchor-pill">Правила</a>
+    <a href="#nav-section"   class="anchor-pill">Навігація</a>
+    <a href="#footer-section" class="anchor-pill">Футер</a>
+    <a href="#accordion"     class="anchor-pill">Акордеон</a>
+    <a href="#reviews-section" class="anchor-pill">Відгуки</a>
   </div>
 </nav>
 
@@ -706,7 +773,18 @@ hover → sand</div>
       <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Набори</button>
     </div>
     <div class="pill-row">
-      <button class="filter-pill active"><i class="hgi-stroke hgi-arrow-down-01"></i> Чай</button>
+      <div class="cat-dropdown" id="dsCatDropdown">
+        <button class="cat-trigger" onclick="toggleDsCat()">
+          <span id="dsCatLabel">Чай</span>
+          <i class="hgi-stroke hgi-arrow-down-01"></i>
+        </button>
+        <div class="cat-menu">
+          <div class="cat-option active" onclick="selectDsCat(this,'Чай')">Чай</div>
+          <div class="cat-option" onclick="selectDsCat(this,'Посуд')">Посуд</div>
+          <div class="cat-option" onclick="selectDsCat(this,'Дошки')">Дошки</div>
+          <div class="cat-option" onclick="selectDsCat(this,'Аксесуари')">Аксесуари</div>
+        </div>
+      </div>
       <button class="sort-btn"><i class="hgi-stroke hgi-filter-horizontal"></i> Сортування</button>
     </div>
 
@@ -1146,6 +1224,275 @@ hover → sand</div>
 </section>
 
 
+<!-- ════════════════════════════════════════
+     НАВІГАЦІЯ
+     ════════════════════════════════════════ -->
+<section id="nav-section" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Навігація</h2>
+    <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
+
+    <div class="ds-preview-tabs">
+      <button class="ds-preview-tab active" onclick="switchNavPreview('desktop', this)">Десктоп</button>
+      <button class="ds-preview-tab" onclick="switchNavPreview('mobile', this)">Мобілка</button>
+    </div>
+
+    <div id="navPreviewDesktop" class="ds-preview-frame">
+      <div class="nav-pv">
+        <div class="nav-pv-logo">
+          <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
+        </div>
+        <ul class="nav-pv-links">
+          <li><a href="#">Про нас</a></li>
+          <li><a href="#" style="color:var(--black);font-weight:500;">Магазин</a></li>
+        </ul>
+        <div class="nav-pv-search">
+          <i class="hgi-stroke hgi-search-01"></i>
+          <span>Пошук чаю, інгредієнтів...</span>
+        </div>
+        <div class="nav-pv-spacer"></div>
+        <div class="nav-pv-right">
+          <button class="nav-pv-btn"><i class="hgi-stroke hgi-user-circle"></i></button>
+          <button class="nav-pv-btn">
+            <i class="hgi-stroke hgi-favourite"></i>
+            <span class="nav-pv-badge wish">2</span>
+          </button>
+          <button class="nav-pv-btn">
+            <i class="hgi-stroke hgi-shopping-bag-01"></i>
+            <span class="nav-pv-badge cart">3</span>
+          </button>
+          <button class="nav-pv-btn"><i class="hgi-stroke hgi-help-circle"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none;">
+      <div class="nav-pv-mobile">
+        <div class="nav-pv-logo">
+          <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
+        </div>
+        <div style="flex:1"></div>
+        <div class="nav-pv-right">
+          <button class="nav-pv-btn"><i class="hgi-stroke hgi-search-01"></i></button>
+          <button class="nav-pv-btn"><i class="hgi-stroke hgi-user-circle"></i></button>
+          <button class="nav-pv-btn">
+            <i class="hgi-stroke hgi-favourite"></i>
+            <span class="nav-pv-badge wish">2</span>
+          </button>
+          <button class="nav-pv-btn">
+            <i class="hgi-stroke hgi-shopping-bag-01"></i>
+            <span class="nav-pv-badge cart">3</span>
+          </button>
+          <button class="nav-pv-btn"><i class="hgi-stroke hgi-menu-01"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacing-grid" style="margin-top: 32px;">
+      <div class="spacing-card">
+        <div class="spacing-label">Висота — десктоп</div>
+        <div class="spacing-val">80<span>px</span></div>
+        <div class="spacing-desc"><code class="ds-code">position: fixed; top: 0</code> — завжди поверх контенту</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Висота — мобілка</div>
+        <div class="spacing-val">72<span>px</span></div>
+        <div class="spacing-desc">FAQ іконка прихована. Бургер відкриває dropdown 240px.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Горизонтальний відступ</div>
+        <div class="spacing-val">48<span>px</span></div>
+        <div class="spacing-desc">Десктоп: <code class="ds-code">padding: 0 48px</code>. Мобілка: <code class="ds-code">padding: 0 16px</code></div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Іконки nav</div>
+        <div class="spacing-val">44<span>px</span></div>
+        <div class="spacing-desc">44×44px area, <code class="ds-code">font-size: 22px</code>. Однаково десктоп і мобілка.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ФУТЕР
+     ════════════════════════════════════════ -->
+<section id="footer-section" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Футер</h2>
+    <p class="ds-section-desc">Темний фон — <code class="ds-code">var(--black)</code>. Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code>. Посилання: 14px DM Sans 300.</p>
+
+    <div class="ds-preview-frame dark" style="background: var(--black); padding: 48px;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr; gap: 48px; max-width: 1280px; margin: 0 auto;">
+
+        <!-- Brand col -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <svg viewBox="0 0 242 249" style="color:var(--cream-bright);width:40px;height:41px;display:block;flex-shrink:0;"><use href="#sol-logo"/></svg>
+          <p style="font-size:14px;color:var(--gray-500);line-height:1.7;font-weight:300;">Нішові китайські чаї. Прямо від джерела — до вашої чашки.</p>
+          <a href="sol-design-system.html" style="font-size:13px;color:var(--gray-300);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-top:4px;">
+            Design System <i class="hgi-stroke hgi-arrow-up-right-01" style="font-size:12px;"></i>
+          </a>
+        </div>
+
+        <!-- Nav col -->
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:20px;">Навігація</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">Магазин</a>
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">Про нас</a>
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">FAQ</a>
+          </div>
+        </div>
+
+        <!-- Info col -->
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:20px;">Інформація</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">Доставка і оплата</a>
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">Повернення</a>
+            <a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;font-weight:300;">Контакти</a>
+          </div>
+        </div>
+
+        <!-- Newsletter col -->
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:8px;">Підписка</div>
+          <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;font-weight:300;">Новинки, сезонні чаї та корисні матеріали — раз на місяць.</p>
+          <div style="display:flex;gap:8px;">
+            <input type="email" placeholder="ваш@email.com" style="flex:1;background:rgba(255,255,255,0.07);border:none;border-radius:40px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--cream-bright);outline:none;" />
+            <button style="background:var(--green-800);color:var(--cream-bright);border:none;border-radius:40px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:15px;cursor:pointer;white-space:nowrap;">→</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="max-width:1280px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <span style="font-size:13px;color:var(--gray-500);">© 2025 Söl Tea</span>
+        <span style="font-size:13px;color:var(--gray-500);">Концептуальний проєкт. Яна Лізгова.</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <div class="ds-sublabel" style="margin-bottom: 12px;">Кольори у футері</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+        <div style="display:inline-flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:4px;background:var(--black);"></div><span style="font-size:13px;color:var(--gray-500);">Фон — <code class="ds-code">--black</code></span></div>
+        <div style="display:inline-flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:4px;background:var(--gray-300);"></div><span style="font-size:13px;color:var(--gray-500);">Заголовки — <code class="ds-code">--gray-300</code></span></div>
+        <div style="display:inline-flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:4px;background:var(--gray-500);"></div><span style="font-size:13px;color:var(--gray-500);">Посилання — <code class="ds-code">--gray-500</code></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     АКОРДЕОН
+     ════════════════════════════════════════ -->
+<section id="accordion" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Акордеон</h2>
+    <p class="ds-section-desc">Використовується у FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті. Анімація через <code class="ds-code">max-height</code>.</p>
+
+    <div class="accordion-demo">
+      <div class="faq-demo-item open">
+        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
+          Коли прийде моє замовлення?
+          <i class="hgi-stroke hgi-add-01"></i>
+        </button>
+        <div class="faq-demo-a">
+          <div class="faq-demo-a-inner">Зазвичай доставка займає 1–3 робочих дні після підтвердження оплати. Нова Пошта — до відділення або кур'єром. Точний термін залежить від вашого міста.</div>
+        </div>
+      </div>
+      <div class="faq-demo-item">
+        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
+          Які способи оплати ви приймаєте?
+          <i class="hgi-stroke hgi-add-01"></i>
+        </button>
+        <div class="faq-demo-a">
+          <div class="faq-demo-a-inner">Ми приймаємо оплату карткою онлайн через LiqPay (Visa, Mastercard, Apple Pay, Google Pay, Privat24) та при отриманні готівкою або карткою.</div>
+        </div>
+      </div>
+      <div class="faq-demo-item">
+        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
+          Чи можна повернути товар?
+          <i class="hgi-stroke hgi-add-01"></i>
+        </button>
+        <div class="faq-demo-a">
+          <div class="faq-demo-a-inner">Так, повернення можливе протягом 14 днів з моменту отримання, якщо товар не відкривався і збережена упаковка. Для повернення напишіть нам на hello@sol-tea.com.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block">&lt;<span class="k">div</span> class=<span class="v">"faq-item"</span>&gt;
+  &lt;<span class="k">button</span> class=<span class="v">"faq-q"</span> onclick=<span class="v">"toggleFaq(this)"</span>&gt;
+    Питання
+    &lt;<span class="k">i</span> class=<span class="v">"hgi-stroke hgi-add-01"</span>&gt;&lt;/<span class="k">i</span>&gt;
+  &lt;/<span class="k">button</span>&gt;
+  &lt;<span class="k">div</span> class=<span class="v">"faq-a"</span>&gt;
+    &lt;<span class="k">div</span> class=<span class="v">"faq-a-inner"</span>&gt;Відповідь...&lt;/<span class="k">div</span>&gt;
+  &lt;/<span class="k">div</span>&gt;
+&lt;/<span class="k">div</span>&gt;
+
+.<span class="k">faq-item.open .faq-q i</span> { <span class="k">transform</span>: <span class="v">rotate(45deg)</span>; }
+.<span class="k">faq-a</span> { <span class="k">max-height</span>: <span class="v">0</span>; <span class="k">overflow</span>: <span class="v">hidden</span>; <span class="k">transition</span>: <span class="v">max-height 0.35s cubic-bezier(0.4,0,0.2,1)</span>; }
+.<span class="k">faq-item.open .faq-a</span> { <span class="k">max-height</span>: <span class="v">400px</span>; }</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ВІДГУКИ
+     ════════════════════════════════════════ -->
+<section id="reviews-section" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Картки відгуків</h2>
+    <p class="ds-section-desc">Відображаються на сторінці товару. Зірки — символ ★, колір <code class="ds-code">var(--green-800)</code>. Аватари — кольорові кола з ініціалами.</p>
+
+    <div class="reviews-demo-grid">
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text-body">Чай дійсно неймовірний. Аромат квітковий, смак м'який і обволікаючий. Вже третя покупка — і щоразу захоплена.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#226F54;">ОК</div>
+          <div class="review-author-info">
+            <div class="review-author-name">Оксана К.</div>
+            <div class="review-author-date">3 квітня 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text-body">Замовив набір для подарунка — упаковка стильна, чай смачний. Швидка доставка і приємний бонус всередині.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#C4855A;">МП</div>
+          <div class="review-author-info">
+            <div class="review-author-name">Максим П.</div>
+            <div class="review-author-date">18 березня 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text-body">Пуер витриманий — складний і глибокий. Трохи часу на освоєння, але потім затягує. Чекаю нові надходження.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#4A4538;">АШ</div>
+          <div class="review-author-info">
+            <div class="review-author-name">Аліна Ш.</div>
+            <div class="review-author-date">7 лютого 2025</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- FOOTER -->
 <footer style="padding: 40px 48px; margin-top: 40px;">
   <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
@@ -1157,7 +1504,7 @@ hover → sand</div>
 
 <script>
 /* Anchor nav scroll tracking */
-const sections = ['brand','colors','typography','buttons','inputs','pills','icons','cards','spacing','rules'];
+const sections = ['brand','colors','typography','buttons','inputs','pills','icons','cards','spacing','rules','nav-section','footer-section','accordion','reviews-section'];
 const navPills = document.querySelectorAll('#anchorNav .anchor-pill');
 const anchorNav = document.getElementById('anchorNav');
 
@@ -1207,6 +1554,46 @@ function copyCode(btn) {
     btn.classList.add('copied');
     setTimeout(() => btn.classList.remove('copied'), 2000);
   });
+}
+
+/* Cat dropdown in pills demo */
+function toggleDsCat() {
+  const dd = document.getElementById('dsCatDropdown');
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    document.addEventListener('click', closeDsCatOutside, { once: true });
+  }
+}
+function closeDsCatOutside(e) {
+  const dd = document.getElementById('dsCatDropdown');
+  if (!dd.contains(e.target)) dd.classList.remove('open');
+}
+function selectDsCat(el, name) {
+  document.querySelectorAll('#dsCatDropdown .cat-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('dsCatLabel').textContent = name;
+  document.getElementById('dsCatDropdown').classList.remove('open');
+}
+
+/* Nav preview tab switcher */
+function switchNavPreview(type, btn) {
+  document.querySelectorAll('.ds-preview-tabs .ds-preview-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const desktop = document.getElementById('navPreviewDesktop');
+  const mobile  = document.getElementById('navPreviewMobile');
+  if (type === 'desktop') {
+    desktop.style.display = '';
+    mobile.style.display  = 'none';
+  } else {
+    desktop.style.display = 'none';
+    mobile.style.display  = '';
+  }
+}
+
+/* Accordion demo */
+function toggleFaqDemo(btn) {
+  const item = btn.closest('.faq-demo-item');
+  item.classList.toggle('open');
 }
 
 /* Search demo */
