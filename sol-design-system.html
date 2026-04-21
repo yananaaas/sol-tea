@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Guide & Design System — Söl Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream-bright: #FDFCF9;
+  --sand: #E8E0CC;
+  --green-800: #226F54;
+  --green-500: #7CC44A;
+  --terra: #C4855A;
+  --black: #1C1A14;
+  --gray-800: #4A4538;
+  --gray-500: #7A7060;
+  --gray-300: #B5AFA3;
+  --gray-100: #D9D3C7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--cream); overflow-x: hidden; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); max-width: 1440px; margin: 0 auto; }
+
+/* ── HEADER ── */
+.ds-header { padding: 80px 48px 0; }
+.ds-header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; }
+.ds-title { font-family: 'Inter', sans-serif; font-size: clamp(52px, 7vw, 88px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--black); margin-bottom: 24px; }
+.ds-subtitle { font-size: 16px; color: var(--gray-500); max-width: 440px; line-height: 1.7; font-weight: 300; }
+.ds-back { display: inline-flex; align-items: center; gap: 10px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--cream-bright); text-decoration: none; padding: 14px 28px; background: var(--green-800); border: none; border-radius: 40px; transition: background 0.2s; flex-shrink: 0; margin-top: 8px; }
+.ds-back i { font-size: 16px; transition: transform 0.2s; transform: translateX(-3px); }
+@media (hover: hover) { .ds-back:hover { background: var(--black); } .ds-back:hover i { transform: translateX(-7px); } }
+
+/* ── ANCHOR NAV ── */
+.anchor-nav { position: sticky; top: 0; z-index: 99; background: var(--cream); padding: 40px 48px 40px; }
+.anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
+.anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; text-decoration: none; }
+.anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
+@media (hover: hover) { .anchor-pill:hover:not(.active) { background: var(--gray-100); } }
+
+/* ── SECTION LAYOUT ── */
+.ds-section { padding: 0 48px 80px; scroll-margin-top: 120px; }
+.ds-section-inner { max-width: 1280px; margin: 0 auto; }
+.ds-section-title { font-family: 'Inter', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 900; letter-spacing: -0.02em; color: var(--black); margin-bottom: 8px; }
+.ds-section-desc { font-size: 14px; color: var(--gray-500); line-height: 1.6; margin-bottom: 48px; max-width: 580px; }
+.ds-sublabel { font-size: 13px; font-weight: 500; color: var(--gray-500); margin-bottom: 16px; }
+.ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
+.ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
+.ds-code-wrap { position: relative; margin-top: 24px; }
+.ds-copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(253,252,249,0.12); border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.5); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
+@media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.2); color: var(--cream-bright); } }
+.ds-copy-btn.copied { color: var(--green-500); }
+.ds-code-block { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 2; background: var(--black); color: var(--gray-300); padding: 24px 28px; border-radius: 20px; overflow-x: auto; margin-top: 0; white-space: pre; }
+.ds-code-wrap .ds-code-block { margin-top: 0; }
+.ds-code-block .k { color: #7CC44A; }
+.ds-code-block .v { color: #C4855A; }
+.ds-code-block.scroll { max-height: 320px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(253,252,249,0.15) transparent; }
+
+/* ── BRAND ── */
+.brand-desc { font-size: 15px; color: var(--gray-800); line-height: 1.8; font-weight: 300; margin-bottom: 48px; max-width: 640px; }
+.brand-logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+.brand-logo-card { background: var(--cream-bright); border-radius: 20px; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+.brand-logo-card svg { width: 56px; height: auto; display: block; }
+.brand-logo-card span { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-500); }
+
+/* ── COLORS ── */
+.color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+.color-swatch { border-radius: 20px; aspect-ratio: 1/1; position: relative; overflow: hidden; cursor: default; }
+.color-overlay {
+  position: absolute; inset: 0;
+  background: rgba(28,26,20,0.84);
+  border-radius: 20px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 14px 16px; gap: 3px;
+  opacity: 0; transition: opacity 0.18s;
+  pointer-events: none;
+}
+@media (hover: hover) { .color-swatch:hover .color-overlay { opacity: 1; } }
+.co-name { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--cream-bright); }
+.co-var { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px; color: rgba(253,252,249,0.55); }
+.co-hex { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; font-weight: 600; color: var(--cream-bright); margin-top: 2px; }
+.co-role { font-size: 10px; color: rgba(253,252,249,0.55); margin-top: 3px; line-height: 1.5; }
+
+/* ── TYPOGRAPHY ── */
+.type-table { }
+.type-row { display: grid; grid-template-columns: 200px 1fr; align-items: start; gap: 48px; padding: 32px 0; }
+.type-row + .type-row { border-top: none; }
+.type-meta-label { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px; }
+.type-meta-detail { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); line-height: 1.9; }
+
+/* ── BUTTONS ── */
+.btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+@media (hover: hover) { .btn-primary:hover { background: var(--black); } }
+
+.btn-secondary { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.btn-secondary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
+@media (hover: hover) { .btn-secondary:hover { background: var(--cream-bright); color: var(--green-800); } .btn-secondary:hover i { transform: translateX(7px); } }
+
+.btn-outline-cream { background: transparent; color: var(--cream-bright); border: 1.5px solid var(--cream-bright); border-radius: 40px; padding: 12.5px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+@media (hover: hover) { .btn-outline-cream:hover { background: var(--cream-bright); color: var(--black); } }
+
+.btn-filled-cream { background: var(--cream-bright); color: var(--green-800); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+@media (hover: hover) { .btn-filled-cream:hover { background: var(--sand); } }
+
+.btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 12.5px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+@media (hover: hover) { .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); } }
+
+.btn-add-demo { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+@media (hover: hover) { .btn-add-demo:hover { background: var(--green-800); } }
+.btn-add-demo.in-cart { background: var(--green-800); }
+@media (hover: hover) { .btn-add-demo.in-cart:hover { background: var(--black); } }
+
+.btn-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.btn-cell { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.btn-cell-dark-wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; background: var(--green-800); border-radius: 20px; padding: 32px; }
+.btn-cell-dark { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+
+/* ── INPUTS ── */
+.input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-label { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+.ds-input { background: var(--cream-bright); border: none; border-radius: 40px; padding: 17px 24px; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); outline: none; transition: background 0.2s; width: 100%; }
+.ds-input::placeholder { color: var(--gray-300); }
+.ds-input:focus { background: var(--sand); }
+.ds-input.error { background: rgba(232,74,46,0.10); }
+.input-hint { font-size: 12px; color: var(--gray-300); margin-top: 4px; }
+.input-hint.error-hint { color: #E84A2E; }
+.search-input-wrap { max-width: 360px; margin-top: 32px; }
+.search-input-demo { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 100%; }
+.search-input-demo:focus-within { background: var(--gray-100); }
+.search-input-demo > i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
+.search-input-inner { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
+.search-input-inner::placeholder { color: var(--gray-500); }
+.search-clear-btn { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
+.search-clear-btn.visible { display: flex; }
+@media (hover: hover) { .search-clear-btn:hover { color: var(--black); } }
+
+/* ── PILLS ── */
+.filter-pill { background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 9px 18px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 7px; }
+.filter-pill.active { background: var(--green-800); color: var(--cream-bright); }
+@media (hover: hover) { .filter-pill:hover:not(.active) { background: var(--gray-100); } }
+.filter-pill i { font-size: 16px; }
+.sort-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 20px; font-size: 13px; color: var(--gray-800); cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: background 0.2s; white-space: nowrap; }
+.sort-btn i { font-size: 18px; }
+@media (hover: hover) { .sort-btn:hover { background: var(--gray-100); } }
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
+
+/* ── ICONS ── */
+.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 20px; }
+.icon-item { background: var(--cream-bright); border-radius: 16px; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 12px; }
+.icon-item i { font-size: 24px; color: var(--gray-800); }
+.icon-name { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 9px; color: var(--gray-500); line-height: 1.5; word-break: break-all; }
+
+/* ── PRODUCT CARD ── */
+.card-demo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: transform 0.3s; }
+@media (hover: hover) { .product-card:hover { transform: translateY(-6px); } }
+.product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
+.product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+.product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; border: none; }
+@media (hover: hover) { .product-wish:hover { color: var(--terra); } }
+.product-wish.liked { color: var(--terra); }
+.product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.badge-new { background: var(--green-500); color: var(--cream-bright); }
+.badge-limited { background: var(--terra); color: var(--cream-bright); }
+.product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+.product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+.product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+.product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
+.btn-add-card { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+.btn-add-card i { font-size: 18px; }
+.btn-add-card.in-cart { background: var(--green-800); }
+@media (hover: hover) { .btn-add-card:hover { background: var(--green-800); } .btn-add-card.in-cart:hover { background: var(--black); } }
+
+/* ── SPACING & SIZES ── */
+.spacing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 48px; }
+.spacing-card { background: var(--cream-bright); border-radius: 20px; padding: 24px 28px; }
+.spacing-label { font-size: 12px; font-weight: 500; color: var(--gray-500); margin-bottom: 6px; }
+.spacing-val { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: -0.02em; color: var(--black); margin-bottom: 6px; }
+.spacing-val span { font-size: 13px; font-weight: 400; color: var(--gray-300); margin-left: 4px; }
+.spacing-desc { font-size: 12px; color: var(--gray-300); line-height: 1.6; }
+
+.radius-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-end; margin-bottom: 48px; }
+.radius-item { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.radius-demo { width: 80px; height: 80px; background: var(--green-800); display: flex; align-items: center; justify-content: center; }
+.rv-wrap { display: flex; align-items: baseline; gap: 2px; }
+.rv-num { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: -0.02em; color: var(--cream-bright); line-height: 1; }
+.rv-unit { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; color: rgba(253,252,249,0.45); line-height: 1; }
+.radius-sub { font-size: 12px; color: var(--gray-500); font-family: 'DM Sans', sans-serif; }
+
+/* ── RULES ── */
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+.rule-card { background: var(--cream-bright); border-radius: 20px; padding: 24px 28px; }
+.rule-num { font-size: 11px; font-weight: 700; color: var(--gray-300); margin-bottom: 12px; letter-spacing: 0.05em; }
+.rule-title { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--black); margin-bottom: 8px; letter-spacing: -0.01em; }
+.rule-body { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+.rule-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; background: var(--sand); color: var(--gray-800); padding: 2px 6px; border-radius: 6px; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .ds-header { padding: 40px 24px 0; }
+  .ds-header-inner { flex-direction: column; gap: 20px; }
+  .ds-title { font-size: clamp(44px, 12vw, 68px); }
+  .anchor-nav { padding: 28px 16px 28px; }
+  .btn-add-card { padding: 14px 28px; font-size: 15px; }
+  .anchor-nav-inner { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .anchor-nav-inner::-webkit-scrollbar { display: none; }
+  .ds-section { padding: 0 24px 60px; scroll-margin-top: 100px; }
+  .brand-inner { grid-template-columns: 1fr; gap: 32px; }
+  .brand-logo svg { width: 80px; }
+  .brand-name { font-size: 36px; }
+  .type-row { grid-template-columns: 1fr; gap: 12px; }
+  .btn-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .btn-cell-dark-wrap { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .card-demo-grid { grid-template-columns: 1fr; }
+  .icon-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
+  .color-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .radius-row { gap: 12px; }
+  .radius-demo { width: 60px; height: 60px; }
+  .rv-num { font-size: 16px; }
+  .rv-unit { font-size: 9px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .ds-code-block { padding: 20px 20px; border-radius: 20px; font-size: 11px; }
+  .spacing-grid { grid-template-columns: 1fr 1fr; }
+  .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
+  .search-input-wrap { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG DEFS -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="sol-logo" viewBox="0 0 242 249">
+    <path d="M114.29 0.30705C112.69 0.573717 106.556 6.17372 100.556 12.7071C87.6231 26.9737 85.4897 27.7737 69.7564 25.2404C52.9564 22.5737 49.223 22.7071 44.423 27.1071C40.5564 30.5737 40.1564 31.7737 38.5564 45.2404C37.3564 55.2404 36.023 60.8404 34.2897 63.2404C32.823 65.1071 25.8897 69.7737 18.6897 73.6404C-4.91029 86.0404 -4.77696 85.5071 11.3564 115.24C13.4897 119.24 15.223 123.907 15.223 125.507C15.223 127.24 12.1564 134.44 8.42304 141.64C0.823044 156.04 -0.376956 162.574 3.75638 167.24C5.22304 168.84 12.5564 173.107 20.1564 176.84C28.823 181.107 34.9564 185.107 36.6897 187.507C38.423 189.907 40.2897 196.44 41.7564 205.507C43.8897 218.44 44.5564 220.174 48.2897 223.64C53.3564 228.04 55.0897 228.174 71.3564 224.707C88.6897 221.107 91.2231 222.04 104.29 235.374C120.823 252.307 123.89 252.307 139.49 235.24C152.956 220.44 154.556 219.774 174.156 222.84C197.49 226.574 200.823 224.174 203.223 202.707C205.223 183.64 206.556 181.774 223.623 172.84C240.423 164.04 243.356 160.307 240.823 151.64C239.89 148.84 237.756 144.174 235.89 141.507C230.023 132.84 226.823 125.64 226.823 120.707C226.823 117.774 229.09 111.64 233.09 104.04C243.356 83.9071 242.156 80.8404 218.823 69.3737C203.223 61.6404 201.49 59.6404 199.223 45.3737C196.956 30.4404 196.556 28.8404 192.956 24.7071C190.023 21.2404 188.823 20.7071 182.823 20.7071C178.956 20.7071 172.556 21.6404 168.556 22.7071C152.956 26.8404 147.223 25.1071 136.556 12.8404C126.956 1.77372 121.89 -1.02628 114.29 0.30705ZM90.8231 60.1737C95.3564 61.1071 98.423 68.0404 98.423 77.5071C98.5564 87.5071 95.8897 91.3737 88.9564 91.3737C85.4897 91.3737 83.4897 90.3071 80.8231 87.3737C77.0897 83.1071 69.8897 81.6404 69.8897 85.1071C69.8897 87.7737 73.4897 90.5737 84.023 95.7737C100.956 104.307 106.956 114.974 102.69 129.107C98.2897 143.774 87.8897 150.707 70.5564 150.707C64.6897 150.707 58.5564 150.174 56.9564 149.64C51.8897 147.774 52.9564 153.507 58.2897 156.707C64.5564 160.44 65.8897 161.774 65.8897 164.707C65.8897 172.44 54.2897 175.374 48.423 169.24C45.8897 166.44 45.0897 163.907 44.423 155.64C44.023 148.974 42.423 142.04 40.023 136.174C37.0897 128.84 36.423 125.374 36.823 119.774C38.1564 104.707 51.3564 100.574 61.7564 111.907C66.5564 116.974 73.8897 116.307 71.7564 110.974C71.3564 109.907 68.023 107.374 64.2897 105.374C54.9564 100.307 48.9564 94.7071 47.223 89.3737C43.3564 77.6404 52.423 63.9071 67.223 59.2404C70.423 58.3071 84.2897 58.8404 90.8231 60.1737ZM150.423 60.8404C157.756 64.1737 157.89 74.9737 150.69 78.1737C139.756 83.2404 131.223 67.1071 141.623 61.3737C146.023 58.9737 146.29 58.9737 150.423 60.8404ZM191.223 63.3737C191.756 65.2404 191.49 74.5737 190.823 84.0404C189.09 106.44 190.156 113.374 195.89 118.707C201.49 124.04 203.223 127.507 203.223 133.374C203.223 140.574 199.89 145.907 193.49 148.84C182.423 153.774 168.556 150.84 164.69 142.707C162.423 138.04 163.623 131.24 169.223 118.174C172.29 110.974 172.69 108.174 172.29 100.574C171.89 92.8404 171.223 90.8404 167.49 86.1737C164.69 82.7071 163.223 79.3737 163.223 76.7071C163.223 66.8404 172.556 59.1071 183.756 59.6404C189.623 60.0404 190.423 60.4404 191.223 63.3737ZM131.756 63.6404C138.423 73.1071 126.023 84.8404 117.89 76.7071C114.69 73.5071 114.423 66.4404 117.49 63.1071C120.69 59.5071 129.09 59.9071 131.756 63.6404ZM144.956 83.9071C155.223 88.1737 163.223 102.974 163.223 117.374C163.223 149.374 129.356 163.24 112.023 138.174C106.956 130.84 105.623 115.64 109.223 104.307C114.69 86.9737 130.69 77.9071 144.956 83.9071ZM104.556 174.04C104.556 176.174 103.623 176.707 100.556 176.707H96.5564V186.84C96.5564 196.44 96.4231 196.84 93.6231 196.44C90.8231 196.04 90.5564 195.24 90.1564 186.44C89.7564 177.107 89.6231 176.84 86.1564 176.44C84.0231 176.174 82.4231 175.107 82.1564 173.64C81.7564 171.64 82.9564 171.374 93.0897 171.374C103.623 171.374 104.556 171.64 104.556 174.04ZM128.556 173.907C128.556 176.174 127.49 176.574 122.29 176.974C113.89 177.507 112.823 180.707 121.09 180.707C126.29 180.707 127.223 181.107 127.223 183.374C127.223 184.84 126.423 186.04 125.623 186.174C124.69 186.174 122.156 186.44 119.89 186.44C117.356 186.574 115.756 187.507 115.49 188.974C115.09 191.107 116.156 191.374 122.556 191.374C128.956 191.374 130.023 191.774 129.623 193.64C129.223 195.64 127.623 196.04 119.223 196.04H109.223L108.423 171.374H118.556C127.623 171.374 128.556 171.64 128.556 173.907ZM155.356 183.907C158.29 190.44 160.556 196.04 160.556 196.307C160.556 196.574 158.956 196.707 157.09 196.707C154.823 196.707 153.356 195.907 152.956 194.04C152.423 191.907 151.09 191.374 146.423 191.374C142.023 191.374 140.29 192.04 139.223 194.04C138.023 196.174 132.556 198.04 132.556 196.174C132.556 195.907 134.423 191.24 136.69 185.907C138.956 180.44 141.09 174.974 141.49 173.64C142.023 171.907 143.356 171.374 146.29 171.64C149.89 172.04 150.69 173.107 155.356 183.907Z" fill="currentColor"/>
+    <path d="M131.223 100.574C127.356 108.04 132.023 121.907 137.49 118.574C142.423 115.507 140.556 98.0404 135.223 98.0404C133.756 98.0404 132.023 99.2404 131.223 100.574Z" fill="currentColor"/>
+    <path d="M144.556 181.907C142.69 185.507 143.356 186.44 146.956 185.774C149.49 185.374 149.49 185.107 148.023 182.174L146.29 178.974L144.556 181.907Z" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<!-- HEADER -->
+<header class="ds-header">
+  <div class="ds-header-inner">
+    <div>
+      <h1 class="ds-title">Style Guide &<br>Design System</h1>
+      <p class="ds-subtitle">Бібліотека компонентів, кольорів і правил для Söl Tea. Єдиний стандарт для всього сайту.</p>
+    </div>
+    <a href="sol-tea.html" class="ds-back">
+      <i class="hgi-stroke hgi-arrow-left-01"></i>
+      До сайту
+    </a>
+  </div>
+</header>
+
+<!-- ANCHOR NAV -->
+<nav class="anchor-nav" id="anchorNav">
+  <div class="anchor-nav-inner">
+    <a href="#brand"      class="anchor-pill active">Бренд</a>
+    <a href="#colors"     class="anchor-pill">Кольори</a>
+    <a href="#typography" class="anchor-pill">Типографіка</a>
+    <a href="#buttons"    class="anchor-pill">Кнопки</a>
+    <a href="#inputs"     class="anchor-pill">Інпути</a>
+    <a href="#pills"      class="anchor-pill">Пілюлі</a>
+    <a href="#icons"      class="anchor-pill">Іконки</a>
+    <a href="#cards"      class="anchor-pill">Картки</a>
+    <a href="#spacing"    class="anchor-pill">Відступи та розміри</a>
+    <a href="#rules"      class="anchor-pill">Правила</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     БРЕНД
+     ════════════════════════════════════════ -->
+<section id="brand" class="ds-section" style="padding-top: 12px;">
+  <div class="ds-section-inner">
+    <div class="ds-sublabel" style="margin-bottom: 12px;">Бренд</div>
+    <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
+    <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
+    <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
+
+    <div class="brand-logo-grid">
+      <div class="brand-logo-card" style="color: var(--green-800);">
+        <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
+        <span>green-800</span>
+      </div>
+      <div class="brand-logo-card" style="color: var(--green-500);">
+        <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
+        <span>green-500</span>
+      </div>
+      <div class="brand-logo-card" style="color: var(--terra);">
+        <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
+        <span>terra</span>
+      </div>
+      <div class="brand-logo-card" style="color: var(--black);">
+        <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
+        <span>black</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     КОЛЬОРИ
+     ════════════════════════════════════════ -->
+<section id="colors" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Кольори</h2>
+    <p class="ds-section-desc">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Фони</div>
+    <div class="color-grid" style="margin-bottom: 40px;">
+      <div class="color-swatch" style="background:#F5F0E8;">
+        <div class="color-overlay"><div class="co-name">cream</div><div class="co-var">--cream</div><div class="co-hex">#F5F0E8</div><div class="co-role">Фон сторінки</div></div>
+      </div>
+      <div class="color-swatch" style="background:#FDFCF9;">
+        <div class="color-overlay"><div class="co-name">cream-bright</div><div class="co-var">--cream-bright</div><div class="co-hex">#FDFCF9</div><div class="co-role">Фон карток, панелей</div></div>
+      </div>
+      <div class="color-swatch" style="background:#E8E0CC;">
+        <div class="color-overlay"><div class="co-name">sand</div><div class="co-var">--sand</div><div class="co-hex">#E8E0CC</div><div class="co-role">Неактивні елементи, інпути</div></div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Акценти</div>
+    <div class="color-grid" style="margin-bottom: 40px;">
+      <div class="color-swatch" style="background:#226F54;">
+        <div class="color-overlay"><div class="co-name">green-800</div><div class="co-var">--green-800</div><div class="co-hex">#226F54</div><div class="co-role">Основний акцент, CTA, активний стан</div></div>
+      </div>
+      <div class="color-swatch" style="background:#7CC44A;">
+        <div class="color-overlay"><div class="co-name">green-500</div><div class="co-var">--green-500</div><div class="co-hex">#7CC44A</div><div class="co-role">Другорядний акцент, бейдж «Новинка»</div></div>
+      </div>
+      <div class="color-swatch" style="background:#C4855A;">
+        <div class="color-overlay"><div class="co-name">terra</div><div class="co-var">--terra</div><div class="co-hex">#C4855A</div><div class="co-role">Wishlist активний, бейдж «Обмежений»</div></div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Текст і нейтральні</div>
+    <div class="color-grid" style="margin-bottom: 40px;">
+      <div class="color-swatch" style="background:#1C1A14;">
+        <div class="color-overlay"><div class="co-name">black</div><div class="co-var">--black</div><div class="co-hex">#1C1A14</div><div class="co-role">Основний текст, заголовки</div></div>
+      </div>
+      <div class="color-swatch" style="background:#4A4538;">
+        <div class="color-overlay"><div class="co-name">gray-800</div><div class="co-var">--gray-800</div><div class="co-hex">#4A4538</div><div class="co-role">Вторинний текст</div></div>
+      </div>
+      <div class="color-swatch" style="background:#7A7060;">
+        <div class="color-overlay"><div class="co-name">gray-500</div><div class="co-var">--gray-500</div><div class="co-hex">#7A7060</div><div class="co-role">Підписи, лейбли</div></div>
+      </div>
+      <div class="color-swatch" style="background:#B5AFA3;">
+        <div class="color-overlay"><div class="co-name">gray-300</div><div class="co-var">--gray-300</div><div class="co-hex">#B5AFA3</div><div class="co-role">Неактивні іконки, placeholder</div></div>
+      </div>
+      <div class="color-swatch" style="background:#D9D3C7;">
+        <div class="color-overlay"><div class="co-name">gray-100</div><div class="co-var">--gray-100</div><div class="co-hex">#D9D3C7</div><div class="co-role">Hover фон нейтральних елементів</div></div>
+      </div>
+    </div>
+
+    <div class="ds-code-wrap">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block">:<span class="k">root</span> {
+  <span class="k">--cream</span>:        <span class="v">#F5F0E8</span>;
+  <span class="k">--cream-bright</span>: <span class="v">#FDFCF9</span>;
+  <span class="k">--sand</span>:         <span class="v">#E8E0CC</span>;
+  <span class="k">--green-800</span>:    <span class="v">#226F54</span>;
+  <span class="k">--green-500</span>:    <span class="v">#7CC44A</span>;
+  <span class="k">--terra</span>:        <span class="v">#C4855A</span>;
+  <span class="k">--black</span>:        <span class="v">#1C1A14</span>;
+  <span class="k">--gray-800</span>:     <span class="v">#4A4538</span>;
+  <span class="k">--gray-500</span>:     <span class="v">#7A7060</span>;
+  <span class="k">--gray-300</span>:     <span class="v">#B5AFA3</span>;
+  <span class="k">--gray-100</span>:     <span class="v">#D9D3C7</span>;
+}</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ТИПОГРАФІКА
+     ════════════════════════════════════════ -->
+<section id="typography" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Типографіка</h2>
+    <p class="ds-section-desc">Два шрифти — тільки вони. Inter для заголовків, DM Sans для всього іншого.</p>
+
+    <div class="type-table">
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Page h1</div>
+          <div class="type-meta-detail">Inter 900
+clamp(40px, 5vw, 64px)
+letter-spacing -0.03em
+line-height 1</div>
+        </div>
+        <div style="font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:var(--black);">Улун Те Гуань Інь</div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Section h2</div>
+          <div class="type-meta-detail">Inter 900
+clamp(26px, 3vw, 38px)
+letter-spacing -0.02em
+line-height 1.1</div>
+        </div>
+        <div style="font-family:'Inter',sans-serif;font-size:clamp(26px,3vw,38px);font-weight:900;letter-spacing:-0.02em;line-height:1.1;color:var(--black);">Хіти продажів</div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Card h4 / підзаголовок</div>
+          <div class="type-meta-detail">Inter 800–900
+17–22px
+letter-spacing -0.01em</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:900;letter-spacing:-0.02em;color:var(--black);">Як заварювати?</div>
+          <div style="font-family:'Inter',sans-serif;font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--black);">Те Гуань Інь</div>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Body</div>
+          <div class="type-meta-detail">DM Sans 300
+15px
+line-height 1.7</div>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;line-height:1.7;color:var(--gray-800);max-width:480px;">Чай із провінції Фуцзянь з характерним молочним ароматом і м'яким смаком з нотками квітів орхідеї. Чудово підходить для щоденної практики.</div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">UI medium</div>
+          <div class="type-meta-detail">DM Sans 500
+13–14px
+line-height 1.5</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--gray-800);">Навігаційне посилання — 14px</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray-800);">Пілюля фільтра — 13px</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Caption / label</div>
+          <div class="type-meta-detail">DM Sans 500
+13px — лейбл
+11–12px — мітка
+завжди sentence case</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+          <span style="font-size:13px;font-weight:500;color:var(--gray-500);">Лейбл інпута — sentence case</span>
+          <span style="font-size:11px;font-weight:500;color:var(--gray-500);">Підпис під компонентом — 11px</span>
+          <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--cream-bright);background:var(--green-500);padding:5px 14px;border-radius:20px;">Новинка</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div>
+          <div class="type-meta-label">Ціна</div>
+          <div class="type-meta-detail">Inter 900
+20px — картка
+letter-spacing -0.02em
+color green-800</div>
+        </div>
+        <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.02em;color:var(--green-800);">580 ₴</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     КНОПКИ
+     ════════════════════════════════════════ -->
+<section id="buttons" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Кнопки</h2>
+    <p class="ds-section-desc">Єдиний стандарт: <code class="ds-code">padding: 14px 28px</code> — <code class="ds-code">font-size: 15px</code> — <code class="ds-code">border-radius: 40px</code>. Hover завжди в <code class="ds-code">@media (hover: hover)</code>.</p>
+
+    <div class="ds-sublabel" style="margin-bottom: 20px;">На світлому фоні</div>
+    <div class="btn-grid-4" style="margin-bottom: 40px;">
+      <div class="btn-cell">
+        <button class="btn-primary">Купити зараз</button>
+        <div class="ds-meta">.btn-primary
+bg green-800
+hover → black</div>
+      </div>
+      <div class="btn-cell">
+        <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
+        <div class="ds-meta">.btn-secondary
+bg green-500
+hover → cream-bright</div>
+      </div>
+      <div class="btn-cell">
+        <button class="btn-outline-dark">Детальніше</button>
+        <div class="ds-meta">.btn-outline-dark
+border green-800
+hover → green-800 fill</div>
+      </div>
+      <div class="btn-cell">
+        <button class="btn-add-demo" id="btnAddDemo" onclick="toggleBtnAdd()"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+        <div class="ds-meta">.btn-add
+bg black → .in-cart: green-800
+клік для демо</div>
+      </div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
+
+    <div class="ds-sublabel" style="margin-bottom: 20px;">На темному фоні</div>
+    <div class="btn-cell-dark-wrap">
+      <div class="btn-cell-dark">
+        <button class="btn-outline-cream">Переглянути</button>
+        <div class="ds-meta" style="color:rgba(253,252,249,0.4);">.btn-outline-cream
+border cream-bright
+hover → cream-bright fill</div>
+      </div>
+      <div class="btn-cell-dark">
+        <button class="btn-filled-cream">Дізнатись більше</button>
+        <div class="ds-meta" style="color:rgba(253,252,249,0.4);">.btn-filled-cream
+bg cream-bright, text green-800
+hover → sand</div>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">.<span class="k">btn-primary</span> {
+  <span class="k">background</span>:    <span class="v">var(--green-800)</span>;
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">14px 28px</span>;
+  <span class="k">font-size</span>:     <span class="v">15px</span>;
+}
+@media (hover: hover) {
+  .<span class="k">btn-primary</span>:hover { <span class="k">background</span>: <span class="v">var(--black)</span>; }
+}
+
+.<span class="k">btn-secondary</span> {
+  <span class="k">background</span>:    <span class="v">var(--green-500)</span>;
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">14px 28px</span>;
+  <span class="k">font-size</span>:     <span class="v">15px</span>;
+}
+.<span class="k">btn-secondary i</span> { <span class="k">transform</span>: <span class="v">translateX(3px)</span>; <span class="k">margin-right</span>: <span class="v">-4px</span>; }
+@media (hover: hover) {
+  .<span class="k">btn-secondary</span>:hover { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
+  .<span class="k">btn-secondary</span>:hover i { <span class="k">transform</span>: <span class="v">translateX(7px)</span>; }
+}
+
+.<span class="k">btn-outline-cream</span> {
+  <span class="k">background</span>:    <span class="v">transparent</span>;
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">border</span>:        <span class="v">1.5px solid var(--cream-bright)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">12.5px 28px</span>;   <span class="v">/* компенсація border */</span>
+  <span class="k">font-size</span>:     <span class="v">15px</span>;
+}
+@media (hover: hover) {
+  .<span class="k">btn-outline-cream</span>:hover { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">color</span>: <span class="v">var(--black)</span>; }
+}
+
+.<span class="k">btn-filled-cream</span> {
+  <span class="k">background</span>:    <span class="v">var(--cream-bright)</span>;
+  <span class="k">color</span>:         <span class="v">var(--green-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">14px 28px</span>;
+  <span class="k">font-size</span>:     <span class="v">15px</span>;
+}
+@media (hover: hover) {
+  .<span class="k">btn-filled-cream</span>:hover { <span class="k">background</span>: <span class="v">var(--sand)</span>; }
+}
+
+.<span class="k">btn-outline-dark</span> {
+  <span class="k">background</span>:    <span class="v">transparent</span>;
+  <span class="k">color</span>:         <span class="v">var(--green-800)</span>;
+  <span class="k">border</span>:        <span class="v">1.5px solid var(--green-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">12.5px 28px</span>;
+  <span class="k">font-size</span>:     <span class="v">15px</span>;
+}
+@media (hover: hover) {
+  .<span class="k">btn-outline-dark</span>:hover { <span class="k">background</span>: <span class="v">var(--green-800)</span>; <span class="k">color</span>: <span class="v">var(--cream-bright)</span>; }
+}
+
+/* .btn-add — кнопка в картці товару */
+.<span class="k">btn-add</span> {
+  <span class="k">background</span>:    <span class="v">var(--black)</span>;
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">10px 18px</span>;
+  <span class="k">font-size</span>:     <span class="v">13px</span>;
+  <span class="k">display</span>:       <span class="v">inline-flex</span>;
+  <span class="k">align-items</span>:   <span class="v">center</span>;
+  <span class="k">gap</span>:           <span class="v">8px</span>;
+}
+.<span class="k">btn-add i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
+.<span class="k">btn-add.in-cart</span> { <span class="k">background</span>: <span class="v">var(--green-800)</span>; }
+@media (hover: hover) {
+  .<span class="k">btn-add</span>:hover          { <span class="k">background</span>: <span class="v">var(--green-800)</span>; }
+  .<span class="k">btn-add.in-cart</span>:hover  { <span class="k">background</span>: <span class="v">var(--black)</span>; }
+}
+
+/* Стрілка в кнопках */
+.<span class="k">btn i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(3px)</span>; <span class="k">margin-right</span>: <span class="v">-4px</span>; <span class="k">transition</span>: <span class="v">transform 0.2s</span>; }
+@media (hover: hover) {
+  .<span class="k">btn</span>:hover <span class="k">i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(7px)</span>; }
+}</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ІНПУТИ
+     ════════════════════════════════════════ -->
+<section id="inputs" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Інпути</h2>
+    <p class="ds-section-desc">Ніяких border, outline, box-shadow. Стан передається тільки через <code class="ds-code">background</code>. Лейбли — sentence case, 13px, gray-500.</p>
+
+    <div class="input-grid">
+      <div class="input-group">
+        <label class="input-label">Ім'я</label>
+        <input type="text" class="ds-input" placeholder="Ярослав Коваленко">
+        <div class="input-hint">Нормальний стан — bg: cream-bright</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Місто</label>
+        <input type="text" class="ds-input" placeholder="Київ" value="Київ">
+        <div class="input-hint">Focus — bg: sand (натисни)</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Email</label>
+        <input type="email" class="ds-input error" placeholder="hello@sol-tea.com">
+        <div class="input-hint error-hint">Помилка — bg: rgba(232,74,46, 0.10)</div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Пошук (хедер)</div>
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 280px;">
+
+      <div>
+        <div class="search-input-demo">
+          <i class="hgi-stroke hgi-search-01"></i>
+          <input class="search-input-inner" type="text" id="demoSearchInput" placeholder="Пошук чаю, інгредієнтів..." oninput="onDemoSearch(this)">
+          <button class="search-clear-btn" id="demoClearBtn" onclick="clearDemoSearch()">
+            <i class="hgi-stroke hgi-cancel-01"></i>
+          </button>
+        </div>
+        <div class="input-hint" style="margin-top: 8px;">Default — bg: sand · Focus → bg: gray-100 · X з'являється при введенні</div>
+      </div>
+
+      <div>
+        <div class="search-input-demo" style="background: var(--gray-100);">
+          <i class="hgi-stroke hgi-search-01"></i>
+          <div class="search-input-inner" style="color: var(--black);">Да Хун Пао</div>
+          <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
+        </div>
+        <div class="input-hint" style="margin-top: 8px;">Filled + X button — bg: gray-100</div>
+      </div>
+
+    </div>
+
+    <div class="ds-code-wrap">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block">.<span class="k">input</span> {
+  <span class="k">background</span>:    <span class="v">var(--cream-bright)</span>;
+  <span class="k">border</span>:        <span class="v">none</span>;
+  <span class="k">outline</span>:       <span class="v">none</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">17px 24px</span>;
+  <span class="k">font-size</span>:     <span class="v">16px</span>;  /* запобігає iOS Safari zoom */
+}
+.<span class="k">input</span>:focus { <span class="k">background</span>: <span class="v">var(--sand)</span>; }
+.<span class="k">input</span>.error { <span class="k">background</span>: <span class="v">rgba(232,74,46, 0.10)</span>; }</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ПІЛЮЛІ
+     ════════════════════════════════════════ -->
+<section id="pills" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Пілюлі</h2>
+    <p class="ds-section-desc">Filter pills — фільтрація в каталозі. Anchor pills — навігація по секціях. Клікни, щоб перемкнути активний стан.</p>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Filter pills — .filter-pill</div>
+    <div class="pill-row" id="filterPillDemo">
+      <button class="filter-pill active" onclick="setPillActive('filterPillDemo',this)">Всі</button>
+      <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Улун</button>
+      <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Пуер</button>
+      <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Да Хун Пао</button>
+      <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Сезонне</button>
+      <button class="filter-pill" onclick="setPillActive('filterPillDemo',this)">Набори</button>
+    </div>
+    <div class="pill-row">
+      <button class="filter-pill active"><i class="hgi-stroke hgi-arrow-down-01"></i> Чай</button>
+      <button class="sort-btn"><i class="hgi-stroke hgi-filter-horizontal"></i> Сортування</button>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px; margin-top: 40px;">Anchor pills — .anchor-pill</div>
+    <div class="pill-row" id="anchorPillDemo">
+      <button class="anchor-pill active" onclick="setPillActive('anchorPillDemo',this)">Доставка</button>
+      <button class="anchor-pill" onclick="setPillActive('anchorPillDemo',this)">Оплата</button>
+      <button class="anchor-pill" onclick="setPillActive('anchorPillDemo',this)">Товари</button>
+      <button class="anchor-pill" onclick="setPillActive('anchorPillDemo',this)">Повернення</button>
+      <button class="anchor-pill" style="display:inline-flex;gap:8px;" onclick="setPillActive('anchorPillDemo',this)"><i class="hgi-stroke hgi-message-01" style="font-size:18px;"></i> Написати нам</button>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">/* filter-pill — фільтри в каталозі */
+.<span class="k">filter-pill</span> {
+  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
+  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">9px 18px</span>;
+  <span class="k">font-size</span>:     <span class="v">13px</span>;
+  <span class="k">font-weight</span>:   <span class="v">500</span>;
+  <span class="k">display</span>:       <span class="v">inline-flex</span>;
+  <span class="k">align-items</span>:   <span class="v">center</span>;
+  <span class="k">gap</span>:           <span class="v">7px</span>;
+}
+.<span class="k">filter-pill i</span> { <span class="k">font-size</span>: <span class="v">16px</span>; }
+.<span class="k">filter-pill.active</span> {
+  <span class="k">background</span>: <span class="v">var(--green-800)</span>;
+  <span class="k">color</span>:      <span class="v">var(--cream-bright)</span>;
+}
+@media (hover: hover) {
+  .<span class="k">filter-pill</span>:hover:not(.active) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}
+@media (max-width: 768px) {
+  .<span class="k">filter-pill</span> { <span class="k">padding</span>: <span class="v">12px 18px</span>; }
+}
+
+/* anchor-pill — навігація по секціях */
+.<span class="k">anchor-pill</span> {
+  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
+  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">9px 18px</span>;
+  <span class="k">font-size</span>:     <span class="v">13px</span>;
+  <span class="k">font-weight</span>:   <span class="v">500</span>;
+}
+.<span class="k">anchor-pill.active</span> {
+  <span class="k">background</span>: <span class="v">var(--green-800)</span>;
+  <span class="k">color</span>:      <span class="v">var(--cream-bright)</span>;
+}
+@media (hover: hover) {
+  .<span class="k">anchor-pill</span>:hover:not(.active) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}
+
+/* anchor-pill-cta — "Написати нам" і подібні */
+.<span class="k">anchor-pill-cta</span> { <span class="k">display</span>: <span class="v">inline-flex</span>; <span class="k">gap</span>: <span class="v">8px</span>; }
+.<span class="k">anchor-pill-cta i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
+.<span class="k">anchor-pill-cta.active</span> { <span class="k">background</span>: <span class="v">var(--black)</span>; }  /* не зелений! */
+
+/* sort-btn — кнопка сортування/дії з іконкою 18px */
+.<span class="k">sort-btn</span> {
+  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
+  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">10px 20px</span>;
+  <span class="k">font-size</span>:     <span class="v">13px</span>;
+  <span class="k">display</span>:       <span class="v">inline-flex</span>;
+  <span class="k">align-items</span>:   <span class="v">center</span>;
+  <span class="k">gap</span>:           <span class="v">8px</span>;
+}
+.<span class="k">sort-btn i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
+@media (hover: hover) {
+  .<span class="k">sort-btn</span>:hover { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ІКОНКИ
+     ════════════════════════════════════════ -->
+<section id="icons" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Іконки</h2>
+    <p class="ds-section-desc">HugeIcons stroke-rounded, безкоштовний пак. Клас <code class="ds-code">hgi-stroke</code> — завжди. Solid іконки є тільки в платній версії пакету, тому не використовуємо.</p>
+
+    <div class="icon-grid">
+      <div class="icon-item"><i class="hgi-stroke hgi-search-01"></i><div class="icon-name">hgi-search-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-user-circle"></i><div class="icon-name">hgi-user-circle</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-favourite"></i><div class="icon-name">hgi-favourite</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-shopping-bag-01"></i><div class="icon-name">hgi-shopping-bag-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-help-circle"></i><div class="icon-name">hgi-help-circle</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-menu-01"></i><div class="icon-name">hgi-menu-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-cancel-01"></i><div class="icon-name">hgi-cancel-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-arrow-right-01"></i><div class="icon-name">hgi-arrow-right-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-arrow-left-01"></i><div class="icon-name">hgi-arrow-left-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-arrow-up-01"></i><div class="icon-name">hgi-arrow-up-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-leaf-01"></i><div class="icon-name">hgi-leaf-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-add-01"></i><div class="icon-name">hgi-add-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-message-01"></i><div class="icon-name">hgi-message-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-checkmark-circle-02"></i><div class="icon-name">hgi-checkmark-circle-02</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-star"></i><div class="icon-name">hgi-star</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-filter-horizontal"></i><div class="icon-name">hgi-filter-horizontal</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-truck-01"></i><div class="icon-name">hgi-truck-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-package-01"></i><div class="icon-name">hgi-package-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-credit-card-01"></i><div class="icon-name">hgi-credit-card-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-logout-01"></i><div class="icon-name">hgi-logout-01</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     КАРТКИ ТОВАРУ
+     ════════════════════════════════════════ -->
+<section id="cards" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Картки товару</h2>
+    <p class="ds-section-desc">Базовий компонент каталогу. Hover на серці — тільки <code class="ds-code">@media (hover: hover)</code>. Третя картка показує стан «в кошику».</p>
+
+    <div class="card-demo-grid">
+      <div class="product-card">
+        <div class="product-img" style="background:#D4CFC4;">
+          Фото
+          <div class="product-region">Фуцзянь</div>
+          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
+          <div class="product-badge badge-new">Новинка</div>
+        </div>
+        <div class="product-body">
+          <h4>Те Гуань Інь</h4>
+          <p class="product-desc">М'який улун із молочним ароматом і нотками орхідеї.</p>
+          <div class="product-footer">
+            <span class="product-price">580 ₴</span>
+            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#C8BFB0;">
+          Фото
+          <div class="product-region">Юньнань</div>
+          <button class="product-wish liked" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
+          <div class="product-badge badge-limited">Обмежений</div>
+        </div>
+        <div class="product-body">
+          <h4>Шен Пуер 2019</h4>
+          <p class="product-desc">Витриманий сирий пуер із трав'янистим смаком.</p>
+          <div class="product-footer">
+            <span class="product-price">1 240 ₴</span>
+            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#CECDBC;">
+          Фото
+          <div class="product-region">Аньхой</div>
+          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
+        </div>
+        <div class="product-body">
+          <h4>Мао Фен</h4>
+          <p class="product-desc">Класичний зелений чай із квітковим ароматом.</p>
+          <div class="product-footer">
+            <span class="product-price">420 ₴</span>
+            <button class="btn-add-card in-cart" data-in-cart="true" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#BDB5A4;">
+          Фото
+          <div class="product-region">Фуцзянь</div>
+          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
+          <div class="product-badge badge-new">Новинка</div>
+        </div>
+        <div class="product-body">
+          <h4>Да Хун Пао</h4>
+          <p class="product-desc">Насичений улун із мінеральним характером.</p>
+          <div class="product-footer">
+            <span class="product-price">890 ₴</span>
+            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">&lt;<span class="k">div</span> class=<span class="v">"product-card"</span>&gt;
+
+  &lt;<span class="k">div</span> class=<span class="v">"product-img"</span> style=<span class="v">"background: #D4CFC4;"</span>&gt;
+    Фото <span class="v">/* placeholder — замінити на &lt;img&gt; */</span>
+
+    &lt;<span class="k">div</span> class=<span class="v">"product-region"</span>&gt;Фуцзянь&lt;/<span class="k">div</span>&gt;
+
+    &lt;<span class="k">button</span> class=<span class="v">"product-wish"</span>
+            onclick=<span class="v">"toggleWish(this, name)"</span>&gt;
+      &lt;<span class="k">i</span> class=<span class="v">"hgi-stroke hgi-favourite"</span>&gt;&lt;/<span class="k">i</span>&gt;
+    &lt;/<span class="k">button</span>&gt;
+    <span class="v">/* .product-wish.liked → color: var(--terra) */</span>
+
+    &lt;<span class="k">div</span> class=<span class="v">"product-badge badge-new"</span>&gt;Новинка&lt;/<span class="k">div</span>&gt;
+    <span class="v">/* або badge-limited для "Обмежений" */</span>
+  &lt;/<span class="k">div</span>&gt;
+
+  &lt;<span class="k">div</span> class=<span class="v">"product-body"</span>&gt;
+    &lt;<span class="k">h4</span>&gt;Те Гуань Інь&lt;/<span class="k">h4</span>&gt;
+    &lt;<span class="k">p</span> class=<span class="v">"product-desc"</span>&gt;М'який улун із молочним ароматом.&lt;/<span class="k">p</span>&gt;
+
+    &lt;<span class="k">div</span> class=<span class="v">"product-footer"</span>&gt;
+      &lt;<span class="k">span</span> class=<span class="v">"product-price"</span>&gt;580 ₴&lt;/<span class="k">span</span>&gt;
+      &lt;<span class="k">button</span> class=<span class="v">"btn-add"</span>
+              onclick=<span class="v">"addToCart(name, this)"</span>&gt;
+        &lt;<span class="k">i</span> class=<span class="v">"hgi-stroke hgi-shopping-bag-add"</span>&gt;&lt;/<span class="k">i</span>&gt;
+        Кошик
+      &lt;/<span class="k">button</span>&gt;
+      <span class="v">/* .btn-add.in-cart → bg: green-800,</span>
+      <span class="v">   icon: hgi-checkmark-circle-02, text: "В кошику" */</span>
+    &lt;/<span class="k">div</span>&gt;
+  &lt;/<span class="k">div</span>&gt;
+
+&lt;/<span class="k">div</span>&gt;
+
+<span class="v">/* CSS */</span>
+.<span class="k">product-card</span> {
+  <span class="k">background</span>:     <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>:  <span class="v">20px</span>;
+  <span class="k">overflow</span>:       <span class="v">hidden</span>;
+  <span class="k">display</span>:        <span class="v">flex</span>;
+  <span class="k">flex-direction</span>: <span class="v">column</span>;
+}
+@media (hover: hover) {
+  .<span class="k">product-card</span>:hover { <span class="k">transform</span>: <span class="v">translateY(-6px)</span>; }
+}
+.<span class="k">product-img</span> {
+  <span class="k">aspect-ratio</span>: <span class="v">4/3</span>;  <span class="v">/* мобілка: 1/1 */</span>
+  <span class="k">position</span>:     <span class="v">relative</span>;
+}
+.<span class="k">product-wish</span> {
+  <span class="k">position</span>:  <span class="v">absolute</span>;  <span class="k">top</span>: <span class="v">12px</span>;  <span class="k">right</span>: <span class="v">12px</span>;
+  <span class="k">width</span>:     <span class="v">44px</span>;  <span class="k">height</span>: <span class="v">44px</span>;  <span class="k">border-radius</span>: <span class="v">50%</span>;
+  <span class="k">background</span>: <span class="v">rgba(253,252,249,0.9)</span>;
+  <span class="k">font-size</span>:  <span class="v">20px</span>;  <span class="k">color</span>: <span class="v">var(--gray-300)</span>;
+}
+.<span class="k">product-wish.liked</span> { <span class="k">color</span>: <span class="v">var(--terra)</span>; }
+@media (hover: hover) {
+  .<span class="k">product-wish</span>:hover { <span class="k">color</span>: <span class="v">var(--terra)</span>; }
+}
+.<span class="k">product-body</span> { <span class="k">padding</span>: <span class="v">20px</span>; <span class="k">flex</span>: <span class="v">1</span>; <span class="k">display</span>: <span class="v">flex</span>; <span class="k">flex-direction</span>: <span class="v">column</span>; }
+.<span class="k">product-price</span> { <span class="k">font-family</span>: <span class="v">'Inter'</span>; <span class="k">font-size</span>: <span class="v">20px</span>; <span class="k">font-weight</span>: <span class="v">900</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
+.<span class="k">product-footer</span> { <span class="k">margin-top</span>: <span class="v">auto</span>; <span class="k">display</span>: <span class="v">flex</span>; <span class="k">justify-content</span>: <span class="v">space-between</span>; <span class="k">align-items</span>: <span class="v">center</span>; }</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ВІДСТУПИ ТА РОЗМІРИ
+     ════════════════════════════════════════ -->
+<section id="spacing" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Відступи та розміри</h2>
+    <p class="ds-section-desc">Числа, якими вимірюється весь сайт. Стандартні значення — не відступати без причини.</p>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Горизонтальні відступи</div>
+    <div class="spacing-grid" style="margin-bottom: 48px;">
+      <div class="spacing-card">
+        <div class="spacing-label">Контент — десктоп</div>
+        <div class="spacing-val">48<span>px</span></div>
+        <div class="spacing-desc">Лівий і правий padding для nav, секцій, footer. <code class="ds-code">padding: 0 48px</code></div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Контентні секції — мобілка</div>
+        <div class="spacing-val">24<span>px</span></div>
+        <div class="spacing-desc">Для більшості секцій на мобілці. <code class="ds-code">padding: 0 24px</code></div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Nav і sticky елементи — мобілка</div>
+        <div class="spacing-val">16<span>px</span></div>
+        <div class="spacing-desc">Nav, sticky panels, filter-bar. <code class="ds-code">padding: 0 16px</code></div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Максимальна ширина контенту</div>
+        <div class="spacing-val">1280<span>px</span></div>
+        <div class="spacing-desc">Обгортка всередині секцій. <code class="ds-code">max-width: 1280px; margin: 0 auto</code></div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Максимальна ширина body</div>
+        <div class="spacing-val">1440<span>px</span></div>
+        <div class="spacing-desc">Обмеження body. Ширші екрани — кремовий фон з боків.</div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Вертикальні відступи</div>
+    <div class="spacing-grid" style="margin-bottom: 48px;">
+      <div class="spacing-card">
+        <div class="spacing-label">Висота nav — десктоп</div>
+        <div class="spacing-val">80<span>px</span></div>
+        <div class="spacing-desc">Фіксована висота навігації на десктопі.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Висота nav — мобілка</div>
+        <div class="spacing-val">72<span>px</span></div>
+        <div class="spacing-desc">Зменшена висота навігації на мобілці.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Між секціями — десктоп</div>
+        <div class="spacing-val">80<span>px</span></div>
+        <div class="spacing-desc">Padding-bottom попередньої секції. Наступна має padding-top: 0.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Між секціями — мобілка</div>
+        <div class="spacing-val">60<span>px</span></div>
+        <div class="spacing-desc">Padding-bottom на мобілці.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Anchor nav padding-bottom</div>
+        <div class="spacing-val">36<span>px</span></div>
+        <div class="spacing-desc">Відступ між пілюлями навігації і контентом. Мобілка: 24px.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Scroll-margin-top (anchor секції)</div>
+        <div class="spacing-val">148<span>px</span></div>
+        <div class="spacing-desc">Nav (80px) + anchor nav (68px). Мобілка: 136px.</div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 24px;">Border radius</div>
+    <div class="radius-row">
+      <div class="radius-item">
+        <div class="radius-demo" style="border-radius: 20px;"><div class="rv-wrap"><span class="rv-num">20</span><span class="rv-unit">px</span></div></div>
+        <div class="radius-sub">картки, панелі</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-demo" style="border-radius: 24px;"><div class="rv-wrap"><span class="rv-num">24</span><span class="rv-unit">px</span></div></div>
+        <div class="radius-sub">великі картки</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-demo" style="border-radius: 40px; width: 148px;"><div class="rv-wrap"><span class="rv-num">40</span><span class="rv-unit">px</span></div></div>
+        <div class="radius-sub">кнопки, пілюлі, інпути</div>
+      </div>
+    </div>
+
+    <div class="ds-sublabel" style="margin-bottom: 16px; margin-top: 48px;">Розміри іконок</div>
+    <div class="spacing-grid">
+      <div class="spacing-card">
+        <div class="spacing-label">Nav icon buttons</div>
+        <div class="spacing-val">22<span>px</span></div>
+        <div class="spacing-desc">font-size для іконок у кнопках навігації (44×44px area).</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Іконка в кнопці btn-add</div>
+        <div class="spacing-val">18<span>px</span></div>
+        <div class="spacing-desc">font-size для іконок всередині кнопок.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Іконка в пілюлі (action/sort)</div>
+        <div class="spacing-val">18<span>px</span></div>
+        <div class="spacing-desc">Sort button, anchor-pill з іконкою типу message.</div>
+      </div>
+      <div class="spacing-card">
+        <div class="spacing-label">Іконка у filter-pill</div>
+        <div class="spacing-val">16<span>px</span></div>
+        <div class="spacing-desc">Менші іконки всередині пілюль фільтрів.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ПРАВИЛА
+     ════════════════════════════════════════ -->
+<section id="rules" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Правила</h2>
+    <p class="ds-section-desc">Обов'язкові до виконання. Без винятків.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-num">01</div>
+        <div class="rule-title">Без дівайдерів</div>
+        <div class="rule-body">Тільки блочна структура. Ніяких <span class="rule-code">&lt;hr&gt;</span> і горизонтальних ліній між секціями. Розділення — виключно відступами та зміною фону.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">02</div>
+        <div class="rule-title">Без uppercase в UI-тексті</div>
+        <div class="rule-body">Лейбли форм, підписи, навігаційні посилання — завжди sentence case. Виняток: тільки бейджі на картках товару та region-мітки.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">03</div>
+        <div class="rule-title">Hover тільки в @media (hover: hover)</div>
+        <div class="rule-body">Всі <span class="rule-code">:hover</span> стилі — виключно всередині <span class="rule-code">@media (hover: hover)</span>. Інакше iOS застряє у hover-стані після тапу.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">04</div>
+        <div class="rule-title">Без border на інпутах</div>
+        <div class="rule-body">Інпути не мають border, outline, box-shadow. Різні стани передаються тільки через <span class="rule-code">background</span>: cream-bright → sand (focus) → rgba error (error).</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">05</div>
+        <div class="rule-title">Тільки hgi-stroke іконки</div>
+        <div class="rule-body">Solid іконки є тільки в платній версії HugeIcons і недоступні в нашому паку. Wishlist активний стан — тільки зміна кольору на <span class="rule-code">var(--terra)</span>, іконка не змінюється.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">06</div>
+        <div class="rule-title">Єдиний розмір кнопок</div>
+        <div class="rule-body"><span class="rule-code">padding: 14px 28px</span> і <span class="rule-code">font-size: 15px</span> — стандарт для всіх CTA кнопок. <span class="rule-code">border-radius: 40px</span> — без винятків.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">07</div>
+        <div class="rule-title">SVG логотипу без inline розмірів</div>
+        <div class="rule-body">SVG не має inline <span class="rule-code">width</span>/<span class="rule-code">height</span> атрибутів — тільки <span class="rule-code">viewBox</span>. Розміри виключно через CSS. Safari пріоритизує HTML-атрибути при масштабуванні.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">08</div>
+        <div class="rule-title">font-size: 16px на input</div>
+        <div class="rule-body">Мінімальний розмір шрифту на інпутах — 16px. Нижче — iOS Safari автоматично зумує сторінку при фокусі.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">09</div>
+        <div class="rule-title">overflow-x: hidden на html</div>
+        <div class="rule-body">Тільки на <span class="rule-code">&lt;html&gt;</span>, не на <span class="rule-code">&lt;body&gt;</span>. Full-bleed дочірні елементи використовують від'ємні margin відносно body.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">10</div>
+        <div class="rule-title">border-radius карток 20–24px</div>
+        <div class="rule-body">Картки, панелі, dropdowns — <span class="rule-code">20px</span> або <span class="rule-code">24px</span>. Інпути — <span class="rule-code">12px</span>. Кнопки і пілюлі — <span class="rule-code">40px</span> (pill).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer style="padding: 40px 48px; margin-top: 40px;">
+  <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    <p style="font-size: 12px; color: var(--gray-500);">© 2025 Söl Tea. Style Guide & Design System.</p>
+    <a href="sol-tea.html" class="ds-back"><i class="hgi-stroke hgi-arrow-left-01"></i> До сайту</a>
+  </div>
+</footer>
+
+
+<script>
+/* Anchor nav scroll tracking */
+const sections = ['brand','colors','typography','buttons','inputs','pills','icons','cards','spacing','rules'];
+const navPills = document.querySelectorAll('#anchorNav .anchor-pill');
+const anchorNav = document.getElementById('anchorNav');
+
+function updateActivePill() {
+  let current = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  navPills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateActivePill, { passive: true });
+updateActivePill();
+
+
+/* Filter / anchor pill toggle in demo groups */
+function setPillActive(groupId, clickedEl) {
+  document.getElementById(groupId)
+    .querySelectorAll('.anchor-pill, .filter-pill')
+    .forEach(p => p.classList.remove('active'));
+  clickedEl.classList.add('active');
+}
+
+/* Btn-add main demo */
+function toggleBtnAdd() {
+  const btn = document.getElementById('btnAddDemo');
+  const inCart = btn.classList.toggle('in-cart');
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+/* Product card cart toggle */
+function toggleCardCart(btn) {
+  const inCart = btn.dataset.inCart === 'true';
+  btn.dataset.inCart = String(!inCart);
+  btn.classList.toggle('in-cart', !inCart);
+  btn.innerHTML = !inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+/* Copy code block */
+function copyCode(btn) {
+  const block = btn.nextElementSibling;
+  navigator.clipboard.writeText(block.innerText).then(() => {
+    btn.classList.add('copied');
+    setTimeout(() => btn.classList.remove('copied'), 2000);
+  });
+}
+
+/* Search demo */
+function onDemoSearch(input) {
+  const clearBtn = document.getElementById('demoClearBtn');
+  clearBtn.classList.toggle('visible', input.value.length > 0);
+}
+function clearDemoSearch() {
+  const input = document.getElementById('demoSearchInput');
+  input.value = '';
+  document.getElementById('demoClearBtn').classList.remove('visible');
+  input.focus();
+}
+</script>
+</body>
+</html>
