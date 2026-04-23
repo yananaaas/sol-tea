@@ -50,11 +50,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
 .ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
 .ds-code-wrap { position: relative; margin-top: 24px; }
-.ds-copy-btn { position: absolute; top: 6px; right: 6px; background: transparent; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
+.ds-copy-btn { position: absolute; top: 14px; right: 14px; background: transparent; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: color 0.25s; padding: 0; z-index: 2; }
 @media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.15); color: var(--cream-bright); } }
 .ds-copy-btn.copied { color: var(--green-500); }
-@keyframes ds-copy-flash { 0% { background: transparent; color: rgba(253,252,249,0.45); } 40% { background: rgba(253,252,249,0.22); color: var(--cream-bright); } 100% { background: transparent; color: var(--green-500); } }
-.ds-copy-btn.flash { animation: ds-copy-flash 0.45s ease forwards; }
 .ds-footer-input::placeholder { color: var(--gray-500); }
 .ds-code-block { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 2; background: var(--black); color: var(--gray-300); padding: 24px 28px; border-radius: 20px; overflow-x: auto; margin-top: 0; white-space: pre; }
 .ds-code-wrap .ds-code-block { margin-top: 0; }
@@ -348,7 +346,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#inputs"          class="anchor-pill">Inputs</a>
     <a href="#pills"           class="anchor-pill">Pills</a>
     <a href="#icons"           class="anchor-pill">Icons</a>
-    <a href="#cards"           class="anchor-pill">Cards</a>
+    <a href="#cards"           class="anchor-pill">Product Cards</a>
     <a href="#reviews-section" class="anchor-pill">Review Cards</a>
     <a href="#accordion"       class="anchor-pill">FAQ</a>
     <a href="#spacing"         class="anchor-pill">Spacing</a>
@@ -362,11 +360,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
      ════════════════════════════════════════ -->
 <section id="brand" class="ds-section" style="padding-top: 12px;">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
-    <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
-    <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
+    <h2 class="ds-section-title" style="margin-bottom: 48px;">Söl Tea</h2>
 
-    <div class="brand-logo-grid">
+    <div class="brand-logo-grid" style="margin-bottom: 40px;">
       <div class="brand-logo-card" style="color: var(--green-800);">
         <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
         <span>green-800</span>
@@ -384,6 +380,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <span>black</span>
       </div>
     </div>
+
+    <p class="ds-section-desc" style="margin-bottom: 12px;">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
+    <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
   </div>
 </section>
 
@@ -601,7 +600,8 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; overflow: hidden; border: none;">
+    <div id="navPreviewMobile" style="display:none; background: var(--cream-bright); border-radius: 16px; overflow: hidden; justify-content: center; align-items: center; padding: 0;">
+      <div style="width: 100%; max-width: 390px;">
       <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -621,9 +621,10 @@ color green-800</div>
           <button class="nav-pv-btn"><i class="hgi-stroke hgi-menu-01"></i></button>
         </div>
       </div>
+      </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: 16px; line-height: 1.7;">Десктоп: 80px, <code class="ds-code">padding: 0 48px</code>. Мобілка: 72px, <code class="ds-code">padding: 0 16px</code>. Іконки: 44×44px area, <code class="ds-code">font-size: 22px</code>. Бейдж: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: 16px; line-height: 1.7;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code>. Mobile: 72px, <code class="ds-code">padding: 0 16px</code>. Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
   </div>
 </section>
 
@@ -1086,8 +1087,8 @@ hover → sand</div>
      ════════════════════════════════════════ -->
 <section id="cards" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Cards</h2>
-    <p class="ds-section-desc">Базовий компонент каталогу. Hover на серці — тільки <code class="ds-code">@media (hover: hover)</code>. Третя картка показує стан «в кошику».</p>
+    <h2 class="ds-section-title">Product Cards</h2>
+    <p class="ds-section-desc">Картки товарів у каталозі (sol-shop.html). Hover на серці — тільки <code class="ds-code">@media (hover: hover)</code>. Третя картка показує стан «в кошику».</p>
 
     <div class="card-demo-grid">
       <div class="product-card">
@@ -1574,10 +1575,8 @@ function toggleCardCart(btn) {
 function copyCode(btn) {
   const block = btn.nextElementSibling;
   navigator.clipboard.writeText(block.innerText).then(() => {
-    btn.classList.remove('flash');
-    void btn.offsetWidth; // force reflow so animation restarts
-    btn.classList.add('copied', 'flash');
-    setTimeout(() => btn.classList.remove('copied', 'flash'), 500);
+    btn.classList.add('copied');
+    setTimeout(() => btn.classList.remove('copied'), 1400);
   });
 }
 
@@ -1607,11 +1606,11 @@ function switchNavPreview(type, btn) {
   const desktop = document.getElementById('navPreviewDesktop');
   const mobile  = document.getElementById('navPreviewMobile');
   if (type === 'desktop') {
-    desktop.style.display = '';
+    desktop.style.display = 'block';
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = '';
+    mobile.style.display  = 'flex';
   }
 }
 
