@@ -360,7 +360,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
      ════════════════════════════════════════ -->
 <section id="brand" class="ds-section" style="padding-top: 12px;">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title" style="margin-bottom: 48px;">Söl Tea</h2>
+    <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
+    <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
 
     <div class="brand-logo-grid" style="margin-bottom: 40px;">
       <div class="brand-logo-card" style="color: var(--green-800);">
@@ -381,7 +382,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       </div>
     </div>
 
-    <p class="ds-section-desc" style="margin-bottom: 12px;">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
     <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
   </div>
 </section>
@@ -600,8 +600,7 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" style="display:none; background: var(--cream-bright); border-radius: 16px; overflow: hidden; justify-content: center; align-items: center; padding: 0;">
-      <div style="width: 100%; max-width: 390px;">
+    <div id="navPreviewMobile" style="display:none; border-radius: 16px; overflow: hidden;">
       <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -620,7 +619,6 @@ color green-800</div>
           </button>
           <button class="nav-pv-btn"><i class="hgi-stroke hgi-menu-01"></i></button>
         </div>
-      </div>
       </div>
     </div>
 
@@ -699,11 +697,37 @@ color green-800</div>
     </div>
 
     <div id="footerPreviewMobile" class="ds-preview-mobile-wrap" style="display:none;background:var(--black);">
-      <div style="padding:40px 24px 32px;display:flex;flex-direction:column;gap:40px;">
+      <div style="padding:60px 24px 32px;display:flex;flex-direction:column;gap:40px;">
+
+        <!-- Brand -->
         <div style="display:flex;flex-direction:column;gap:16px;">
           <svg viewBox="0 0 242 249" style="color:var(--green-500);width:36px;height:37px;display:block;"><use href="#sol-logo"/></svg>
-          <p style="font-size:13px;color:var(--gray-500);line-height:1.7;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+          <p style="font-size:13px;color:var(--gray-500);line-height:1.7;max-width:220px;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
         </div>
+
+        <!-- Магазин -->
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:16px;">Магазин</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Улун</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Пуер</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Сезонне</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Набори</a></li>
+          </ul>
+        </div>
+
+        <!-- Про нас -->
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:16px;">Про нас</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Наша історія</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Як заварювати</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Блог</a></li>
+            <li><a href="#" style="font-size:14px;color:var(--gray-500);text-decoration:none;">Контакти</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
         <div>
           <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:16px;">Підписка</div>
           <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">Нові надходження та сезонні новинки — першими.</p>
@@ -712,13 +736,17 @@ color green-800</div>
             <button style="background:var(--green-500);color:var(--cream-bright);border:none;border-radius:40px;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;">OK</button>
           </div>
         </div>
-        <div style="padding-top:24px;border-top:0.5px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;color:var(--gray-500);">© 2025 Söl Tea. Всі права захищені.</span>
+
+        <!-- Footer bottom -->
+        <div style="padding-top:24px;border-top:0.5px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:16px;align-items:flex-start;">
+          <p style="font-size:12px;color:var(--gray-500);">© 2025 Söl Tea. Всі права захищені.</p>
           <div style="display:flex;">
-            <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-instagram"></i></button>
-            <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-telegram"></i></button>
+            <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-instagram"></i></button>
+            <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-telegram"></i></button>
+            <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-facebook-01"></i></button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -1610,7 +1638,7 @@ function switchNavPreview(type, btn) {
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = 'flex';
+    mobile.style.display  = 'block';
   }
 }
 
