@@ -50,11 +50,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
 .ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
 .ds-code-wrap { position: relative; margin-top: 24px; }
-.ds-copy-btn { position: absolute; top: 10px; right: 10px; background: transparent; border: none; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
-@media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.18); color: var(--cream-bright); } }
+.ds-copy-btn { position: absolute; top: 6px; right: 6px; background: transparent; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
+@media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.15); color: var(--cream-bright); } }
 .ds-copy-btn.copied { color: var(--green-500); }
-.ds-copy-label { position: absolute; top: 16px; right: 52px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: rgba(253,252,249,0.6); opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
-.ds-copy-label.show { opacity: 1; }
+@keyframes ds-copy-flash { 0% { background: transparent; color: rgba(253,252,249,0.45); } 40% { background: rgba(253,252,249,0.22); color: var(--cream-bright); } 100% { background: transparent; color: var(--green-500); } }
+.ds-copy-btn.flash { animation: ds-copy-flash 0.45s ease forwards; }
 .ds-footer-input::placeholder { color: var(--gray-500); }
 .ds-code-block { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 2; background: var(--black); color: var(--gray-300); padding: 24px 28px; border-radius: 20px; overflow-x: auto; margin-top: 0; white-space: pre; }
 .ds-code-wrap .ds-code-block { margin-top: 0; }
@@ -350,7 +350,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#icons"           class="anchor-pill">Icons</a>
     <a href="#cards"           class="anchor-pill">Cards</a>
     <a href="#reviews-section" class="anchor-pill">Review Cards</a>
-    <a href="#accordion"       class="anchor-pill">Accordion</a>
+    <a href="#accordion"       class="anchor-pill">FAQ</a>
     <a href="#spacing"         class="anchor-pill">Spacing</a>
     <a href="#rules"           class="anchor-pill">Guidelines</a>
   </div>
@@ -568,8 +568,8 @@ color green-800</div>
     <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-      <button class="filter-pill active" onclick="switchNavPreview('desktop', this)">Десктоп</button>
-      <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Мобілка</button>
+      <button class="filter-pill active" onclick="switchNavPreview('desktop', this)">Desktop</button>
+      <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Mobile</button>
     </div>
 
     <div id="navPreviewDesktop" style="border: none; border-radius: 16px; overflow: hidden;">
@@ -602,7 +602,7 @@ color green-800</div>
     </div>
 
     <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; overflow: hidden; border: none;">
-      <div class="nav-pv-mobile">
+      <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
         </div>
@@ -637,8 +637,8 @@ color green-800</div>
     <p class="ds-section-desc">Темний фон — <code class="ds-code">var(--black)</code>. Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code>. Посилання: 14px DM Sans 300.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-      <button class="filter-pill active" onclick="switchFooterPreview('desktop', this)">Десктоп</button>
-      <button class="filter-pill" onclick="switchFooterPreview('mobile', this)">Мобілка</button>
+      <button class="filter-pill active" onclick="switchFooterPreview('desktop', this)">Desktop</button>
+      <button class="filter-pill" onclick="switchFooterPreview('mobile', this)">Mobile</button>
     </div>
 
     <div id="footerPreviewDesktop" class="ds-preview-frame dark" style="background: var(--black); padding: 80px 48px 40px;">
@@ -1234,7 +1234,7 @@ hover → sand</div>
 <section id="reviews-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Review Cards</h2>
-    <p class="ds-section-desc">Картки відгуків з головної сторінки (marquee). Текст — зверху, підпис автора + рейтинг-пілюля — знизу. Рейтинг: один тег ★ + цифра.</p>
+    <p class="ds-section-desc">Marquee-компонент головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. Колір аватара — варіативний через inline style.</p>
 
     <div class="testimonials-demo-grid">
 
@@ -1290,8 +1290,8 @@ hover → sand</div>
      ════════════════════════════════════════ -->
 <section id="accordion" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Accordion — FAQ</h2>
-    <p class="ds-section-desc">Головний компонент сторінки FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
+    <h2 class="ds-section-title">FAQ</h2>
+    <p class="ds-section-desc">Accordion — головний компонент сторінки FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
 
     <div class="accordion-demo">
       <div class="faq-demo-item open">
@@ -1458,7 +1458,7 @@ hover → sand</div>
 <section id="rules" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Guidelines</h2>
-    <p class="ds-section-desc">Обов'язкові до виконання. Без винятків.</p>
+    <p class="ds-section-desc">Правила, які застосовуються при проектуванні і розробці цього проекту. Єдиний стандарт для всіх сторінок.</p>
 
     <div class="rules-grid">
       <div class="rule-card">
@@ -1574,16 +1574,10 @@ function toggleCardCart(btn) {
 function copyCode(btn) {
   const block = btn.nextElementSibling;
   navigator.clipboard.writeText(block.innerText).then(() => {
-    btn.classList.add('copied');
-    let label = btn.parentElement.querySelector('.ds-copy-label');
-    if (!label) {
-      label = document.createElement('span');
-      label.className = 'ds-copy-label';
-      label.textContent = 'Скопійовано';
-      btn.parentElement.appendChild(label);
-    }
-    label.classList.add('show');
-    setTimeout(() => { btn.classList.remove('copied'); label.classList.remove('show'); }, 1800);
+    btn.classList.remove('flash');
+    void btn.offsetWidth; // force reflow so animation restarts
+    btn.classList.add('copied', 'flash');
+    setTimeout(() => btn.classList.remove('copied', 'flash'), 500);
   });
 }
 
