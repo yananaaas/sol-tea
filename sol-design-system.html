@@ -49,7 +49,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-sublabel { font-size: 13px; font-weight: 500; color: var(--gray-500); margin-bottom: 16px; }
 .ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
 .ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
-.ds-code-wrap { position: relative; margin-top: 24px; }
+.ds-code-wrap { position: relative; margin-top: 40px; }
 .ds-copy-btn { position: absolute; top: 14px; right: 14px; background: transparent; border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: color 0.25s; padding: 0; z-index: 2; }
 @media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.15); color: var(--cream-bright); } }
 .ds-copy-btn.copied { color: var(--green-500); }
@@ -360,7 +360,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
      ════════════════════════════════════════ -->
 <section id="brand" class="ds-section" style="padding-top: 12px;">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
+    <h2 class="ds-section-title">Söl Tea</h2>
     <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
 
     <div class="brand-logo-grid">
@@ -391,7 +391,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 <section id="colors" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Colors</h2>
-    <p class="ds-section-desc" style="margin-bottom: 8px;">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
+    <p class="ds-section-desc">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
     <p class="color-tap-hint">Натисни на квадрат, щоб побачити деталі</p>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">Фони</div>
@@ -439,7 +439,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       </div>
     </div>
 
-    <div class="ds-code-wrap">
+    <div class="ds-code-wrap" style="margin-top: 0;">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
       <div class="ds-code-block">:<span class="k">root</span> {
   <span class="k">--cream</span>:        <span class="v">#F5F0E8</span>;
@@ -633,7 +633,7 @@ color green-800</div>
     <h2 class="ds-section-title">Footer</h2>
     <p class="ds-section-desc">Темний фон — <code class="ds-code">var(--black)</code>. Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code>. Посилання: 14px DM Sans 300.</p>
 
-    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchFooterPreview('desktop', this)">Desktop</button>
       <button class="filter-pill" onclick="switchFooterPreview('mobile', this)">Mobile</button>
     </div>
@@ -760,7 +760,7 @@ color green-800</div>
     <h2 class="ds-section-title">Buttons</h2>
     <p class="ds-section-desc">Єдиний стандарт: <code class="ds-code">padding: 14px 28px</code> — <code class="ds-code">font-size: 15px</code> — <code class="ds-code">border-radius: 40px</code>. Hover завжди в <code class="ds-code">@media (hover: hover)</code>.</p>
 
-    <div class="ds-sublabel" style="margin-bottom: 20px;">На світлому фоні</div>
+    <div class="ds-sublabel" style="margin-bottom: 16px;">На світлому фоні</div>
     <div class="btn-grid-4" style="margin-bottom: 40px;">
       <div class="btn-cell">
         <button class="btn-primary">Купити зараз</button>
@@ -790,7 +790,7 @@ bg black → .in-cart: green-800
 
     <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
 
-    <div class="ds-sublabel" style="margin-bottom: 20px;">На темному фоні</div>
+    <div class="ds-sublabel" style="margin-bottom: 16px;">На темному фоні</div>
     <div class="btn-cell-dark-wrap">
       <div class="btn-cell-dark">
         <button class="btn-outline-cream">Переглянути</button>
@@ -1309,6 +1309,43 @@ hover → sand</div>
       </div>
 
     </div>
+
+    <div class="ds-code-wrap">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block">.<span class="k">testimonial</span> {
+  <span class="k">background</span>:     <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>:  <span class="v">20px</span>;
+  <span class="k">padding</span>:        <span class="v">32px</span>;
+  <span class="k">display</span>:        <span class="v">flex</span>;
+  <span class="k">flex-direction</span>: <span class="v">column</span>;
+  <span class="k">gap</span>:            <span class="v">24px</span>;
+}
+.<span class="k">testimonial-text</span> {
+  <span class="k">font-size</span>:   <span class="v">15px</span>;
+  <span class="k">line-height</span>: <span class="v">1.7</span>;
+  <span class="k">color</span>:       <span class="v">var(--black)</span>;
+  <span class="k">flex</span>:        <span class="v">1</span>;
+}
+.<span class="k">testimonial-footer</span> {
+  <span class="k">display</span>:         <span class="v">flex</span>;
+  <span class="k">align-items</span>:     <span class="v">center</span>;
+  <span class="k">justify-content</span>: <span class="v">space-between</span>;
+}
+.<span class="k">testimonial-avatar</span> {
+  <span class="k">width</span>:         <span class="v">40px</span>;  <span class="k">height</span>: <span class="v">40px</span>;
+  <span class="k">border-radius</span>: <span class="v">50%</span>;
+  <span class="k">background</span>:    <span class="v">var(--green-800)</span>;  <span class="v">/* варіативний через inline style */</span>
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">font-size</span>:     <span class="v">15px</span>;  <span class="k">font-weight</span>: <span class="v">700</span>;
+}
+.<span class="k">testimonial-rating</span> {
+  <span class="k">background</span>:    <span class="v">var(--green-800)</span>;
+  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
+  <span class="k">border-radius</span>: <span class="v">20px</span>;
+  <span class="k">padding</span>:       <span class="v">5px 12px</span>;
+  <span class="k">font-size</span>:     <span class="v">12px</span>;  <span class="k">font-weight</span>: <span class="v">500</span>;
+}</div>
+    </div>
   </div>
 </section>
 
@@ -1437,7 +1474,7 @@ hover → sand</div>
       </div>
     </div>
 
-    <div class="ds-sublabel" style="margin-bottom: 24px;">Border radius</div>
+    <div class="ds-sublabel" style="margin-bottom: 16px;">Border radius</div>
     <div class="radius-row">
       <div class="radius-item">
         <div class="radius-demo" style="border-radius: 20px;"><div class="rv-wrap"><span class="rv-num">20</span><span class="rv-unit">px</span></div></div>
