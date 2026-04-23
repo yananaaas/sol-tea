@@ -50,9 +50,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
 .ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
 .ds-code-wrap { position: relative; margin-top: 24px; }
-.ds-copy-btn { position: absolute; top: 10px; right: 10px; background: transparent; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 17px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
+.ds-copy-btn { position: absolute; top: 10px; right: 10px; background: transparent; border: none; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
 @media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.18); color: var(--cream-bright); } }
 .ds-copy-btn.copied { color: var(--green-500); }
+.ds-copy-label { position: absolute; top: 16px; right: 52px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: rgba(253,252,249,0.6); opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
+.ds-copy-label.show { opacity: 1; }
+.ds-footer-input::placeholder { color: var(--gray-500); }
 .ds-code-block { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 2; background: var(--black); color: var(--gray-300); padding: 24px 28px; border-radius: 20px; overflow-x: auto; margin-top: 0; white-space: pre; }
 .ds-code-wrap .ds-code-block { margin-top: 0; }
 .ds-code-block .k { color: #7CC44A; }
@@ -569,8 +572,8 @@ color green-800</div>
       <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Мобілка</button>
     </div>
 
-    <div id="navPreviewDesktop" style="border: none; overflow: hidden; border-radius: 16px; position: relative;">
-      <div id="navPvInner" class="nav-pv" style="width: 1440px; transform-origin: left top;">
+    <div id="navPreviewDesktop" style="border: none; border-radius: 16px; overflow: hidden;">
+      <div class="nav-pv" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
         </div>
@@ -638,14 +641,14 @@ color green-800</div>
       <button class="filter-pill" onclick="switchFooterPreview('mobile', this)">Мобілка</button>
     </div>
 
-    <div id="footerPreviewDesktop" class="ds-preview-frame dark" style="background: var(--black); padding: 48px;">
-      <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto;">
+    <div id="footerPreviewDesktop" class="ds-preview-frame dark" style="background: var(--black); padding: 80px 48px 40px;">
+      <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px;">
 
         <!-- Brand col -->
         <div style="display:flex;flex-direction:column;gap:16px;">
           <svg viewBox="0 0 242 249" style="color:var(--green-500);width:40px;height:41px;display:block;flex-shrink:0;"><use href="#sol-logo"/></svg>
-          <p style="font-size:13px;color:var(--gray-500);line-height:1.7;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
-          <a href="sol-design-system.html" style="font-size:13px;color:var(--gray-300);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-top:4px;">
+          <p style="font-size:13px;color:var(--gray-500);line-height:1.7;max-width:220px;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+          <a href="sol-design-system.html" style="font-size:13px;color:var(--gray-300);text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
             Design System ↗
           </a>
         </div>
@@ -677,19 +680,19 @@ color green-800</div>
           <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:20px;">Підписка</div>
           <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">Нові надходження та сезонні новинки — першими.</p>
           <div style="display:flex;gap:8px;">
-            <input type="email" placeholder="Ваш email" style="flex:1;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:40px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--cream-bright);outline:none;" />
+            <input type="email" placeholder="Ваш email" class="ds-footer-input" style="flex:1;min-width:180px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:40px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--cream-bright);outline:none;" />
             <button style="background:var(--green-500);color:var(--cream-bright);border:none;border-radius:40px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;">OK</button>
           </div>
         </div>
 
       </div>
 
-      <div style="max-width:1280px;margin:0 auto;padding-top:32px;margin-top:40px;border-top:0.5px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div style="max-width:1280px;margin:0 auto;padding-top:32px;border-top:0.5px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
         <span style="font-size:12px;color:var(--gray-500);">© 2025 Söl Tea. Всі права захищені.</span>
-        <div style="display:flex;align-items:center;">
-          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-instagram"></i></button>
-          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-telegram"></i></button>
-          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-facebook-01"></i></button>
+        <div style="display:flex;align-items:center;gap:0;">
+          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-instagram"></i></button>
+          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-telegram"></i></button>
+          <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-facebook-01"></i></button>
         </div>
       </div>
     </div>
@@ -704,7 +707,7 @@ color green-800</div>
           <div style="font-size:14px;font-weight:500;color:var(--gray-300);margin-bottom:16px;">Підписка</div>
           <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">Нові надходження та сезонні новинки — першими.</p>
           <div style="display:flex;gap:8px;">
-            <input type="email" placeholder="Ваш email" style="flex:1;min-width:0;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:40px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--cream-bright);outline:none;" />
+            <input type="email" placeholder="Ваш email" class="ds-footer-input" style="flex:1;min-width:0;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);border-radius:40px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--cream-bright);outline:none;" />
             <button style="background:var(--green-500);color:var(--cream-bright);border:none;border-radius:40px;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;">OK</button>
           </div>
         </div>
@@ -1423,7 +1426,7 @@ hover → sand</div>
     </div>
 
     <div class="ds-sublabel" style="margin-bottom: 16px; margin-top: 48px;">Розміри іконок</div>
-    <div class="spacing-grid">
+    <div class="spacing-grid" style="margin-bottom: 0;">
       <div class="spacing-card">
         <div class="spacing-label">Nav icon buttons</div>
         <div class="spacing-val">22<span>px</span></div>
@@ -1572,7 +1575,15 @@ function copyCode(btn) {
   const block = btn.nextElementSibling;
   navigator.clipboard.writeText(block.innerText).then(() => {
     btn.classList.add('copied');
-    setTimeout(() => btn.classList.remove('copied'), 2000);
+    let label = btn.parentElement.querySelector('.ds-copy-label');
+    if (!label) {
+      label = document.createElement('span');
+      label.className = 'ds-copy-label';
+      label.textContent = 'Скопійовано';
+      btn.parentElement.appendChild(label);
+    }
+    label.classList.add('show');
+    setTimeout(() => { btn.classList.remove('copied'); label.classList.remove('show'); }, 1800);
   });
 }
 
@@ -1595,19 +1606,6 @@ function selectDsCat(el, name) {
   document.getElementById('dsCatDropdown').classList.remove('open');
 }
 
-/* Nav desktop — proportional scale to fit container */
-function applyNavScale() {
-  const container = document.getElementById('navPreviewDesktop');
-  const inner     = document.getElementById('navPvInner');
-  if (!container || !inner) return;
-  const scale = container.offsetWidth / 1440;
-  inner.style.transform = 'scale(' + scale + ')';
-  container.style.height = Math.round(80 * scale) + 'px';
-}
-window.addEventListener('resize', applyNavScale, { passive: true });
-document.addEventListener('DOMContentLoaded', applyNavScale);
-setTimeout(applyNavScale, 100); // fallback after fonts/icons load
-
 /* Nav / Footer preview tab switcher */
 function switchNavPreview(type, btn) {
   btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
@@ -1617,7 +1615,6 @@ function switchNavPreview(type, btn) {
   if (type === 'desktop') {
     desktop.style.display = '';
     mobile.style.display  = 'none';
-    setTimeout(applyNavScale, 0);
   } else {
     desktop.style.display = 'none';
     mobile.style.display  = '';
