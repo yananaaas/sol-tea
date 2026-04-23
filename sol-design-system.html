@@ -363,7 +363,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
     <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
 
-    <div class="brand-logo-grid" style="margin-bottom: 40px;">
+    <div class="brand-logo-grid">
       <div class="brand-logo-card" style="color: var(--green-800);">
         <svg viewBox="0 0 242 249"><use href="#sol-logo"/></svg>
         <span>green-800</span>
@@ -564,12 +564,12 @@ color green-800</div>
     <h2 class="ds-section-title">Header</h2>
     <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
 
-    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchNavPreview('desktop', this)">Desktop</button>
       <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Mobile</button>
     </div>
 
-    <div id="navPreviewDesktop" style="border: none; border-radius: 16px; overflow: hidden;">
+    <div id="navPreviewDesktop" style="border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
       <div class="nav-pv" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -598,7 +598,7 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; border: none;">
+    <div id="navPreviewMobile" style="display:none; width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
       <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -620,7 +620,7 @@ color green-800</div>
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: 16px; line-height: 1.7;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code>. Mobile: 72px, <code class="ds-code">padding: 0 16px</code>. Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.7;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code>. Mobile: 72px, <code class="ds-code">padding: 0 16px</code>. Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
   </div>
 </section>
 
@@ -1100,9 +1100,9 @@ hover → sand</div>
       <div class="icon-item"><i class="hgi-stroke hgi-checkmark-circle-02"></i><div class="icon-name">hgi-checkmark-circle-02</div></div>
       <div class="icon-item"><i class="hgi-stroke hgi-star"></i><div class="icon-name">hgi-star</div></div>
       <div class="icon-item"><i class="hgi-stroke hgi-filter-horizontal"></i><div class="icon-name">hgi-filter-horizontal</div></div>
-      <div class="icon-item"><i class="hgi-stroke hgi-truck-01"></i><div class="icon-name">hgi-truck-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-delivery-truck-01"></i><div class="icon-name">hgi-delivery-truck-01</div></div>
       <div class="icon-item"><i class="hgi-stroke hgi-package-01"></i><div class="icon-name">hgi-package-01</div></div>
-      <div class="icon-item"><i class="hgi-stroke hgi-credit-card-01"></i><div class="icon-name">hgi-credit-card-01</div></div>
+      <div class="icon-item"><i class="hgi-stroke hgi-credit-card"></i><div class="icon-name">hgi-credit-card</div></div>
       <div class="icon-item"><i class="hgi-stroke hgi-logout-01"></i><div class="icon-name">hgi-logout-01</div></div>
     </div>
   </div>
