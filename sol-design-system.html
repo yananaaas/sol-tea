@@ -36,7 +36,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 
 /* ── ANCHOR NAV ── */
 .anchor-nav { position: sticky; top: 0; z-index: 99; background: var(--cream); padding: 40px 48px 40px; }
-.anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; }
+.anchor-nav-inner { display: flex; gap: 8px; max-width: 1280px; flex-wrap: wrap; margin: 0 auto; }
 .anchor-pill { background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; white-space: nowrap; text-decoration: none; }
 .anchor-pill.active { background: var(--green-800); color: var(--cream-bright); }
 @media (hover: hover) { .anchor-pill:hover:not(.active) { background: var(--gray-100); } }
@@ -50,8 +50,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-meta { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); margin-top: 10px; line-height: 3.2; }
 .ds-code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--sand); color: var(--gray-800); padding: 3px 8px; border-radius: 8px; display: inline-block; margin: 3px 2px; }
 .ds-code-wrap { position: relative; margin-top: 24px; }
-.ds-copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(253,252,249,0.12); border: none; border-radius: 10px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.5); font-size: 22px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
-@media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.2); color: var(--cream-bright); } }
+.ds-copy-btn { position: absolute; top: 10px; right: 10px; background: transparent; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: rgba(253,252,249,0.45); font-size: 17px; cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0; z-index: 2; }
+@media (hover: hover) { .ds-copy-btn:hover { background: rgba(253,252,249,0.18); color: var(--cream-bright); } }
 .ds-copy-btn.copied { color: var(--green-500); }
 .ds-code-block { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 2; background: var(--black); color: var(--gray-300); padding: 24px 28px; border-radius: 20px; overflow-x: auto; margin-top: 0; white-space: pre; }
 .ds-code-wrap .ds-code-block { margin-top: 0; }
@@ -79,6 +79,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   pointer-events: none;
 }
 @media (hover: hover) { .color-swatch:hover .color-overlay { opacity: 1; } }
+.color-swatch.tapped .color-overlay { opacity: 1; }
+.color-tap-hint { display: none; font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
 .co-name { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--cream-bright); }
 .co-var { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px; color: rgba(253,252,249,0.55); }
 .co-hex { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; font-weight: 600; color: var(--cream-bright); margin-top: 2px; }
@@ -290,7 +292,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .btn-cell-dark-wrap { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .card-demo-grid { grid-template-columns: 1fr; }
   .icon-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
-  .color-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .color-grid { grid-template-columns: 1fr; gap: 12px; }
+  .color-tap-hint { display: block; }
+  .color-swatch { aspect-ratio: auto; height: 80px; border-radius: 16px; }
   .radius-row { gap: 12px; }
   .radius-demo { width: 60px; height: 60px; }
   .rv-num { font-size: 16px; }
@@ -333,7 +337,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 <nav class="anchor-nav" id="anchorNav">
   <div class="anchor-nav-inner">
     <a href="#brand"           class="anchor-pill active">Brand</a>
-    <a href="#colors"          class="anchor-pill">Colour</a>
+    <a href="#colors"          class="anchor-pill">Colors</a>
     <a href="#typography"      class="anchor-pill">Typography</a>
     <a href="#nav-section"     class="anchor-pill">Header</a>
     <a href="#footer-section"  class="anchor-pill">Footer</a>
@@ -342,10 +346,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#pills"           class="anchor-pill">Pills</a>
     <a href="#icons"           class="anchor-pill">Icons</a>
     <a href="#cards"           class="anchor-pill">Cards</a>
-    <a href="#reviews-section" class="anchor-pill">Testimonials</a>
+    <a href="#reviews-section" class="anchor-pill">Review Cards</a>
     <a href="#accordion"       class="anchor-pill">Accordion</a>
     <a href="#spacing"         class="anchor-pill">Spacing</a>
-    <a href="#rules"           class="anchor-pill">Rules</a>
+    <a href="#rules"           class="anchor-pill">Guidelines</a>
   </div>
 </nav>
 
@@ -355,8 +359,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
      ════════════════════════════════════════ -->
 <section id="brand" class="ds-section" style="padding-top: 12px;">
   <div class="ds-section-inner">
-    <div class="ds-sublabel" style="margin-bottom: 12px;">Бренд</div>
-    <h2 class="ds-section-title" style="margin-bottom: 8px;">Brand</h2>
+    <h2 class="ds-section-title" style="margin-bottom: 8px;">Söl Tea</h2>
     <p class="ds-section-desc">Мінімалістично-editorial e-commerce для нішових китайських чаїв. Без пафосу, без кліше про традиції — тільки характер.</p>
     <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
 
@@ -387,8 +390,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
      ════════════════════════════════════════ -->
 <section id="colors" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Colour</h2>
+    <h2 class="ds-section-title">Colors</h2>
     <p class="ds-section-desc">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
+    <p class="color-tap-hint">Натисни на квадрат, щоб побачити деталі</p>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">Фони</div>
     <div class="color-grid" style="margin-bottom: 40px;">
@@ -565,8 +569,8 @@ color green-800</div>
       <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Мобілка</button>
     </div>
 
-    <div id="navPreviewDesktop" class="ds-preview-frame" style="border: none; overflow-x: auto;">
-      <div class="nav-pv" style="min-width: 860px;">
+    <div id="navPreviewDesktop" style="border: none; overflow: hidden; border-radius: 16px; position: relative;">
+      <div id="navPvInner" class="nav-pv" style="width: 1440px; transform-origin: left top;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
         </div>
@@ -594,7 +598,7 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; overflow: hidden;">
+    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; overflow: hidden; border: none;">
       <div class="nav-pv-mobile">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -1226,8 +1230,8 @@ hover → sand</div>
      ════════════════════════════════════════ -->
 <section id="reviews-section" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Testimonials</h2>
-    <p class="ds-section-desc">Used in the homepage marquee. Text first, author + rating tag at the bottom. Rating: single pill with ★ and number.</p>
+    <h2 class="ds-section-title">Review Cards</h2>
+    <p class="ds-section-desc">Картки відгуків з головної сторінки (marquee). Текст — зверху, підпис автора + рейтинг-пілюля — знизу. Рейтинг: один тег ★ + цифра.</p>
 
     <div class="testimonials-demo-grid">
 
@@ -1283,8 +1287,8 @@ hover → sand</div>
      ════════════════════════════════════════ -->
 <section id="accordion" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Accordion</h2>
-    <p class="ds-section-desc">Використовується у FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
+    <h2 class="ds-section-title">Accordion — FAQ</h2>
+    <p class="ds-section-desc">Головний компонент сторінки FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
 
     <div class="accordion-demo">
       <div class="faq-demo-item open">
@@ -1450,7 +1454,7 @@ hover → sand</div>
      ════════════════════════════════════════ -->
 <section id="rules" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Rules</h2>
+    <h2 class="ds-section-title">Guidelines</h2>
     <p class="ds-section-desc">Обов'язкові до виконання. Без винятків.</p>
 
     <div class="rules-grid">
@@ -1591,6 +1595,19 @@ function selectDsCat(el, name) {
   document.getElementById('dsCatDropdown').classList.remove('open');
 }
 
+/* Nav desktop — proportional scale to fit container */
+function applyNavScale() {
+  const container = document.getElementById('navPreviewDesktop');
+  const inner     = document.getElementById('navPvInner');
+  if (!container || !inner) return;
+  const scale = container.offsetWidth / 1440;
+  inner.style.transform = 'scale(' + scale + ')';
+  container.style.height = Math.round(80 * scale) + 'px';
+}
+window.addEventListener('resize', applyNavScale, { passive: true });
+document.addEventListener('DOMContentLoaded', applyNavScale);
+setTimeout(applyNavScale, 100); // fallback after fonts/icons load
+
 /* Nav / Footer preview tab switcher */
 function switchNavPreview(type, btn) {
   btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
@@ -1600,6 +1617,7 @@ function switchNavPreview(type, btn) {
   if (type === 'desktop') {
     desktop.style.display = '';
     mobile.style.display  = 'none';
+    setTimeout(applyNavScale, 0);
   } else {
     desktop.style.display = 'none';
     mobile.style.display  = '';
@@ -1625,6 +1643,24 @@ function toggleFaqDemo(btn) {
   const item = btn.closest('.faq-demo-item');
   item.classList.toggle('open');
 }
+
+/* Color swatch — tap to reveal on touch devices */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.color-swatch').forEach(function(swatch) {
+    swatch.addEventListener('click', function(e) {
+      const isTouch = !window.matchMedia('(hover: hover)').matches;
+      if (!isTouch) return;
+      const wasOpen = swatch.classList.contains('tapped');
+      document.querySelectorAll('.color-swatch.tapped').forEach(function(s) { s.classList.remove('tapped'); });
+      if (!wasOpen) swatch.classList.add('tapped');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.color-swatch')) {
+      document.querySelectorAll('.color-swatch.tapped').forEach(function(s) { s.classList.remove('tapped'); });
+    }
+  });
+});
 
 /* Search demo */
 function onDemoSearch(input) {
