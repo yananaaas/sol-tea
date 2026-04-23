@@ -243,7 +243,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .nav-pv-burger { display: none; }
 
 /* ── ACCORDION ── */
-.accordion-demo { display: flex; flex-direction: column; gap: 4px; }
+.accordion-demo { display: flex; flex-direction: column; gap: 12px; }
 .faq-demo-item { background: var(--cream-bright); border-radius: 20px; overflow: hidden; }
 .faq-demo-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--black); line-height: 1.4; transition: color 0.2s; }
 .faq-demo-item.open .faq-demo-q { color: var(--green-800); border-radius: 0; }
@@ -381,8 +381,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <span>black</span>
       </div>
     </div>
-
-    <p class="brand-desc">Концептуальний інтернет-магазин для людей, які хочуть розібратися в китайському чаї і знайти щось дійсно якісне. Не масмаркет — а чай із конкретних регіонів, від перевірених джерел, з поясненням, що це і як заварювати. Візуально: чиста типографіка, кремовий фон, зелений акцент. Без ілюстрацій із горами і пагодами, без слова «автентичний».</p>
   </div>
 </section>
 
@@ -393,7 +391,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 <section id="colors" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Colors</h2>
-    <p class="ds-section-desc">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
+    <p class="ds-section-desc" style="margin-bottom: 24px;">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
     <p class="color-tap-hint">Натисни на квадрат, щоб побачити деталі</p>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">Фони</div>
@@ -600,7 +598,7 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" style="display:none; border-radius: 16px; overflow: hidden;">
+    <div id="navPreviewMobile" class="ds-preview-mobile-wrap" style="display:none; border: none;">
       <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -703,6 +701,7 @@ color green-800</div>
         <div style="display:flex;flex-direction:column;gap:16px;">
           <svg viewBox="0 0 242 249" style="color:var(--green-500);width:36px;height:37px;display:block;"><use href="#sol-logo"/></svg>
           <p style="font-size:13px;color:var(--gray-500);line-height:1.7;max-width:220px;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
+          <a href="sol-design-system.html" style="font-size:13px;color:var(--gray-300);text-decoration:none;display:inline-flex;align-items:center;gap:5px;">Design System <i class="hgi-stroke hgi-arrow-up-right-01" style="font-size:12px;"></i></a>
         </div>
 
         <!-- Магазин -->
@@ -1638,7 +1637,7 @@ function switchNavPreview(type, btn) {
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = 'block';
+    mobile.style.display  = '';
   }
 }
 
