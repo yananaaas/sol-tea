@@ -154,7 +154,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 
 /* ── ICONS ── */
 .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 20px; }
-.icon-item { background: var(--cream-bright); border-radius: 16px; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 12px; }
+.icon-item { background: var(--cream-bright); border-radius: 16px; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 12px; overflow: hidden; }
 .icon-item i { font-size: 24px; color: var(--gray-800); }
 .icon-name { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 9px; color: var(--gray-500); line-height: 1.5; word-break: break-all; }
 
@@ -326,8 +326,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .card-demo-grid { grid-template-columns: 1fr; gap: 24px; }
   .icon-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
   .color-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .color-tap-hint { display: flex; align-items: center; gap: 6px; margin-bottom: 24px; }
-  .color-tap-hint i { font-size: 16px; flex-shrink: 0; }
+  .type-demo-price { font-size: 24px !important; }
+  .type-demo-h4 { font-size: 24px !important; }
+  .icon-btn-row { flex-direction: column; gap: 24px; }
+  .icon-btn-row .btn-cell { align-items: flex-start !important; }
+  .ds-footer-inner { flex-direction: column-reverse; align-items: flex-start; }
+  .ds-footer-inner { padding: 0 24px; }
   .color-swatch { aspect-ratio: 1/1; height: auto; border-radius: 20px; }
   .radius-row { gap: 12px; }
   .radius-demo { width: 60px; height: 60px; }
@@ -546,7 +550,7 @@ line-height 1.1</div>
 letter-spacing -0.01em</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:900;letter-spacing:-0.02em;color:var(--black);">Як заварювати?</div>
+          <div class="type-demo-h4" style="font-family:'Inter',sans-serif;font-size:22px;font-weight:900;letter-spacing:-0.02em;color:var(--black);">Як заварювати?</div>
           <div style="font-family:'Inter',sans-serif;font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--black);">Те Гуань Інь</div>
         </div>
       </div>
@@ -597,7 +601,7 @@ line-height 1.5</div>
 letter-spacing -0.02em
 color green-800</div>
         </div>
-        <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.02em;color:var(--green-800);">580 ₴</div>
+        <div class="type-demo-price" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.02em;color:var(--green-800);">580 ₴</div>
       </div>
     </div>
   </div>
@@ -920,7 +924,7 @@ bg black → .in-cart: green-800
     <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
 
     <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Кнопки-іконки</div>
-    <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
+    <div class="icon-btn-row" style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
       <div class="btn-cell" style="align-items: center;">
         <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-search-01"></i></button>
         <div class="ds-meta" style="text-align:center;">.nav-icon-btn
@@ -1919,7 +1923,7 @@ hover → sand</div>
 
 <!-- FOOTER -->
 <footer style="padding: 40px 48px; margin-top: 40px;">
-  <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+  <div class="ds-footer-inner" style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
     <p style="font-size: 12px; color: var(--gray-500);">© 2025 Söl Tea. Style Guide & Design System.</p>
     <a href="sol-tea.html" class="ds-back"><i class="hgi-stroke hgi-arrow-left-01"></i> До сайту</a>
   </div>
