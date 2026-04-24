@@ -231,6 +231,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-badge { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--cream-bright); padding: 0 4px; line-height: 1; }
 .ds-badge.cart { background: var(--green-800); }
 .ds-badge.wish { background: var(--terra); }
+.ds-gallery-arrow-demo { width: 40px; height: 40px; border-radius: 50%; background: rgba(253,252,249,0.88); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--black); flex-shrink: 0; }
+@media (hover: hover) { .ds-gallery-arrow-demo:hover:not(:disabled) { background: var(--cream-bright); } }
+.ds-gallery-arrow-demo:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
 /* ── PAGINATION ── */
 .ds-pagination { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
@@ -382,10 +385,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#typography"      class="anchor-pill">Typography</a>
     <a href="#nav-section"     class="anchor-pill">Header</a>
     <a href="#footer-section"  class="anchor-pill">Footer</a>
-    <a href="#badge"           class="anchor-pill">Badge</a>
+    <a href="#indicator"       class="anchor-pill">Indicator</a>
     <a href="#buttons"         class="anchor-pill">Buttons</a>
     <a href="#inputs"          class="anchor-pill">Inputs</a>
-    <a href="#qty"             class="anchor-pill">Qty</a>
+    <a href="#stepper"         class="anchor-pill">Stepper</a>
     <a href="#pills"           class="anchor-pill">Pills</a>
     <a href="#pagination"      class="anchor-pill">Pagination</a>
     <a href="#icons"           class="anchor-pill">Icons</a>
@@ -808,12 +811,12 @@ color green-800</div>
 <!-- ════════════════════════════════════════
      BADGE (NAV ІНДИКАТОР)
      ════════════════════════════════════════ -->
-<section id="badge" class="ds-section">
+<section id="indicator" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Nav Badge</h2>
+    <h2 class="ds-section-title">Indicator</h2>
     <p class="ds-section-desc">Кружечок-індикатор кількості поверх іконки навігації. Кошик — <code class="ds-code">green-800</code>, Вподобане — <code class="ds-code">terra</code>. Мінімальна ширина <code class="ds-code">17px</code>, висота <code class="ds-code">17px</code>, шрифт <code class="ds-code">Inter 700 10px</code>.</p>
 
-    <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
+    <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
         <button class="nav-icon-btn-demo">
           <i class="hgi-stroke hgi-shopping-bag-02"></i>
@@ -915,6 +918,37 @@ bg black → .in-cart: green-800
     </div>
 
     <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
+
+    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 8px;">Кнопки-іконки</div>
+    <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7;">Два типи: <strong style="color:var(--black);">nav icon btn</strong> — навігація, <code class="ds-code">44×44px</code>, <code class="ds-code">font-size: 22px</code>; <strong style="color:var(--black);">gallery arrow</strong> — слайдер товару, <code class="ds-code">40×40px</code>, <code class="ds-code">bg: rgba(253,252,249,0.88)</code>. Обидва круглі, без border.</p>
+
+    <div style="font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;">Nav icon — .nav-icon-btn</div>
+    <div style="display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 32px;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-search-01"></i></button>
+        <div class="ds-meta" style="text-align:center;">search-01</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-user-circle"></i></button>
+        <div class="ds-meta" style="text-align:center;">user-circle</div>
+      </div>
+    </div>
+
+    <div style="font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;">Gallery arrows — .gallery-arrow</div>
+    <div style="background: var(--sand); border-radius: 20px; padding: 28px; display: inline-flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="ds-gallery-arrow-demo"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
+        <div class="ds-meta" style="text-align:center;">prev</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="ds-gallery-arrow-demo" disabled><i class="hgi-stroke hgi-arrow-left-01"></i></button>
+        <div class="ds-meta" style="text-align:center;">prev disabled</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="ds-gallery-arrow-demo"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
+        <div class="ds-meta" style="text-align:center;">next</div>
+      </div>
+    </div>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">На темному фоні</div>
     <div class="btn-cell-dark-wrap">
@@ -1020,36 +1054,6 @@ hover → sand</div>
 }</div>
     </div>
 
-    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Icon buttons — .nav-icon-btn</div>
-    <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7;">Кнопки-іконки в навігації. Завжди <code class="ds-code">44×44px</code>, <code class="ds-code">font-size: 22px</code>, круглі. <code class="ds-code">position: relative</code> — для позиціонування badge. Hover тільки в <code class="ds-code">@media (hover: hover)</code>.</p>
-    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-search-01"></i></button>
-        <div class="ds-meta" style="text-align:center;">search-01</div>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-user-circle"></i></button>
-        <div class="ds-meta" style="text-align:center;">user-circle</div>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="nav-icon-btn-demo" style="color: var(--terra);">
-          <i class="hgi-stroke hgi-favourite"></i>
-          <span class="ds-badge wish">2</span>
-        </button>
-        <div class="ds-meta" style="text-align:center;">favourite<br>+ wish badge</div>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="nav-icon-btn-demo">
-          <i class="hgi-stroke hgi-shopping-bag-02"></i>
-          <span class="ds-badge cart">3</span>
-        </button>
-        <div class="ds-meta" style="text-align:center;">shopping-bag-02<br>+ cart badge</div>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-help-circle"></i></button>
-        <div class="ds-meta" style="text-align:center;">help-circle<br>(FAQ)</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1151,9 +1155,9 @@ hover → sand</div>
 <!-- ════════════════════════════════════════
      QTY SELECTOR
      ════════════════════════════════════════ -->
-<section id="qty" class="ds-section">
+<section id="stepper" class="ds-section">
   <div class="ds-section-inner">
-    <h2 class="ds-section-title">Qty selector</h2>
+    <h2 class="ds-section-title">Stepper</h2>
     <p class="ds-section-desc">Контрол вибору кількості в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. Мінімум 1 — кнопка «–» дизейблиться.</p>
 
     <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
@@ -1328,13 +1332,15 @@ hover → sand</div>
     <p class="ds-section-desc">Пагінація в каталозі. Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <code class="ds-code">flex-shrink: 0</code> — кнопки не деформуються.</p>
 
     <div class="ds-pagination" id="dsPagination">
+      <button class="ds-page-btn" id="dsPrevBtn" onclick="dsPaginate(Math.max(1, dsCurrentPage-1))"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
       <button class="ds-page-btn" onclick="dsPaginate(1)">1</button>
       <button class="ds-page-btn active" onclick="dsPaginate(2)">2</button>
       <button class="ds-page-btn" onclick="dsPaginate(3)">3</button>
       <span class="ds-page-dots">···</span>
       <button class="ds-page-btn" onclick="dsPaginate(8)">8</button>
+      <button class="ds-page-btn" id="dsNextBtn" onclick="dsPaginate(Math.min(8, dsCurrentPage+1))"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
     </div>
-    <div class="ds-meta" style="margin-top: 12px;">Клікни на сторінку, щоб перемкнути активну</div>
+    <div class="ds-meta" style="margin-top: 12px;">Клікни на сторінку або стрілки, щоб перемкнути</div>
 
     <div class="ds-code-wrap" style="margin-top: 40px;">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
@@ -1894,7 +1900,7 @@ hover → sand</div>
 
 <script>
 /* Anchor nav scroll tracking */
-const sections = ['brand','colors','typography','nav-section','footer-section','badge','buttons','inputs','qty','pills','pagination','icons','cards','reviews-section','accordion','spacing','rules'];
+const sections = ['brand','colors','typography','nav-section','footer-section','indicator','buttons','inputs','stepper','pills','pagination','icons','cards','reviews-section','accordion','spacing','rules'];
 const navPills = document.querySelectorAll('#anchorNav .anchor-pill');
 const anchorNav = document.getElementById('anchorNav');
 
@@ -1941,10 +1947,16 @@ function dsQtyChange(delta) {
 }
 
 /* Pagination demo */
+let dsCurrentPage = 2;
 function dsPaginate(page) {
+  page = Math.max(1, Math.min(8, page));
+  dsCurrentPage = page;
   document.querySelectorAll('#dsPagination .ds-page-btn').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.textContent) === page);
+    const num = parseInt(btn.textContent);
+    btn.classList.toggle('active', !isNaN(num) && num === page);
   });
+  document.getElementById('dsPrevBtn').disabled = page <= 1;
+  document.getElementById('dsNextBtn').disabled = page >= 8;
 }
 
 /* Btn-add main demo */
