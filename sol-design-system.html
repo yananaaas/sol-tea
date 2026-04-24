@@ -225,6 +225,28 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-preview-frame.dark { border-color: rgba(255,255,255,0.06); }
 .ds-preview-mobile-wrap { width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--gray-100); }
 
+/* ── NAV ICON BTN & BADGE ── */
+.nav-icon-btn-demo { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; flex-shrink: 0; }
+@media (hover: hover) { .nav-icon-btn-demo:hover { background: var(--sand); } }
+.ds-badge { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--cream-bright); padding: 0 4px; line-height: 1; }
+.ds-badge.cart { background: var(--green-800); }
+.ds-badge.wish { background: var(--terra); }
+
+/* ── PAGINATION ── */
+.ds-pagination { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.ds-page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+@media (hover: hover) { .ds-page-btn:hover:not(.active) { background: var(--gray-100); } }
+.ds-page-btn.active { background: var(--green-800); color: var(--cream-bright); }
+.ds-page-btn:disabled { opacity: 0.4; cursor: default; }
+.ds-page-dots { color: var(--gray-300); font-size: 14px; width: 32px; text-align: center; flex-shrink: 0; letter-spacing: 2px; }
+
+/* ── QTY CONTROL ── */
+.ds-qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
+.ds-qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-800); transition: background 0.15s; flex-shrink: 0; }
+@media (hover: hover) { .ds-qty-btn:hover { background: var(--gray-100); } }
+.ds-qty-btn:disabled { opacity: 0.35; cursor: default; }
+.ds-qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
+
 /* ── NAV PREVIEW ── */
 .nav-pv { display: flex; align-items: center; gap: 32px; padding: 0 48px; height: 80px; background: var(--cream); }
 .nav-pv-mobile { display: flex; align-items: center; gap: 0; padding: 0 16px; height: 72px; background: var(--cream); }
@@ -360,9 +382,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     <a href="#typography"      class="anchor-pill">Typography</a>
     <a href="#nav-section"     class="anchor-pill">Header</a>
     <a href="#footer-section"  class="anchor-pill">Footer</a>
+    <a href="#badge"           class="anchor-pill">Badge</a>
     <a href="#buttons"         class="anchor-pill">Buttons</a>
     <a href="#inputs"          class="anchor-pill">Inputs</a>
+    <a href="#qty"             class="anchor-pill">Qty</a>
     <a href="#pills"           class="anchor-pill">Pills</a>
+    <a href="#pagination"      class="anchor-pill">Pagination</a>
     <a href="#icons"           class="anchor-pill">Icons</a>
     <a href="#cards"           class="anchor-pill">Product Cards</a>
     <a href="#reviews-section" class="anchor-pill">Review Cards</a>
@@ -781,6 +806,79 @@ color green-800</div>
 
 
 <!-- ════════════════════════════════════════
+     BADGE (NAV ІНДИКАТОР)
+     ════════════════════════════════════════ -->
+<section id="badge" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Nav Badge</h2>
+    <p class="ds-section-desc">Кружечок-індикатор кількості поверх іконки навігації. Кошик — <code class="ds-code">green-800</code>, Вподобане — <code class="ds-code">terra</code>. Мінімальна ширина <code class="ds-code">17px</code>, висота <code class="ds-code">17px</code>, шрифт <code class="ds-code">Inter 700 10px</code>.</p>
+
+    <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <button class="nav-icon-btn-demo">
+          <i class="hgi-stroke hgi-shopping-bag-02"></i>
+          <span class="ds-badge cart">3</span>
+        </button>
+        <div class="ds-meta" style="text-align:center;">Кошик<br>.ds-badge.cart<br>bg: green-800</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <button class="nav-icon-btn-demo">
+          <i class="hgi-stroke hgi-favourite"></i>
+          <span class="ds-badge wish">2</span>
+        </button>
+        <div class="ds-meta" style="text-align:center;">Вподобане<br>.ds-badge.wish<br>bg: terra</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <button class="nav-icon-btn-demo">
+          <i class="hgi-stroke hgi-shopping-bag-02"></i>
+        </button>
+        <div class="ds-meta" style="text-align:center;">Без badge<br>(0 елементів)</div>
+      </div>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">/* Nav icon кнопка */
+.<span class="k">nav-icon-btn</span> {
+  <span class="k">width</span>:         <span class="v">44px</span>;
+  <span class="k">height</span>:        <span class="v">44px</span>;
+  <span class="k">border-radius</span>: <span class="v">50%</span>;
+  <span class="k">font-size</span>:     <span class="v">22px</span>;
+  <span class="k">position</span>:      <span class="v">relative</span>;
+  <span class="k">display</span>:       <span class="v">flex</span>;
+  <span class="k">align-items</span>:   <span class="v">center</span>;
+  <span class="k">justify-content</span>: <span class="v">center</span>;
+  <span class="k">background</span>:    <span class="v">transparent</span>;
+  <span class="k">border</span>:        <span class="v">none</span>;
+  <span class="k">cursor</span>:        <span class="v">pointer</span>;
+  <span class="k">color</span>:         <span class="v">var(--black)</span>;
+}
+
+/* Badge */
+.<span class="k">cart-badge</span>, .<span class="k">wish-badge</span> {
+  <span class="k">position</span>:   <span class="v">absolute</span>;
+  <span class="k">top</span>:        <span class="v">2px</span>;
+  <span class="k">right</span>:      <span class="v">2px</span>;
+  <span class="k">min-width</span>:  <span class="v">17px</span>;
+  <span class="k">height</span>:     <span class="v">17px</span>;
+  <span class="k">border-radius</span>: <span class="v">20px</span>;
+  <span class="k">font-family</span>: <span class="v">'Inter', sans-serif</span>;
+  <span class="k">font-size</span>:  <span class="v">10px</span>;
+  <span class="k">font-weight</span>: <span class="v">700</span>;
+  <span class="k">color</span>:      <span class="v">var(--cream-bright)</span>;
+  <span class="k">padding</span>:    <span class="v">0 4px</span>;
+  <span class="k">display</span>:    <span class="v">flex</span>;
+  <span class="k">align-items</span>: <span class="v">center</span>;
+  <span class="k">justify-content</span>: <span class="v">center</span>;
+}
+.<span class="k">cart-badge</span> { <span class="k">background</span>: <span class="v">var(--green-800)</span>; }
+.<span class="k">wish-badge</span> { <span class="k">background</span>: <span class="v">var(--terra)</span>; }</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
      КНОПКИ
      ════════════════════════════════════════ -->
 <section id="buttons" class="ds-section">
@@ -921,6 +1019,37 @@ hover → sand</div>
   .<span class="k">btn</span>:hover <span class="k">i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(7px)</span>; }
 }</div>
     </div>
+
+    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Icon buttons — .nav-icon-btn</div>
+    <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7;">Кнопки-іконки в навігації. Завжди <code class="ds-code">44×44px</code>, <code class="ds-code">font-size: 22px</code>, круглі. <code class="ds-code">position: relative</code> — для позиціонування badge. Hover тільки в <code class="ds-code">@media (hover: hover)</code>.</p>
+    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-search-01"></i></button>
+        <div class="ds-meta" style="text-align:center;">search-01</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-user-circle"></i></button>
+        <div class="ds-meta" style="text-align:center;">user-circle</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo" style="color: var(--terra);">
+          <i class="hgi-stroke hgi-favourite"></i>
+          <span class="ds-badge wish">2</span>
+        </button>
+        <div class="ds-meta" style="text-align:center;">favourite<br>+ wish badge</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo">
+          <i class="hgi-stroke hgi-shopping-bag-02"></i>
+          <span class="ds-badge cart">3</span>
+        </button>
+        <div class="ds-meta" style="text-align:center;">shopping-bag-02<br>+ cart badge</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-help-circle"></i></button>
+        <div class="ds-meta" style="text-align:center;">help-circle<br>(FAQ)</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1014,6 +1143,67 @@ hover → sand</div>
 }
 .<span class="k">input</span>:focus { <span class="k">background</span>: <span class="v">var(--sand)</span>; }
 .<span class="k">input</span>.error { <span class="k">background</span>: <span class="v">rgba(232,74,46, 0.10)</span>; }</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     QTY SELECTOR
+     ════════════════════════════════════════ -->
+<section id="qty" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Qty selector</h2>
+    <p class="ds-section-desc">Контрол вибору кількості в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. Мінімум 1 — кнопка «–» дизейблиться.</p>
+
+    <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
+        <div class="ds-qty-ctrl">
+          <button class="ds-qty-btn" id="qtyMinus" onclick="dsQtyChange(-1)" disabled>
+            <i class="hgi-stroke hgi-minus-sign"></i>
+          </button>
+          <span class="ds-qty-num" id="qtyNum">1</span>
+          <button class="ds-qty-btn" id="qtyPlus" onclick="dsQtyChange(1)">
+            <i class="hgi-stroke hgi-plus-sign"></i>
+          </button>
+        </div>
+        <div class="ds-meta">Клікни, щоб змінити кількість</div>
+      </div>
+    </div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">/* Qty selector */
+.<span class="k">qty-ctrl</span> {
+  <span class="k">display</span>:       <span class="v">inline-flex</span>;
+  <span class="k">align-items</span>:   <span class="v">center</span>;
+  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:       <span class="v">4px</span>;
+  <span class="k">gap</span>:           <span class="v">2px</span>;
+}
+.<span class="k">qty-btn</span> {
+  <span class="k">width</span>:         <span class="v">32px</span>;
+  <span class="k">height</span>:        <span class="v">32px</span>;
+  <span class="k">border-radius</span>: <span class="v">50%</span>;
+  <span class="k">border</span>:        <span class="v">none</span>;
+  <span class="k">background</span>:    <span class="v">transparent</span>;
+  <span class="k">cursor</span>:        <span class="v">pointer</span>;
+  <span class="k">font-size</span>:     <span class="v">16px</span>;
+  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
+}
+.<span class="k">qty-btn</span>:disabled { <span class="k">opacity</span>: <span class="v">0.35</span>; <span class="k">cursor</span>: <span class="v">default</span>; }
+@media (hover: hover) {
+  .<span class="k">qty-btn</span>:hover:not(:disabled) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}
+.<span class="k">qty-num</span> {
+  <span class="k">min-width</span>:    <span class="v">28px</span>;
+  <span class="k">text-align</span>:   <span class="v">center</span>;
+  <span class="k">font-family</span>:  <span class="v">'Inter', sans-serif</span>;
+  <span class="k">font-size</span>:    <span class="v">14px</span>;
+  <span class="k">font-weight</span>:  <span class="v">700</span>;
+  <span class="k">color</span>:        <span class="v">var(--black)</span>;
+}</div>
     </div>
   </div>
 </section>
@@ -1123,6 +1313,64 @@ hover → sand</div>
 .<span class="k">sort-btn i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
 @media (hover: hover) {
   .<span class="k">sort-btn</span>:hover { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     PAGINATION
+     ════════════════════════════════════════ -->
+<section id="pagination" class="ds-section">
+  <div class="ds-section-inner">
+    <h2 class="ds-section-title">Pagination</h2>
+    <p class="ds-section-desc">Пагінація в каталозі. Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <code class="ds-code">flex-shrink: 0</code> — кнопки не деформуються.</p>
+
+    <div class="ds-pagination" id="dsPagination">
+      <button class="ds-page-btn" onclick="dsPaginate(1)">1</button>
+      <button class="ds-page-btn active" onclick="dsPaginate(2)">2</button>
+      <button class="ds-page-btn" onclick="dsPaginate(3)">3</button>
+      <span class="ds-page-dots">···</span>
+      <button class="ds-page-btn" onclick="dsPaginate(8)">8</button>
+    </div>
+    <div class="ds-meta" style="margin-top: 12px;">Клікни на сторінку, щоб перемкнути активну</div>
+
+    <div class="ds-code-wrap" style="margin-top: 40px;">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block scroll">/* Pagination */
+.<span class="k">pagination</span> {
+  <span class="k">display</span>:     <span class="v">flex</span>;
+  <span class="k">align-items</span>: <span class="v">center</span>;
+  <span class="k">gap</span>:         <span class="v">6px</span>;
+  <span class="k">flex-wrap</span>:   <span class="v">nowrap</span>;
+}
+.<span class="k">page-btn</span> {
+  <span class="k">width</span>:         <span class="v">40px</span>;
+  <span class="k">height</span>:        <span class="v">40px</span>;
+  <span class="k">border-radius</span>: <span class="v">50%</span>;
+  <span class="k">border</span>:        <span class="v">none</span>;
+  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
+  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
+  <span class="k">font-family</span>:   <span class="v">'DM Sans', sans-serif</span>;
+  <span class="k">font-size</span>:     <span class="v">14px</span>;
+  <span class="k">font-weight</span>:   <span class="v">500</span>;
+  <span class="k">cursor</span>:        <span class="v">pointer</span>;
+  <span class="k">flex-shrink</span>:   <span class="v">0</span>;
+}
+.<span class="k">page-btn.active</span> {
+  <span class="k">background</span>: <span class="v">var(--green-800)</span>;
+  <span class="k">color</span>:      <span class="v">var(--cream-bright)</span>;
+}
+@media (hover: hover) {
+  .<span class="k">page-btn</span>:hover:not(.active) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}
+.<span class="k">page-dots</span> {
+  <span class="k">color</span>:          <span class="v">var(--gray-300)</span>;
+  <span class="k">width</span>:          <span class="v">32px</span>;
+  <span class="k">text-align</span>:     <span class="v">center</span>;
+  <span class="k">letter-spacing</span>: <span class="v">2px</span>;
+  <span class="k">flex-shrink</span>:    <span class="v">0</span>;
 }</div>
     </div>
   </div>
@@ -1646,7 +1894,7 @@ hover → sand</div>
 
 <script>
 /* Anchor nav scroll tracking */
-const sections = ['brand','colors','typography','nav-section','footer-section','buttons','inputs','pills','icons','cards','reviews-section','accordion','spacing','rules'];
+const sections = ['brand','colors','typography','nav-section','footer-section','badge','buttons','inputs','qty','pills','pagination','icons','cards','reviews-section','accordion','spacing','rules'];
 const navPills = document.querySelectorAll('#anchorNav .anchor-pill');
 const anchorNav = document.getElementById('anchorNav');
 
@@ -1680,6 +1928,23 @@ function setPillActive(groupId, clickedEl) {
     .querySelectorAll('.anchor-pill, .filter-pill')
     .forEach(p => p.classList.remove('active'));
   clickedEl.classList.add('active');
+}
+
+/* Qty selector demo */
+function dsQtyChange(delta) {
+  const numEl = document.getElementById('qtyNum');
+  const minusBtn = document.getElementById('qtyMinus');
+  let val = parseInt(numEl.textContent) + delta;
+  if (val < 1) val = 1;
+  numEl.textContent = val;
+  minusBtn.disabled = val <= 1;
+}
+
+/* Pagination demo */
+function dsPaginate(page) {
+  document.querySelectorAll('#dsPagination .ds-page-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.textContent) === page);
+  });
 }
 
 /* Btn-add main demo */
