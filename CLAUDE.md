@@ -56,6 +56,36 @@ HugeIcons stroke-rounded. CDN: `https://use.hugeicons.com/font/icons.css`
 Стрілки в кнопках: `translateX(3px)` → `translateX(7px)` на hover.
 `.btn-secondary i { transform: translateX(3px); margin-right: -4px; }` — для arrow-right-01.
 
+### Кнопки-іконки
+Два типи, обидва круглі, без border:
+- **`.nav-icon-btn`** — навігація в хедері. `44×44px`, `font-size: 22px`, `position: relative` (для індикатора). Hover: `background: var(--sand)` в `@media (hover: hover)`.
+- **`.gallery-arrow`** — стрілки слайдера на сторінці товару. `40×40px`, `font-size: 20px`, `background: rgba(253,252,249,0.88)`. `position: absolute; top: 50%; transform: translateY(-50%); z-index: 3`. Disabled: `opacity: 0.3`. `.gallery-arrow-prev { left: 12px }`, `.gallery-arrow-next { right: 12px }`.
+
+### Indicator (nav badge)
+Кружечок-індикатор кількості поверх `.nav-icon-btn`. `position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; font-family: Inter; font-size: 10px; font-weight: 700`.
+- `.cart-badge` / `.wish-badge` — класи для кошика і вподобаних
+- Кошик: `background: var(--green-800)`, вподобані: `background: var(--terra)`
+- При 0 елементах — badge не показується (видаляється з DOM)
+
+### Counter (qty selector)
+Контрол вибору кількості в кошику і чекауті.
+```css
+.qty-ctrl { background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
+.qty-btn  { width: 32px; height: 32px; border-radius: 50%; font-size: 16px; }
+.qty-num  { min-width: 28px; font-family: Inter; font-size: 14px; font-weight: 700; }
+```
+Мінімум 1 — кнопка «–» `disabled` при `qty === 1`. Hover кнопок в `@media (hover: hover)`.
+
+### Pagination
+```css
+.pagination { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.page-btn   { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: var(--sand); font-size: 14px; }
+.page-btn.active { background: var(--green-800); color: var(--cream-bright); }
+.page-btn:disabled { opacity: 0.4; cursor: default; }
+.page-dots  { color: var(--gray-300); width: 32px; text-align: center; letter-spacing: 2px; }
+```
+Рендериться динамічно через JS. Завжди показує: 1, last, current, current±1. Крапки де є пропуск > 1. Стрілки ← → по краях.
+
 ### Правила дизайну
 - Без дівайдерів — тільки блочна структура
 - border-radius карток: `20–24px`
@@ -700,25 +730,26 @@ CSS: `order: 1` для dropdown, `order: 2` для sort-btn, `order: 3; width: 1
 ## Наступні таски (черга)
 
 ### Пріоритет 1 — Дизайн система (окремий чат)
-- **DS mobile** — підкрутити мобільну версію sol-design-system.html
-- **DS ревізія секцій** — пройтися по розділах, вирішити чи потрібно щось додати
 - **DS ↔ сторінки** — перевірити, чи компоненти DS прив'язані до кожної сторінки (лінки, відповідність класів)
 
-### Пріоритет 2 — Сторінки (окремий чат)
+### Пріоритет 2 — Контент (окремий чат)
+- **Документ із продуктами** — структурований опис усіх товарів: назва, категорія, регіон, опис, ціна, параметри заварювання. Джерело правди для наповнення PRODUCTS у JS.
+
+### Пріоритет 3 — Сторінки (окремий чат)
 - **sol-about.html** — «Про нас»: команда, цінності, процес відбору чаю, джерела. Не дублює Головну. Той самий editorial стиль.
 - **Головна сторінка** — ревізія і часткова редизайн: що прибрати, що підсилити після реальних фото
 
-### Пріоритет 3 — Медіа (окремий чат)
+### Пріоритет 4 — Медіа (окремий чат)
 - **Підготувати зображення** — фото продуктів, hero, about
 - **Підключити `/images/`** — замінити всі placeholder-div на `<img>` теги скрізь
 - **Нормалізувати логотипи** — PNG доставки/оплат: Figma → 100×100px, 10% відступ з кожної сторони
 
-### Пріоритет 4 — Код і архітектура (окремий чат)
+### Пріоритет 5 — Код і архітектура (окремий чат)
 - **Code review** — перевірити і покращити код усіх сторінок
 - **Wishlist панель** — slide-in як профіль-панель, з іконкою серця в nav
 - **Email підписка** — повідомлення після сабміту у футері
 - **Стратегія даних** — вирішити: Notion API / Supabase / Formspree. Детальне порівняння в окремому чаті
 
-### Пріоритет 5 — Тестування і кейс (окремий чат)
+### Пріоритет 6 — Тестування і кейс (окремий чат)
 - **A/B варіації** — задокументувати варіанти для кейсу, пояснити рішення
 - **Кейс-стаді** — стаття про проект: процес, рішення, результат. Для портфоліо і Medium/Behance
