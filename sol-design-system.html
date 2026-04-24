@@ -313,6 +313,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
   .testimonials-demo-grid { grid-template-columns: 1fr; }
+  .sort-btn { padding: 12px 20px; }
+  .card-demo-grid .product-img { aspect-ratio: 1/1; }
+  .card-demo-grid .btn-add { padding: 14px 28px; font-size: 15px; }
 }
 </style>
 </head>
@@ -939,28 +942,59 @@ hover → sand</div>
     </div>
 
     <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Пошук (хедер)</div>
-    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 280px;">
+    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+      <button class="filter-pill active" onclick="switchSearchPreview('desktop', this)">Desktop</button>
+      <button class="filter-pill" onclick="switchSearchPreview('mobile', this)">Mobile</button>
+    </div>
 
-      <div>
-        <div class="search-input-demo">
-          <i class="hgi-stroke hgi-search-01"></i>
-          <input class="search-input-inner" type="text" id="demoSearchInput" placeholder="Пошук чаю, інгредієнтів..." oninput="onDemoSearch(this)">
-          <button class="search-clear-btn" id="demoClearBtn" onclick="clearDemoSearch()">
-            <i class="hgi-stroke hgi-cancel-01"></i>
-          </button>
+    <div id="searchPreviewDesktop">
+      <div style="display: flex; flex-direction: column; gap: 16px; max-width: 280px;">
+        <div>
+          <div class="search-input-demo">
+            <i class="hgi-stroke hgi-search-01"></i>
+            <input class="search-input-inner" type="text" id="demoSearchInput" placeholder="Пошук чаю, інгредієнтів..." oninput="onDemoSearch(this)">
+            <button class="search-clear-btn" id="demoClearBtn" onclick="clearDemoSearch()">
+              <i class="hgi-stroke hgi-cancel-01"></i>
+            </button>
+          </div>
+          <div class="input-hint" style="margin-top: 8px;">Default — bg: sand · Focus → bg: gray-100 · X з'являється при введенні</div>
         </div>
-        <div class="input-hint" style="margin-top: 8px;">Default — bg: sand · Focus → bg: gray-100 · X з'являється при введенні</div>
-      </div>
-
-      <div>
-        <div class="search-input-demo" style="background: var(--gray-100);">
-          <i class="hgi-stroke hgi-search-01"></i>
-          <div class="search-input-inner" style="color: var(--black);">Да Хун Пао</div>
-          <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
+        <div>
+          <div class="search-input-demo" style="background: var(--gray-100);">
+            <i class="hgi-stroke hgi-search-01"></i>
+            <div class="search-input-inner" style="color: var(--black);">Да Хун Пао</div>
+            <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
+          </div>
+          <div class="input-hint" style="margin-top: 8px;">Filled + X button — bg: gray-100</div>
         </div>
-        <div class="input-hint" style="margin-top: 8px;">Filled + X button — bg: gray-100</div>
       </div>
+    </div>
 
+    <div id="searchPreviewMobile" style="display: none;">
+      <div class="ds-preview-mobile-wrap">
+        <div style="width: 375px; background: var(--cream); border-radius: 20px; overflow: hidden;">
+          <!-- Nav in search-active state -->
+          <div style="height: 72px; background: var(--cream); display: flex; align-items: center; padding: 0 16px; gap: 12px;">
+            <!-- Logo -->
+            <div style="flex-shrink: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 242 249" style="height: 34px; width: 33px; display: block;">
+                <path d="M121 0C54.2 0 0 54.2 0 121s54.2 121 121 121 121-54.2 121-121S187.8 0 121 0z" fill="var(--green-800)"/>
+                <path d="M121 40c-44.7 0-81 36.3-81 81s36.3 81 81 81 81-36.3 81-81-36.3-81-81-81z" fill="var(--cream)"/>
+                <path d="M121 80c-22.6 0-41 18.4-41 41s18.4 41 41 41 41-18.4 41-41-18.4-41-41-41z" fill="var(--green-800)"/>
+              </svg>
+            </div>
+            <!-- Inline search bar (fills remaining space) -->
+            <div class="search-input-demo" style="flex: 1; background: var(--sand);">
+              <i class="hgi-stroke hgi-search-01" style="color: var(--gray-500);"></i>
+              <div class="search-input-inner" style="color: var(--black);">Улун</div>
+              <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
+            </div>
+            <!-- Cancel button -->
+            <button style="flex-shrink: 0; background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--gray-800); cursor: pointer; padding: 0; white-space: nowrap;">Скасувати</button>
+          </div>
+          <div class="input-hint" style="padding: 12px 16px 16px;">Mobile — nav.search-active: inline search заповнює nav, іконки ховаються</div>
+        </div>
+      </div>
     </div>
 
     <div class="ds-code-wrap">
@@ -1405,7 +1439,7 @@ hover → sand</div>
 
     <div class="ds-code-wrap" style="margin-top: 40px;">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block">.<span class="k">faq-item</span> { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">border-radius</span>: <span class="v">20px</span>; <span class="k">overflow</span>: <span class="v">hidden</span>; }
+      <div class="ds-code-block scroll">.<span class="k">faq-item</span> { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">border-radius</span>: <span class="v">20px</span>; <span class="k">overflow</span>: <span class="v">hidden</span>; }
 .<span class="k">faq-question</span> { <span class="k">padding</span>: <span class="v">28px</span>; <span class="k">font-size</span>: <span class="v">16px</span>; <span class="k">font-weight</span>: <span class="v">600</span>; <span class="k">color</span>: <span class="v">var(--black)</span>; <span class="k">transition</span>: <span class="v">color 0.2s</span>; }
 .<span class="k">faq-question-icon</span> { <span class="k">font-size</span>: <span class="v">22px</span>; <span class="k">color</span>: <span class="v">var(--gray-500)</span>; <span class="k">transition</span>: <span class="v">transform 0.3s, color 0.2s</span>; }
 .<span class="k">faq-item.open .faq-question</span> { <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
@@ -1599,8 +1633,8 @@ hover → sand</div>
 <!-- FOOTER -->
 <footer style="padding: 40px 48px; margin-top: 40px;">
   <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-    <p style="font-size: 12px; color: var(--gray-500);">© 2025 Söl Tea. Style Guide & Design System.</p>
     <a href="sol-tea.html" class="ds-back"><i class="hgi-stroke hgi-arrow-left-01"></i> До сайту</a>
+    <p style="font-size: 12px; color: var(--gray-500);">© 2025 Söl Tea. Style Guide & Design System.</p>
   </div>
 </footer>
 
@@ -1698,6 +1732,20 @@ function switchFooterPreview(type, btn) {
   btn.classList.add('active');
   const desktop = document.getElementById('footerPreviewDesktop');
   const mobile  = document.getElementById('footerPreviewMobile');
+  if (type === 'desktop') {
+    desktop.style.display = '';
+    mobile.style.display  = 'none';
+  } else {
+    desktop.style.display = 'none';
+    mobile.style.display  = '';
+  }
+}
+
+function switchSearchPreview(type, btn) {
+  btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const desktop = document.getElementById('searchPreviewDesktop');
+  const mobile  = document.getElementById('searchPreviewMobile');
   if (type === 'desktop') {
     desktop.style.display = '';
     mobile.style.display  = 'none';
