@@ -332,6 +332,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .icon-btn-row { flex-direction: column; gap: 24px; }
   .icon-btn-row .btn-cell { align-items: flex-start !important; }
   .ds-footer-inner { flex-direction: column-reverse; align-items: flex-start !important; justify-content: flex-start !important; padding: 0; }
+  footer { padding-left: 24px !important; padding-right: 24px !important; }
   .color-swatch { aspect-ratio: 1/1; height: auto; border-radius: 20px; }
   .radius-row { gap: 12px; }
   .radius-demo { width: 60px; height: 60px; }
@@ -339,10 +340,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .rv-unit { font-size: 9px; }
   .rules-grid { grid-template-columns: 1fr; }
   .ds-code-block { padding: 20px; border-radius: 20px; font-size: 11px; white-space: pre-wrap; overflow-x: hidden; word-break: break-all; }
-  .spacing-grid { grid-template-columns: 1fr 1fr; }
-  .ds-pagination { gap: 4px; }
-  .ds-page-btn { width: 36px; height: 36px; font-size: 13px; }
-  .ds-page-dots { width: 24px; font-size: 12px; }
+  .spacing-grid { grid-template-columns: 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
   .testimonials-demo-grid { grid-template-columns: 1fr; }
@@ -1982,8 +1980,8 @@ function dsQtyChange(delta) {
 }
 
 /* Pagination demo */
-let dsCurrentPage = 2;
-const DS_TOTAL = 8;
+let dsCurrentPage = 3;
+const DS_TOTAL = 5;
 function dsPaginate(page) {
   dsCurrentPage = Math.max(1, Math.min(DS_TOTAL, page));
   dsRenderPagination();
