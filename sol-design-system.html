@@ -307,12 +307,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .ds-header { padding: 40px 24px 0; }
-  .ds-header-inner { flex-direction: column; gap: 20px; }
+  .ds-header-inner { flex-direction: column-reverse; gap: 20px; align-items: flex-start; }
   .ds-title { font-size: clamp(40px, 11vw, 64px); }
   .anchor-nav { padding: 20px 16px 24px; }
   .anchor-nav-inner { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .anchor-nav-inner::-webkit-scrollbar { display: none; }
-  .ds-section { padding: 0 24px 60px; scroll-margin-top: 88px; }
+  .ds-section { padding: 0 24px 40px; scroll-margin-top: 88px; }
+  .ds-section-desc { margin-bottom: 40px; }
   .brand-inner { grid-template-columns: 1fr; gap: 32px; }
   .brand-logo svg { width: 80px; }
   .brand-name { font-size: 36px; }
@@ -330,8 +331,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .type-demo-h4 { font-size: 24px !important; }
   .icon-btn-row { flex-direction: column; gap: 24px; }
   .icon-btn-row .btn-cell { align-items: flex-start !important; }
-  .ds-footer-inner { flex-direction: column-reverse; align-items: flex-start; }
-  .ds-footer-inner { padding: 0 24px; }
+  .ds-footer-inner { flex-direction: column-reverse; align-items: flex-start !important; justify-content: flex-start !important; padding: 0; }
   .color-swatch { aspect-ratio: 1/1; height: auto; border-radius: 20px; }
   .radius-row { gap: 12px; }
   .radius-demo { width: 60px; height: 60px; }
@@ -339,7 +339,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .rv-unit { font-size: 9px; }
   .rules-grid { grid-template-columns: 1fr; }
   .ds-code-block { padding: 20px; border-radius: 20px; font-size: 11px; white-space: pre-wrap; overflow-x: hidden; word-break: break-all; }
-  .spacing-grid { grid-template-columns: 1fr; }
+  .spacing-grid { grid-template-columns: 1fr 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
   .testimonials-demo-grid { grid-template-columns: 1fr; }
