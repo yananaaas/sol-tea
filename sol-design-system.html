@@ -275,13 +275,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .testimonial-handle { font-size: 12px; color: var(--gray-500); }
 .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
 
+/* ── DESKTOP PREVIEW SCROLL ── */
+.ds-preview-scroll::-webkit-scrollbar { display: none; }
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .ds-header { padding: 40px 24px 0; }
   .ds-header-inner { flex-direction: column; gap: 20px; }
   .ds-title { font-size: clamp(40px, 11vw, 64px); }
   .anchor-nav { padding: 20px 16px 24px; }
-  .btn-add-card { padding: 14px 28px; font-size: 15px; }
   .anchor-nav-inner { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .anchor-nav-inner::-webkit-scrollbar { display: none; }
   .ds-section { padding: 0 24px 60px; scroll-margin-top: 88px; }
@@ -289,20 +291,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .brand-logo svg { width: 80px; }
   .brand-name { font-size: 36px; }
   .type-row { grid-template-columns: 1fr; gap: 12px; }
-  .btn-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .type-demo-h1 { font-size: clamp(28px, 8vw, 40px) !important; }
+  .type-demo-h2 { font-size: 22px !important; }
+  .btn-grid-4 { grid-template-columns: 1fr; gap: 20px; }
   .btn-cell-dark-wrap { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
-  .card-demo-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .filter-pill { padding: 12px 18px; }
+  .anchor-pill { padding: 12px 18px; }
+  .card-demo-grid { grid-template-columns: 1fr; gap: 24px; }
   .icon-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
   .color-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .color-tap-hint { display: block; }
-  .color-swatch { aspect-ratio: auto; height: 80px; border-radius: 16px; }
+  .color-tap-hint { display: flex; align-items: center; gap: 6px; }
+  .color-tap-hint i { font-size: 16px; flex-shrink: 0; }
+  .color-swatch { aspect-ratio: 1/1; height: auto; border-radius: 20px; }
   .radius-row { gap: 12px; }
   .radius-demo { width: 60px; height: 60px; }
   .rv-num { font-size: 16px; }
   .rv-unit { font-size: 9px; }
   .rules-grid { grid-template-columns: 1fr; }
-  .ds-code-block { padding: 20px; border-radius: 20px; font-size: 11px; }
-  .spacing-grid { grid-template-columns: 1fr 1fr; }
+  .ds-code-block { padding: 20px; border-radius: 20px; font-size: 11px; white-space: pre-wrap; overflow-x: hidden; word-break: break-all; }
+  .spacing-grid { grid-template-columns: 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
   .testimonials-demo-grid { grid-template-columns: 1fr; }
@@ -392,7 +399,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Colors</h2>
     <p class="ds-section-desc">Всі кольори — CSS змінні в <code class="ds-code">:root</code>. Ніколи не хардкодити hex напряму. Наведи на квадрат, щоб побачити всю інформацію.</p>
-    <p class="color-tap-hint">Натисни на квадрат, щоб побачити деталі</p>
+    <p class="color-tap-hint"><i class="hgi-stroke hgi-touch-01"></i>Натисни на квадрат, щоб побачити деталі</p>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">Фони</div>
     <div class="color-grid" style="margin-bottom: 40px;">
@@ -472,22 +479,24 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <div>
           <div class="type-meta-label">Page h1</div>
           <div class="type-meta-detail">Inter 900
-clamp(40px, 5vw, 64px)
+Desktop: clamp(40px, 5vw, 64px)
+Mobile: clamp(28px, 8vw, 40px)
 letter-spacing -0.03em
 line-height 1</div>
         </div>
-        <div style="font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:var(--black);">Улун Те Гуань Інь</div>
+        <div class="type-demo-h1" style="font-family:'Inter',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:var(--black);">Улун Те Гуань Інь</div>
       </div>
 
       <div class="type-row">
         <div>
           <div class="type-meta-label">Section h2</div>
           <div class="type-meta-detail">Inter 900
-clamp(26px, 3vw, 38px)
+Desktop: clamp(26px, 3vw, 38px)
+Mobile: 22px
 letter-spacing -0.02em
 line-height 1.1</div>
         </div>
-        <div style="font-family:'Inter',sans-serif;font-size:clamp(26px,3vw,38px);font-weight:900;letter-spacing:-0.02em;line-height:1.1;color:var(--black);">Хіти продажів</div>
+        <div class="type-demo-h2" style="font-family:'Inter',sans-serif;font-size:clamp(26px,3vw,38px);font-weight:900;letter-spacing:-0.02em;line-height:1.1;color:var(--black);">Хіти продажів</div>
       </div>
 
       <div class="type-row">
@@ -569,8 +578,9 @@ color green-800</div>
       <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Mobile</button>
     </div>
 
-    <div id="navPreviewDesktop" style="border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
-      <div class="nav-pv" style="padding: 0;">
+    <div id="navPreviewDesktop" class="ds-preview-scroll" style="border-radius: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px;">
+      <div style="min-width: 760px;">
+      <div class="nav-pv" style="padding: 0 48px;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
         </div>
@@ -595,6 +605,7 @@ color green-800</div>
           </button>
           <button class="nav-pv-btn"><i class="hgi-stroke hgi-help-circle"></i></button>
         </div>
+      </div>
       </div>
     </div>
 
@@ -640,7 +651,8 @@ color green-800</div>
       <button class="filter-pill" onclick="switchFooterPreview('mobile', this)">Mobile</button>
     </div>
 
-    <div id="footerPreviewDesktop" class="ds-preview-frame dark" style="background: var(--black); padding: 80px 48px 40px;">
+    <div id="footerPreviewDesktop" class="ds-preview-frame dark ds-preview-scroll" style="background: var(--black); padding: 80px 48px 40px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+      <div style="min-width: 900px;">
       <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px;">
 
         <!-- Brand col -->
@@ -693,6 +705,7 @@ color green-800</div>
           <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-telegram"></i></button>
           <button style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:24px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;"><i class="hgi-stroke hgi-facebook-01"></i></button>
         </div>
+      </div>
       </div>
     </div>
 
