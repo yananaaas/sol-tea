@@ -919,34 +919,37 @@ bg black → .in-cart: green-800
 
     <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
 
-    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 8px;">Кнопки-іконки</div>
-    <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7;">Два типи: <strong style="color:var(--black);">nav icon btn</strong> — навігація, <code class="ds-code">44×44px</code>, <code class="ds-code">font-size: 22px</code>; <strong style="color:var(--black);">gallery arrow</strong> — слайдер товару, <code class="ds-code">40×40px</code>, <code class="ds-code">bg: rgba(253,252,249,0.88)</code>. Обидва круглі, без border.</p>
-
-    <div style="font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;">Nav icon — .nav-icon-btn</div>
-    <div style="display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 32px;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Кнопки-іконки</div>
+    <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
+      <div class="btn-cell" style="align-items: center;">
         <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-search-01"></i></button>
-        <div class="ds-meta" style="text-align:center;">search-01</div>
+        <div class="ds-meta" style="text-align:center;">.nav-icon-btn
+44×44px
+пошук</div>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="btn-cell" style="align-items: center;">
         <button class="nav-icon-btn-demo"><i class="hgi-stroke hgi-user-circle"></i></button>
-        <div class="ds-meta" style="text-align:center;">user-circle</div>
+        <div class="ds-meta" style="text-align:center;">.nav-icon-btn
+44×44px
+профіль</div>
       </div>
-    </div>
-
-    <div style="font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;">Gallery arrows — .gallery-arrow</div>
-    <div style="background: var(--sand); border-radius: 20px; padding: 28px; display: inline-flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="btn-cell" style="align-items: center;">
         <button class="ds-gallery-arrow-demo"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
-        <div class="ds-meta" style="text-align:center;">prev</div>
+        <div class="ds-meta" style="text-align:center;">.gallery-arrow
+40×40px
+bg cream 88%</div>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="btn-cell" style="align-items: center;">
         <button class="ds-gallery-arrow-demo" disabled><i class="hgi-stroke hgi-arrow-left-01"></i></button>
-        <div class="ds-meta" style="text-align:center;">prev disabled</div>
+        <div class="ds-meta" style="text-align:center;">.gallery-arrow
+disabled
+opacity 0.3</div>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="btn-cell" style="align-items: center;">
         <button class="ds-gallery-arrow-demo"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
-        <div class="ds-meta" style="text-align:center;">next</div>
+        <div class="ds-meta" style="text-align:center;">.gallery-arrow
+40×40px
+next</div>
       </div>
     </div>
 
@@ -1171,7 +1174,6 @@ hover → sand</div>
             <i class="hgi-stroke hgi-plus-sign"></i>
           </button>
         </div>
-        <div class="ds-meta">Клікни, щоб змінити кількість</div>
       </div>
     </div>
 
@@ -1340,7 +1342,6 @@ hover → sand</div>
       <button class="ds-page-btn" onclick="dsPaginate(8)">8</button>
       <button class="ds-page-btn" id="dsNextBtn" onclick="dsPaginate(Math.min(8, dsCurrentPage+1))"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
     </div>
-    <div class="ds-meta" style="margin-top: 12px;">Клікни на сторінку або стрілки, щоб перемкнути</div>
 
     <div class="ds-code-wrap" style="margin-top: 40px;">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
