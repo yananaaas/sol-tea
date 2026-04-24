@@ -136,14 +136,14 @@
   .reviews-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
   .reviews-count-lbl { font-size: 14px; color: var(--gray-500); }
   .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .review-card { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-  .review-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
-  .review-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .review-user { display: flex; align-items: center; gap: 12px; }
-  .review-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
-  .review-author { font-size: 14px; font-weight: 600; color: var(--black); }
-  .review-date { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
-  .review-rating-pill { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+  .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
+  .testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
+  .testimonial-user { display: flex; align-items: center; gap: 12px; }
+  .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
+  .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
+  .testimonial-handle { font-size: 12px; color: var(--gray-500); }
+  .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
   .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; border: none; }
   .product-wish.liked { color: var(--terra); }
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
@@ -688,14 +688,14 @@ function renderReviews(reviews) {
   grid.innerHTML = reviews.map((r, i) => {
     const initials = r.author.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
     const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
-    return `<div class="review-card">
-      <p class="review-text">${r.text}</p>
-      <div class="review-footer">
-        <div class="review-user">
-          <div class="review-avatar" style="background:${color}">${initials}</div>
-          <div><div class="review-author">${r.author}</div><div class="review-date">${r.date}</div></div>
+    return `<div class="testimonial">
+      <p class="testimonial-text">${r.text}</p>
+      <div class="testimonial-footer">
+        <div class="testimonial-user">
+          <div class="testimonial-avatar" style="background:${color}">${initials}</div>
+          <div><div class="testimonial-name">${r.author}</div><div class="testimonial-handle">${r.date}</div></div>
         </div>
-        <span class="review-rating-pill">★ ${r.rating}</span>
+        <span class="testimonial-rating">★ ${Number.isInteger(r.rating) ? r.rating + '.0' : r.rating}</span>
       </div>
     </div>`;
   }).join('');
