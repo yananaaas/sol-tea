@@ -92,7 +92,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .type-row { display: grid; grid-template-columns: 200px 1fr; align-items: start; gap: 48px; padding: 32px 0; }
 .type-row + .type-row { border-top: none; }
 .type-meta-label { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px; }
-.type-meta-detail { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); line-height: 1.9; }
+.type-meta-detail { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: var(--gray-300); line-height: 1.9; white-space: pre-line; }
 
 /* ── BUTTONS ── */
 .btn-primary { background: var(--green-800); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
@@ -580,7 +580,7 @@ color green-800</div>
 
     <div id="navPreviewDesktop" class="ds-preview-scroll" style="border-radius: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px;">
       <div style="min-width: 760px;">
-      <div class="nav-pv" style="padding: 0 48px;">
+      <div class="nav-pv" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
         </div>
@@ -633,7 +633,7 @@ color green-800</div>
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.7;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code>. Mobile: 72px, <code class="ds-code">padding: 0 16px</code>. Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.9;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code><br>Mobile: 72px, <code class="ds-code">padding: 0 16px</code><br>Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
   </div>
 </section>
 
@@ -660,7 +660,7 @@ color green-800</div>
           <svg viewBox="0 0 242 249" style="color:var(--green-500);width:40px;height:41px;display:block;flex-shrink:0;"><use href="#sol-logo"/></svg>
           <p style="font-size:13px;color:var(--gray-500);line-height:1.7;max-width:220px;">Нішові китайські чаї для тих, хто цінує момент. Зібрано вручну, доставлено з любов'ю.</p>
           <a href="sol-design-system.html" style="font-size:13px;color:var(--gray-300);text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
-            Design System ↗
+            Design System <i class="hgi-stroke hgi-arrow-up-right-01" style="font-size:12px;"></i>
           </a>
         </div>
 
