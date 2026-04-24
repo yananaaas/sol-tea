@@ -230,7 +230,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .nav-pv-logo { flex-shrink: 0; display: flex; align-items: center; }
 .nav-pv-logo svg { height: 42px; width: 41px; display: block; }
 .nav-pv-links { display: flex; gap: 36px; list-style: none; }
-.nav-pv-links a { font-size: 14px; color: var(--gray-800); text-decoration: none; }
+.nav-pv-links a { font-size: 14px; color: var(--gray-800); text-decoration: none; white-space: nowrap; }
 .nav-pv-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; width: 280px; flex-shrink: 0; }
 .nav-pv-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
 .nav-pv-search span { font-size: 15px; color: var(--gray-500); }
@@ -314,8 +314,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .search-input-wrap { max-width: 100%; }
   .testimonials-demo-grid { grid-template-columns: 1fr; }
   .sort-btn { padding: 12px 20px; }
+  .cat-trigger { padding: 12px 20px; }
   .card-demo-grid .product-img { aspect-ratio: 1/1; }
-  .card-demo-grid .btn-add { padding: 14px 28px; font-size: 15px; }
+  .card-demo-grid .product-body { padding: 24px; justify-content: space-between; }
+  .card-demo-grid .product-body h4 { font-size: 24px; }
+  .card-demo-grid .product-desc { font-size: 13px; line-height: 1.7; }
+  .card-demo-grid .product-price { font-size: 24px; }
+  .card-demo-grid .btn-add-card { padding: 14px 28px; font-size: 15px; }
+  .radius-demo { width: 80px; height: 80px; }
+  .rv-num { font-size: 18px; }
 }
 </style>
 </head>
@@ -636,7 +643,7 @@ color green-800</div>
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.9;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code><br>Mobile: 72px, <code class="ds-code">padding: 0 16px</code><br>Icons: 44×44px area, <code class="ds-code">font-size: 22px</code>. Badge: 17×17px, <code class="ds-code">font-size: 10px</code>.</p>
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.9;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code><br>Mobile: 72px, <code class="ds-code">padding: 0 16px</code><br>Іконки: 44×44px, <code class="ds-code">font-size: 22px</code><br>Badge: 17×17px, <code class="ds-code">font-size: 10px</code></p>
   </div>
 </section>
 
@@ -647,7 +654,9 @@ color green-800</div>
 <section id="footer-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Footer</h2>
-    <p class="ds-section-desc">Темний фон — <code class="ds-code">var(--black)</code>. Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code>. Посилання: 14px DM Sans 300.</p>
+    <p class="ds-section-desc" style="white-space: pre-line;">Темний фон — <code class="ds-code">var(--black)</code>
+Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code>
+Посилання: 14px DM Sans 300</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchFooterPreview('desktop', this)">Desktop</button>
@@ -971,29 +980,20 @@ hover → sand</div>
     </div>
 
     <div id="searchPreviewMobile" style="display: none;">
-      <div class="ds-preview-mobile-wrap">
-        <div style="width: 375px; background: var(--cream); border-radius: 20px; overflow: hidden;">
-          <!-- Nav in search-active state -->
-          <div style="height: 72px; background: var(--cream); display: flex; align-items: center; padding: 0 16px; gap: 12px;">
-            <!-- Logo -->
-            <div style="flex-shrink: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;">
-              <svg viewBox="0 0 242 249" style="height: 34px; width: 33px; display: block;">
-                <path d="M121 0C54.2 0 0 54.2 0 121s54.2 121 121 121 121-54.2 121-121S187.8 0 121 0z" fill="var(--green-800)"/>
-                <path d="M121 40c-44.7 0-81 36.3-81 81s36.3 81 81 81 81-36.3 81-81-36.3-81-81-81z" fill="var(--cream)"/>
-                <path d="M121 80c-22.6 0-41 18.4-41 41s18.4 41 41 41 41-18.4 41-41-18.4-41-41-41z" fill="var(--green-800)"/>
-              </svg>
-            </div>
-            <!-- Inline search bar (fills remaining space) -->
-            <div class="search-input-demo" style="flex: 1; background: var(--sand);">
-              <i class="hgi-stroke hgi-search-01" style="color: var(--gray-500);"></i>
-              <div class="search-input-inner" style="color: var(--black);">Улун</div>
-              <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
-            </div>
-            <!-- Cancel button -->
-            <button style="flex-shrink: 0; background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--gray-800); cursor: pointer; padding: 0; white-space: nowrap;">Скасувати</button>
+      <div style="width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream);">
+        <!-- nav-pv-mobile in search-active state -->
+        <div class="nav-pv-mobile" style="padding: 0 16px;">
+          <div class="nav-pv-logo">
+            <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
           </div>
-          <div class="input-hint" style="padding: 12px 16px 16px;">Mobile — nav.search-active: inline search заповнює nav, іконки ховаються</div>
+          <!-- nav-search-inline: flex:1, margin-left:12px, background:sand, border-radius:40px, padding:10px 14px -->
+          <div style="flex: 1; margin-left: 12px; background: var(--sand); border-radius: 40px; padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
+            <i class="hgi-stroke hgi-search-01" style="font-size: 22px; color: var(--gray-500); flex-shrink: 0;"></i>
+            <span style="flex: 1; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black);">Улун</span>
+            <button style="background: none; border: none; padding: 0; color: var(--gray-500); font-size: 18px; display: flex; align-items: center; cursor: pointer; flex-shrink: 0;"><i class="hgi-stroke hgi-cancel-01"></i></button>
+          </div>
         </div>
+        <div class="input-hint" style="padding: 10px 16px 16px;">nav.search-active — .nav-right і бургер ховаються, .nav-search-inline заповнює nav</div>
       </div>
     </div>
 
@@ -1651,7 +1651,19 @@ function updateActivePill() {
     const el = document.getElementById(id);
     if (el && window.scrollY >= el.offsetTop - 120) current = id;
   });
-  navPills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === '#' + current));
+  const inner = document.querySelector('.anchor-nav-inner');
+  navPills.forEach(p => {
+    const isActive = p.getAttribute('href') === '#' + current;
+    p.classList.toggle('active', isActive);
+    if (isActive && inner) {
+      const pillLeft = p.offsetLeft;
+      const pillRight = pillLeft + p.offsetWidth;
+      const viewLeft = inner.scrollLeft;
+      const viewRight = viewLeft + inner.offsetWidth;
+      if (pillLeft < viewLeft + 16) inner.scrollLeft = pillLeft - 16;
+      else if (pillRight > viewRight - 16) inner.scrollLeft = pillRight - inner.offsetWidth + 16;
+    }
+  });
 }
 window.addEventListener('scroll', updateActivePill, { passive: true });
 updateActivePill();
