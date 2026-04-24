@@ -1048,6 +1048,47 @@ hover → sand</div>
 .<span class="k">btn i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(3px)</span>; <span class="k">margin-right</span>: <span class="v">-4px</span>; <span class="k">transition</span>: <span class="v">transform 0.2s</span>; }
 @media (hover: hover) {
   .<span class="k">btn</span>:hover <span class="k">i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(7px)</span>; }
+}
+
+/* Nav icon button */
+.<span class="k">nav-icon-btn</span> {
+  <span class="k">width</span>:            <span class="v">44px</span>;
+  <span class="k">height</span>:           <span class="v">44px</span>;
+  <span class="k">border-radius</span>:    <span class="v">50%</span>;
+  <span class="k">font-size</span>:        <span class="v">22px</span>;
+  <span class="k">position</span>:         <span class="v">relative</span>;  <span class="v">/* для індикатора */</span>
+  <span class="k">background</span>:       <span class="v">transparent</span>;
+  <span class="k">border</span>:           <span class="v">none</span>;
+  <span class="k">cursor</span>:           <span class="v">pointer</span>;
+  <span class="k">color</span>:            <span class="v">var(--black)</span>;
+  <span class="k">display</span>:          <span class="v">flex</span>;
+  <span class="k">align-items</span>:      <span class="v">center</span>;
+  <span class="k">justify-content</span>:  <span class="v">center</span>;
+}
+@media (hover: hover) {
+  .<span class="k">nav-icon-btn</span>:hover { <span class="k">background</span>: <span class="v">var(--sand)</span>; }
+}
+
+/* Gallery arrow */
+.<span class="k">gallery-arrow</span> {
+  <span class="k">width</span>:            <span class="v">40px</span>;
+  <span class="k">height</span>:           <span class="v">40px</span>;
+  <span class="k">border-radius</span>:    <span class="v">50%</span>;
+  <span class="k">background</span>:       <span class="v">rgba(253,252,249,0.88)</span>;
+  <span class="k">border</span>:           <span class="v">none</span>;
+  <span class="k">cursor</span>:           <span class="v">pointer</span>;
+  <span class="k">font-size</span>:        <span class="v">20px</span>;
+  <span class="k">color</span>:            <span class="v">var(--black)</span>;
+  <span class="k">position</span>:         <span class="v">absolute</span>;
+  <span class="k">top</span>:              <span class="v">50%</span>;
+  <span class="k">transform</span>:        <span class="v">translateY(-50%)</span>;
+  <span class="k">z-index</span>:          <span class="v">3</span>;
+}
+.<span class="k">gallery-arrow-prev</span> { <span class="k">left</span>:  <span class="v">12px</span>; }
+.<span class="k">gallery-arrow-next</span> { <span class="k">right</span>: <span class="v">12px</span>; }
+.<span class="k">gallery-arrow</span>:disabled { <span class="k">opacity</span>: <span class="v">0.3</span>; <span class="k">cursor</span>: <span class="v">default</span>; }
+@media (hover: hover) {
+  .<span class="k">gallery-arrow</span>:hover { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; }
 }</div>
     </div>
 
@@ -1327,15 +1368,7 @@ hover → sand</div>
     <h2 class="ds-section-title">Pagination</h2>
     <p class="ds-section-desc">Пагінація в каталозі. Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <code class="ds-code">flex-shrink: 0</code> — кнопки не деформуються.</p>
 
-    <div class="ds-pagination" id="dsPagination">
-      <button class="ds-page-btn" id="dsPrevBtn" onclick="dsPaginate(Math.max(1, dsCurrentPage-1))"><i class="hgi-stroke hgi-arrow-left-01"></i></button>
-      <button class="ds-page-btn" onclick="dsPaginate(1)">1</button>
-      <button class="ds-page-btn active" onclick="dsPaginate(2)">2</button>
-      <button class="ds-page-btn" onclick="dsPaginate(3)">3</button>
-      <span class="ds-page-dots">···</span>
-      <button class="ds-page-btn" onclick="dsPaginate(8)">8</button>
-      <button class="ds-page-btn" id="dsNextBtn" onclick="dsPaginate(Math.min(8, dsCurrentPage+1))"><i class="hgi-stroke hgi-arrow-right-01"></i></button>
-    </div>
+    <div class="ds-pagination" id="dsPagination"></div>
 
     <div class="ds-code-wrap" style="margin-top: 40px;">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
@@ -1943,16 +1976,26 @@ function dsQtyChange(delta) {
 
 /* Pagination demo */
 let dsCurrentPage = 2;
+const DS_TOTAL = 8;
 function dsPaginate(page) {
-  page = Math.max(1, Math.min(8, page));
-  dsCurrentPage = page;
-  document.querySelectorAll('#dsPagination .ds-page-btn').forEach(btn => {
-    const num = parseInt(btn.textContent);
-    btn.classList.toggle('active', !isNaN(num) && num === page);
-  });
-  document.getElementById('dsPrevBtn').disabled = page <= 1;
-  document.getElementById('dsNextBtn').disabled = page >= 8;
+  dsCurrentPage = Math.max(1, Math.min(DS_TOTAL, page));
+  dsRenderPagination();
 }
+function dsRenderPagination() {
+  const p = dsCurrentPage;
+  const show = new Set([1, p-1, p, p+1, DS_TOTAL].filter(n => n >= 1 && n <= DS_TOTAL));
+  const pages = Array.from(show).sort((a,b) => a-b);
+  let html = `<button class="ds-page-btn" ${p<=1?'disabled':''} onclick="dsPaginate(${p-1})"><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
+  let prev = 0;
+  for (const n of pages) {
+    if (n - prev > 1) html += `<span class="ds-page-dots">···</span>`;
+    html += `<button class="ds-page-btn${n===p?' active':''}" onclick="dsPaginate(${n})">${n}</button>`;
+    prev = n;
+  }
+  html += `<button class="ds-page-btn" ${p>=DS_TOTAL?'disabled':''} onclick="dsPaginate(${p+1})"><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
+  document.getElementById('dsPagination').innerHTML = html;
+}
+dsRenderPagination();
 
 /* Btn-add main demo */
 function toggleBtnAdd() {
