@@ -43,7 +43,7 @@
   .cart-badge.visible, .wish-badge.visible { display: flex; }
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
   .burger-btn:hover { background: var(--sand); }
-  .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; background: var(--sand); border-radius: 40px; }
+  .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease, margin-left 0.22s ease; background: var(--sand); border-radius: 40px; }
   .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
   .nav-search-inline-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); min-width: 0; }
   .nav-search-inline-input::placeholder { color: var(--gray-500); }
@@ -142,7 +142,10 @@
   .review-meta { flex: 1; }
   .review-author { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
   .review-date { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
-  .review-stars { font-size: 14px; letter-spacing: 1px; }
+  .review-rating-pill { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; display: inline-block; }
+  .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; border: none; }
+  .product-wish.liked { color: var(--terra); }
+  @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
   .review-text { font-size: 14px; line-height: 1.65; color: var(--gray-800); }
   .reviews-empty { font-size: 15px; color: var(--gray-500); }
 
@@ -542,6 +545,16 @@ function toggleProductCart() {
   setCartBtnState(btn, idx === -1);
 }
 
+function toggleSimilarWish(name, btn) {
+  const wish = getWish();
+  const idx = wish.indexOf(name);
+  if (idx !== -1) wish.splice(idx, 1);
+  else wish.push(name);
+  saveWish(wish);
+  btn.classList.toggle('liked', wish.includes(name));
+  updateWishBadge();
+}
+
 function toggleProductWish() {
   if (!currentProduct) return;
   const btn = document.getElementById('piWish');
@@ -675,13 +688,12 @@ function renderReviews(reviews) {
   grid.innerHTML = reviews.map((r, i) => {
     const initials = r.author.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
     const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
-    const stars = Array.from({length:5},(_,j)=>`<span style="color:${j<r.rating?'var(--green-800)':'var(--gray-300)'}">\u2605</span>`).join('');
     return `<div class="review-card">
       <div class="review-top">
         <div class="review-avatar" style="background:${color}">${initials}</div>
         <div class="review-meta"><div class="review-author">${r.author}</div><div class="review-date">${r.date}</div></div>
+        <span class="review-rating-pill">★ ${r.rating}</span>
       </div>
-      <div class="review-stars">${stars}</div>
       <p class="review-text">${r.text}</p>
     </div>`;
   }).join('');
@@ -703,11 +715,15 @@ function renderSimilar(p) {
   if (similar.length === 0) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   const cart = getCart();
+  const wish = getWish();
   grid.innerHTML = similar.map(s => {
     const inCart = cart.some(c => c.name === s.name);
-    return `<div class="product-card" onclick="goToProduct('${s.name.replace(/'/g,"\\'")}')">
+    const isLiked = wish.includes(s.name);
+    const safeName = s.name.replace(/'/g,"\\'");
+    return `<div class="product-card" onclick="goToProduct('${safeName}')">
       <div class="product-img"${s.bg?` style="background:${s.bg}"`:''}>Фото
         <div class="product-region">${s.region}</div>
+        <button class="product-wish${isLiked?' liked':''}" onclick="event.stopPropagation();toggleSimilarWish('${safeName}',this)"><i class="hgi-stroke hgi-favourite"></i></button>
         ${s.badge==='new'?'<div class="product-badge badge-new">Новинка</div>':''}
         ${s.badge==='limited'?'<div class="product-badge badge-limited">Обмежений</div>':''}
       </div>
