@@ -279,21 +279,21 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 @media (max-width: 768px) {
   .ds-header { padding: 40px 24px 0; }
   .ds-header-inner { flex-direction: column; gap: 20px; }
-  .ds-title { font-size: clamp(44px, 12vw, 68px); }
-  .anchor-nav { padding: 28px 16px 28px; }
+  .ds-title { font-size: clamp(40px, 11vw, 64px); }
+  .anchor-nav { padding: 20px 16px 24px; }
   .btn-add-card { padding: 14px 28px; font-size: 15px; }
   .anchor-nav-inner { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .anchor-nav-inner::-webkit-scrollbar { display: none; }
-  .ds-section { padding: 0 24px 60px; scroll-margin-top: 100px; }
+  .ds-section { padding: 0 24px 60px; scroll-margin-top: 88px; }
   .brand-inner { grid-template-columns: 1fr; gap: 32px; }
   .brand-logo svg { width: 80px; }
   .brand-name { font-size: 36px; }
   .type-row { grid-template-columns: 1fr; gap: 12px; }
   .btn-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .btn-cell-dark-wrap { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .card-demo-grid { grid-template-columns: 1fr; }
+  .btn-cell-dark-wrap { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
+  .card-demo-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
   .icon-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
-  .color-grid { grid-template-columns: 1fr; gap: 12px; }
+  .color-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .color-tap-hint { display: block; }
   .color-swatch { aspect-ratio: auto; height: 80px; border-radius: 16px; }
   .radius-row { gap: 12px; }
@@ -301,7 +301,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .rv-num { font-size: 16px; }
   .rv-unit { font-size: 9px; }
   .rules-grid { grid-template-columns: 1fr; }
-  .ds-code-block { padding: 20px 20px; border-radius: 20px; font-size: 11px; }
+  .ds-code-block { padding: 20px; border-radius: 20px; font-size: 11px; }
   .spacing-grid { grid-template-columns: 1fr 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
@@ -598,7 +598,8 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="navPreviewMobile" style="display:none; width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px;">
+    <div id="navPreviewMobile" style="display:none; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: var(--cream-bright); border: 1px solid var(--gray-100); padding: 16px; justify-content: center; align-items: center;">
+      <div style="width: 375px; max-width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-100);">
       <div class="nav-pv-mobile" style="padding: 0;">
         <div class="nav-pv-logo">
           <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
@@ -617,6 +618,7 @@ color green-800</div>
           </button>
           <button class="nav-pv-btn"><i class="hgi-stroke hgi-menu-01"></i></button>
         </div>
+      </div>
       </div>
     </div>
 
@@ -694,8 +696,8 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="footerPreviewMobile" class="ds-preview-mobile-wrap" style="display:none;background:var(--black);">
-      <div style="padding:60px 24px 32px;display:flex;flex-direction:column;gap:40px;">
+    <div id="footerPreviewMobile" style="display:none; border-radius: 20px; overflow: hidden; background: var(--black); padding: 0; justify-content: center;">
+      <div style="width: 100%; max-width: 480px; margin: 0 auto; padding:60px 24px 32px;display:flex;flex-direction:column;gap:40px;">
 
         <!-- Brand -->
         <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1674,7 +1676,7 @@ function switchNavPreview(type, btn) {
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = '';
+    mobile.style.display  = 'flex';
   }
 }
 
@@ -1688,7 +1690,7 @@ function switchFooterPreview(type, btn) {
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = '';
+    mobile.style.display  = 'block';
   }
 }
 
