@@ -696,8 +696,8 @@ color green-800</div>
       </div>
     </div>
 
-    <div id="footerPreviewMobile" style="display:none; border-radius: 20px; overflow: hidden; background: var(--black); padding: 0; justify-content: center;">
-      <div style="width: 100%; max-width: 480px; margin: 0 auto; padding:60px 24px 32px;display:flex;flex-direction:column;gap:40px;">
+    <div id="footerPreviewMobile" class="ds-preview-mobile-wrap" style="display:none;background:var(--black);">
+      <div style="padding:60px 24px 32px;display:flex;flex-direction:column;gap:40px;">
 
         <!-- Brand -->
         <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1690,7 +1690,7 @@ function switchFooterPreview(type, btn) {
     mobile.style.display  = 'none';
   } else {
     desktop.style.display = 'none';
-    mobile.style.display  = 'block';
+    mobile.style.display  = '';
   }
 }
 
