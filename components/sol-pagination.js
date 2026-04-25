@@ -34,7 +34,7 @@
       const current = parseInt(this.getAttribute('current') || '1', 10);
       const total   = parseInt(this.getAttribute('total')   || '0', 10);
 
-      if (total <= 1) {
+      if (total < 1) {
         this.innerHTML = '';
         this.style.display = 'none';
         return;
