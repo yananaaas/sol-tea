@@ -5,6 +5,7 @@
     connectedCallback() {
       const active = this.getAttribute('active') || '';
       const shopActive = active === 'shop' || active === 'product';
+      const shopSearch = active === 'shop';
       const faqActive  = active === 'faq';
       const homeActive = active === 'home';
 
@@ -16,7 +17,7 @@
       <li><a href="sol-tea.html"${homeActive ? ' class="active"' : ''}>Про нас</a></li>
       <li><a href="sol-shop.html"${shopActive ? ' class="active"' : ''}>Магазин</a></li>
     </ul>
-    <sol-search${shopActive ? ' variant="shop"' : ''}></sol-search>
+    <sol-search${shopSearch ? ' variant="shop"' : ''}></sol-search>
     <div class="nav-right">
       <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
       <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
