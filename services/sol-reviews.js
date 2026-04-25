@@ -5,9 +5,9 @@
   function load() {
     if (cache) return Promise.resolve(cache);
     if (pending) return pending;
-    pending = fetch('reviews.json')
+    pending = fetch('data/reviews.json')
       .then(r => {
-        if (!r.ok) throw new Error('Failed to load reviews.json: ' + r.status);
+        if (!r.ok) throw new Error('Failed to load data/reviews.json: ' + r.status);
         return r.json();
       })
       .then(data => { cache = data; pending = null; return data; })
