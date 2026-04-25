@@ -308,7 +308,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 /* ── TESTIMONIALS ── */
 .testimonials-demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
 .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-.testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
+.testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
 .testimonial-user { display: flex; align-items: center; gap: 12px; }
 .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
@@ -1725,10 +1725,13 @@ hover → sand</div>
   <span class="k">gap</span>:            <span class="v">24px</span>;
 }
 .<span class="k">testimonial-text</span> {
-  <span class="k">font-size</span>:   <span class="v">15px</span>;
-  <span class="k">line-height</span>: <span class="v">1.7</span>;
-  <span class="k">color</span>:       <span class="v">var(--black)</span>;
-  <span class="k">flex</span>:        <span class="v">1</span>;
+  <span class="k">font-size</span>:           <span class="v">15px</span>;
+  <span class="k">line-height</span>:         <span class="v">1.7</span>;
+  <span class="k">color</span>:               <span class="v">var(--black)</span>;
+  <span class="k">display</span>:             <span class="v">-webkit-box</span>;
+  <span class="k">-webkit-line-clamp</span>:  <span class="v">3</span>;
+  <span class="k">-webkit-box-orient</span>:  <span class="v">vertical</span>;
+  <span class="k">overflow</span>:            <span class="v">hidden</span>;
 }
 .<span class="k">testimonial-footer</span> {
   <span class="k">display</span>:         <span class="v">flex</span>;
