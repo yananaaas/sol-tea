@@ -108,14 +108,6 @@
   .reviews-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; }
   .reviews-count-lbl { font-size: 14px; color: var(--gray-500); }
   .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-  .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
-  .testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
-  .testimonial-user { display: flex; align-items: center; gap: 12px; }
-  .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
-  .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
-  .testimonial-handle { font-size: 12px; color: var(--gray-500); }
-  .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
   .reviews-empty { font-size: 15px; color: var(--gray-500); }
 
@@ -219,6 +211,7 @@
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-review-card.js"></script>
 </head>
 <body>
 
@@ -327,7 +320,6 @@ const PRODUCTS = [
   {name:'Каністра для чаю 100г',cat:'store',section:'accessories',region:'Тайвань',desc:'Алюміній з силіконовим ущільнювачем. Матова чорна.',longDesc:'Алюмінієва каністра для зберігання 100 г чаю з подвійним силіконовим ущільнювачем. Захищає від вологи, світла і сторонніх запахів.',price:'₴ 320',bg:'#C8C4BC',badge:null,grams:null,brew:null,images:3,reviews:[{author:'Юля Д.',rating:5,date:'Лютий 2026',text:'Якісна і гарна. Чай тепер зберігається правильно.'}]}
 ];
 
-const AVATAR_COLORS = ['#226F54','#C4855A','#4A4538','#7A7060','#7CC44A','#B5AFA3'];
 let currentSlide = 0;
 let currentProduct = null;
 let selectedGrams = null;
@@ -514,18 +506,8 @@ function renderReviews(reviews) {
   }
   lbl.textContent = reviews.length + ' ' + pluralUk(reviews.length, 'відгук', 'відгуки', 'відгуків');
   grid.innerHTML = reviews.map((r, i) => {
-    const initials = r.author.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
-    return `<div class="testimonial">
-      <p class="testimonial-text">${r.text}</p>
-      <div class="testimonial-footer">
-        <div class="testimonial-user">
-          <div class="testimonial-avatar" style="background:${color}">${initials}</div>
-          <div><div class="testimonial-name">${r.author}</div><div class="testimonial-handle">${r.date}</div></div>
-        </div>
-        <span class="testimonial-rating">★ ${Number.isInteger(r.rating) ? r.rating + '.0' : r.rating}</span>
-      </div>
-    </div>`;
+    const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+    return `<sol-review-card text="${esc(r.text)}" author="${esc(r.author)}" handle="${esc(r.date)}" rating="${esc(r.rating)}" index="${i}"></sol-review-card>`;
   }).join('');
 }
 

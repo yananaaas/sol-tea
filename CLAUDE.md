@@ -776,6 +776,7 @@ sol-admin.html         sol-shop, sol-product, sol-tea
 - ✅ `components/sol-footer.js` — `<sol-footer>` — футер
 - ✅ `components/sol-search.js` — `<sol-search variant="...">` — інпут пошуку (вбудований у sol-nav)
 - ✅ `components/sol-product-card.js` — `<sol-product-card>` — картка товару (інтегрована на всіх сторінках: sol-shop, sol-tea, sol-product, sol-cart, sol-faq, sol-checkout)
+- ✅ `components/sol-review-card.js` — `<sol-review-card>` — картка відгуку (інтегрована на sol-product через `renderReviews`, на sol-tea з `variant="marquee"` для бігучого рядка)
 
 **Залишилось** (джерело правди — підтверджує Яна перед кожним):
 

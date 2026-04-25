@@ -172,14 +172,6 @@
   .testimonials-track-wrap { overflow: hidden; }
   .testimonials-track { display: flex; gap: 40px; width: max-content; animation: marquee 32s linear infinite; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; width: 360px; flex-shrink: 0; }
-  .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
-  .testimonial-user { display: flex; align-items: center; gap: 12px; }
-  .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
-  .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
-  .testimonial-handle { font-size: 12px; color: var(--gray-500); }
-  .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
 
   /* FOOTER */
 
@@ -343,6 +335,7 @@
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-review-card.js"></script>
 </head>
 <body>
 
@@ -552,77 +545,17 @@
 <section class="testimonials">
   <div class="testimonials-track-wrap">
     <div class="testimonials-track">
-      <div class="testimonial">
-        <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#226F54">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#C4855A">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#4A4538">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#7A7060">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#1C1A14">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
+      <sol-review-card variant="marquee" color="#226F54" rating="5" author="Олена Коваль" handle="@olenatea" text="Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця."></sol-review-card>
+      <sol-review-card variant="marquee" color="#C4855A" rating="5" author="Максим Дяченко" handle="@puermax" text="Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний."></sol-review-card>
+      <sol-review-card variant="marquee" color="#4A4538" rating="5" author="Марія Романюк" handle="@maria.tea" text="Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень."></sol-review-card>
+      <sol-review-card variant="marquee" color="#7A7060" rating="5" author="Андрій Поліщук" handle="@andrii.p" text="Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай."></sol-review-card>
+      <sol-review-card variant="marquee" color="#1C1A14" rating="5" author="Василь Савченко" handle="@vasyl_tea" text="Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього."></sol-review-card>
       <!-- duplicate -->
-      <div class="testimonial">
-        <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#226F54">ОК</div><div><div class="testimonial-name">Олена Коваль</div><div class="testimonial-handle">@olenatea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#C4855A">МД</div><div><div class="testimonial-name">Максим Дяченко</div><div class="testimonial-handle">@puermax</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#4A4538">МР</div><div><div class="testimonial-name">Марія Романюк</div><div class="testimonial-handle">@maria.tea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#7A7060">АП</div><div><div class="testimonial-name">Андрій Поліщук</div><div class="testimonial-handle">@andrii.p</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user"><div class="testimonial-avatar" style="background:#1C1A14">ВС</div><div><div class="testimonial-name">Василь Савченко</div><div class="testimonial-handle">@vasyl_tea</div></div></div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
+      <sol-review-card variant="marquee" color="#226F54" rating="5" author="Олена Коваль" handle="@olenatea" text="Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця."></sol-review-card>
+      <sol-review-card variant="marquee" color="#C4855A" rating="5" author="Максим Дяченко" handle="@puermax" text="Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний."></sol-review-card>
+      <sol-review-card variant="marquee" color="#4A4538" rating="5" author="Марія Романюк" handle="@maria.tea" text="Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень."></sol-review-card>
+      <sol-review-card variant="marquee" color="#7A7060" rating="5" author="Андрій Поліщук" handle="@andrii.p" text="Дуже ціную те, що кожен сорт описаний чесно. Відчувається що люди самі люблять чай."></sol-review-card>
+      <sol-review-card variant="marquee" color="#1C1A14" rating="5" author="Василь Савченко" handle="@vasyl_tea" text="Перший раз спробував шен пуер саме тут — тепер не уявляю ранку без нього."></sol-review-card>
     </div>
   </div>
 </section>
