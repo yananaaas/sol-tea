@@ -171,6 +171,7 @@
   .product-footer { margin-top: auto; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
   .product-footer { display: flex; justify-content: space-between; align-items: center; }
   .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
@@ -480,6 +481,12 @@ function renderFilters() {
   }).join('');
 }
 
+function highlightText(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+}
+
 function renderCards() {
   const { products } = SECTIONS[currentSection];
   const grid = document.getElementById('productsGrid');
@@ -523,8 +530,8 @@ function renderCards() {
         ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
       </div>
       <div class="product-body">
-        <h4>${p.name}</h4>
-        <p class="product-desc">${p.desc}</p>
+        <h4>${searchQuery ? highlightText(p.name, searchQuery) : p.name}</h4>
+        <p class="product-desc">${searchQuery ? highlightText(p.desc, searchQuery) : p.desc}</p>
         <div class="product-footer">
           <span class="product-price">${p.price}</span>
           <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();addToCart('${p.name.replace(/'/g,"\\'")}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
