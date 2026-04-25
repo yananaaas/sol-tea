@@ -141,14 +141,6 @@
   .cart-item-controls { display: flex; align-items: center; gap: 10px; }
   .cart-item-price { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 900; color: var(--green-800); }
 
-  /* QTY CONTROL */
-  .qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
-  .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-800); transition: background 0.15s; flex-shrink: 0; }
-  @media (hover: hover) { .qty-btn:hover { background: var(--gray-100); } }
-  .qty-btn:disabled { opacity: 0.35; cursor: default; }
-  @media (hover: hover) { .qty-btn:disabled:hover { background: transparent; } }
-  .qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
-
   /* REMOVE BUTTON */
   .cart-item-remove { width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--gray-300); transition: all 0.2s; flex-shrink: 0; }
   @media (hover: hover) { .cart-item-remove:hover { background: rgba(232,74,46,0.08); color: #E84A2E; } }
@@ -240,6 +232,7 @@
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-counter.js"></script>
 </head>
 <body>
 
@@ -454,6 +447,7 @@ function renderCart() {
     const p = PRODUCT_MAP[item.name] || {};
     const itemTotal = (p.price || 0) * item.qty;
     const safeN = item.name.replace(/'/g, "\\'");
+    const attrN = item.name.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
     const badgeHtml = p.badge ? `<span class="item-badge badge-${p.badge}">${BADGE_LABELS[p.badge] || ''}</span>` : '';
     return `
       <div class="cart-item">
@@ -470,15 +464,7 @@ function renderCart() {
             </button>
           </div>
           <div class="cart-item-controls">
-            <div class="qty-ctrl">
-              <button class="qty-btn" onclick="changeQty('${safeN}', -1)" ${item.qty <= 1 ? 'disabled' : ''}>
-                <i class="hgi-stroke hgi-minus-sign"></i>
-              </button>
-              <span class="qty-num">${item.qty}</span>
-              <button class="qty-btn" onclick="changeQty('${safeN}', 1)">
-                <i class="hgi-stroke hgi-plus-sign"></i>
-              </button>
-            </div>
+            <sol-counter value="${item.qty}" min="1" data-name="${attrN}"></sol-counter>
             <span class="cart-item-price">₴ ${(itemTotal).toLocaleString('uk-UA')}</span>
           </div>
         </div>
@@ -510,6 +496,10 @@ function renderCart() {
       <a href="sol-checkout.html" class="btn-checkout">Оформити замовлення <i class="hgi-stroke hgi-arrow-right-01"></i></a>
       <p class="summary-note">Оплата карткою або при отриманні</p>
     </div>`;
+
+  cartEl.querySelectorAll('sol-counter').forEach(c => {
+    c.addEventListener('change', e => changeQty(c.dataset.name, e.detail.delta));
+  });
 }
 
 // ========================
