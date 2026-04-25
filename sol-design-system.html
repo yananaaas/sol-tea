@@ -103,19 +103,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .btn-secondary i { transform: translateX(3px); margin-right: -4px; transition: transform 0.2s; }
 @media (hover: hover) { .btn-secondary:hover { background: var(--cream-bright); color: var(--green-800); } .btn-secondary:hover i { transform: translateX(7px); } }
 
-.btn-outline-cream { background: transparent; color: var(--cream-bright); border: 1.5px solid var(--cream-bright); border-radius: 40px; padding: 12.5px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-@media (hover: hover) { .btn-outline-cream:hover { background: var(--cream-bright); color: var(--black); } }
+.btn-outline-cream { background: transparent; color: var(--cream-bright); border: 1.5px solid var(--cream-bright); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+@media (hover: hover) { .btn-outline-cream:hover { background: var(--cream-bright); border-color: var(--cream-bright); color: var(--green-800); } }
 
 .btn-filled-cream { background: var(--cream-bright); color: var(--green-800); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 @media (hover: hover) { .btn-filled-cream:hover { background: var(--sand); } }
 
-.btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 12.5px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.btn-outline-dark { background: transparent; color: var(--green-800); border: 1.5px solid var(--green-800); border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 @media (hover: hover) { .btn-outline-dark:hover { background: var(--green-800); color: var(--cream-bright); } }
 
 .btn-add-demo { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
 @media (hover: hover) { .btn-add-demo:hover { background: var(--green-800); } }
 .btn-add-demo.in-cart { background: var(--green-800); }
 @media (hover: hover) { .btn-add-demo.in-cart:hover { background: var(--black); } }
+
+/* Картка в схожих товарах / wishlist — менший розмір */
+.btn-add-sm-demo { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-add-sm-demo i { font-size: 18px; }
+.btn-add-sm-demo.in-cart { background: var(--green-800); }
+@media (hover: hover) { .btn-add-sm-demo:hover { background: var(--green-800); } .btn-add-sm-demo.in-cart:hover { background: var(--black); } }
 
 .btn-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
 .btn-cell { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
@@ -150,6 +156,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .sort-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); border-radius: 40px; padding: 10px 20px; font-size: 13px; color: var(--gray-800); cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: background 0.2s; white-space: nowrap; }
 .sort-btn i { font-size: 18px; }
 @media (hover: hover) { .sort-btn:hover { background: var(--gray-100); } }
+
+/* Tab pills — Кошик / Вподобане (sol-cart.html) */
+.tab-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border: none; border-radius: 40px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.tab-pill.active { background: var(--green-800); color: var(--cream-bright); }
+@media (hover: hover) { .tab-pill:hover:not(.active) { background: var(--gray-100); } }
+.tab-count { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--green-800); }
+.tab-count.wish-count { color: var(--terra); }
+.tab-pill.active .tab-count, .tab-pill.active .tab-count.wish-count { color: var(--cream-bright); }
+
 .pill-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
 
 /* ── ICONS ── */
@@ -895,7 +910,7 @@ color green-800</div>
     <p class="ds-section-desc">Єдиний стандарт: <code class="ds-code">padding: 14px 28px</code> — <code class="ds-code">font-size: 15px</code> — <code class="ds-code">border-radius: 40px</code>. Hover завжди в <code class="ds-code">@media (hover: hover)</code>.</p>
 
     <div class="ds-sublabel" style="margin-bottom: 16px;">На світлому фоні</div>
-    <div class="btn-grid-4" style="margin-bottom: 40px;">
+    <div class="btn-grid-4" style="margin-bottom: 40px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
       <div class="btn-cell">
         <button class="btn-primary">Купити зараз</button>
         <div class="ds-meta">.btn-primary
@@ -916,8 +931,14 @@ hover → green-800 fill</div>
       </div>
       <div class="btn-cell">
         <button class="btn-add-demo" id="btnAddDemo" onclick="toggleBtnAdd()"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
-        <div class="ds-meta">.btn-add
-bg black → .in-cart: green-800
+        <div class="ds-meta">.btn-add (sol-product)
+14px 28px / 15px
+клік для демо</div>
+      </div>
+      <div class="btn-cell">
+        <button class="btn-add-sm-demo" id="btnAddSmDemo" onclick="toggleBtnAddSm()"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
+        <div class="ds-meta">.btn-add / .btn-add-sm (картки)
+10px 18px / 13px
 клік для демо</div>
       </div>
     </div>
@@ -1001,11 +1022,11 @@ hover → sand</div>
   <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
   <span class="k">border</span>:        <span class="v">1.5px solid var(--cream-bright)</span>;
   <span class="k">border-radius</span>: <span class="v">40px</span>;
-  <span class="k">padding</span>:       <span class="v">12.5px 28px</span>;   <span class="v">/* компенсація border */</span>
+  <span class="k">padding</span>:       <span class="v">14px 28px</span>;
   <span class="k">font-size</span>:     <span class="v">15px</span>;
 }
 @media (hover: hover) {
-  .<span class="k">btn-outline-cream</span>:hover { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">color</span>: <span class="v">var(--black)</span>; }
+  .<span class="k">btn-outline-cream</span>:hover { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">border-color</span>: <span class="v">var(--cream-bright)</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
 }
 
 .<span class="k">btn-filled-cream</span> {
@@ -1024,14 +1045,14 @@ hover → sand</div>
   <span class="k">color</span>:         <span class="v">var(--green-800)</span>;
   <span class="k">border</span>:        <span class="v">1.5px solid var(--green-800)</span>;
   <span class="k">border-radius</span>: <span class="v">40px</span>;
-  <span class="k">padding</span>:       <span class="v">12.5px 28px</span>;
+  <span class="k">padding</span>:       <span class="v">14px 28px</span>;
   <span class="k">font-size</span>:     <span class="v">15px</span>;
 }
 @media (hover: hover) {
   .<span class="k">btn-outline-dark</span>:hover { <span class="k">background</span>: <span class="v">var(--green-800)</span>; <span class="k">color</span>: <span class="v">var(--cream-bright)</span>; }
 }
 
-/* .btn-add — кнопка в картці товару */
+/* .btn-add — кнопка "Кошик" в картці товару (sol-shop, sol-tea, sol-cart) */
 .<span class="k">btn-add</span> {
   <span class="k">background</span>:    <span class="v">var(--black)</span>;
   <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
@@ -1048,6 +1069,19 @@ hover → sand</div>
   .<span class="k">btn-add</span>:hover          { <span class="k">background</span>: <span class="v">var(--green-800)</span>; }
   .<span class="k">btn-add.in-cart</span>:hover  { <span class="k">background</span>: <span class="v">var(--black)</span>; }
 }
+
+/* .btn-add-sm — той самий стиль, але для схожих товарів у sol-product.html */
+.<span class="k">btn-add-sm</span> {
+  <span class="k">padding</span>:   <span class="v">10px 18px</span>;
+  <span class="k">font-size</span>: <span class="v">13px</span>;
+  <span class="k">gap</span>:       <span class="v">8px</span>;
+  /* решта — ідентично .btn-add */
+}
+.<span class="k">btn-add-sm i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
+/* sol-product overrides btn-add-sm → 14px 28px / 15px на мобілці (@media max-width:768px) */
+
+/* .btn-submit / .btn-checkout — full-width варіант .btn-primary */
+/* sol-checkout.html і sol-cart.html: display:flex; width:100%; padding:16px 28px */
 
 /* Стрілка в кнопках */
 .<span class="k">btn i.arrow</span> { <span class="k">transform</span>: <span class="v">translateX(3px)</span>; <span class="k">margin-right</span>: <span class="v">-4px</span>; <span class="k">transition</span>: <span class="v">transform 0.2s</span>; }
@@ -1288,6 +1322,12 @@ hover → sand</div>
       <button class="sort-btn"><i class="hgi-stroke hgi-filter-horizontal"></i> Сортування</button>
     </div>
 
+    <div class="ds-sublabel" style="margin-bottom: 16px; margin-top: 40px;">Tab pills — .tab-pill (sol-cart.html)</div>
+    <div class="pill-row" id="tabPillDemo">
+      <button class="tab-pill active" onclick="setTabPillActive('tabPillDemo',this)">Кошик <span class="tab-count">2</span></button>
+      <button class="tab-pill" onclick="setTabPillActive('tabPillDemo',this)">Вподобане <span class="tab-count wish-count">5</span></button>
+    </div>
+
     <div class="ds-sublabel" style="margin-bottom: 16px; margin-top: 40px;">Anchor pills — .anchor-pill</div>
     <div class="pill-row" id="anchorPillDemo">
       <button class="anchor-pill active" onclick="setPillActive('anchorPillDemo',this)">Доставка</button>
@@ -1344,6 +1384,29 @@ hover → sand</div>
 .<span class="k">anchor-pill-cta</span> { <span class="k">display</span>: <span class="v">inline-flex</span>; <span class="k">gap</span>: <span class="v">8px</span>; }
 .<span class="k">anchor-pill-cta i</span> { <span class="k">font-size</span>: <span class="v">18px</span>; }
 .<span class="k">anchor-pill-cta.active</span> { <span class="k">background</span>: <span class="v">var(--black)</span>; }  /* не зелений! */
+
+/* gram-pill — вибір грамів у sol-product.html (alias filter-pill, без іконки) */
+/* .gram-pill — той самий CSS, що й .filter-pill */
+
+/* tab-pill — таби Кошик / Вподобане (sol-cart.html) */
+.<span class="k">tab-pill</span> {
+  <span class="k">background</span>:  <span class="v">var(--sand)</span>;
+  <span class="k">color</span>:       <span class="v">var(--gray-800)</span>;
+  <span class="k">border-radius</span>: <span class="v">40px</span>;
+  <span class="k">padding</span>:     <span class="v">10px 20px</span>;
+  <span class="k">font-size</span>:   <span class="v">14px</span>;
+  <span class="k">font-weight</span>: <span class="v">500</span>;
+  <span class="k">display</span>:     <span class="v">inline-flex</span>;
+  <span class="k">align-items</span>: <span class="v">center</span>;
+  <span class="k">gap</span>:         <span class="v">8px</span>;
+}
+.<span class="k">tab-pill.active</span> { <span class="k">background</span>: <span class="v">var(--green-800)</span>; <span class="k">color</span>: <span class="v">var(--cream-bright)</span>; }
+@media (hover: hover) {
+  .<span class="k">tab-pill</span>:hover:not(.active) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
+}
+.<span class="k">tab-count</span> { <span class="k">font-family</span>: <span class="v">'Inter'</span>; <span class="k">font-size</span>: <span class="v">13px</span>; <span class="k">font-weight</span>: <span class="v">700</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
+.<span class="k">tab-count.wish-count</span> { <span class="k">color</span>: <span class="v">var(--terra)</span>; }
+.<span class="k">tab-pill.active .tab-count</span> { <span class="k">color</span>: <span class="v">var(--cream-bright)</span>; }
 
 /* sort-btn — кнопка сортування/дії з іконкою 18px */
 .<span class="k">sort-btn</span> {
@@ -2009,6 +2072,21 @@ function toggleBtnAdd() {
   btn.innerHTML = inCart
     ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
     : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+/* Btn-add-sm demo */
+function toggleBtnAddSm() {
+  const btn = document.getElementById('btnAddSmDemo');
+  const inCart = btn.classList.toggle('in-cart');
+  btn.innerHTML = inCart
+    ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+    : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+}
+
+/* Tab pill demo */
+function setTabPillActive(groupId, el) {
+  document.querySelectorAll('#' + groupId + ' .tab-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
 }
 
 /* Product card cart toggle */
