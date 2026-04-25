@@ -228,7 +228,7 @@
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
 <script src="components/sol-pagination.js"></script>
-<script src="components/sol-products.js"></script>
+<script src="components/sol-catalog.js"></script>
 </head>
 <body>
 
@@ -359,7 +359,7 @@ function renderCards() {
       name="${esc(p.name)}"
       region="${esc(p.region)}"
       desc="${esc(p.desc)}"
-      price="${esc(SolProducts.formatPrice(p.price, p.currency))}"
+      price="${esc(SolCatalog.formatPrice(p.price, p.currency))}"
       bg="${esc(p.bg||'')}"
       badge="${esc(p.badge||'')}"
       index="${i}"
@@ -535,7 +535,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-SolProducts.load().then(data => {
+SolCatalog.load().then(data => {
   allProducts = data;
   renderFilters();
   renderCards();

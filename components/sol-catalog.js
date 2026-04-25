@@ -22,5 +22,5 @@
     return symbol ? `${symbol} ${num}` : num;
   }
 
-  window.SolProducts = { load, formatPrice };
+  window.SolCatalog = { load, formatPrice };
 })();
