@@ -46,6 +46,8 @@
         .product-body h4 { font-size: 24px; font-weight: 900; }
         .product-desc { font-size: 13px; line-height: 1.7; }
         .product-price { font-size: 24px; }
+        .btn-add { padding: 14px 28px; font-size: 15px; }
+        .btn-add i { font-size: 20px; }
       }
     `;
     document.head.appendChild(style);

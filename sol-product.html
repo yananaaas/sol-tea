@@ -39,21 +39,7 @@
   .burger-btn:hover { background: var(--sand); }
 
   /* BUTTONS */
-  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-add i { font-size: 20px; }
-  .btn-add.in-cart { background: var(--green-800); }
-  @media (hover: hover) {
-    .btn-add:hover { background: var(--green-800); }
-    .btn-add.in-cart:hover { background: var(--black); }
-  }
-  .btn-add-sm { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
-  .btn-add-sm i { font-size: 18px; }
-  .btn-add-sm.in-cart { background: var(--green-800); }
-  @media (hover: hover) {
-    .btn-add-sm:hover { background: var(--green-800); }
-    .btn-add-sm.in-cart:hover { background: var(--black); }
-  }
-
+    
   /* PAGE WRAP */
   .product-wrap { padding: 0 48px; margin-top: 80px; }
 
@@ -74,8 +60,6 @@
   .gallery-slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-300); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
   .gallery-slide.active { opacity: 1; pointer-events: auto; }
   .gallery-badge { position: absolute; bottom: 16px; left: 16px; z-index: 2; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .badge-new { background: var(--green-500); color: var(--cream-bright); }
-  .badge-limited { background: var(--terra); color: var(--cream-bright); }
   .gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; background: rgba(253,252,249,0.88); border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--black); transition: background 0.2s; }
   .gallery-arrow-prev { left: 12px; }
   .gallery-arrow-next { right: 12px; }
@@ -132,8 +116,6 @@
   .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
   .testimonial-handle { font-size: 12px; color: var(--gray-500); }
   .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
-  .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; border: none; }
-  .product-wish.liked { color: var(--terra); }
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
   .reviews-empty { font-size: 15px; color: var(--gray-500); }
 
@@ -141,16 +123,7 @@
   .similar-section { padding: 60px 48px; background: var(--cream); }
   .similar-section h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 40px; }
   .similar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
   @media (hover: hover) { .product-card:hover { transform: translateY(-6px); } }
-  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
-  .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
-  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.01em; color: var(--black); }
-  .product-body p { font-size: 12px; color: var(--gray-500); line-height: 1.6; flex: 1; }
-  .product-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 16px; }
-  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
   /* SCROLL TOP */
   .scroll-top { position: fixed; bottom: 32px; right: max(40px, calc((100vw - 1440px) / 2 + 40px)); z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
@@ -225,14 +198,6 @@
     .reviews-grid { grid-template-columns: 1fr; gap: 24px; }
     .similar-section { padding: 40px 16px; }
     .similar-grid { grid-template-columns: 1fr; gap: 24px; }
-    .product-card { display: flex; flex-direction: column; }
-    .product-body { flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
-    .product-body h4 { font-size: 24px; font-weight: 900; }
-    .product-body p { font-size: 13px; line-height: 1.7; }
-    .product-price { font-size: 24px; }
-    .product-img { aspect-ratio: 1/1; }
-    .btn-add-sm { padding: 14px 28px; font-size: 15px; }
-    .btn-add-sm i { font-size: 20px; }
     .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
     .pp-header { padding: 14px 14px 12px; }
     .pp-body { padding: 6px 6px 12px; }

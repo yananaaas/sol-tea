@@ -91,8 +91,6 @@
 
   /* BADGES */
   .item-badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-  .badge-new { background: var(--green-500); color: var(--cream-bright); }
-  .badge-limited { background: var(--terra); color: var(--cream-bright); }
 
   /* NAV SEARCH CLEAR */
   @media (hover: hover) { .nav-search-clear:hover { color: var(--black); } }
@@ -193,28 +191,9 @@
   .wish-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
 
   /* PRODUCT CARD — identical component to sol-shop.html */
-  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(16px); display: flex; flex-direction: column; transition: opacity 0.4s ease, transform 0.4s ease; }
-  .product-card.show { opacity: 1; transform: translateY(0); }
   @media (hover: hover) { .product-card.show:hover { transform: translateY(-6px); } }
-  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
-  .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
-  .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
-  .product-wish.liked { color: var(--terra); }
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
-  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
-  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
-  .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
-  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
-  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
-  .btn-add i { font-size: 18px; }
-  .btn-add.in-cart { background: var(--green-800); }
-  @media (hover: hover) {
-    .btn-add:hover { background: var(--green-800); }
-    .btn-add.in-cart:hover { background: var(--black); }
-  }
-
+  
   /* MOBILE */
   @media (max-width: 768px) {
     nav { height: 72px; }
@@ -245,13 +224,11 @@
     .cart-summary { position: static; margin-top: 24px; border-radius: 20px; padding: 24px; }
     .wish-section { padding: 0 16px 48px; }
     .wish-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .product-img { aspect-ratio: 1/1; }
     .empty-state { padding: 60px 24px; }
   }
 
   @media (max-width: 480px) {
     .wish-grid { grid-template-columns: 1fr; }
-    .product-img { aspect-ratio: 4/3; }
   }
 
   @media (min-width: 769px) and (max-width: 1100px) {
