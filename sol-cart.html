@@ -497,7 +497,7 @@ function renderCart() {
       <p class="summary-note">Оплата карткою або при отриманні</p>
     </div>`;
 
-  cartEl.querySelectorAll('sol-counter').forEach(c => {
+  itemsEl.querySelectorAll('sol-counter').forEach(c => {
     c.addEventListener('change', e => changeQty(c.dataset.name, e.detail.delta));
   });
 }
