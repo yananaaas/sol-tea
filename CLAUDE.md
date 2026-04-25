@@ -775,6 +775,7 @@ sol-admin.html         sol-shop, sol-product, sol-tea
 - ✅ `components/sol-nav.js` — `<sol-nav active="...">` — хедер/навігація
 - ✅ `components/sol-footer.js` — `<sol-footer>` — футер
 - ✅ `components/sol-search.js` — `<sol-search variant="...">` — інпут пошуку (вбудований у sol-nav)
+- ✅ `components/sol-product-card.js` — `<sol-product-card>` — картка товару (інтегрована на всіх сторінках: sol-shop, sol-tea, sol-product, sol-cart, sol-faq, sol-checkout)
 
 **Залишилось** (джерело правди — підтверджує Яна перед кожним):
 
