@@ -168,15 +168,6 @@
 
   /* ACCORDION */
   .faq-list { display: flex; flex-direction: column; gap: 12px; }
-  .faq-item { background: var(--cream-bright); border-radius: 20px; overflow: hidden; }
-  .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--black); line-height: 1.4; transition: color 0.2s; }
-  .faq-question:hover { color: var(--green-800); }
-  .faq-question-icon { font-size: 22px; color: var(--gray-500); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), color 0.2s; }
-  .faq-item.open .faq-question-icon { transform: rotate(45deg); color: var(--green-800); }
-  .faq-item.open .faq-question { color: var(--green-800); }
-  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
-  .faq-item.open .faq-answer { max-height: 400px; }
-  .faq-answer-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
 
   /* SCROLL MARGIN for anchor nav + sticky nav */
   .faq-section { scroll-margin-top: 148px; }
@@ -209,14 +200,13 @@
     .faq-section { padding: 0 24px 28px; scroll-margin-top: 136px; }
     .faq-section-header { margin-bottom: 24px; }
     .faq-section-header h2 { font-size: 22px; }
-    .faq-question { padding: 22px 22px; font-size: 15px; }
-    .faq-answer-inner { padding: 0 22px 24px; }
   }
   </style>
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-faq-item.js"></script>
 </head>
 <body>
 
@@ -248,42 +238,10 @@
       <h2>Доставка</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Скільки часу займає доставка?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Доставка по Україні займає 1–3 робочі дні залежно від міста. Після відправлення ви отримаєте SMS або email з номером для відстеження посилки.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d1">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Куди ви доставляєте?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Ми доставляємо по всій Україні через Нову Пошту та Укрпошту. Доставка за кордон поки що не здійснюється, але ми над цим працюємо — слідкуйте за оновленнями.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d2">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Як відстежити посилку?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Після відправлення ми надсилаємо SMS або email з ТТН Нової Пошти. Відстежити статус посилки можна на сайті novaposhta.ua або в додатку Нової Пошти.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d3">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Яка вартість доставки?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Вартість доставки розраховується автоматично при оформленні замовлення залежно від ваги та міста. При замовленні від 2000 грн — доставка безкоштовна.</div>
-        </div>
-      </div>
+      <sol-faq-item class="fade-up" question="Скільки часу займає доставка?" answer="Доставка по Україні займає 1–3 робочі дні залежно від міста. Після відправлення ви отримаєте SMS або email з номером для відстеження посилки."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d1" question="Куди ви доставляєте?" answer="Ми доставляємо по всій Україні через Нову Пошту та Укрпошту. Доставка за кордон поки що не здійснюється, але ми над цим працюємо — слідкуйте за оновленнями."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d2" question="Як відстежити посилку?" answer="Після відправлення ми надсилаємо SMS або email з ТТН Нової Пошти. Відстежити статус посилки можна на сайті novaposhta.ua або в додатку Нової Пошти."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d3" question="Яка вартість доставки?" answer="Вартість доставки розраховується автоматично при оформленні замовлення залежно від ваги та міста. При замовленні від 2000 грн — доставка безкоштовна."></sol-faq-item>
     </div>
   </div>
 </section>
@@ -295,33 +253,9 @@
       <h2>Оплата</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Які способи оплати ви приймаєте?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Ми приймаємо оплату карткою Visa та Mastercard, Apple Pay, Google Pay, а також накладений платіж при отриманні в Новій Пошті.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d1">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Чи безпечна оплата на сайті?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Так, всі платіжні транзакції проходять через захищену платіжну систему з SSL-шифруванням. Ми не зберігаємо дані вашої картки.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d2">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Чи можна оплатити при отриманні?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Так, ви можете обрати накладений платіж при оформленні замовлення. Оплата здійснюється готівкою або карткою у відділенні Нової Пошти при отриманні.</div>
-        </div>
-      </div>
+      <sol-faq-item class="fade-up" question="Які способи оплати ви приймаєте?" answer="Ми приймаємо оплату карткою Visa та Mastercard, Apple Pay, Google Pay, а також накладений платіж при отриманні в Новій Пошті."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d1" question="Чи безпечна оплата на сайті?" answer="Так, всі платіжні транзакції проходять через захищену платіжну систему з SSL-шифруванням. Ми не зберігаємо дані вашої картки."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d2" question="Чи можна оплатити при отриманні?" answer="Так, ви можете обрати накладений платіж при оформленні замовлення. Оплата здійснюється готівкою або карткою у відділенні Нової Пошти при отриманні."></sol-faq-item>
     </div>
   </div>
 </section>
@@ -333,42 +267,10 @@
       <h2>Товари</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Як зберігати чай після відкриття?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Зберігайте чай у сухому темному місці в герметичній упаковці або жестяній банці. Уникайте впливу вологи, прямого сонця та сильних запахів — чай добре їх поглинає.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d1">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Звідки ви берете чай?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Ми працюємо безпосередньо з фермерами в Китаї — переважно з провінцій Фуцзянь, Юньнань та Гуандун. Кожен сорт проходить особисту дегустацію перед тим, як потрапити в наш каталог. Жодних посередників.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d2">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Чи є мінімальне замовлення?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Ні, мінімального замовлення немає. Ви можете замовити навіть один пакет 50 г. Але пам'ятайте: при замовленні від 2000 грн доставка безкоштовна.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d3">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Чи є чай у подарункових упаковках?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Так, у нашому магазині є подарункові набори в красивому упакуванні. Їх можна знайти в розділі "Набори". Також ми можемо оформити будь-яке замовлення як подарунок — напишіть нам.</div>
-        </div>
-      </div>
+      <sol-faq-item class="fade-up" question="Як зберігати чай після відкриття?" answer="Зберігайте чай у сухому темному місці в герметичній упаковці або жестяній банці. Уникайте впливу вологи, прямого сонця та сильних запахів — чай добре їх поглинає."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d1" question="Звідки ви берете чай?" answer="Ми працюємо безпосередньо з фермерами в Китаї — переважно з провінцій Фуцзянь, Юньнань та Гуандун. Кожен сорт проходить особисту дегустацію перед тим, як потрапити в наш каталог. Жодних посередників."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d2" question="Чи є мінімальне замовлення?" answer="Ні, мінімального замовлення немає. Ви можете замовити навіть один пакет 50 г. Але пам&#39;ятайте: при замовленні від 2000 грн доставка безкоштовна."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d3" question="Чи є чай у подарункових упаковках?" answer="Так, у нашому магазині є подарункові набори в красивому упакуванні. Їх можна знайти в розділі &quot;Набори&quot;. Також ми можемо оформити будь-яке замовлення як подарунок — напишіть нам."></sol-faq-item>
     </div>
   </div>
 </section>
@@ -380,33 +282,9 @@
       <h2>Повернення</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Чи можна повернути товар?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Так, ви можете повернути товар протягом 14 днів з моменту отримання за умови збереження оригінального пакування та якщо товар не був у використанні. Харчові продукти (чай) не підлягають поверненню, якщо упаковка розпечатана.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d1">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Що робити, якщо товар пошкоджений?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Напишіть нам протягом 48 годин після отримання і прикріпіть фото пошкодження. Ми відправимо новий товар або повернемо кошти — на ваш вибір.</div>
-        </div>
-      </div>
-      <div class="faq-item fade-up fade-up-d2">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Скільки часу займає повернення коштів?
-          <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Після підтвердження повернення кошти надходять на ваш рахунок протягом 3–5 робочих днів залежно від банку.</div>
-        </div>
-      </div>
+      <sol-faq-item class="fade-up" question="Чи можна повернути товар?" answer="Так, ви можете повернути товар протягом 14 днів з моменту отримання за умови збереження оригінального пакування та якщо товар не був у використанні. Харчові продукти (чай) не підлягають поверненню, якщо упаковка розпечатана."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d1" question="Що робити, якщо товар пошкоджений?" answer="Напишіть нам протягом 48 годин після отримання і прикріпіть фото пошкодження. Ми відправимо новий товар або повернемо кошти — на ваш вибір."></sol-faq-item>
+      <sol-faq-item class="fade-up fade-up-d2" question="Скільки часу займає повернення коштів?" answer="Після підтвердження повернення кошти надходять на ваш рахунок протягом 3–5 робочих днів залежно від банку."></sol-faq-item>
     </div>
   </div>
 </section>
@@ -608,12 +486,6 @@ function updateWishBadge() {
 }
 updateCartBadge();
 updateWishBadge();
-
-// ACCORDION
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  item.classList.toggle('open');
-}
 
 // ANCHOR NAV
 const sectionIds = ['faq-delivery', 'faq-payment', 'faq-products', 'faq-returns', 'faq-cta'];
