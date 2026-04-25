@@ -45,7 +45,7 @@
       .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
       .search-panel-header { margin-bottom: 40px; }
       .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
-      .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+      .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
       .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
       .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
 

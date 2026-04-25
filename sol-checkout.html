@@ -88,21 +88,6 @@
   .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
   .mm-footer-text { font-size: 11px; color: var(--gray-300); padding: 8px 0; }
 
-  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(16px); display: flex; flex-direction: column; transition: opacity 0.4s ease, transform 0.4s ease; }
-  .product-card.show { opacity: 1; transform: translateY(0); }
-  @media (hover: hover) { .product-card.show:hover { transform: translateY(-6px); } }
-  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
-  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .badge-new { background: var(--green-500); color: var(--cream-bright); }
-  .badge-limited { background: var(--terra); color: var(--cream-bright); }
-  .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
-  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
-  .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
-  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
-  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-  .btn-add.in-cart { background: var(--green-800); }
-  @media (hover: hover) { .btn-add:hover { background: var(--green-800); } .btn-add.in-cart:hover { background: var(--black); } }
 
   /* SCROLL TO TOP */
   .scroll-top { position: fixed; bottom: 32px; right: max(40px, calc((100vw - 1440px) / 2 + 40px)); z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
@@ -297,6 +282,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -759,6 +745,15 @@ function submitOrder() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function toggleWish(btn, name) {
+  const w = JSON.parse(sessionStorage.getItem('solWish') || '[]');
+  const i = w.indexOf(name);
+  if (i === -1) w.push(name); else w.splice(i, 1);
+  sessionStorage.setItem('solWish', JSON.stringify(w));
+  btn.classList.toggle('liked', w.includes(name));
+  updateWishBadge();
+}
+
 // SEARCH
 function filterProducts(q) {
   const panel = document.getElementById('searchPanel');
@@ -770,19 +765,20 @@ function filterProducts(q) {
   const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.region.toLowerCase().includes(lq));
   if (!results.length) { grid.innerHTML = ''; empty.style.display = ''; return; }
   empty.style.display = 'none';
-  const cart = getCart();
-  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-  const hi = s => s.replace(re, m => '<mark class="search-highlight">' + m + '</mark>');
-  grid.innerHTML = results.slice(0,12).map(p => {
-    const inCart = cart.some(c => c.name === p.name);
-    const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return '<div class="product-card show" onclick="goToProduct(\'' + sn + '\')">' +
-      '<div class="product-img" style="background:' + p.bg + '">Фото' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
-      '<div class="product-body"><h4>' + hi(esc(p.name)) + '</h4><p class="product-desc">' + hi(esc(p.desc)) + '</p>' +
-      '<div class="product-footer"><span class="product-price">₴\u00a0' + fmt(p.price) + '</span>' +
-      '<button class="btn-add' + (inCart ? ' in-cart' : '') + '" onclick="event.stopPropagation();toggleSearchCart(\'' + sn + '\',this)">' + (inCart ? 'В кошику' : '+ В кошик') + '</button>' +
-      '</div></div></div>';
-  }).join('');
+  const escA = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = results.slice(0, 12).map((p, i) => `
+    <sol-product-card
+      name="${escA(p.name)}"
+      region="${escA(p.region||'')}"
+      desc="${escA(p.desc||'')}"
+      price="₴ ${fmt(p.price)}"
+      bg="${escA(p.bg||'')}"
+      badge="${escA(p.badge||'')}"
+      index="${i}"
+      search="${escA(q)}"
+      cart-fn="toggleSearchCart"
+      show></sol-product-card>
+  `).join('');
 }
 function toggleSearchCart(name, btn) {
   const cart = getCart();
