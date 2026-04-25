@@ -266,7 +266,34 @@
     .faq-section-header h2 { font-size: 22px; }
     .faq-question { padding: 22px 22px; font-size: 15px; }
     .faq-answer-inner { padding: 0 22px 24px; }
+    .search-panel-inner { padding: 96px 24px 60px; }
+    .search-panel-grid { grid-template-columns: 1fr; }
   }
+  /* SEARCH PANEL */
+  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
+  .search-panel-header { margin-bottom: 40px; }
+  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
+  .search-panel-empty { font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
+  .product-card { background: var(--cream-bright); border-radius: 20px; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(16px); display: flex; flex-direction: column; transition: opacity 0.4s ease, transform 0.4s ease; }
+  .product-card.show { opacity: 1; transform: translateY(0); }
+  @media (hover: hover) { .product-card.show:hover { transform: translateY(-6px); } }
+  .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
+  .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-new { background: var(--green-500); color: var(--cream-bright); }
+  .badge-limited { background: var(--terra); color: var(--cream-bright); }
+  .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+  .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
+  .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .btn-add.in-cart { background: var(--green-800); }
+  @media (hover: hover) { .btn-add:hover { background: var(--green-800); } .btn-add.in-cart:hover { background: var(--black); } }
 </style>
 <script src="components/sol-nav.js"></script>
 </head>
@@ -471,6 +498,15 @@
   </div>
 </section>
 
+<!-- SEARCH PANEL -->
+<div id="searchPanel" class="search-panel">
+  <div class="search-panel-inner">
+    <div class="search-panel-header"><span class="search-panel-title">Результати пошуку:</span></div>
+    <div id="searchPanelGrid" class="search-panel-grid"></div>
+    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -549,6 +585,84 @@ function toggleProfile() {
   panel.classList.toggle('open', !isOpen);
   overlay.classList.toggle('open', !isOpen);
 }
+const PRODUCTS = [
+  {name:'Те Гуань Інь', price:480, bg:'#EEE9DF', badge:null, region:'Фуцзянь', desc:'Квіткові нотки, ніжне послясмаччя.'},
+  {name:'Шен Пуер 2019', price:920, bg:'#DDD8CC', badge:'new', region:'Юньнань', desc:'Яскравий, терпкий, з потенціалом до витримки.'},
+  {name:'Фенхуан Даньцун', price:680, bg:'#E4DDD3', badge:'limited', region:'Гуандун', desc:'Персик, медова орхідея.'},
+  {name:'Шу Пуер Старий', price:560, bg:'#D5CFCA', badge:null, region:'Юньнань', desc:"М'який і глибокий. Землистий, без гіркоти."},
+  {name:'Да Хун Пао', price:740, bg:'#E8E3D8', badge:null, region:'Фуцзянь', desc:'Мінеральний, смажений. Скелі Уї.'},
+  {name:'Цзінь Сюань', price:520, bg:'#DDE4D5', badge:'new', region:'Тайвань', desc:'Молочний, вершковий.'},
+  {name:'Лао Шу Пуер', price:1200, bg:'#E0D9CE', badge:null, region:'Юньнань', desc:'Зі старих дерев, глибокий і складний.'},
+  {name:'Дун Дін', price:610, bg:'#EBE5D8', badge:null, region:'Тайвань', desc:'Флоральний, легко смажений.'},
+  {name:'Бін Ча 2021', price:780, bg:'#E2DBD0', badge:'new', region:'Юньнань', desc:'Пресований млинець, гори Менхай.'},
+  {name:'Бай Хао Улун', price:960, bg:'#E6E0D2', badge:null, region:'Тайвань', desc:'Мускатний виноград, мед.'},
+  {name:'Менхай Шу 2015', price:1050, bg:'#D0CAC0', badge:null, region:'Юньнань', desc:'Витриманий шу з фабрики Менхай.'},
+  {name:'Іу Гу Шу', price:1450, bg:'#C8C2B8', badge:'limited', region:'Юньнань', desc:'Шен зі столітніх дерев Іу.'},
+  {name:'Весняний Збір 2026', price:1100, bg:'#DAD4C8', badge:'limited', region:'Фуцзянь', desc:'Перший зрив, гора Уї.'},
+  {name:'Осінній Фенхуан 2025', price:920, bg:'#D4CEC4', badge:'limited', region:'Гуандун', desc:'Осінній зрив Да Хун Пао.'},
+  {name:'Набір "Знайомство"', price:680, bg:'#DDD8CC', badge:'new', region:'Різні', desc:'5 сортів по 20 г.'},
+  {name:'Набір "Пуер"', price:1200, bg:'#D0CBC0', badge:null, region:'Юньнань', desc:'4 сорти пуеру по 25 г.'},
+  {name:'Гайвань біла 120мл', price:560, bg:'#EAE5DC', badge:null, region:'Цзиндечжень', desc:'Класична порцелянова гайвань.'},
+  {name:'Гайвань сіра 150мл', price:640, bg:'#D8D3CA', badge:null, region:'Цзиндечжень', desc:'Матова глазур, зручний корпус.'},
+  {name:'Чайник Ісін 200мл', price:1800, bg:'#C9B9A8', badge:'new', region:'Ісін', desc:'Пурпурова глина Хуанлун.'},
+  {name:'Чайник Ju-Lun 180мл', price:2200, bg:'#BFB4A8', badge:null, region:'Ісін', desc:'Класична форма Жу Лун Юн.'},
+  {name:'Піала 60мл', price:240, bg:'#DDD7CC', badge:null, region:'Юньнань', desc:'Тонкостінна піала ручної роботи.'},
+  {name:'Піала Небо 80мл', price:320, bg:'#C8D0D8', badge:null, region:'Юньнань', desc:'Глазурована в синій.'},
+  {name:'Піала Небо 50мл', price:200, bg:'#D4D8D0', badge:null, region:'Юньнань', desc:'Маленька для швидких ковтків.'},
+  {name:'Глечик 200мл', price:480, bg:'#DDD9D2', badge:null, region:'Цзиндечжень', desc:'Ча Хай для рівномірного розливу.'},
+  {name:'Глечик скляний 300мл', price:560, bg:'#D8E0E4', badge:null, region:'Тайвань', desc:'Боросилікатне скло.'},
+  {name:'Кетль Hario 800мл', price:1400, bg:'#D4D0C8', badge:'new', region:'Японія', desc:'Носик-гусяча шия.'},
+  {name:'Кетль керамічний 600мл', price:980, bg:'#CEC8BE', badge:null, region:'Китай', desc:'Для нагрівання на плиті.'},
+  {name:'Гайвань з квіткою 100мл', price:720, bg:'#DDE3EB', badge:'limited', region:'Цзиндечжень', desc:'Ручний розпис у техниці доухай.'},
+  {name:'Дошка бамбукова S', price:480, bg:'#D8D4C4', badge:null, region:'Китай', desc:'Компактна, 25×15 см.'},
+  {name:'Дошка бамбукова L', price:720, bg:'#D0CDB8', badge:null, region:'Китай', desc:'Простора, 40×25 см.'},
+  {name:'Дошка горіхова', price:1200, bg:'#C0AE98', badge:'new', region:'Тайвань', desc:'Волоський горіх, олія тунгу.'},
+  {name:'Дошка дубова', price:1050, bg:'#C8B8A0', badge:null, region:'Тайвань', desc:'Дуб, стійкий до вологи.'},
+  {name:"Дошка кам'яна сланець", price:1600, bg:'#B8BCB8', badge:'limited', region:'Китай', desc:'Натуральний сланець.'},
+  {name:'Дошка мармурова', price:1900, bg:'#DDD9D4', badge:'limited', region:'Китай', desc:'Білий кара-мармур.'},
+  {name:'Набір ча-дао 6 предметів', price:680, bg:'#D8D4C8', badge:'new', region:'Юньнань', desc:'Щипці, ложка, голка, воронка.'},
+  {name:'Воронка бамбукова', price:120, bg:'#D0CCBA', badge:null, region:'Китай', desc:'Для засипання листя.'},
+  {name:'Ча-пе', price:90, bg:'#D4D0C4', badge:null, region:'Тайвань', desc:'Бамбукова лопатка.'},
+  {name:'Каністра для чаю 100г', price:320, bg:'#C8C4BC', badge:null, region:'Тайвань', desc:'Алюміній з ущільнювачем.'}
+];
+const BADGE_LABELS = { new: 'Новинка', limited: 'Обмежений' };
+function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
+function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
+
+function filterProducts(q) {
+  const panel = document.getElementById('searchPanel');
+  const grid = document.getElementById('searchPanelGrid');
+  const empty = document.getElementById('searchPanelEmpty');
+  if (!q.trim()) { panel.classList.remove('open'); document.body.style.overflow = ''; return; }
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const lq = q.toLowerCase();
+  const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.region.toLowerCase().includes(lq));
+  empty.style.display = results.length ? 'none' : '';
+  const cart = getCart();
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+  const hi = s => s.replace(re, m => '<mark class="search-highlight">' + m + '</mark>');
+  grid.innerHTML = results.slice(0,12).map(p => {
+    const inCart = cart.some(c => c.name === p.name);
+    const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return '<div class="product-card show" onclick="goToProduct(\'' + sn + '\')">' +
+      '<div class="product-img" style="background:' + p.bg + '">Фото' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
+      '<div class="product-body"><h4>' + hi(esc(p.name)) + '</h4><p class="product-desc">' + hi(esc(p.desc)) + '</p>' +
+      '<div class="product-footer"><span class="product-price">₴ ' + fmt(p.price) + '</span>' +
+      '<button class="btn-add' + (inCart ? ' in-cart' : '') + '" onclick="event.stopPropagation();toggleSearchCart(\'' + sn + '\',this)">' + (inCart ? 'В кошику' : '+ В кошик') + '</button>' +
+      '</div></div></div>';
+  }).join('');
+}
+function toggleSearchCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx >= 0) { cart.splice(idx,1); btn.classList.remove('in-cart'); btn.textContent = '+ В кошик'; }
+  else { cart.push({name, qty:1}); btn.classList.add('in-cart'); btn.textContent = 'В кошику'; }
+  saveCart(cart); updateCartBadge();
+}
+
 function openSearch() {
   if (window.innerWidth <= 768) {
     document.querySelector('nav').classList.add('search-active');
@@ -559,30 +673,28 @@ function openSearch() {
 }
 function closeSearch() {
   document.querySelector('nav').classList.remove('search-active');
-  document.getElementById('navSearchInput').value = '';
-  const inp = document.getElementById('desktopSearchInput');
-  if (inp) { inp.value = ''; }
-  document.getElementById('desktopSearchClear').classList.remove('visible');
+  document.getElementById('searchPanel').classList.remove('open');
+  document.body.style.overflow = '';
+  ['desktopSearchInput','navSearchInput'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.remove('visible');
 }
 function onDesktopSearchInput(val) {
-  document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.toggle('visible', val.length > 0);
+  filterProducts(val);
 }
-function onNavSearchInput(val) {
-  if (val.trim()) window.location.href = 'sol-shop.html';
-}
+function onNavSearchInput(val) { filterProducts(val); }
 function clearDesktopSearch() {
   const inp = document.getElementById('desktopSearchInput');
-  inp.value = '';
-  document.getElementById('desktopSearchClear').classList.remove('visible');
+  if (inp) inp.value = '';
+  const cb = document.getElementById('desktopSearchClear');
+  if (cb) cb.classList.remove('visible');
+  filterProducts('');
 }
 function onDesktopSearchBlur() {}
 
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.activeElement === document.getElementById('desktopSearchInput')) {
-    const val = document.getElementById('desktopSearchInput').value.trim();
-    if (val) window.location.href = 'sol-shop.html';
-    return;
-  }
   if (e.key === 'Escape') {
     closeSearch();
     document.querySelector('nav').classList.remove('search-active');
