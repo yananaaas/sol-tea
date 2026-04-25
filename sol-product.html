@@ -675,26 +675,20 @@ function filterProducts(q) {
   const matches = PRODUCTS.filter(p =>
     p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
   );
-  const cart = getCart();
-  grid.innerHTML = matches.map(p => {
-    const inCart = cart.some(c => c.name === p.name);
-    const safeN = p.name.replace(/'/g, "\\'");
-    return `<div class="product-card show" onclick="goToProduct('${safeN}')">
-      <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
-        ${p.region ? `<div class="product-region">${p.region}</div>` : ''}
-        ${p.badge === 'new' ? '<div class="product-badge badge-new">Новинка</div>' : ''}
-        ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
-      </div>
-      <div class="product-body">
-        <h4>${highlightText(p.name, query)}</h4>
-        <p class="product-desc">${highlightText(p.desc, query)}</p>
-        <div class="product-footer">
-          <span class="product-price">${p.price}</span>
-          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();toggleSearchCart('${safeN}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = matches.map((p, i) => `
+    <sol-product-card
+      name="${esc(p.name)}"
+      region="${esc(p.region||'')}"
+      desc="${esc(p.desc||'')}"
+      price="${esc(p.price)}"
+      bg="${esc(p.bg||'')}"
+      badge="${esc(p.badge||'')}"
+      index="${i}"
+      search="${esc(query)}"
+      cart-fn="toggleSearchCart"
+      show></sol-product-card>
+  `).join('');
   empty.style.display = matches.length === 0 ? 'block' : 'none';
   panel.classList.add('open');
   document.body.style.overflow = 'hidden';
