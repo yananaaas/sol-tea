@@ -786,6 +786,7 @@ sol-admin.html         sol-shop, sol-product, sol-tea
 - ✅ `components/sol-review-card.js` — `<sol-review-card>` — картка відгуку (інтегрована на sol-product через `renderReviews`, на sol-tea з `variant="marquee"` для бігучого рядка)
 - ✅ `components/sol-counter.js` — `<sol-counter value="..." min="1" max="...">` — qty selector (інтегрований на sol-cart, еміт `change` з `detail: { value, delta }`)
 - ✅ `components/sol-faq-item.js` — `<sol-faq-item question="..." answer="...">` — акордеон запитань (інтегрований на sol-faq, 14 елементів у 4 секціях)
+- ✅ `components/sol-pagination.js` — `<sol-pagination current="..." total="...">` — пагінація (інтегрована на sol-shop, еміт `page-change` з `detail: { page }`)
 
 **Залишилось** (джерело правди — підтверджує Яна перед кожним):
 

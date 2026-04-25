@@ -138,12 +138,6 @@
   .empty-state { grid-column: 1/-1; padding: 60px 0; text-align: center; color: var(--gray-500); font-size: 18px; display: none; }
   .empty-state.visible { display: block; }
 
-  /* PAGINATION */
-  .pagination { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 60px 0 100px; flex-wrap: nowrap; }
-  .page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-  .page-btn:hover { background: var(--gray-100); }
-  .page-btn.active { background: var(--green-800); color: var(--cream-bright); }
-  .page-dots { color: var(--gray-300); font-size: 14px; width: 32px; text-align: center; flex-shrink: 0; letter-spacing: 2px; }
 
   /* SCROLL TO TOP */
   .scroll-top { position: fixed; bottom: 32px; right: max(40px, calc((100vw - 1440px) / 2 + 40px)); z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
@@ -233,6 +227,7 @@
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-pagination.js"></script>
 </head>
 <body>
 
@@ -265,7 +260,7 @@
   <div class="products-grid" id="productsGrid"></div>
   <div class="empty-state" id="emptyState">Нічого не знайдено</div>
 
-  <div class="pagination" id="paginationContainer"></div>
+  <sol-pagination id="paginationContainer"></sol-pagination>
 </div>
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
@@ -426,27 +421,8 @@ function renderCards() {
 function renderPagination(totalPages) {
   const container = document.getElementById('paginationContainer');
   if (!container) return;
-  if (totalPages <= 1) { container.innerHTML = ''; return; }
-
-  // Build set of pages to always show: 1, last, currentPage ±1
-  const show = new Set([1, totalPages, currentPage]);
-  if (currentPage > 1) show.add(currentPage - 1);
-  if (currentPage < totalPages) show.add(currentPage + 1);
-  const sorted = [...show].sort((a, b) => a - b);
-
-  let html = '';
-  html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
-
-  let prev = 0;
-  for (const p of sorted) {
-    if (p - prev > 1) html += '<span class="page-dots">···</span>';
-    html += `<button class="page-btn${p === currentPage ? ' active' : ''}" onclick="goToPage(${p})">${p}</button>`;
-    prev = p;
-  }
-
-  html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled style="opacity:0.4;cursor:default"' : ''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
-
-  container.innerHTML = html;
+  container.setAttribute('total', totalPages);
+  container.setAttribute('current', currentPage);
 }
 
 function goToPage(page) {
@@ -607,6 +583,8 @@ renderFilters();
 renderCards();
 updateCartBadge();
 updateWishBadge();
+
+document.getElementById('paginationContainer').addEventListener('page-change', e => goToPage(e.detail.page));
 
 // Re-render when restored from bfcache (browser back button)
 window.addEventListener('pageshow', (e) => { if (e.persisted) renderCards(); });
