@@ -34,6 +34,8 @@
   .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
   .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
   .nav-search-input::placeholder { color: var(--gray-500); }
+  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-search-clear.visible { display: flex; }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; }
   .nav-icon-btn:hover { background: var(--sand); }
@@ -718,6 +720,10 @@ if (!currentProduct) {
 }
 updateCartBadge();
 updateWishBadge();
+setTimeout(() => {
+  const deskInp = document.getElementById('desktopSearchInput');
+  if (deskInp) deskInp.addEventListener('focus', () => { openProductSearch(); deskInp.blur(); });
+}, 0);
 
 // Scroll top
 window.addEventListener('scroll', () => {
@@ -750,6 +756,15 @@ function toggleProfile() {
 function toggleMobileMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('mobileMenuOverlay').classList.toggle('open');
+}
+function onDesktopSearchInput(val) {
+  document.getElementById('desktopSearchClear')?.classList.toggle('visible', val.length > 0);
+}
+function onDesktopSearchBlur() {}
+function clearDesktopSearch() {
+  const inp = document.getElementById('desktopSearchInput');
+  if (inp) inp.value = '';
+  document.getElementById('desktopSearchClear')?.classList.remove('visible');
 }
 function openProductSearch() {
   if (window.innerWidth <= 768) {
