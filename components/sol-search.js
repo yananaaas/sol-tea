@@ -195,7 +195,9 @@
     btn.innerHTML = inCart
       ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
       : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
-    if (typeof window.updateCartBadge === 'function') window.updateCartBadge();
+    ['updateCartBadge', 'updateCartTabCount'].forEach(fn => {
+      if (typeof window[fn] === 'function') window[fn]();
+    });
   });
 
   class SolSearch extends HTMLElement {
