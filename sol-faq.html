@@ -231,6 +231,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -509,6 +510,15 @@ function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
 function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
 
+function toggleWish(btn, name) {
+  const w = JSON.parse(sessionStorage.getItem('solWish') || '[]');
+  const i = w.indexOf(name);
+  if (i === -1) w.push(name); else w.splice(i, 1);
+  sessionStorage.setItem('solWish', JSON.stringify(w));
+  btn.classList.toggle('liked', w.includes(name));
+  updateWishBadge();
+}
+
 function filterProducts(q) {
   const panel = document.getElementById('searchPanel');
   const grid = document.getElementById('searchPanelGrid');
@@ -519,19 +529,20 @@ function filterProducts(q) {
   const lq = q.toLowerCase();
   const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.region.toLowerCase().includes(lq));
   empty.style.display = results.length ? 'none' : '';
-  const cart = getCart();
-  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-  const hi = s => s.replace(re, m => '<mark class="search-highlight">' + m + '</mark>');
-  grid.innerHTML = results.slice(0,12).map(p => {
-    const inCart = cart.some(c => c.name === p.name);
-    const sn = p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return '<div class="product-card show" onclick="goToProduct(\'' + sn + '\')">' +
-      '<div class="product-img" style="background:' + p.bg + '">Фото' + (p.badge ? '<span class="product-badge badge-' + p.badge + '">' + BADGE_LABELS[p.badge] + '</span>' : '') + '</div>' +
-      '<div class="product-body"><h4>' + hi(esc(p.name)) + '</h4><p class="product-desc">' + hi(esc(p.desc)) + '</p>' +
-      '<div class="product-footer"><span class="product-price">₴ ' + fmt(p.price) + '</span>' +
-      '<button class="btn-add' + (inCart ? ' in-cart' : '') + '" onclick="event.stopPropagation();toggleSearchCart(\'' + sn + '\',this)">' + (inCart ? 'В кошику' : '+ В кошик') + '</button>' +
-      '</div></div></div>';
-  }).join('');
+  const escA = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = results.slice(0, 12).map((p, i) => `
+    <sol-product-card
+      name="${escA(p.name)}"
+      region="${escA(p.region||'')}"
+      desc="${escA(p.desc||'')}"
+      price="₴ ${fmt(p.price)}"
+      bg="${escA(p.bg||'')}"
+      badge="${escA(p.badge||'')}"
+      index="${i}"
+      search="${escA(q)}"
+      cart-fn="toggleSearchCart"
+      show></sol-product-card>
+  `).join('');
 }
 function toggleSearchCart(name, btn) {
   const cart = getCart();
