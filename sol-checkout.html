@@ -283,6 +283,7 @@
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
+<script src="components/sol-catalog.js"></script>
 </head>
 <body>
 
@@ -496,49 +497,14 @@
 
 
 <script>
-function onNavSearchInput(val) { filterProducts(val); }
-const PRODUCTS = [
-  {name:'Те Гуань Інь', price:480, bg:'#EEE9DF', badge:null, region:'Фуцзянь', desc:'Квіткові нотки, ніжне послясмаччя.'},
-  {name:'Шен Пуер 2019', price:920, bg:'#DDD8CC', badge:'new', region:'Юньнань', desc:'Яскравий, терпкий, з потенціалом до витримки.'},
-  {name:'Фенхуан Даньцун', price:680, bg:'#E4DDD3', badge:'limited', region:'Гуандун', desc:'Персик, медова орхідея.'},
-  {name:'Шу Пуер Старий', price:560, bg:'#D5CFCA', badge:null, region:'Юньнань', desc:"М'який і глибокий. Землистий, без гіркоти."},
-  {name:'Да Хун Пао', price:740, bg:'#E8E3D8', badge:null, region:'Фуцзянь', desc:'Мінеральний, смажений. Скелі Уї.'},
-  {name:'Цзінь Сюань', price:520, bg:'#DDE4D5', badge:'new', region:'Тайвань', desc:'Молочний, вершковий.'},
-  {name:'Лао Шу Пуер', price:1200, bg:'#E0D9CE', badge:null, region:'Юньнань', desc:'Зі старих дерев, глибокий і складний.'},
-  {name:'Дун Дін', price:610, bg:'#EBE5D8', badge:null, region:'Тайвань', desc:'Флоральний, легко смажений.'},
-  {name:'Бін Ча 2021', price:780, bg:'#E2DBD0', badge:'new', region:'Юньнань', desc:'Пресований млинець, гори Менхай.'},
-  {name:'Бай Хао Улун', price:960, bg:'#E6E0D2', badge:null, region:'Тайвань', desc:'Мускатний виноград, мед.'},
-  {name:'Менхай Шу 2015', price:1050, bg:'#D0CAC0', badge:null, region:'Юньнань', desc:'Витриманий шу з фабрики Менхай.'},
-  {name:'Іу Гу Шу', price:1450, bg:'#C8C2B8', badge:'limited', region:'Юньнань', desc:'Шен зі столітніх дерев Іу.'},
-  {name:'Весняний Збір 2026', price:1100, bg:'#DAD4C8', badge:'limited', region:'Фуцзянь', desc:'Перший зрив, гора Уї.'},
-  {name:'Осінній Фенхуан 2025', price:920, bg:'#D4CEC4', badge:'limited', region:'Гуандун', desc:'Осінній зрив Да Хун Пао.'},
-  {name:'Набір "Знайомство"', price:680, bg:'#DDD8CC', badge:'new', region:'Різні', desc:'5 сортів по 20 г.'},
-  {name:'Набір "Пуер"', price:1200, bg:'#D0CBC0', badge:null, region:'Юньнань', desc:'4 сорти пуеру по 25 г.'},
-  {name:'Гайвань біла 120мл', price:560, bg:'#EAE5DC', badge:null, region:'Цзиндечжень', desc:'Класична порцелянова гайвань.'},
-  {name:'Гайвань сіра 150мл', price:640, bg:'#D8D3CA', badge:null, region:'Цзиндечжень', desc:'Матова глазур, зручний корпус.'},
-  {name:'Чайник Ісін 200мл', price:1800, bg:'#C9B9A8', badge:'new', region:'Ісін', desc:'Пурпурова глина Хуанлун.'},
-  {name:'Чайник Ju-Lun 180мл', price:2200, bg:'#BFB4A8', badge:null, region:'Ісін', desc:'Класична форма Жу Лун Юн.'},
-  {name:'Піала 60мл', price:240, bg:'#DDD7CC', badge:null, region:'Юньнань', desc:'Тонкостінна піала ручної роботи.'},
-  {name:'Піала Небо 80мл', price:320, bg:'#C8D0D8', badge:null, region:'Юньнань', desc:'Глазурована в синій.'},
-  {name:'Піала Небо 50мл', price:200, bg:'#D4D8D0', badge:null, region:'Юньнань', desc:'Маленька для швидких ковтків.'},
-  {name:'Глечик 200мл', price:480, bg:'#DDD9D2', badge:null, region:'Цзиндечжень', desc:'Ча Хай для рівномірного розливу.'},
-  {name:'Глечик скляний 300мл', price:560, bg:'#D8E0E4', badge:null, region:'Тайвань', desc:'Боросилікатне скло.'},
-  {name:'Кетль Hario 800мл', price:1400, bg:'#D4D0C8', badge:'new', region:'Японія', desc:'Носик-гусяча шия.'},
-  {name:'Кетль керамічний 600мл', price:980, bg:'#CEC8BE', badge:null, region:'Китай', desc:'Для нагрівання на плиті.'},
-  {name:'Гайвань з квіткою 100мл', price:720, bg:'#DDE3EB', badge:'limited', region:'Цзиндечжень', desc:'Ручний розпис у техниці доухай.'},
-  {name:'Дошка бамбукова S', price:480, bg:'#D8D4C4', badge:null, region:'Китай', desc:'Компактна, 25×15 см.'},
-  {name:'Дошка бамбукова L', price:720, bg:'#D0CDB8', badge:null, region:'Китай', desc:'Простора, 40×25 см.'},
-  {name:'Дошка горіхова', price:1200, bg:'#C0AE98', badge:'new', region:'Тайвань', desc:'Волоський горіх, олія тунгу.'},
-  {name:'Дошка дубова', price:1050, bg:'#C8B8A0', badge:null, region:'Тайвань', desc:'Дуб, стійкий до вологи.'},
-  {name:"Дошка кам'яна сланець", price:1600, bg:'#B8BCB8', badge:'limited', region:'Китай', desc:'Натуральний сланець.'},
-  {name:'Дошка мармурова', price:1900, bg:'#DDD9D4', badge:'limited', region:'Китай', desc:'Білий кара-мармур.'},
-  {name:'Набір ча-дао 6 предметів', price:680, bg:'#D8D4C8', badge:'new', region:'Юньнань', desc:'Щипці, ложка, голка, воронка.'},
-  {name:'Воронка бамбукова', price:120, bg:'#D0CCBA', badge:null, region:'Китай', desc:'Для засипання листя.'},
-  {name:'Ча-пе', price:90, bg:'#D4D0C4', badge:null, region:'Тайвань', desc:'Бамбукова лопатка.'},
-  {name:'Каністра для чаю 100г', price:320, bg:'#C8C4BC', badge:null, region:'Тайвань', desc:'Алюміній з ущільнювачем.'}
-];
-const PRODUCT_MAP = {};
-PRODUCTS.forEach(p => { PRODUCT_MAP[p.name] = p; });
+let allProducts = [];
+let PRODUCT_MAP = {};
+
+function buildProductMap(list) {
+  PRODUCT_MAP = {};
+  list.forEach(p => { PRODUCT_MAP[p.name] = p; });
+}
+
 const BADGE_LABELS = { new: 'Новинка', limited: 'Обмежений' };
 const FREE_DELIVERY_THRESHOLD = 1000;
 const COURIER_COST = 80;
@@ -550,7 +516,6 @@ let paymentType = 'card';
 function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')) || []; } catch(e) { return []; } }
 function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
 function getWish() { try { return JSON.parse(sessionStorage.getItem('solWish')) || []; } catch(e) { return []; } }
-function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); }
 function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function goToProduct(name) { window.location.href = 'sol-product.html?name=' + encodeURIComponent(name); }
 
@@ -581,7 +546,7 @@ function renderSummary() {
         '<div class="co-item-name" onclick="goToProduct(\'' + sn + '\')">' + esc(p.name) + '</div>' +
         '<div class="co-item-qty">' + i.qty + '\u00a0шт · ' + p.region + '</div>' +
       '</div>' +
-      '<div class="co-item-price">₴\u00a0' + fmt(p.price * i.qty) + '</div>' +
+      '<div class="co-item-price">' + SolCatalog.formatPrice(p.price * i.qty, 'UAH') + '</div>' +
     '</div>';
   }).join('');
 
@@ -611,14 +576,14 @@ function updateSummaryRows(subtotal) {
     }
   }
 
-  document.getElementById('coSubtotal').textContent = '₴\u00a0' + fmt(subtotal);
+  document.getElementById('coSubtotal').textContent = SolCatalog.formatPrice(subtotal, 'UAH');
 
   const delivEl = document.getElementById('coDelivery');
   if (deliveryType === 'courier') {
-    delivEl.textContent = '₴\u00a0' + fmt(COURIER_COST);
+    delivEl.textContent = SolCatalog.formatPrice(COURIER_COST, 'UAH');
     delivEl.className = 'co-row-val';
   } else if (deliveryType === 'ukrposhta') {
-    delivEl.textContent = '₴\u00a0' + fmt(UKRPOSHTA_COST);
+    delivEl.textContent = SolCatalog.formatPrice(UKRPOSHTA_COST, 'UAH');
     delivEl.className = 'co-row-val';
   } else if (deliveryType === 'branch' && subtotal >= FREE_DELIVERY_THRESHOLD) {
     delivEl.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02"></i> Безкоштовно';
@@ -628,7 +593,7 @@ function updateSummaryRows(subtotal) {
     delivEl.className = 'co-row-val';
   }
 
-  document.getElementById('coTotal').textContent = '₴\u00a0' + fmt(subtotal + deliveryCost);
+  document.getElementById('coTotal').textContent = SolCatalog.formatPrice(subtotal + deliveryCost, 'UAH');
 }
 
 const DELIVERY_META = {
@@ -754,70 +719,6 @@ function toggleWish(btn, name) {
   updateWishBadge();
 }
 
-// SEARCH
-function filterProducts(q) {
-  const panel = document.getElementById('searchPanel');
-  const grid = document.getElementById('searchPanelGrid');
-  const empty = document.getElementById('searchPanelEmpty');
-  if (!q.trim()) { panel.classList.remove('open'); return; }
-  panel.classList.add('open');
-  const lq = q.toLowerCase();
-  const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.region.toLowerCase().includes(lq));
-  if (!results.length) { grid.innerHTML = ''; empty.style.display = ''; return; }
-  empty.style.display = 'none';
-  const escA = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
-  grid.innerHTML = results.slice(0, 12).map((p, i) => `
-    <sol-product-card
-      name="${escA(p.name)}"
-      region="${escA(p.region||'')}"
-      desc="${escA(p.desc||'')}"
-      price="₴ ${fmt(p.price)}"
-      bg="${escA(p.bg||'')}"
-      badge="${escA(p.badge||'')}"
-      index="${i}"
-      search="${escA(q)}"
-      cart-fn="toggleSearchCart"
-      show></sol-product-card>
-  `).join('');
-}
-function toggleSearchCart(name, btn) {
-  const cart = getCart();
-  const idx = cart.findIndex(i => i.name === name);
-  if (idx >= 0) { cart.splice(idx,1); btn.classList.remove('in-cart'); btn.textContent = '+ В кошик'; }
-  else { cart.push({name, qty:1}); btn.classList.add('in-cart'); btn.textContent = 'В кошику'; }
-  saveCart(cart); updateCartBadge();
-}
-function onDesktopSearchInput(val) {
-  const cb = document.getElementById('desktopSearchClear');
-  if (cb) cb.classList.toggle('visible', val.length > 0);
-  filterProducts(val);
-}
-function onDesktopSearchBlur() {}
-function clearDesktopSearch() {
-  const inp = document.getElementById('desktopSearchInput');
-  if (inp) inp.value = '';
-  const cb = document.getElementById('desktopSearchClear');
-  if (cb) cb.classList.remove('visible');
-  document.getElementById('searchPanel').classList.remove('open');
-}
-function openSearch() {
-  if (window.innerWidth <= 768) {
-    document.querySelector('nav').classList.add('search-active');
-    const inp = document.getElementById('navSearchInput');
-    if (inp) inp.focus();
-  } else {
-    const inp = document.getElementById('desktopSearchInput');
-    if (inp) inp.focus();
-  }
-}
-function closeSearch() {
-  document.querySelector('nav').classList.remove('search-active');
-  document.getElementById('searchPanel').classList.remove('open');
-  ['desktopSearchInput','navSearchInput'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-  const cb = document.getElementById('desktopSearchClear');
-  if (cb) cb.classList.remove('visible');
-}
-
 // PANELS
 function toggleProfile() {
   const panel = document.getElementById('profilePanel');
@@ -851,9 +752,15 @@ window.addEventListener('scroll', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderSummary();
   updateCartBadge();
   updateWishBadge();
+  SolCatalog.load().then(data => {
+    allProducts = data;
+    buildProductMap(data);
+    renderSummary();
+  }).catch(err => {
+    console.error('[sol-checkout] failed to load catalog', err);
+  });
 });
 
 document.addEventListener('keydown', e => {
