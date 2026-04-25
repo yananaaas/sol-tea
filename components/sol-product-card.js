@@ -30,6 +30,14 @@
       .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
       .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
+      .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+      .btn-add i { font-size: 18px; line-height: 1; }
+      .btn-add.in-cart { background: var(--green-800); }
+      @media (hover: hover) {
+        .btn-add:hover { background: var(--green-800); }
+        .btn-add.in-cart:hover { background: var(--black); }
+      }
+
       .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
 
       @media (max-width: 768px) {
