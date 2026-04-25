@@ -160,12 +160,12 @@
   .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
   .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
   .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.01em; color: var(--black); }
   .product-body p { font-size: 12px; color: var(--gray-500); line-height: 1.6; flex: 1; }
   .product-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 16px; }
   .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
-  .nav-search-btn-mobile { display: none; }
+  .nav-search-mobile { display: none; }
 
   /* SCROLL TOP */
   .scroll-top { position: fixed; bottom: 32px; right: max(40px, calc((100vw - 1440px) / 2 + 40px)); z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
@@ -199,14 +199,15 @@
   .footer-social-btn:hover { background: rgba(255,255,255,0.08); color: var(--green-500); }
 
   /* SEARCH OVERLAY */
-  .search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px max(48px, calc((100vw - 1440px) / 2 + 48px)); box-shadow: 0 4px 20px rgba(28,26,20,0.08); }
-  .search-overlay.open { display: flex; }
-  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 10px 18px; }
-  .search-overlay-inner > i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
-  .search-overlay-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
-  .search-overlay-input::placeholder { color: var(--gray-500); }
-  .search-clear-btn { opacity: 0; pointer-events: none; transition: opacity 0.15s; }
-  .search-clear-btn.visible { opacity: 1; pointer-events: all; }
+  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
+  .search-panel-header { margin-bottom: 40px; }
+  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
+  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
+  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
+  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
 
   /* MOBILE MENU */
   .mobile-menu-overlay { display: none; position: fixed; inset: 0; background: rgba(28,26,20,0.3); z-index: 399; backdrop-filter: blur(4px); }
@@ -287,8 +288,9 @@
     .product-img { aspect-ratio: 1/1; }
     .btn-add-sm { padding: 14px 28px; font-size: 15px; }
     .btn-add-sm i { font-size: 20px; }
-    .search-overlay { display: none !important; }
-    .nav-search-btn-mobile { display: flex !important; }
+    .search-panel-inner { padding: 96px 24px 60px; }
+    .search-panel-grid { grid-template-columns: 1fr; }
+    .nav-search-mobile { display: flex; }
     .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
     .pp-header { padding: 14px 14px 12px; }
     .pp-body { padding: 6px 6px 12px; }
@@ -312,12 +314,14 @@
 
 <sol-nav active="product"></sol-nav>
 
-<!-- SEARCH OVERLAY -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-overlay-inner">
-    <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" id="searchInput" placeholder="Пошук чаю..." class="search-overlay-input" oninput="document.getElementById('searchClearBtn').classList.toggle('visible', this.value.length > 0)" onkeydown="if(event.key==='Enter'&&this.value.trim())window.location='sol-shop.html'">
-    <button class="nav-icon-btn search-clear-btn" id="searchClearBtn" onclick="document.getElementById('searchInput').value='';this.classList.remove('visible')"><i class="hgi-stroke hgi-cancel-01"></i></button>
+<!-- SEARCH PANEL -->
+<div id="searchPanel" class="search-panel">
+  <div class="search-panel-inner">
+    <div class="search-panel-header">
+      <span class="search-panel-title">Результати пошуку:</span>
+    </div>
+    <div id="searchPanelGrid" class="search-panel-grid"></div>
+    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
   </div>
 </div>
 
@@ -720,10 +724,6 @@ if (!currentProduct) {
 }
 updateCartBadge();
 updateWishBadge();
-setTimeout(() => {
-  const deskInp = document.getElementById('desktopSearchInput');
-  if (deskInp) deskInp.addEventListener('focus', () => { openProductSearch(); deskInp.blur(); });
-}, 0);
 
 // Scroll top
 window.addEventListener('scroll', () => {
@@ -741,11 +741,11 @@ window.addEventListener('scroll', () => {
 
 // Close search on Escape / outside click
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeProductSearch();
+  if (e.key === 'Escape') closeSearch();
 });
 document.addEventListener('click', e => {
-  const overlay = document.getElementById('searchOverlay');
-  if (overlay.classList.contains('open') && !overlay.contains(e.target)) closeProductSearch();
+  const panel = document.getElementById('searchPanel');
+  if (panel && panel.classList.contains('open') && !panel.contains(e.target)) closeSearch();
 });
 
 // Profile & mobile menu
@@ -757,7 +757,56 @@ function toggleMobileMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('mobileMenuOverlay').classList.toggle('open');
 }
+function highlightText(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+}
+function filterProducts(q) {
+  const query = q.trim().toLowerCase();
+  const panel = document.getElementById('searchPanel');
+  const grid = document.getElementById('searchPanelGrid');
+  const empty = document.getElementById('searchPanelEmpty');
+  if (!query) { panel.classList.remove('open'); document.body.style.overflow = ''; return; }
+  const matches = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
+  );
+  const cart = getCart();
+  grid.innerHTML = matches.map(p => {
+    const inCart = cart.some(c => c.name === p.name);
+    const safeN = p.name.replace(/'/g, "\\'");
+    return `<div class="product-card show" onclick="goToProduct('${safeN}')">
+      <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
+        ${p.region ? `<div class="product-region">${p.region}</div>` : ''}
+        ${p.badge === 'new' ? '<div class="product-badge badge-new">Новинка</div>' : ''}
+        ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
+      </div>
+      <div class="product-body">
+        <h4>${highlightText(p.name, query)}</h4>
+        <p class="product-desc">${highlightText(p.desc, query)}</p>
+        <div class="product-footer">
+          <span class="product-price">${p.price}</span>
+          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();toggleSearchCart('${safeN}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  empty.style.display = matches.length === 0 ? 'block' : 'none';
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function toggleSearchCart(name, btn) {
+  const cart = getCart();
+  const idx = cart.findIndex(c => c.name === name);
+  if (idx >= 0) { cart.splice(idx, 1); } else { cart.push({ name, qty: 1 }); }
+  saveCart(cart);
+  const inCart = idx < 0;
+  btn.className = 'btn-add' + (inCart ? ' in-cart' : '');
+  btn.innerHTML = inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+  updateCartBadge();
+}
 function onDesktopSearchInput(val) {
+  filterProducts(val);
   document.getElementById('desktopSearchClear')?.classList.toggle('visible', val.length > 0);
 }
 function onDesktopSearchBlur() {}
@@ -765,22 +814,24 @@ function clearDesktopSearch() {
   const inp = document.getElementById('desktopSearchInput');
   if (inp) inp.value = '';
   document.getElementById('desktopSearchClear')?.classList.remove('visible');
+  filterProducts('');
 }
-function openProductSearch() {
+function onNavSearchInput(val) { filterProducts(val); }
+function openSearch() {
   if (window.innerWidth <= 768) {
     document.querySelector('nav').classList.add('search-active');
     document.getElementById('navSearchInput').focus();
   } else {
-    document.getElementById('searchOverlay').classList.add('open');
-    document.getElementById('searchInput').focus();
+    document.getElementById('desktopSearchInput').focus();
   }
 }
-function closeProductSearch() {
-  document.getElementById('searchOverlay').classList.remove('open');
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClearBtn').classList.remove('visible');
+function closeSearch() {
   document.querySelector('nav').classList.remove('search-active');
   document.getElementById('navSearchInput').value = '';
+  const inp = document.getElementById('desktopSearchInput');
+  if (inp) { inp.value = ''; }
+  document.getElementById('desktopSearchClear')?.classList.remove('visible');
+  filterProducts('');
 }
 </script>
 </body>

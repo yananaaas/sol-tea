@@ -553,6 +553,8 @@ function openSearch() {
   if (window.innerWidth <= 768) {
     document.querySelector('nav').classList.add('search-active');
     document.getElementById('navSearchInput').focus();
+  } else {
+    document.getElementById('desktopSearchInput').focus();
   }
 }
 function closeSearch() {
@@ -565,13 +567,22 @@ function closeSearch() {
 function onDesktopSearchInput(val) {
   document.getElementById('desktopSearchClear').classList.toggle('visible', val.length > 0);
 }
+function onNavSearchInput(val) {
+  if (val.trim()) window.location.href = 'sol-shop.html';
+}
 function clearDesktopSearch() {
   const inp = document.getElementById('desktopSearchInput');
   inp.value = '';
   document.getElementById('desktopSearchClear').classList.remove('visible');
 }
+function onDesktopSearchBlur() {}
 
 document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.activeElement === document.getElementById('desktopSearchInput')) {
+    const val = document.getElementById('desktopSearchInput').value.trim();
+    if (val) window.location.href = 'sol-shop.html';
+    return;
+  }
   if (e.key === 'Escape') {
     closeSearch();
     document.querySelector('nav').classList.remove('search-active');

@@ -259,16 +259,10 @@
   .pp-logout:hover { background: rgba(232,74,46,0.07); }
   .pp-logout .pp-item-icon { background: rgba(232,74,46,0.15); color: #E84A2E; }
 
-  /* SEARCH OVERLAY (both desktop + mobile) */
-  .nav-search-mobile-shop { display: none; }
-  .mobile-search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px max(48px, calc((100vw - 1440px) / 2 + 48px)); box-shadow: 0 4px 16px rgba(28,26,20,0.08); }
-  .mobile-search-overlay.open { display: flex; }
-  .mobile-search-inner { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 10px 18px; }
-  .mobile-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
-  .mobile-search-input::placeholder { color: var(--gray-500); }
+  .nav-search-mobile { display: none; }
   /* NAV inline search (mobile) */
   .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
   .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
   .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
   .nav-search-inline-input::placeholder { color: var(--gray-500); }
@@ -283,8 +277,7 @@
     .nav-spacer { display: none; }
     .nav-right { gap: 0; margin-left: auto; }
     .nav-faq { display: none; }
-    .nav-search-mobile-shop { display: flex; }
-    .mobile-search-overlay { top: 72px; padding: 12px 16px; }
+    .nav-search-mobile { display: flex; }
     .page-wrap { padding: 0 16px; overflow-x: hidden; }
     .shop-header { padding-top: 96px; padding-bottom: 24px; }
     .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
@@ -302,7 +295,6 @@
     .product-desc { font-size: 13px; line-height: 1.7; }
     .product-price { font-size: 24px; }
     .btn-add { padding: 14px 28px; font-size: 15px; }
-    .mobile-search-overlay { display: none !important; }
     nav.search-active .nav-right { display: none; }
     nav.search-active .burger-btn { display: none !important; }
     .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
@@ -333,13 +325,6 @@
 <!-- NAV -->
 <sol-nav active="shop"></sol-nav>
 
-<!-- MOBILE SEARCH OVERLAY -->
-<div class="mobile-search-overlay" id="mobileSearchOverlay">
-  <div class="mobile-search-inner">
-    <input type="text" placeholder="Пошук чаю..." class="mobile-search-input" id="mobileSearchInput" oninput="onSearchInput(this.value); document.getElementById('shopClearBtn').classList.toggle('visible', this.value.length > 0)">
-    <button class="nav-icon-btn search-clear-btn" id="shopClearBtn" onclick="document.getElementById('mobileSearchInput').value=''; onSearchInput(''); this.classList.remove('visible')"><i class="hgi-stroke hgi-cancel-01"></i></button>
-  </div>
-</div>
 
 <div class="page-wrap">
   <div class="shop-header">
@@ -700,8 +685,6 @@ function openMobileSearch() {
 function closeMobileSearch() {
   document.querySelector('nav').classList.remove('search-active');
   document.getElementById('navSearchInput').value = '';
-  document.getElementById('mobileSearchOverlay').classList.remove('open');
-  document.getElementById('mobileSearchInput').value = '';
   searchQuery = '';
   currentPage = 1;
   renderCards();
@@ -721,7 +704,7 @@ function toggleProfile() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeMobileSearch();
-    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay','mobileSearchOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
+    ['profilePanel','profileOverlay','mobileMenu','mobileMenuOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
     document.body.style.overflow = '';
   }
 });

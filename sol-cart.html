@@ -42,7 +42,7 @@
   .wish-badge { background: var(--terra); }
   .cart-badge.visible, .wish-badge.visible { display: flex; }
   .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+  .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
   .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
   .nav-search-inline-input::placeholder { color: var(--gray-500); }
   .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
@@ -257,7 +257,8 @@
   .product-wish.liked { color: var(--terra); }
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
   .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-  .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
   .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
@@ -801,7 +802,7 @@ function clearDesktopSearch() {
 function highlightText(text, query) {
   if (!query) return text;
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark style="background:var(--green-500);color:var(--cream-bright);border-radius:2px;padding:0 2px">$1</mark>');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-highlight">$1</mark>');
 }
 function filterProducts(q) {
   const query = q.trim().toLowerCase();
