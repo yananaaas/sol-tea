@@ -228,6 +228,7 @@
 <script src="components/sol-footer.js"></script>
 <script src="components/sol-product-card.js"></script>
 <script src="components/sol-pagination.js"></script>
+<script src="components/sol-products.js"></script>
 </head>
 <body>
 
@@ -279,24 +280,6 @@ const SECTIONS = {
     filters: [
       {key:'all',label:'Всі'},{key:'oolong',label:'Улун'},
       {key:'puer',label:'Пуер'},{key:'seasonal',label:'Сезонне'},{key:'sets',label:'Набори'}
-    ],
-    products: [
-      {name:'Те Гуань Інь',     cat:'oolong',  region:'Фуцзянь', desc:'Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.',price:'₴ 480',  bg:'',        badge:null},
-      {name:'Шен Пуер 2019',    cat:'puer',    region:'Юньнань', desc:'Яскравий, терпкий, з потенціалом до витримки. З гір Іу.',         price:'₴ 920',  bg:'#DDD8CC', badge:'new'},
-      {name:'Фенхуан Даньцун',  cat:'oolong',  region:'Гуандун', desc:'Персик, медова орхідея. З гір Фенхуан, обмежений збір.',          price:'₴ 680',  bg:'#E4DDD3', badge:'limited'},
-      {name:'Шу Пуер Старий',   cat:'puer',    region:'Юньнань', desc:"Витриманий шу, м'який і глибокий. Землистий, без гіркоти.",       price:'₴ 560',  bg:'#D5CFCA', badge:null},
-      {name:'Да Хун Пао',       cat:'oolong',  region:'Фуцзянь', desc:'Мінеральний, смажений. Скелі Уї, обмежений збір.',               price:'₴ 740',  bg:'#E8E3D8', badge:null},
-      {name:'Цзінь Сюань',      cat:'oolong',  region:'Тайвань', desc:'Молочний, вершковий. Гірські плантації Тайваню.',                 price:'₴ 520',  bg:'#DDE4D5', badge:'new'},
-      {name:'Лао Шу Пуер',      cat:'puer',    region:'Юньнань', desc:'Зі старих дерев, глибокий і складний. Рідкісний.',               price:'₴ 1 200',bg:'#E0D9CE', badge:null},
-      {name:'Дун Дін',          cat:'oolong',  region:'Тайвань', desc:'Флоральний, легко смажений. Класика тайванського улуну.',         price:'₴ 610',  bg:'#EBE5D8', badge:null},
-      {name:'Бін Ча 2021',      cat:'puer',    region:'Юньнань', desc:'Пресований млинець, гори Менхай. Молодий і живий.',              price:'₴ 780',  bg:'#E2DBD0', badge:'new'},
-      {name:'Бай Хао Улун',     cat:'oolong',  region:'Тайвань', desc:'Мускатний виноград, мед. Орієнтальний красень Тайваню.',         price:'₴ 960',  bg:'#E6E0D2', badge:null},
-      {name:'Менхай Шу 2015',   cat:'puer',    region:'Юньнань', desc:'Витриманий шу з фабрики Менхай. Темний, насичений, без гіркоти.',price:'₴ 1 050',bg:'#D0CAC0', badge:null},
-      {name:'Іу Гу Шу',         cat:'puer',    region:'Юньнань', desc:'Шен зі столітніх дерев Іу. Глибокий, смоляний, складний.',      price:'₴ 1 450',bg:'#C8C2B8', badge:'limited'},
-      {name:'Весняний Збір 2026',cat:'seasonal',region:'Фуцзянь', desc:'Перший зрив, гора Уї. Лише 12 кг. Ніжний і яскравий.',         price:'₴ 1 100',bg:'#DAD4C8', badge:'limited'},
-      {name:'Осінній Фенхуан 2025',cat:'seasonal',region:'Гуандун',desc:'Осінній зрив Да Хун Пао. Димний, мінеральний, тривале послясмаччя.',price:'₴ 920',bg:'#D4CEC4', badge:'limited'},
-      {name:'Набір "Знайомство"',cat:'sets',   region:'Різні',   desc:'5 сортів по 20 г: улун, пуер, сезонне. Ідеально для початку.',  price:'₴ 680',  bg:'#DDD8CC', badge:'new'},
-      {name:'Набір "Пуер"',      cat:'sets',   region:'Юньнань', desc:'Шен 2019, Шу старий, Бін Ча 2021 та Іу Гу Шу. По 25 г.',       price:'₴ 1 200',bg:'#D0CBC0', badge:null}
     ]
   },
   teaware: {
@@ -304,49 +287,22 @@ const SECTIONS = {
       {key:'all',label:'Всі'},{key:'gaiwans',label:'Гайвані'},
       {key:'teapots',label:'Чайники'},{key:'bowls',label:'Піали'},
       {key:'pitchers',label:'Глечики'},{key:'kettles',label:'Кетлі'}
-    ],
-    products: [
-      {name:'Гайвань біла 120мл',     cat:'gaiwans', region:'Цзиндечжень',desc:'Класична порцелянова гайвань для улуну і пуеру.',     price:'₴ 560',  bg:'#EAE5DC',badge:null},
-      {name:'Гайвань сіра 150мл',     cat:'gaiwans', region:'Цзиндечжень',desc:'Матова глазур, зручний корпус, нейтральний смак.',    price:'₴ 640',  bg:'#D8D3CA',badge:null},
-      {name:'Чайник Ісін 200мл',      cat:'teapots', region:'Ісін',       desc:"Пурпурова глина зі стандартного кар'єру Хуанлун.",    price:'₴ 1 800',bg:'#C9B9A8',badge:'new'},
-      {name:'Чайник Ju-Lun 180мл',    cat:'teapots', region:'Ісін',       desc:'Класична форма Жу Лун Юн. Ідеально для шен пуеру.',  price:'₴ 2 200',bg:'#BFB4A8',badge:null},
-      {name:'Піала 60мл',             cat:'bowls',   region:'Юньнань',    desc:'Тонкостінна піала ручної роботи, глиняний обпал.',    price:'₴ 240',  bg:'#DDD7CC',badge:null},
-      {name:'Піала Небо 80мл',        cat:'bowls',   region:'Юньнань',    desc:'Глазурована в синій, форма широкого рота.',           price:'₴ 320',  bg:'#C8D0D8',badge:null},
-      {name:'Глечик 200мл',           cat:'pitchers',region:'Цзиндечжень',desc:'Ча Хай для зливання рівномірного настою.',            price:'₴ 480',  bg:'#DDD9D2',badge:null},
-      {name:'Глечик скляний 300мл',   cat:'pitchers',region:'Тайвань',    desc:'Жароміцне боросилікатне скло, видно колір чаю.',     price:'₴ 560',  bg:'#D8E0E4',badge:null},
-      {name:'Кетль Hario 800мл',      cat:'kettles', region:'Японія',     desc:'Носик-гусяча шия, точний контроль потоку.',          price:'₴ 1 400',bg:'#D4D0C8',badge:'new'},
-      {name:'Кетль керамічний 600мл', cat:'kettles', region:'Китай',      desc:'Для нагрівання на плиті, рівномірний нагрів.',       price:'₴ 980',  bg:'#CEC8BE',badge:null},
-      {name:'Піала Небо 50мл',        cat:'bowls',   region:'Юньнань',    desc:'Маленька для швидких ковтків. Тонкостінна кераміка.',price:'₴ 200',  bg:'#D4D8D0',badge:null},
-      {name:'Гайвань з квіткою 100мл',cat:'gaiwans', region:'Цзиндечжень',desc:'Ручний розпис у синьо-білій техниці доухай.',        price:'₴ 720',  bg:'#DDE3EB',badge:'limited'}
     ]
   },
   boards: {
     filters: [
       {key:'all',label:'Всі'},{key:'bamboo',label:'Бамбук'},
       {key:'wood',label:'Дерево'},{key:'stone',label:'Камінь'}
-    ],
-    products: [
-      {name:'Дошка бамбукова S',     cat:'bamboo',region:'Китай',  desc:'Компактна, 25×15 см. З дренажним відсіком та шлангом.',  price:'₴ 480',  bg:'#D8D4C4',badge:null},
-      {name:'Дошка бамбукова L',     cat:'bamboo',region:'Китай',  desc:'Простора, 40×25 см. Виїмка для чайника посередині.',    price:'₴ 720',  bg:'#D0CDB8',badge:null},
-      {name:'Дошка горіхова',        cat:'wood',  region:'Тайвань',desc:'Волоський горіх, масло тунгу. Темна і тепла.',          price:'₴ 1 200',bg:'#C0AE98',badge:'new'},
-      {name:'Дошка дубова',          cat:'wood',  region:'Тайвань',desc:'Дуб з широкими річними кільцями, стійкий до вологи.',   price:'₴ 1 050',bg:'#C8B8A0',badge:null},
-      {name:'Дошка кам\'яна сланець',cat:'stone', region:'Китай',  desc:'Натуральний сланець, 30×20 см. Стійкий до температур.',price:'₴ 1 600',bg:'#B8BCB8',badge:'limited'},
-      {name:'Дошка мармурова',       cat:'stone', region:'Китай',  desc:'Білий кара-мармур, 25×16 см. Елегантна поверхня.',      price:'₴ 1 900',bg:'#DDD9D4',badge:'limited'}
     ]
   },
   accessories: {
     filters: [
       {key:'all',label:'Всі'},{key:'tools',label:'Інструменти'},
       {key:'store',label:'Зберігання'},{key:'other',label:'Інше'}
-    ],
-    products: [
-      {name:'Набір ча-дао 6 предметів',cat:'tools',region:'Юньнань',desc:'Щипці, ложка, голка, воронка, кліщі, підставка.',    price:'₴ 680',bg:'#D8D4C8',badge:'new'},
-      {name:'Воронка бамбукова',       cat:'tools',region:'Китай',  desc:'Для засипання листя без розсипу.',                   price:'₴ 120',bg:'#D0CCBA',badge:null},
-      {name:'Ча-пе',                   cat:'tools',region:'Тайвань',desc:'Бамбукова лопатка для виймання листя з пакування.',  price:'₴ 90', bg:'#D4D0C4',badge:null},
-      {name:'Каністра для чаю 100г',   cat:'store',region:'Тайвань',desc:'Алюміній з силіконовим ущільнювачем. Матова чорна.', price:'₴ 320',bg:'#C8C4BC',badge:null}
     ]
   }
 };
+let allProducts = [];
 
 let currentSection = 'tea';
 let activeFilters = [];
@@ -370,7 +326,7 @@ function highlightText(text, query) {
 }
 
 function renderCards() {
-  const { products } = SECTIONS[currentSection];
+  const products = allProducts.filter(p => p.section === currentSection);
   const grid = document.getElementById('productsGrid');
   const empty = document.getElementById('emptyState');
   let visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
@@ -403,7 +359,7 @@ function renderCards() {
       name="${esc(p.name)}"
       region="${esc(p.region)}"
       desc="${esc(p.desc)}"
-      price="${esc(p.price)}"
+      price="${esc(SolProducts.formatPrice(p.price, p.currency))}"
       bg="${esc(p.bg||'')}"
       badge="${esc(p.badge||'')}"
       index="${i}"
@@ -426,7 +382,7 @@ function renderPagination(totalPages) {
 }
 
 function goToPage(page) {
-  const { products } = SECTIONS[currentSection];
+  const products = allProducts.filter(p => p.section === currentSection);
   const visible = activeFilters.length === 0 ? products : products.filter(p => activeFilters.includes(p.cat));
   const totalPages = Math.ceil(visible.length / ITEMS_PER_PAGE);
   if (page < 1 || page > totalPages) return;
@@ -579,15 +535,21 @@ window.addEventListener('scroll', () => {
   }
 });
 
-renderFilters();
-renderCards();
+SolProducts.load().then(data => {
+  allProducts = data;
+  renderFilters();
+  renderCards();
+}).catch(err => {
+  console.error('[sol-shop] failed to load products', err);
+});
+
 updateCartBadge();
 updateWishBadge();
 
 document.getElementById('paginationContainer').addEventListener('page-change', e => goToPage(e.detail.page));
 
 // Re-render when restored from bfcache (browser back button)
-window.addEventListener('pageshow', (e) => { if (e.persisted) renderCards(); });
+window.addEventListener('pageshow', (e) => { if (e.persisted && allProducts.length) renderCards(); });
 </script>
 </body>
 </html>
