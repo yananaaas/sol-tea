@@ -253,6 +253,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -403,6 +404,9 @@ function toggleProductCart() {
   updateCartBadge();
   setCartBtnState(btn, idx === -1);
 }
+
+function toggleWish(btn, name) { toggleSimilarWish(name, btn); }
+function addToCart(name, btn) { toggleSmCart(name, btn); }
 
 function toggleSimilarWish(name, btn) {
   const wish = getWish();
@@ -575,31 +579,21 @@ function renderSimilar(p) {
   similar = similar.slice(0, 4);
   if (similar.length === 0) { section.style.display = 'none'; return; }
   section.style.display = 'block';
-  const cart = getCart();
-  const wish = getWish();
-  grid.innerHTML = similar.map(s => {
-    const inCart = cart.some(c => c.name === s.name);
-    const isLiked = wish.includes(s.name);
-    const safeName = s.name.replace(/'/g,"\\'");
-    return `<div class="product-card" onclick="goToProduct('${safeName}')">
-      <div class="product-img"${s.bg?` style="background:${s.bg}"`:''}>Фото
-        <div class="product-region">${s.region}</div>
-        <button class="product-wish${isLiked?' liked':''}" onclick="event.stopPropagation();toggleSimilarWish('${safeName}',this)"><i class="hgi-stroke hgi-favourite"></i></button>
-        ${s.badge==='new'?'<div class="product-badge badge-new">Новинка</div>':''}
-        ${s.badge==='limited'?'<div class="product-badge badge-limited">Обмежений</div>':''}
-      </div>
-      <div class="product-body">
-        <h4>${s.name}</h4>
-        <p>${s.desc}</p>
-        <div class="product-footer">
-          <span class="product-price">${s.price}</span>
-          <button class="btn-add-sm${inCart?' in-cart':''}" onclick="event.stopPropagation();toggleSmCart('${s.name.replace(/'/g,"\\'")}',this)">
-            <i class="hgi-stroke hgi-${inCart?'checkmark-circle-02':'shopping-bag-add'}"></i> ${inCart?'В кошику':'Кошик'}
-          </button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = similar.map((s, i) => `
+    <sol-product-card
+      name="${esc(s.name)}"
+      region="${esc(s.region)}"
+      desc="${esc(s.desc)}"
+      price="${esc(s.price)}"
+      bg="${esc(s.bg||'')}"
+      badge="${esc(s.badge||'')}"
+      index="${i}"></sol-product-card>
+  `).join('');
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    grid.querySelectorAll('sol-product-card').forEach(c => c.show && c.show());
+  }));
 }
 
 function renderProduct(p) {

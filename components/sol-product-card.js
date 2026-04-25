@@ -70,7 +70,8 @@
 
   class SolProductCard extends HTMLElement {
     static get observedAttributes() {
-      return ['name', 'region', 'desc', 'price', 'bg', 'badge', 'index', 'search'];
+      return ['name', 'region', 'desc', 'price', 'bg', 'badge', 'index', 'search',
+              'liked', 'wish-id', 'cart-fn', 'show'];
     }
 
     connectedCallback() {
@@ -83,32 +84,45 @@
     }
 
     render() {
-      const name = this.getAttribute('name') || '';
-      const region = this.getAttribute('region') || '';
-      const desc = this.getAttribute('desc') || '';
-      const price = this.getAttribute('price') || '';
-      const bg = this.getAttribute('bg') || '';
-      const badge = this.getAttribute('badge') || '';
-      const index = parseInt(this.getAttribute('index') || '0', 10);
-      const search = this.getAttribute('search') || '';
+      const name    = this.getAttribute('name')    || '';
+      const region  = this.getAttribute('region')  || '';
+      const desc    = this.getAttribute('desc')    || '';
+      const price   = this.getAttribute('price')   || '';
+      const bg      = this.getAttribute('bg')      || '';
+      const badge   = this.getAttribute('badge')   || '';
+      const index   = parseInt(this.getAttribute('index') || '0', 10);
+      const search  = this.getAttribute('search')  || '';
+      const wishId  = this.getAttribute('wish-id') || name;
+      const cartFn  = this.getAttribute('cart-fn') || 'addToCart';
+      const isLiked = this.hasAttribute('liked');
+      const showNow = this.hasAttribute('show');
 
-      const liked = getWish().includes(name);
-      const inCart = getCart().some(c => c.name === name);
+      const inCart    = getCart().some(c => c.name === name);
+      const likedState = isLiked || getWish().includes(name);
 
-      const safeName = escJs(name);
-      const bgStyle = bg ? ` style="background:${escAttr(bg)}"` : '';
-      const delayStyle = ` style="transition-delay:${(index * 0.04).toFixed(2)}s"`;
+      const safeName   = escJs(name);
+      const safeWishId = escJs(wishId);
+      const safeCartFn = escJs(cartFn);
+      const bgStyle    = bg ? ` style="background:${escAttr(bg)}"` : '';
+      const delayStyle = showNow ? '' : ` style="transition-delay:${(index * 0.04).toFixed(2)}s"`;
 
       const badgeHtml =
-        badge === 'new' ? '<div class="product-badge badge-new">Новинка</div>' :
+        badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' :
         badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' :
         '';
 
+      // Wish button: if `liked` attr → always terra, click removes; otherwise toggle
+      const wishOnclick = isLiked
+        ? `event.stopPropagation();removeFromWish('${safeWishId}')`
+        : `event.stopPropagation();toggleWish(this,'${safeName}')`;
+      const wishClass = likedState ? 'product-wish liked' : 'product-wish';
+      const wishStyle = likedState ? ' style="color:var(--terra)"' : '';
+
       this.innerHTML = `
-        <div class="product-card"${delayStyle} onclick="goToProduct('${safeName}')">
+        <div class="product-card${showNow ? ' show' : ''}"${delayStyle} onclick="goToProduct('${safeName}')">
           <div class="product-img"${bgStyle}>Фото
             <div class="product-region">${escHtml(region)}</div>
-            <button class="product-wish${liked ? ' liked' : ''}" onclick="event.stopPropagation();toggleWish(this,'${safeName}')"><i class="hgi-stroke hgi-favourite"></i></button>
+            <button class="${wishClass}"${wishStyle} onclick="${wishOnclick}"><i class="hgi-stroke hgi-favourite"></i></button>
             ${badgeHtml}
           </div>
           <div class="product-body">
@@ -116,7 +130,7 @@
             <p class="product-desc">${highlight(desc, search)}</p>
             <div class="product-footer">
               <span class="product-price">${escHtml(price)}</span>
-              <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();addToCart('${safeName}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
+              <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();${safeCartFn}('${safeName}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
             </div>
           </div>
         </div>

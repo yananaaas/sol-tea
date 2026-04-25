@@ -370,6 +370,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -526,38 +527,10 @@
     <a href="sol-shop.html" class="btn-link">Всі товари <i class="hgi-stroke hgi-arrow-right-01"></i></a>
   </div>
   <div class="products-grid">
-    <div class="product-card fade-up" style="cursor:pointer" onclick="goToProduct('Те Гуань Інь')">
-      <div class="product-img">Фото<span class="product-region">Фуцзянь</span><button class="product-wish" onclick="solToggleWish(event,this,'teg')"><i class="hgi-stroke hgi-favourite"></i></button></div>
-      <div class="product-body">
-        <h4>Те Гуань Інь</h4>
-        <p class="product-desc">Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва.</p>
-        <div class="product-footer"><span class="product-price">₴ 480</span><button class="btn-add" onclick="event.stopPropagation();addToCart('Те Гуань Інь',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
-      </div>
-    </div>
-    <div class="product-card fade-up fade-up-d1" style="cursor:pointer" onclick="goToProduct('Шен Пуер 2019')">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="solToggleWish(event,this,'shen')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-new">Новинка</div></div>
-      <div class="product-body">
-        <h4>Шен Пуер 2019</h4>
-        <p class="product-desc">Яскравий, терпкий, з потенціалом до витримки. З гір Іу.</p>
-        <div class="product-footer"><span class="product-price">₴ 920</span><button class="btn-add" onclick="event.stopPropagation();addToCart('Шен Пуер 2019',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
-      </div>
-    </div>
-    <div class="product-card fade-up fade-up-d1" style="cursor:pointer" onclick="goToProduct('Фенхуан Даньцун')">
-      <div class="product-img">Фото<span class="product-region">Гуандун</span><button class="product-wish" onclick="solToggleWish(event,this,'feng')"><i class="hgi-stroke hgi-favourite"></i></button><div class="product-badge badge-limited">Обмежений</div></div>
-      <div class="product-body">
-        <h4>Фенхуан Даньцун</h4>
-        <p class="product-desc">Персик, медова орхідея. З гір Фенхуан, обмежений збір.</p>
-        <div class="product-footer"><span class="product-price">₴ 680</span><button class="btn-add" onclick="event.stopPropagation();addToCart('Фенхуан Даньцун',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
-      </div>
-    </div>
-    <div class="product-card fade-up fade-up-d2" style="cursor:pointer" onclick="goToProduct('Шу Пуер Старий')">
-      <div class="product-img">Фото<span class="product-region">Юньнань</span><button class="product-wish" onclick="solToggleWish(event,this,'shu')"><i class="hgi-stroke hgi-favourite"></i></button></div>
-      <div class="product-body">
-        <h4>Шу Пуер Старий</h4>
-        <p class="product-desc">Витриманий шу, м'який і глибокий. Землистий, без гіркоти.</p>
-        <div class="product-footer"><span class="product-price">₴ 560</span><button class="btn-add" onclick="event.stopPropagation();addToCart('Шу Пуер Старий',this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button></div>
-      </div>
-    </div>
+    <sol-product-card name="Те Гуань Інь" region="Фуцзянь" desc="Квіткові нотки, ніжне послясмаччя. Класичний залізний бодхисатва." price="₴ 480" index="0"></sol-product-card>
+    <sol-product-card name="Шен Пуер 2019" region="Юньнань" desc="Яскравий, терпкий, з потенціалом до витримки. З гір Іу." price="₴ 920" badge="new" index="1"></sol-product-card>
+    <sol-product-card name="Фенхуан Даньцун" region="Гуандун" desc="Персик, медова орхідея. З гір Фенхуан, обмежений збір." price="₴ 680" badge="limited" index="2"></sol-product-card>
+    <sol-product-card name="Шу Пуер Старий" region="Юньнань" desc="Витриманий шу, м&#39;який і глибокий. Землистий, без гіркоти." price="₴ 560" index="3"></sol-product-card>
   </div>
 </section>
 
@@ -853,6 +826,20 @@ function solToggleWish(event, btn, id) {
 updateCartBadge();
 updateWishBadge();
 initCartBtns();
+
+function toggleWish(btn, name) {
+  const w = JSON.parse(sessionStorage.getItem('solWish') || '[]');
+  const i = w.indexOf(name);
+  if (i === -1) w.push(name); else w.splice(i, 1);
+  sessionStorage.setItem('solWish', JSON.stringify(w));
+  btn.classList.toggle('liked', w.includes(name));
+  updateWishBadge();
+}
+
+// Animate bestseller cards after component renders
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  document.querySelectorAll('.bestsellers sol-product-card').forEach(c => c.show && c.show());
+}));
 </script>
 
 

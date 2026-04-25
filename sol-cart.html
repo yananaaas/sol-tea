@@ -262,6 +262,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -384,6 +385,14 @@ function getCart() { try { return JSON.parse(sessionStorage.getItem('solCart')) 
 function saveCart(c) { sessionStorage.setItem('solCart', JSON.stringify(c)); }
 function getWish() { try { return JSON.parse(sessionStorage.getItem('solWish')) || []; } catch(e) { return []; } }
 function saveWish(w) { sessionStorage.setItem('solWish', JSON.stringify(w)); }
+function toggleWish(btn, name) {
+  const w = getWish();
+  const i = w.indexOf(name);
+  if (i === -1) w.push(name); else w.splice(i, 1);
+  saveWish(w);
+  btn.classList.toggle('liked', w.includes(name));
+  updateWishBadge();
+}
 
 // ========================
 // BADGES
@@ -567,34 +576,26 @@ function renderWishlist() {
     return;
   }
 
-  grid.innerHTML = wish.map(id => {
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = wish.map((id, i) => {
     const name = WISH_ID_MAP[id] || id;
     const p = PRODUCT_MAP[name] || {};
-    const inCart = cart.some(c => c.name === name);
-    const safeN = name.replace(/'/g, "\\'");
-    const safeId = id.replace(/'/g, "\\'");
     const priceStr = p.price ? '₴ ' + p.price.toLocaleString('uk-UA') : '—';
-    return `
-      <div class="product-card" onclick="goToProduct('${safeN}')">
-        <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
-          ${p.region ? `<div class="product-region">${p.region}</div>` : ''}
-          <div class="product-wish liked" style="color:var(--terra)" onclick="event.stopPropagation();removeFromWish('${safeId}')"><i class="hgi-stroke hgi-favourite"></i></div>
-          ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
-          ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
-        </div>
-        <div class="product-body">
-          <h4>${name}</h4>
-          <p class="product-desc">${p.desc || ''}</p>
-          <div class="product-footer">
-            <span class="product-price">${priceStr}</span>
-            <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();toggleWishCart('${safeN}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
-          </div>
-        </div>
-      </div>`;
+    return `<sol-product-card
+      name="${esc(name)}"
+      region="${esc(p.region||'')}"
+      desc="${esc(p.desc||'')}"
+      price="${esc(priceStr)}"
+      bg="${esc(p.bg||'')}"
+      badge="${esc(p.badge||'')}"
+      index="${i}"
+      wish-id="${esc(id)}"
+      cart-fn="toggleWishCart"
+      liked></sol-product-card>`;
   }).join('');
 
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    grid.querySelectorAll('.product-card').forEach(c => c.classList.add('show'));
+    grid.querySelectorAll('sol-product-card').forEach(c => c.show && c.show());
   }));
 }
 
@@ -695,27 +696,20 @@ function filterProducts(q) {
   const matches = PRODUCTS.filter(p =>
     p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
   );
-  const cart = getCart();
-  grid.innerHTML = matches.map(p => {
-    const inCart = cart.some(c => c.name === p.name);
-    const safeN = p.name.replace(/'/g, "\\'");
-    return `
-      <div class="product-card show" onclick="goToProduct('${safeN}')">
-        <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
-          ${p.region ? `<div class="product-region">${p.region}</div>` : ''}
-          ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
-          ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
-        </div>
-        <div class="product-body">
-          <h4>${highlightText(p.name, query)}</h4>
-          <p class="product-desc">${highlightText(p.desc, query)}</p>
-          <div class="product-footer">
-            <span class="product-price">₴ ${p.price.toLocaleString('uk-UA')}</span>
-            <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();toggleSearchCart('${safeN}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = matches.map((p, i) => `
+    <sol-product-card
+      name="${esc(p.name)}"
+      region="${esc(p.region||'')}"
+      desc="${esc(p.desc||'')}"
+      price="₴ ${p.price.toLocaleString('uk-UA')}"
+      bg="${esc(p.bg||'')}"
+      badge="${esc(p.badge||'')}"
+      index="${i}"
+      search="${esc(query)}"
+      cart-fn="toggleSearchCart"
+      show></sol-product-card>
+  `).join('');
   empty.style.display = matches.length === 0 ? 'block' : 'none';
   panel.classList.add('open');
   document.body.style.overflow = 'hidden';
