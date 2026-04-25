@@ -29,21 +29,12 @@
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); height: 80px; }
   .nav-inner { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; gap: 32px; padding: 0 48px; }
-  .nav-spacer { flex: 1; }
   .nav-logo { flex-shrink: 0; display: flex; align-items: center; }
   .nav-logo a { display: flex; align-items: center; }
   .nav-logo svg { height: 42px; width: 41px; display: block; }
   .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
   .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--green-800); }
-  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
-  .nav-search:focus-within { background: var(--gray-100); }
-  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
-  .nav-search-input::placeholder { color: var(--gray-500); }
-  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
-  .nav-search-clear:hover { color: var(--black); }
-  .nav-search-clear.visible { display: flex; }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; }
   .nav-icon-btn:hover { background: var(--sand); }
@@ -51,7 +42,6 @@
   .cart-badge { background: var(--green-800); }
   .wish-badge { background: var(--terra); }
   .cart-badge.visible, .wish-badge.visible { display: flex; }
-  .nav-search-mobile { display: none; }
 
   /* SECTION TAG */
   .section-tag { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: var(--sand); color: var(--gray-800); border-radius: 40px; padding: 10px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
@@ -268,7 +258,6 @@
   .pp-logout .pp-item-icon { background: rgba(232,74,46,0.12); color: #E84A2E; }
   .pp-logout:hover .pp-item-icon { background: rgba(232,74,46,0.18); }
 
-
   /* SCROLL ANIMATIONS */
   .fade-up {
     opacity: 0;
@@ -287,24 +276,6 @@
   .hero-buttons { animation: fadeUp 0.5s ease 0.5s both; }
   .break-mobile { display: none; }
   @media (min-width: 769px) { .ritual-col-right .ritual-card { aspect-ratio: 1/1; min-height: unset; } }
-
-
-  /* SEARCH OVERLAY */
-  .search-overlay { display: none; position: fixed; top: 80px; left: 0; right: 0; z-index: 99; background: var(--cream); padding: 12px max(48px, calc((100vw - 1440px) / 2 + 48px)); box-shadow: 0 4px 20px rgba(28,26,20,0.08); }
-  .search-overlay.open { display: flex; }
-  .search-overlay-inner { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 1280px; margin: 0 auto; background: var(--sand); border-radius: 40px; padding: 10px 18px; }
-  .search-overlay-inner > i { font-size: 18px; color: var(--gray-500); flex-shrink: 0; }
-  .search-overlay-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); }
-  .search-overlay-input::placeholder { color: var(--gray-500); }
-  .search-clear-btn { opacity: 0; pointer-events: none; transition: opacity 0.15s; }
-  .search-clear-btn.visible { opacity: 1; pointer-events: all; }
-
-  /* NAV inline search (mobile) */
-  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
-  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
-  .nav-search-inline-input::placeholder { color: var(--gray-500); }
 
   /* BURGER MENU */
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
@@ -339,15 +310,10 @@
     nav { height: 72px; }
     .nav-inner { padding: 0 16px; gap: 4px; }
     .nav-links { display: none; }
-    .nav-search { display: none; }
-    .nav-spacer { display: none; }
     .nav-faq { display: none; }
-    .nav-search-mobile { display: flex; }
     .nav-right { gap: 0; margin-left: auto; }
     .burger-btn { display: flex; }
     .mobile-menu { top: 76px; }
-    .search-overlay { top: 72px; padding: 12px 16px; }
-    .search-overlay-input { font-size: 16px; }
     .hero { padding: 8px; margin-top: 72px; }
     .hero-inner { height: calc(100svh - 72px - 16px); min-height: 500px; }
     .hero-content { top: auto; bottom: 0; transform: none; padding: 32px 28px; width: 100%; max-width: 100%; }
@@ -374,13 +340,6 @@
     .hero-content { padding: 32px 28px 60px; }
     .hero-buttons { flex-direction: column; align-items: flex-start; gap: 10px; }
     .hero-buttons > * { padding: 14px 28px; font-size: 15px; }
-    .search-overlay { display: none !important; }
-    nav.search-active .nav-right { display: none; }
-    nav.search-active .burger-btn { display: none !important; }
-    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
-    .nav-search-inline i { font-size: 22px; }
-    nav.search-active .nav-spacer { display: none; }
-    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
     .break-mobile { display: block; }
     .scroll-top { bottom: 20px; right: 20px; }
     .ritual-top { padding: 80px 24px 60px; }
@@ -406,21 +365,9 @@
     .pp-section-label { padding: 10px 10px 4px; }
   }
 
-  /* SEARCH PANEL */
-  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
-  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
-  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
-  .search-panel-header { margin-bottom: 40px; }
-  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
-  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
-  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
-  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 768px) {
-    .search-panel-inner { padding: 96px 24px 60px; }
-    .search-panel-grid { grid-template-columns: 1fr; }
-  }
+
 </style>
+<script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 </head>
@@ -429,14 +376,6 @@
 <!-- NAV -->
 <sol-nav active="home"></sol-nav>
 
-<!-- SEARCH OVERLAY -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-overlay-inner">
-    <i class="hgi-stroke hgi-search-01"></i>
-    <input type="text" id="searchInput" placeholder="Пошук чаю, інгредієнтів..." class="search-overlay-input" oninput="filterProducts(this.value); document.getElementById('searchClearBtn').classList.toggle('visible', this.value.length > 0)">
-    <button class="nav-icon-btn search-clear-btn" id="searchClearBtn" onclick="document.getElementById('searchInput').value=''; filterProducts(''); this.classList.remove('visible')"><i class="hgi-stroke hgi-cancel-01"></i></button>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -916,16 +855,6 @@ updateWishBadge();
 initCartBtns();
 </script>
 
-<!-- SEARCH PANEL OVERLAY -->
-<div id="searchPanel" class="search-panel">
-  <div class="search-panel-inner">
-    <div class="search-panel-header">
-      <span class="search-panel-title">Результати пошуку:</span>
-    </div>
-    <div id="searchPanelGrid" class="search-panel-grid"></div>
-    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
-  </div>
-</div>
 
 </body>
 </html>

@@ -21,18 +21,12 @@
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); height: 80px; }
   .nav-inner { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; gap: 32px; padding: 0 48px; }
-  .nav-spacer { flex: 1; }
   .nav-logo { flex-shrink: 0; display: flex; align-items: center; }
   .nav-logo a { display: flex; align-items: center; }
   .nav-logo svg { height: 42px; width: 41px; display: block; }
   .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
   .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
   @media (hover: hover) { .nav-links a:hover { color: var(--green-800); } }
-  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
-  .nav-search:focus-within { background: var(--gray-100); }
-  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
-  .nav-search-input::placeholder { color: var(--gray-500); }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; }
   @media (hover: hover) { .nav-icon-btn:hover { background: var(--sand); } }
@@ -41,12 +35,6 @@
   .cart-badge { background: var(--green-800); }
   .wish-badge { background: var(--terra); }
   .cart-badge.visible, .wish-badge.visible { display: flex; }
-  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
-  .nav-search-inline-input::placeholder { color: var(--gray-500); }
-  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
-  .nav-search-mobile { display: none; }
   .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; transition: background 0.2s; flex-shrink: 0; }
   @media (hover: hover) { .burger-btn:hover { background: var(--sand); } }
 
@@ -107,29 +95,13 @@
   .badge-limited { background: var(--terra); color: var(--cream-bright); }
 
   /* NAV SEARCH CLEAR */
-  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
   @media (hover: hover) { .nav-search-clear:hover { color: var(--black); } }
-  .nav-search-clear.visible { display: flex; }
 
-  /* SEARCH PANEL */
-  .search-panel { position: fixed; inset: 0; background: var(--cream); z-index: 300; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
-  .search-panel.open { opacity: 1; pointer-events: all; transform: translateY(0); }
-  .search-panel-inner { max-width: 1280px; margin: 0 auto; padding: 120px 48px 80px; }
-  .search-panel-header { margin-bottom: 40px; }
-  .search-panel-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--black); letter-spacing: -0.02em; }
-  .search-panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .search-panel-empty { font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--gray-500); text-align: center; padding: 60px 0; }
-  @media (max-width: 1024px) { .search-panel-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 768px) {
-    .search-panel-inner { padding: 96px 24px 60px; }
-    .search-panel-grid { grid-template-columns: 1fr; }
-  }
-
+  
   /* SCROLL TO TOP */
   .scroll-top { position: fixed; bottom: 32px; right: max(40px, calc((100vw - 1440px) / 2 + 40px)); z-index: 50; width: 48px; height: 48px; background: var(--cream); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: var(--gray-500); transition: opacity 0.3s, transform 0.3s, background 0.2s; opacity: 0; pointer-events: none; box-shadow: 0 0 0 1.5px var(--gray-100); }
   .scroll-top.visible { opacity: 1; pointer-events: all; }
   @media (hover: hover) { .scroll-top:hover { background: var(--sand); color: var(--green-800); transform: translateY(-3px); } }
-
 
   /* ============================
      CART PAGE
@@ -231,7 +203,6 @@
   @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
   .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
   .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
@@ -249,17 +220,10 @@
     nav { height: 72px; }
     .nav-inner { padding: 0 16px; gap: 4px; }
     .nav-links { display: none; }
-    .nav-search { display: none; }
-    .nav-spacer { display: none; }
     .nav-faq { display: none; }
-    .nav-search-mobile { display: flex; }
     .nav-right { gap: 0; margin-left: auto; }
     .burger-btn { display: flex; }
     .mobile-menu { top: 76px; }
-    nav.search-active .nav-right { display: none; }
-    nav.search-active .burger-btn { display: none !important; }
-    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
-    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
     .scroll-top { bottom: 20px; right: 20px; }
     .profile-panel { top: 76px; right: 8px; left: 8px; width: auto; max-height: calc(100svh - 84px); }
     .pp-header { padding: 14px 14px 12px; }
@@ -295,6 +259,7 @@
     .cart-layout { grid-template-columns: 1fr 340px; gap: 32px; }
   }
 </style>
+<script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 </head>
@@ -350,16 +315,6 @@
 
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
 
-<!-- SEARCH PANEL -->
-<div id="searchPanel" class="search-panel">
-  <div class="search-panel-inner">
-    <div class="search-panel-header">
-      <span class="search-panel-title">Результати пошуку:</span>
-    </div>
-    <div id="searchPanelGrid" class="search-panel-grid"></div>
-    <p id="searchPanelEmpty" class="search-panel-empty" style="display:none">Нічого не знайдено</p>
-  </div>
-</div>
 
 <script>
 function onNavSearchInput(val) { filterProducts(val); }

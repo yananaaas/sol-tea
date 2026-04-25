@@ -21,7 +21,6 @@
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 400; background: var(--cream); height: 80px; }
   .nav-inner { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; gap: 32px; padding: 0 48px; }
-  .nav-spacer { flex: 1; }
   .nav-logo { flex-shrink: 0; display: flex; align-items: center; }
   .nav-logo a { display: flex; align-items: center; }
   .nav-logo svg { height: 42px; width: 41px; display: block; }
@@ -29,14 +28,6 @@
   .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--green-800); }
   .nav-links a.active { color: var(--green-800); font-weight: 500; }
-  .nav-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; transition: background 0.2s; width: 280px; flex-shrink: 0; }
-  .nav-search:focus-within { background: var(--gray-100); }
-  .nav-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
-  .nav-search-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); min-width: 0; cursor: text; }
-  .nav-search-input::placeholder { color: var(--gray-500); }
-  .nav-search-clear { display: none; background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 18px; padding: 0; width: 20px; height: 20px; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s; }
-  .nav-search-clear:hover { color: var(--black); }
-  .nav-search-clear.visible { display: flex; }
   .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .nav-icon-btn { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; }
   .nav-icon-btn:hover { background: var(--sand); }
@@ -171,7 +162,6 @@
   .product-footer { margin-top: auto; }
   .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
   .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
-  .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
   .product-footer { display: flex; justify-content: space-between; align-items: center; }
   .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
 
@@ -234,25 +224,14 @@
   .pp-logout:hover { background: rgba(232,74,46,0.07); }
   .pp-logout .pp-item-icon { background: rgba(232,74,46,0.15); color: #E84A2E; }
 
-  .nav-search-mobile { display: none; }
-  /* NAV inline search (mobile) */
-  .nav-search-inline { display: none; flex: 1; align-items: center; gap: 6px; background: var(--sand); border-radius: 40px; padding: 10px 16px; margin-left: 8px; }
-  .nav-search-inline i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; }
-  .search-close-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); font-size: 14px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
-  .nav-search-inline-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); }
-  .nav-search-inline-input::placeholder { color: var(--gray-500); }
-
   /* MOBILE */
   @media (max-width: 768px) {
     .burger-btn { display: flex; }
     nav { height: 72px; }
     .nav-inner { padding: 0 16px; gap: 4px; }
     .nav-links { display: none; }
-    .nav-search { display: none; }
-    .nav-spacer { display: none; }
     .nav-right { gap: 0; margin-left: auto; }
     .nav-faq { display: none; }
-    .nav-search-mobile { display: flex; }
     .page-wrap { padding: 0 16px; overflow-x: hidden; }
     .shop-header { padding-top: 96px; padding-bottom: 24px; }
     .shop-header h1 { font-size: clamp(28px, 8vw, 40px); }
@@ -270,12 +249,6 @@
     .product-desc { font-size: 13px; line-height: 1.7; }
     .product-price { font-size: 24px; }
     .btn-add { padding: 14px 28px; font-size: 15px; }
-    nav.search-active .nav-right { display: none; }
-    nav.search-active .burger-btn { display: none !important; }
-    .nav-search-inline { display: flex !important; opacity: 0; width: 0; overflow: hidden; padding: 0; pointer-events: none; margin-left: 0; flex: 0 0 auto; align-self: center; transition: opacity 0.22s ease, padding 0.22s ease; }
-    .nav-search-inline i { font-size: 22px; }
-    nav.search-active .nav-spacer { display: none; }
-    nav.search-active .nav-search-inline { opacity: 1; flex: 1; width: auto; overflow: visible; pointer-events: all; padding: 10px 14px; margin-left: 12px; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -293,6 +266,7 @@
     .products-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
   }
 </style>
+<script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
 </head>
@@ -300,7 +274,6 @@
 
 <!-- NAV -->
 <sol-nav active="shop"></sol-nav>
-
 
 <div class="page-wrap">
   <div class="shop-header">
@@ -334,8 +307,6 @@
 <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="hgi-stroke hgi-arrow-up-01"></i></button>
 
 <sol-footer></sol-footer>
-
-
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function openSearch() { openMobileSearch(); }

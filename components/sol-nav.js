@@ -16,25 +16,7 @@
       <li><a href="sol-tea.html"${homeActive ? ' class="active"' : ''}>Про нас</a></li>
       <li><a href="sol-shop.html"${shopActive ? ' class="active"' : ''}>Магазин</a></li>
     </ul>
-    <div class="nav-search">
-      <i class="hgi-stroke hgi-search-01"></i>
-      <input type="text" id="desktopSearchInput" placeholder="Пошук чаю, інгредієнтів..."
-        class="nav-search-input"
-        oninput="onDesktopSearchInput(this.value)"
-        onblur="onDesktopSearchBlur()">
-      <button class="nav-search-clear" id="desktopSearchClear"
-        onmousedown="event.preventDefault()"
-        onclick="clearDesktopSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
-    </div>
-    <div class="nav-spacer"></div>
-    <div class="nav-search-inline" id="navSearchInline">
-      <i class="hgi-stroke hgi-search-01"></i>
-      <input type="text" id="navSearchInput" placeholder="Пошук чаю..."
-        class="nav-search-inline-input"
-        oninput="if(typeof onNavSearchInput==='function')onNavSearchInput(this.value)"
-        onkeydown="if(event.key==='Enter'&&this.value.trim()&&typeof onNavSearchInput!=='function')window.location='sol-shop.html'">
-      <button class="search-close-btn" onclick="closeSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
-    </div>
+    <sol-search${shopActive ? ' variant="shop"' : ''}></sol-search>
     <div class="nav-right">
       <button class="nav-icon-btn nav-search-mobile" title="Пошук" onclick="openSearch()"><i class="hgi-stroke hgi-search-01"></i></button>
       <button class="nav-icon-btn" title="Профіль" onclick="toggleProfile()"><i class="hgi-stroke hgi-user-circle"></i></button>
