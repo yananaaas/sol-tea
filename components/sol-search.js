@@ -70,6 +70,134 @@
     document.head.appendChild(style);
   }
 
+  // --- Search logic (default behaviour for pages with the panel) ---
+
+  function ensureCatalog() {
+    if (!window.SolCatalog) return Promise.resolve([]);
+    return SolCatalog.load();
+  }
+
+  function escAttr(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+  }
+
+  function runSearch(query) {
+    const panel = document.getElementById('searchPanel');
+    if (!panel) return;
+    const q = (query || '').trim();
+    if (!q) {
+      panel.classList.remove('open');
+      document.body.style.overflow = '';
+      return;
+    }
+    ensureCatalog().then(products => {
+      const lq = q.toLowerCase();
+      const matches = products.filter(p =>
+        (p.name   || '').toLowerCase().includes(lq) ||
+        (p.desc   || '').toLowerCase().includes(lq) ||
+        (p.region || '').toLowerCase().includes(lq)
+      );
+      const grid  = document.getElementById('searchPanelGrid');
+      const empty = document.getElementById('searchPanelEmpty');
+      grid.innerHTML = matches.map((p, i) => `
+        <sol-product-card
+          name="${escAttr(p.name)}"
+          region="${escAttr(p.region || '')}"
+          desc="${escAttr(p.desc || '')}"
+          price="${escAttr(SolCatalog.formatPrice(p.price, p.currency))}"
+          bg="${escAttr(p.bg || '')}"
+          badge="${escAttr(p.badge || '')}"
+          index="${i}"
+          search="${escAttr(q)}"
+          cart-fn="solSearchToggleCart"
+          show></sol-product-card>
+      `).join('');
+      empty.style.display = matches.length === 0 ? 'block' : 'none';
+      panel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  function closeAll() {
+    const panel   = document.getElementById('searchPanel');
+    const overlay = document.getElementById('searchOverlay');
+    if (panel)   panel.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    const nav = document.querySelector('nav');
+    if (nav) nav.classList.remove('search-active');
+    ['desktopSearchInput', 'searchInput', 'navSearchInput'].forEach(id => {
+      const inp = document.getElementById(id);
+      if (inp) inp.value = '';
+    });
+    document.querySelectorAll('.nav-search-clear, #searchClearBtn').forEach(b => b.classList.remove('visible'));
+  }
+
+  function openSearch() {
+    if (window.innerWidth <= 768) {
+      const nav = document.querySelector('nav');
+      if (nav) nav.classList.add('search-active');
+      const inp = document.getElementById('navSearchInput');
+      if (inp) inp.focus();
+    } else {
+      const overlay = document.getElementById('searchOverlay');
+      if (overlay) overlay.classList.add('open');
+      const inp = document.getElementById('searchInput');
+      if (inp) inp.focus();
+    }
+  }
+
+  // --- Defaults: only set if the page hasn't already defined its own ---
+  // Pages like sol-shop override these with custom inline-search behaviour.
+
+  function setDefault(name, fn) {
+    if (typeof window[name] !== 'function') window[name] = fn;
+  }
+
+  setDefault('filterProducts', runSearch);
+  setDefault('onNavSearchInput', runSearch);
+  setDefault('openSearch', openSearch);
+  setDefault('closeSearch', closeAll);
+
+  setDefault('onDesktopSearchInput', function (val) {
+    runSearch(val);
+    const clear = document.getElementById('desktopSearchClear');
+    if (clear) clear.classList.toggle('visible', val.length > 0);
+  });
+  setDefault('clearDesktopSearch', function () {
+    const inp = document.getElementById('desktopSearchInput');
+    if (inp) inp.value = '';
+    const clear = document.getElementById('desktopSearchClear');
+    if (clear) clear.classList.remove('visible');
+    runSearch('');
+  });
+  setDefault('onDesktopSearchBlur', function () {
+    setTimeout(() => {
+      const overlay = document.getElementById('searchOverlay');
+      const inp = document.getElementById('desktopSearchInput');
+      if (overlay && inp && !inp.value) overlay.classList.remove('open');
+    }, 150);
+  });
+
+  // Default cart toggle for product cards rendered inside the search panel.
+  // Pages can still override by setting their own window.solSearchToggleCart.
+  setDefault('solSearchToggleCart', function (name, btn) {
+    let cart;
+    try { cart = JSON.parse(sessionStorage.getItem('solCart') || '[]'); }
+    catch (e) { cart = []; }
+    const idx = cart.findIndex(c => c.name === name);
+    const wasIn = idx >= 0;
+    if (wasIn) cart.splice(idx, 1);
+    else       cart.push({ name, qty: 1 });
+    sessionStorage.setItem('solCart', JSON.stringify(cart));
+    const inCart = !wasIn;
+    btn.className = 'btn-add' + (inCart ? ' in-cart' : '');
+    btn.innerHTML = inCart
+      ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику'
+      : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик';
+    if (typeof window.updateCartBadge === 'function') window.updateCartBadge();
+  });
+
   class SolSearch extends HTMLElement {
     connectedCallback() {
       injectSearchStyles();
