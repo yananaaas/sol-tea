@@ -269,6 +269,7 @@
 <script src="components/sol-search.js"></script>
 <script src="components/sol-nav.js"></script>
 <script src="components/sol-footer.js"></script>
+<script src="components/sol-product-card.js"></script>
 </head>
 <body>
 
@@ -438,34 +439,22 @@ function renderCards() {
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   const pageItems = visible.slice(start, start + ITEMS_PER_PAGE);
 
-  const wish = JSON.parse(sessionStorage.getItem('solWish')||'[]');
-  const cart = getCart();
-  grid.innerHTML = pageItems.map((p, i) => {
-    const liked = wish.includes(p.name);
-    const wishStyle = liked ? ' style="color:var(--terra)"' : '';
-    const inCart = cart.some(c => c.name === p.name);
-    return `
-    <div class="product-card" style="transition-delay:${i * 0.04}s;cursor:pointer" onclick="goToProduct('${p.name.replace(/'/g,"\\'")}')">
-      <div class="product-img"${p.bg ? ` style="background:${p.bg}"` : ''}>Фото
-        <div class="product-region">${p.region}</div>
-        <div class="product-wish${liked ? ' liked' : ''}"${wishStyle} onclick="event.stopPropagation();toggleWish(this,'${p.name.replace(/'/g,"\\'")}')"><i class="hgi-stroke hgi-favourite"></i></div>
-        ${p.badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' : ''}
-        ${p.badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' : ''}
-      </div>
-      <div class="product-body">
-        <h4>${searchQuery ? highlightText(p.name, searchQuery) : p.name}</h4>
-        <p class="product-desc">${searchQuery ? highlightText(p.desc, searchQuery) : p.desc}</p>
-        <div class="product-footer">
-          <span class="product-price">${p.price}</span>
-          <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();addToCart('${p.name.replace(/'/g,"\\'")}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  grid.innerHTML = pageItems.map((p, i) => `
+    <sol-product-card
+      name="${esc(p.name)}"
+      region="${esc(p.region)}"
+      desc="${esc(p.desc)}"
+      price="${esc(p.price)}"
+      bg="${esc(p.bg||'')}"
+      badge="${esc(p.badge||'')}"
+      index="${i}"
+      search="${esc(searchQuery||'')}"></sol-product-card>
+  `).join('');
 
   // Trigger animation: two rAF frames so browser paints initial opacity:0 first
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    grid.querySelectorAll('.product-card').forEach(c => c.classList.add('show'));
+    grid.querySelectorAll('sol-product-card').forEach(c => c.show && c.show());
   }));
 
   renderPagination(totalPages);
