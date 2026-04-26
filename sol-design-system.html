@@ -275,12 +275,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
    - border-radius на самому iframe — fallback для випадків коли iframe виходить
      за межі wrap (наприклад при горизонтальному скролі).
    Внутрішній .ds-live-scroll робить горизонтальний скрол на вузьких viewport. */
-.ds-live-wrap { border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
+.ds-live-wrap { border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 32px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
 .ds-live-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .ds-live-scroll::-webkit-scrollbar { display: none; }
 .ds-live-iframe { display: block; border: 0; background: var(--cream); border-radius: 20px; }
 .ds-live-iframe.desktop { width: 100%; min-width: 769px; }
-.ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
+.ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 32px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
 .ds-live-mobile-wrap .ds-live-iframe { width: 100%; }
 
 /* Метадані під компонентом: десктоп — у рядок з flex-wrap, мобілка — стовпець.
@@ -297,7 +297,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
    Product Cards тощо). Розмір синхронізований з .ds-section-desc для консистентності.
    <strong> у середині — ключові терміни (Web-component, Header, Footer тощо),
    стиль збігається з .ds-meta-flow strong. */
-.ds-section-note { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+.ds-section-note { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 32px; }
 .ds-section-note strong, .ds-section-desc strong { font-weight: 600; color: var(--gray-800); }
 @media (max-width: 768px) {
   .ds-section-note { font-size: 16px; line-height: 1.6; }
