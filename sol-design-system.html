@@ -2669,7 +2669,16 @@ const DS_LIVE_NAV_PREP = `
     try { parent.postMessage({ type: 'ds-nav-resize', open: !!isOpen }, '*'); } catch (e) {}
   };
   window.toggleProfile = function() {};
-  window.openSearch = window.closeSearch = function(){};
+  window.openSearch = function() {
+    var nav = document.querySelector('nav');
+    if (nav) nav.classList.add('search-active');
+    var inp = document.getElementById('navSearchInput');
+    if (inp) inp.focus();
+  };
+  window.closeSearch = function() {
+    var nav = document.querySelector('nav');
+    if (nav) nav.classList.remove('search-active');
+  };
 
   window.addEventListener('load', function() {
     document.querySelectorAll('a[href]').forEach(function(a) {
@@ -2767,14 +2776,15 @@ window.addEventListener('message', function(e){
 /* sol-search preview:
    Desktop — компонент сам по собі (показує .nav-search pill 280px) у flex-обгортці.
    Mobile — обгортаємо у <nav class="search-active">, щоб inline-pill розгорнувся
-   на повну ширину (через селектори nav.search-active .nav-search-inline). */
+   на повну ширину (через селектори nav.search-active .nav-search-inline).
+   Padding обгорток — 0, щоб контент стояв з лівого краю iframe (як у решти preview). */
 const DS_LIVE_SEARCH_DESKTOP_CSS = `
-  body { display: flex; align-items: center; padding: 14px 16px; height: 80px; }
+  body { display: flex; align-items: center; padding: 0; height: 80px; }
   .nav-spacer { display: none; }
 `;
 const DS_LIVE_SEARCH_MOBILE_CSS = `
-  nav { display: flex; align-items: center; gap: 4px; padding: 0 16px; height: 72px; background: var(--cream); }
-  nav, footer { border-radius: 0; }
+  nav { display: flex; align-items: center; gap: 0; padding: 0; height: 72px; background: var(--cream); border-radius: 0; }
+  nav.search-active .nav-search-inline { margin-left: 0 !important; }
 `;
 (function initSearchPreviews(){
   const scripts = ['sol-search'];
