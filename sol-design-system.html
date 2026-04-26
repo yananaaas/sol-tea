@@ -1040,7 +1040,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       sol-review-card[variant="marquee"] { display: flex; flex-shrink: 0; width: 360px; }
 
       .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-      .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
+      .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
       .testimonial-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
       .testimonial-user { display: flex; align-items: center; gap: 12px; }
       .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
@@ -1049,7 +1049,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
 
       .testimonial--marquee { width: 100%; flex: 1; }
-      .testimonial--marquee .testimonial-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     `;
     document.head.appendChild(style);
   }
@@ -2170,7 +2169,7 @@ hover → sand</div>
 <section id="reviews-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Review Cards</h2>
-    <p class="ds-section-note"><strong>Marquee-компонент</strong> головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. <strong>Web-component</strong> <code class="ds-code">&lt;sol-review-card&gt;</code> приймає атрибути <code class="ds-code">text</code>, <code class="ds-code">author</code>, <code class="ds-code">handle</code>, <code class="ds-code">rating</code>, <code class="ds-code">color</code> (або <code class="ds-code">index</code> для авто-кольору з палітри). Атрибут <code class="ds-code">variant="marquee"</code> — фіксована ширина 360px і обмеження тексту 3 рядками для бігучого рядка.</p>
+    <p class="ds-section-note"><strong>Marquee-компонент</strong> головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. Текст відгука обмежений 3 рядками. <strong>Web-component</strong> <code class="ds-code">&lt;sol-review-card&gt;</code> приймає атрибути <code class="ds-code">text</code>, <code class="ds-code">author</code>, <code class="ds-code">handle</code>, <code class="ds-code">rating</code>, <code class="ds-code">color</code> (або <code class="ds-code">index</code> для авто-кольору з палітри). Атрибут <code class="ds-code">variant="marquee"</code> — фіксована ширина 360px для бігучого рядка.</p>
 
     <div class="ds-live-wrap">
       <iframe id="reviewsIframe" class="ds-live-iframe ds-live-iframe-auto" style="width: 100%;" height="200" title="Live sol-review-card"></iframe>
@@ -2903,14 +2902,11 @@ const DS_PRODUCT_CARDS_HTML = `<div class="ds-cards-grid">
   if (iframe) iframe.srcdoc = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, ['sol-product-card'], DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
 })();
 
-/* sol-review-card preview: 3 картки у grid + 1 marquee варіант */
+/* sol-review-card preview: 3 картки у grid */
 const DS_LIVE_REVIEWS_CSS = `
   html, body { margin: 0; padding: 0; }
   body { padding: 16px 0; }
-  .ds-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; margin-bottom: 32px; }
-  .ds-reviews-marquee { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
-  .ds-reviews-marquee::-webkit-scrollbar { display: none; }
-  .ds-marquee-label { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-bottom: 12px; }
+  .ds-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
   @media (max-width: 768px) {
     .ds-reviews-grid { grid-template-columns: 1fr; gap: 24px; }
   }
@@ -2920,12 +2916,6 @@ const DS_LIVE_REVIEWS_HTML = `
     <sol-review-card text="Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця." author="Олена Коваль" handle="@olenatea" rating="5" index="0"></sol-review-card>
     <sol-review-card text="Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний." author="Максим Дяченко" handle="@puermax" rating="5" index="1"></sol-review-card>
     <sol-review-card text="Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень." author="Марія Романюк" handle="@maria.tea" rating="5" index="2"></sol-review-card>
-  </div>
-  <div class="ds-marquee-label">variant="marquee" — фіксована ширина 360px, текст обмежений 3 рядками</div>
-  <div class="ds-reviews-marquee">
-    <sol-review-card variant="marquee" text="Söl Tea — це не магазин, це досвід. Кожна посилка як подарунок собі: продумано до дрібниць, від обгортки до запаху." author="Ірина Лесик" handle="@iryna.tea" rating="5" index="3"></sol-review-card>
-    <sol-review-card variant="marquee" text="Купив набір на подарунок мамі. Вона тепер п'є чай тільки звідси. Ну і я разом з нею :)" author="Андрій Петренко" handle="@petrenko" rating="5" index="4"></sol-review-card>
-    <sol-review-card variant="marquee" text="Сезонні новинки — це окрема насолода. Вже три роки чекаю весняного зеленого і ніколи не розчаровуюсь." author="Світлана Гайдук" handle="@gaiduk_tea" rating="5" index="5"></sol-review-card>
   </div>
 `;
 (function initReviewsPreview(){
