@@ -2550,18 +2550,18 @@ hover: sand</div>
     <div class="rules-grid">
       <div class="rule-card">
         <div class="rule-num">01</div>
+        <div class="rule-title">Складні блоки — Web Components</div>
+        <div class="rule-body">Великі переиспользувані блоки (nav, footer, картки, акордеон, пагінація тощо) — Web Components у <span class="rule-code">components/</span>. Атомарні стилі (кнопки <span class="rule-code">.btn-*</span>, пілюлі <span class="rule-code">.filter-pill</span>, інпути <span class="rule-code">.ds-input</span>) лишаються глобальними CSS-класами.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">02</div>
         <div class="rule-title">Без дівайдерів</div>
         <div class="rule-body">Тільки блочна структура. Ніяких <span class="rule-code">&lt;hr&gt;</span> і горизонтальних ліній між секціями. Розділення — виключно відступами та зміною фону.</div>
       </div>
       <div class="rule-card">
-        <div class="rule-num">02</div>
-        <div class="rule-title">Без uppercase в UI-тексті</div>
-        <div class="rule-body">Лейбли форм, підписи, навігаційні посилання — завжди sentence case. Виняток: тільки бейджі на картках товару та region-мітки.</div>
-      </div>
-      <div class="rule-card">
         <div class="rule-num">03</div>
-        <div class="rule-title">Hover тільки в @media (hover: hover)</div>
-        <div class="rule-body">Всі <span class="rule-code">:hover</span> стилі — виключно всередині <span class="rule-code">@media (hover: hover)</span>. Інакше iOS застряє у hover-стані після тапу.</div>
+        <div class="rule-title">Border-radius карток 20–24px</div>
+        <div class="rule-body">Картки, панелі, dropdowns — <span class="rule-code">20px</span> або <span class="rule-code">24px</span>. Інпути — <span class="rule-code">12px</span>. Кнопки і пілюлі — <span class="rule-code">40px</span> (pill).</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">04</div>
@@ -2570,13 +2570,13 @@ hover: sand</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">05</div>
-        <div class="rule-title">Тільки hgi-stroke іконки</div>
-        <div class="rule-body">Solid іконки є тільки в платній версії HugeIcons і недоступні в нашому паку. Wishlist активний стан — тільки зміна кольору на <span class="rule-code">var(--terra)</span>, іконка не змінюється.</div>
+        <div class="rule-title">Hover тільки в @media (hover: hover)</div>
+        <div class="rule-body">Всі <span class="rule-code">:hover</span> стилі — виключно всередині <span class="rule-code">@media (hover: hover)</span>. Інакше iOS застряє у hover-стані після тапу.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">06</div>
-        <div class="rule-title">Єдиний розмір кнопок</div>
-        <div class="rule-body"><span class="rule-code">padding: 14px 28px</span> і <span class="rule-code">font-size: 15px</span> — стандарт для всіх CTA кнопок. <span class="rule-code">border-radius: 40px</span> — без винятків.</div>
+        <div class="rule-title">Тільки hgi-stroke іконки</div>
+        <div class="rule-body">Solid іконки є тільки в платній версії HugeIcons і недоступні в нашому паку. Wishlist активний стан — тільки зміна кольору на <span class="rule-code">var(--terra)</span>, іконка не змінюється.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">07</div>
@@ -2590,23 +2590,23 @@ hover: sand</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">09</div>
-        <div class="rule-title">Overflow-x: hidden на html</div>
-        <div class="rule-body">Тільки на <span class="rule-code">&lt;html&gt;</span>, не на <span class="rule-code">&lt;body&gt;</span>. Full-bleed дочірні елементи використовують від'ємні margin відносно body.</div>
+        <div class="rule-title">Sessionstorage для стану кошика і вподобаних</div>
+        <div class="rule-body">Стан кошика — <span class="rule-code">sessionStorage.solCart</span>, вподобаних — <span class="rule-code">sessionStorage.solWish</span>. Компоненти зчитують і пишуть напряму. Без localStorage (зник після закриття браузера) — ще немає бекенду.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">10</div>
-        <div class="rule-title">Border-radius карток 20–24px</div>
-        <div class="rule-body">Картки, панелі, dropdowns — <span class="rule-code">20px</span> або <span class="rule-code">24px</span>. Інпути — <span class="rule-code">12px</span>. Кнопки і пілюлі — <span class="rule-code">40px</span> (pill).</div>
+        <div class="rule-title">Без uppercase в UI-тексті</div>
+        <div class="rule-body">Лейбли форм, підписи, навігаційні посилання — завжди sentence case. Виняток: тільки бейджі на картках товару та region-мітки.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">11</div>
-        <div class="rule-title">Складні блоки — Web Components</div>
-        <div class="rule-body">Великі переиспользувані блоки (nav, footer, картки, акордеон, пагінація тощо) — Web Components у <span class="rule-code">components/</span>. Атомарні стилі (кнопки <span class="rule-code">.btn-*</span>, пілюлі <span class="rule-code">.filter-pill</span>, інпути <span class="rule-code">.ds-input</span>) лишаються глобальними CSS-класами.</div>
+        <div class="rule-title">Єдиний розмір кнопок</div>
+        <div class="rule-body"><span class="rule-code">padding: 14px 28px</span> і <span class="rule-code">font-size: 15px</span> — стандарт для всіх CTA кнопок. <span class="rule-code">border-radius: 40px</span> — без винятків.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">12</div>
-        <div class="rule-title">Sessionstorage для стану кошика і вподобаних</div>
-        <div class="rule-body">Стан кошика — <span class="rule-code">sessionStorage.solCart</span>, вподобаних — <span class="rule-code">sessionStorage.solWish</span>. Компоненти зчитують і пишуть напряму. Без localStorage (зник після закриття браузера) — ще немає бекенду.</div>
+        <div class="rule-title">Overflow-x: hidden на html</div>
+        <div class="rule-body">Тільки на <span class="rule-code">&lt;html&gt;</span>, не на <span class="rule-code">&lt;body&gt;</span>. Full-bleed дочірні елементи використовують від'ємні margin відносно body.</div>
       </div>
     </div>
   </div>
