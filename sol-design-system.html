@@ -2048,7 +2048,7 @@ hover → sand</div>
     <!-- Один responsive iframe: width:100%, без min-width — рендериться desktop або
          mobile layout залежно від ширини самого iframe (= ширини секції DS) -->
     <div class="ds-live-wrap">
-      <iframe id="cardsIframe" class="ds-live-iframe ds-live-iframe-auto" style="width: 100%;" height="500" title="Live sol-product-card"></iframe>
+      <iframe id="cardsIframe" class="ds-live-iframe ds-live-iframe-auto" style="width: 100%;" height="200" title="Live sol-product-card"></iframe>
     </div>
 
     <div class="ds-meta-flow">
@@ -2800,7 +2800,7 @@ ${scripts}
 const DS_LIVE_AUTOHEIGHT_PREP = `
 <script>
   function reportHeight() {
-    var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+    var h = document.body.scrollHeight;
     try { parent.postMessage({ type: 'ds-iframe-autoheight', height: h }, '*'); } catch(e) {}
   }
   window.addEventListener('load', function() {
@@ -2851,7 +2851,7 @@ const DS_LIVE_PRODUCT_PREP = `
   sessionStorage.setItem('solWish', JSON.stringify(['Шен Пуер 2019','Да Хун Пао']));
   window.goToProduct = window.addToCart = window.toggleWish = window.removeFromWish = function(){};
   function reportHeight() {
-    var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+    var h = document.body.scrollHeight;
     try { parent.postMessage({ type: 'ds-iframe-autoheight', height: h }, '*'); } catch(e) {}
   }
   window.addEventListener('load', function() {
