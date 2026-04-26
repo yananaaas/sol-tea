@@ -1154,16 +1154,20 @@ color green-800</div>
       <span>Badge: 17×17px, <code class="ds-code">font-size: 10px</code></span>
     </div>
 
-    <div class="ds-sublabel" style="margin-top: 40px; margin-bottom: 16px;">Атрибут <code class="ds-code">active</code></div>
-    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.9; margin-bottom: 0;">Підсвічує активний пункт меню та (для FAQ) робить кнопку нерозкликабельною. Можливі значення:<br>
-      <code class="ds-code">home</code> — сторінка «Про нас» (sol-tea.html)<br>
-      <code class="ds-code">shop</code> — Магазин (sol-shop.html); також показує варіант пошуку <code class="ds-code">variant="shop"</code> (без overlay-панелі)<br>
-      <code class="ds-code">product</code> — сторінка товару (sol-product.html); підсвічує «Магазин»<br>
-      <code class="ds-code">faq</code> — Часті запитання (sol-faq.html); підсвічує іконку FAQ<br>
-      без атрибута — нейтральний стан (cart / checkout)
-    </p>
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span>Атрибут <code class="ds-code">active</code></span>
+    </div>
+    <div class="ds-meta-flow" style="margin-top: 12px; flex-direction: column; gap: 4px;">
+      <span><code class="ds-code">home</code> — сторінка «Про нас» (sol-tea.html)</span>
+      <span><code class="ds-code">shop</code> — Магазин (sol-shop.html); показує варіант пошуку <code class="ds-code">variant="shop"</code></span>
+      <span><code class="ds-code">product</code> — сторінка товару (sol-product.html); підсвічує «Магазин»</span>
+      <span><code class="ds-code">faq</code> — Часті запитання (sol-faq.html); підсвічує іконку FAQ</span>
+      <span>без атрибута — нейтральний стан (cart / checkout)</span>
+    </div>
 
-    <div class="ds-sublabel" style="margin-top: 40px; margin-bottom: 12px;">Source: <code class="ds-code">components/sol-nav.js</code></div>
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span>Source: <code class="ds-code">components/sol-nav.js</code></span>
+    </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
       <div id="navSourceCode" class="ds-code-block scroll" data-src="sol-nav">// loading components/sol-nav.js…</div>
@@ -1204,7 +1208,9 @@ color green-800</div>
       <span>Newsletter pill: green-500</span>
     </div>
 
-    <div class="ds-sublabel" style="margin-top: 40px; margin-bottom: 12px;">Source: <code class="ds-code">components/sol-footer.js</code></div>
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span>Source: <code class="ds-code">components/sol-footer.js</code></span>
+    </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
       <div id="footerSourceCode" class="ds-code-block scroll" data-src="sol-footer">// loading components/sol-footer.js…</div>
