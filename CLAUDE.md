@@ -788,13 +788,14 @@ sol-admin.html         sol-shop, sol-product, sol-tea
 - ✅ `components/sol-faq-item.js` — `<sol-faq-item question="..." answer="...">` — акордеон запитань (інтегрований на sol-faq, 14 елементів у 4 секціях)
 - ✅ `components/sol-pagination.js` — `<sol-pagination current="..." total="...">` — пагінація (інтегрована на sol-shop, еміт `page-change` з `detail: { page }`)
 
-**Залишилось** (джерело правди — підтверджує Яна перед кожним):
+**Залишилось:** немає, всі 8 компонентів готові і перенесені в DS.
 
-### Перенесення компонентів у sol-design-system.html
-- Усі готові компоненти (`sol-nav`, `sol-footer`, `sol-search`, `sol-product-card`, `sol-review-card`, `sol-counter`, `sol-faq-item`, `sol-pagination`) треба перенести у `sol-design-system.html` як живі приклади.
-- Оновити в DS: контекст (опис призначення), підписи (назви секцій/прикладів), назви компонентів, код у блоках (HTML / атрибути / події), де треба — варіанти й стани.
-- Підключити в DS ті ж самі `components/*.js` файли — щоб приклади були реальні, а не скопійована розмітка.
-- Дотримуватись поточного стилю DS (заголовки, типографіка, відступи).
+### Перенесення компонентів у sol-design-system.html ✅ Готово
+Усі 8 компонентів живуть у DS як справжні `<sol-*>` теги:
+- nav / footer / search / product-card / review-card — у iframe (бо потребують повного document context).
+- counter / faq-item / pagination — інлайн у DS scope (атомарні).
+- Кожна секція має: пояснювальний параграф з жирними ключовими термінами, метадані з `<strong>` лейблами, source-блок з підсвіткою через регекс-хайлайтер.
+- 12 правил у Guidelines (додано Web Components і Sessionstorage).
 
 ### Пріоритет 2 — Сторінки (окремий чат)
 - **sol-about.html** — «Про нас»: команда, цінності, процес відбору чаю, джерела. Не дублює Головну. Той самий editorial стиль.
