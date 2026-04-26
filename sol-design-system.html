@@ -294,8 +294,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 }
 
 /* Пояснювальний параграф під заголовком компонента (Header, Footer, Inputs,
-   Product Cards тощо). Розмір синхронізований з .ds-section-desc для консистентності. */
+   Product Cards тощо). Розмір синхронізований з .ds-section-desc для консистентності.
+   <strong> у середині — ключові терміни (Web-component, Header, Footer тощо),
+   стиль збігається з .ds-meta-flow strong. */
 .ds-section-note { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+.ds-section-note strong, .ds-section-desc strong { font-weight: 600; color: var(--gray-800); }
 @media (max-width: 768px) {
   .ds-section-note { font-size: 16px; line-height: 1.6; }
 }
@@ -1292,7 +1295,7 @@ color green-800</div>
 <section id="nav-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Header</h2>
-    <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. Web-component <code class="ds-code">&lt;sol-nav&gt;</code> рендерить однакову навігацію на всіх сторінках. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
+    <p class="ds-section-desc"><strong>Фіксований header</strong> з логотипом, пошуком та іконками. <strong>Web-component</strong> <code class="ds-code">&lt;sol-nav&gt;</code> рендерить однакову навігацію на всіх сторінках. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchNavPreview('desktop', this)">Desktop</button>
@@ -1346,7 +1349,7 @@ color green-800</div>
 <section id="footer-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Footer</h2>
-    <p class="ds-section-desc">Темний footer з 4 колонками (бренд, магазин, про нас, підписка) і нижнім рядком з копірайтом і соцмережами. Web-component <code class="ds-code">&lt;sol-footer&gt;</code> сам інжектить свій CSS — ніяких атрибутів не потребує.</p>
+    <p class="ds-section-desc"><strong>Темний footer</strong> з 4 колонками (бренд, магазин, про нас, підписка) і нижнім рядком з копірайтом і соцмережами. <strong>Web-component</strong> <code class="ds-code">&lt;sol-footer&gt;</code> сам інжектить свій CSS — ніяких атрибутів не потребує.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchFooterPreview('desktop', this)">Desktop</button>
@@ -1388,7 +1391,7 @@ color green-800</div>
 <section id="indicator" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Indicator</h2>
-    <p class="ds-section-desc">Кружечок-індикатор кількості поверх іконки навігації. Кошик — <code class="ds-code">green-800</code>, Вподобане — <code class="ds-code">terra</code>. Мінімальна ширина <code class="ds-code">17px</code>, висота <code class="ds-code">17px</code>, шрифт <code class="ds-code">Inter 700 10px</code>.</p>
+    <p class="ds-section-desc"><strong>Кружечок-індикатор</strong> кількості поверх іконки навігації. Кошик — <code class="ds-code">green-800</code>, Вподобане — <code class="ds-code">terra</code>. Мінімальна ширина <code class="ds-code">17px</code>, висота <code class="ds-code">17px</code>, шрифт <code class="ds-code">Inter 700 10px</code>.</p>
 
     <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
@@ -1715,7 +1718,7 @@ hover → sand</div>
       </div>
     </div>
 
-    <p class="ds-section-note" style="margin-top: 48px;">Web-component <code class="ds-code">&lt;sol-search&gt;</code> вбудований у <code class="ds-code">&lt;sol-nav&gt;</code>, але може використовуватись окремо. На десктопі — sand-pill 280px з clear-кнопкою. На мобілці — inline-pill, який розгортається на повну ширину коли nav має клас <code class="ds-code">search-active</code>.</p>
+    <p class="ds-section-note" style="margin-top: 48px;"><strong>Web-component</strong> <code class="ds-code">&lt;sol-search&gt;</code> вбудований у <code class="ds-code">&lt;sol-nav&gt;</code>, але може використовуватись окремо. На десктопі — sand-pill 280px з clear-кнопкою. На мобілці — inline-pill, який розгортається на повну ширину коли nav має клас <code class="ds-code">search-active</code>.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchSearchPreview('desktop', this)">Desktop</button>
@@ -1756,7 +1759,7 @@ hover → sand</div>
 <section id="counter" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Counter</h2>
-    <p class="ds-section-desc">Контрол вибору кількості в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. Мінімум 1 — кнопка «–» дизейблиться.</p>
+    <p class="ds-section-desc"><strong>Контрол вибору кількості</strong> в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. Мінімум 1 — кнопка «–» дизейблиться.</p>
 
     <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
@@ -2040,7 +2043,7 @@ hover → sand</div>
 <section id="cards" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Product Cards</h2>
-    <p class="ds-section-note">Картки товарів у каталозі (sol-shop.html). Web-component <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
+    <p class="ds-section-note"><strong>Картки товарів</strong> у каталозі (sol-shop.html). <strong>Web-component</strong> <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
 
     <!-- Один responsive iframe: width:100%, без min-width — рендериться desktop або
          mobile layout залежно від ширини самого iframe (= ширини секції DS) -->
@@ -2074,7 +2077,7 @@ hover → sand</div>
 <section id="reviews-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Review Cards</h2>
-    <p class="ds-section-desc">Marquee-компонент головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. Колір аватара — варіативний через inline style.</p>
+    <p class="ds-section-desc"><strong>Marquee-компонент</strong> головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. Колір аватара — варіативний через inline style.</p>
 
     <div class="testimonials-demo-grid">
 
