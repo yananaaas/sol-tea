@@ -866,6 +866,165 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   customElements.define('sol-footer', SolFooter);
 })();
 </script>
+<script type="text/plain" id="src-sol-product-card">
+(function () {
+  function injectProductCardStyles() {
+    if (document.getElementById('sol-product-card-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sol-product-card-styles';
+    style.textContent = `
+      sol-product-card { display: contents; }
+
+      .product-card {
+        background: var(--cream-bright); border-radius: 20px; overflow: hidden;
+        transition: transform 0.3s, opacity 0.4s ease, transform 0.4s ease;
+        cursor: pointer;
+        opacity: 0; transform: translateY(16px);
+        display: flex; flex-direction: column;
+      }
+      .product-card.show { opacity: 1; transform: translateY(0); }
+      @media (hover: hover) { .product-card.show:hover { transform: translateY(-6px); } }
+
+      .product-img { aspect-ratio: 4/3; background: var(--sand); position: relative; display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 11px; letter-spacing: 0.08em; }
+      .product-region { position: absolute; top: 12px; left: 12px; background: rgba(253,252,249,0.92); border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-800); }
+      .product-wish { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,252,249,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: var(--gray-300); transition: color 0.2s; line-height: 1; border: none; }
+      @media (hover: hover) { .product-wish:hover { color: var(--terra); } }
+      .product-wish.liked { color: var(--terra); }
+      .product-badge { position: absolute; bottom: 12px; left: 12px; border-radius: 20px; padding: 6px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+      .badge-new { background: var(--green-500); color: var(--cream-bright); }
+      .badge-limited { background: var(--terra); color: var(--cream-bright); }
+      .product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+      .product-body h4 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -0.01em; }
+      .product-desc { font-size: 12px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+      .product-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+      .product-price { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; color: var(--green-800); letter-spacing: -0.02em; }
+
+      .btn-add { background: var(--black); color: var(--cream-bright); border: none; border-radius: 40px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+      .btn-add i { font-size: 18px; line-height: 1; }
+      .btn-add.in-cart { background: var(--green-800); }
+      @media (hover: hover) {
+        .btn-add:hover { background: var(--green-800); }
+        .btn-add.in-cart:hover { background: var(--black); }
+      }
+
+      .search-highlight { background: var(--gray-100); color: var(--black); border-radius: 4px; padding: 0 2px; }
+
+      @media (max-width: 768px) {
+        .product-img { aspect-ratio: 1/1; }
+        .product-body { flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-body h4 { font-size: 24px; font-weight: 900; }
+        .product-desc { font-size: 13px; line-height: 1.7; }
+        .product-price { font-size: 24px; }
+        .btn-add { padding: 14px 28px; font-size: 15px; }
+        .btn-add i { font-size: 20px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function escAttr(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+  }
+  function escJs(s) {
+    return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  }
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function highlight(text, query) {
+    if (!query) return escHtml(text);
+    const safe = escHtml(text);
+    const q = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return safe.replace(new RegExp(`(${q})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+  }
+
+  function getCart() {
+    try { return JSON.parse(sessionStorage.getItem('solCart') || '[]'); } catch (e) { return []; }
+  }
+  function getWish() {
+    try { return JSON.parse(sessionStorage.getItem('solWish') || '[]'); } catch (e) { return []; }
+  }
+
+  class SolProductCard extends HTMLElement {
+    static get observedAttributes() {
+      return ['name', 'region', 'desc', 'price', 'bg', 'badge', 'index', 'search',
+              'liked', 'wish-id', 'cart-fn', 'show'];
+    }
+
+    connectedCallback() {
+      injectProductCardStyles();
+      this.render();
+    }
+
+    attributeChangedCallback() {
+      if (this.isConnected) this.render();
+    }
+
+    render() {
+      const name    = this.getAttribute('name')    || '';
+      const region  = this.getAttribute('region')  || '';
+      const desc    = this.getAttribute('desc')    || '';
+      const price   = this.getAttribute('price')   || '';
+      const bg      = this.getAttribute('bg')      || '';
+      const badge   = this.getAttribute('badge')   || '';
+      const index   = parseInt(this.getAttribute('index') || '0', 10);
+      const search  = this.getAttribute('search')  || '';
+      const wishId  = this.getAttribute('wish-id') || name;
+      const cartFn  = this.getAttribute('cart-fn') || 'addToCart';
+      const isLiked = this.hasAttribute('liked');
+      const showNow = this.hasAttribute('show');
+
+      const inCart    = getCart().some(c => c.name === name);
+      const likedState = isLiked || getWish().includes(name);
+
+      const safeName   = escJs(name);
+      const safeWishId = escJs(wishId);
+      const safeCartFn = escJs(cartFn);
+      const bgStyle    = bg ? ` style="background:${escAttr(bg)}"` : '';
+      const delayStyle = showNow ? '' : ` style="transition-delay:${(index * 0.04).toFixed(2)}s"`;
+
+      const badgeHtml =
+        badge === 'new'     ? '<div class="product-badge badge-new">Новинка</div>' :
+        badge === 'limited' ? '<div class="product-badge badge-limited">Обмежений</div>' :
+        '';
+
+      // Wish button: if `liked` attr → always terra, click removes; otherwise toggle
+      const wishOnclick = isLiked
+        ? `event.stopPropagation();removeFromWish('${safeWishId}')`
+        : `event.stopPropagation();toggleWish(this,'${safeName}')`;
+      const wishClass = likedState ? 'product-wish liked' : 'product-wish';
+      const wishStyle = likedState ? ' style="color:var(--terra)"' : '';
+
+      this.innerHTML = `
+        <div class="product-card${showNow ? ' show' : ''}"${delayStyle} onclick="goToProduct('${safeName}')">
+          <div class="product-img"${bgStyle}>Фото
+            <div class="product-region">${escHtml(region)}</div>
+            <button class="${wishClass}"${wishStyle} onclick="${wishOnclick}"><i class="hgi-stroke hgi-favourite"></i></button>
+            ${badgeHtml}
+          </div>
+          <div class="product-body">
+            <h4>${highlight(name, search)}</h4>
+            <p class="product-desc">${highlight(desc, search)}</p>
+            <div class="product-footer">
+              <span class="product-price">${escHtml(price)}</span>
+              <button class="btn-add${inCart ? ' in-cart' : ''}" onclick="event.stopPropagation();${safeCartFn}('${safeName}',this)">${inCart ? '<i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику' : '<i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик'}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    show() {
+      const card = this.querySelector('.product-card');
+      if (card) card.classList.add('show');
+    }
+  }
+
+  customElements.define('sol-product-card', SolProductCard);
+})();
+</script>
 
 <!-- SVG DEFS -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -1873,21 +2032,10 @@ hover → sand</div>
     <h2 class="ds-section-title">Product Cards</h2>
     <p style="font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px;">Картки товарів у каталозі (sol-shop.html). Web-component <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
 
-    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-      <button class="filter-pill active" onclick="switchProductCardsPreview('desktop', this)">Desktop</button>
-      <button class="filter-pill" onclick="switchProductCardsPreview('mobile', this)">Mobile</button>
-    </div>
-
-    <div id="cardsPreviewDesktop" class="ds-live-wrap">
-      <div class="ds-live-scroll">
-        <iframe id="cardsIframeDesktop" class="ds-live-iframe ds-live-iframe-auto desktop" height="500" title="Live sol-product-card grid — desktop"></iframe>
-      </div>
-    </div>
-
-    <div id="cardsPreviewMobile" style="display:none;">
-      <div class="ds-live-mobile-wrap">
-        <iframe id="cardsIframeMobile" class="ds-live-iframe ds-live-iframe-auto" height="600" title="Live sol-product-card — mobile"></iframe>
-      </div>
+    <!-- Один responsive iframe: width:100%, без min-width — рендериться desktop або
+         mobile layout залежно від ширини самого iframe (= ширини секції DS) -->
+    <div class="ds-live-wrap">
+      <iframe id="cardsIframe" class="ds-live-iframe ds-live-iframe-auto" style="width: 100%;" height="500" title="Live sol-product-card"></iframe>
     </div>
 
     <div class="ds-meta-flow">
@@ -2409,13 +2557,6 @@ function switchFooterPreview(type, btn) {
   }
 }
 
-function switchProductCardsPreview(type, btn) {
-  btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('cardsPreviewDesktop').style.display = type === 'desktop' ? '' : 'none';
-  document.getElementById('cardsPreviewMobile').style.display  = type === 'desktop' ? 'none' : '';
-}
-
 function switchSearchPreview(type, btn) {
   btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -2712,12 +2853,9 @@ const DS_PRODUCT_CARDS_HTML = `<div class="ds-cards-grid">
   <sol-product-card name="Да Хун Пао"     region="Фуцзянь" desc="Насичений улун із мінеральним характером."              price="890 ₴"   bg="#BDB5A4" badge="new"     show></sol-product-card>
 </div>`;
 
-(function initProductCardsPreviews(){
-  const scripts = ['sol-product-card'];
-  const desktop = document.getElementById('cardsIframeDesktop');
-  const mobile  = document.getElementById('cardsIframeMobile');
-  if (desktop) desktop.srcdoc = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, scripts, DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
-  if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, scripts, DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
+(function initProductCardsPreview(){
+  const iframe = document.getElementById('cardsIframe');
+  if (iframe) iframe.srcdoc = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, ['sol-product-card'], DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
 })();
 
 /* sol-search preview:
