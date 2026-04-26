@@ -24,7 +24,7 @@
       .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
       .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
       .footer-bottom p { font-size: 12px; color: var(--gray-500); }
-      .footer-ds-link { font-size: 14px; font-weight: 500; color: var(--gray-300); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; }
+      .footer-ds-link { font-size: 14px; font-weight: 500; color: var(--gray-300); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; white-space: nowrap; }
       .footer-ds-link i { font-size: 20px; }
       .footer-socials { display: flex; gap: 8px; }
       .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }

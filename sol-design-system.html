@@ -783,7 +783,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       .btn-subscribe { background: var(--green-500); color: var(--cream-bright); border: none; border-radius: 40px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
       .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
       .footer-bottom p { font-size: 12px; color: var(--gray-500); }
-      .footer-ds-link { font-size: 14px; font-weight: 500; color: var(--gray-300); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; }
+      .footer-ds-link { font-size: 14px; font-weight: 500; color: var(--gray-300); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; white-space: nowrap; }
       .footer-ds-link i { font-size: 20px; }
       .footer-socials { display: flex; gap: 8px; }
       .footer-social-btn { background: none; border: none; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--gray-500); font-size: 24px; transition: all 0.2s; }
@@ -2263,7 +2263,7 @@ hover: sand</div>
     <h2 class="ds-section-title">Pagination</h2>
     <p class="ds-section-note"><strong>Пагінація</strong> в каталозі (sol-shop.html). Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <strong>Web-component</strong> <code class="ds-code">&lt;sol-pagination&gt;</code> приймає атрибути <code class="ds-code">current</code> і <code class="ds-code">total</code>. Показує: 1, last, current, current±1; решта — як крапки. Еміт події <code class="ds-code">page-change</code> з <code class="ds-code">detail: {page}</code>.</p>
 
-    <div style="display: flex; flex-direction: column; gap: 24px; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; gap: 40px; align-items: flex-start;">
       <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
         <sol-pagination current="1" total="5" style="padding: 0;"></sol-pagination>
         <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Перша сторінка:</strong> кнопка «назад» disabled</div>
