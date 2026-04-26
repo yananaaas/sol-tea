@@ -1871,143 +1871,41 @@ hover → sand</div>
 <section id="cards" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Product Cards</h2>
-    <p class="ds-section-desc">Картки товарів у каталозі (sol-shop.html). Hover на серці — тільки <code class="ds-code">@media (hover: hover)</code>. Третя картка показує стан «в кошику».</p>
+    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px;">Картки товарів у каталозі (sol-shop.html). Web-component <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
 
-    <div class="card-demo-grid">
-      <div class="product-card">
-        <div class="product-img" style="background:#D4CFC4;">
-          Фото
-          <div class="product-region">Фуцзянь</div>
-          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
-          <div class="product-badge badge-new">Новинка</div>
-        </div>
-        <div class="product-body">
-          <h4>Те Гуань Інь</h4>
-          <p class="product-desc">М'який улун із молочним ароматом і нотками орхідеї.</p>
-          <div class="product-footer">
-            <span class="product-price">580 ₴</span>
-            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
-          </div>
-        </div>
-      </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+      <button class="filter-pill active" onclick="switchProductCardsPreview('desktop', this)">Desktop</button>
+      <button class="filter-pill" onclick="switchProductCardsPreview('mobile', this)">Mobile</button>
+    </div>
 
-      <div class="product-card">
-        <div class="product-img" style="background:#C8BFB0;">
-          Фото
-          <div class="product-region">Юньнань</div>
-          <button class="product-wish liked" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
-          <div class="product-badge badge-limited">Обмежений</div>
-        </div>
-        <div class="product-body">
-          <h4>Шен Пуер 2019</h4>
-          <p class="product-desc">Витриманий сирий пуер із трав'янистим смаком.</p>
-          <div class="product-footer">
-            <span class="product-price">1 240 ₴</span>
-            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img" style="background:#CECDBC;">
-          Фото
-          <div class="product-region">Аньхой</div>
-          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
-        </div>
-        <div class="product-body">
-          <h4>Мао Фен</h4>
-          <p class="product-desc">Класичний зелений чай із квітковим ароматом.</p>
-          <div class="product-footer">
-            <span class="product-price">420 ₴</span>
-            <button class="btn-add-card in-cart" data-in-cart="true" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-checkmark-circle-02"></i> В кошику</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img" style="background:#BDB5A4;">
-          Фото
-          <div class="product-region">Фуцзянь</div>
-          <button class="product-wish" onclick="this.classList.toggle('liked')"><i class="hgi-stroke hgi-favourite"></i></button>
-          <div class="product-badge badge-new">Новинка</div>
-        </div>
-        <div class="product-body">
-          <h4>Да Хун Пао</h4>
-          <p class="product-desc">Насичений улун із мінеральним характером.</p>
-          <div class="product-footer">
-            <span class="product-price">890 ₴</span>
-            <button class="btn-add-card" data-in-cart="false" onclick="toggleCardCart(this)"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
-          </div>
-        </div>
+    <div id="cardsPreviewDesktop" class="ds-live-wrap">
+      <div class="ds-live-scroll">
+        <iframe id="cardsIframeDesktop" class="ds-live-iframe ds-live-iframe-auto desktop" height="500" title="Live sol-product-card grid — desktop"></iframe>
       </div>
     </div>
 
-    <div class="ds-code-wrap" style="margin-top: 40px;">
+    <div id="cardsPreviewMobile" style="display:none;">
+      <div class="ds-live-mobile-wrap">
+        <iframe id="cardsIframeMobile" class="ds-live-iframe ds-live-iframe-auto" height="600" title="Live sol-product-card — mobile"></iframe>
+      </div>
+    </div>
+
+    <div class="ds-meta-flow">
+      <span>Border-radius: <code class="ds-code">20px</code></span>
+      <span>Image aspect: <code class="ds-code">4/3</code> desktop / <code class="ds-code">1/1</code> mobile</span>
+      <span>Hover: <code class="ds-code">translateY(-6px)</code> (тільки <code class="ds-code">@media (hover: hover)</code>)</span>
+      <span>Wish-active: <code class="ds-code">terra</code></span>
+      <span>In-cart кнопка: <code class="ds-code">green-800</code></span>
+    </div>
+
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span>Source: <code class="ds-code">components/sol-product-card.js</code></span>
+    </div>
+    <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block scroll">&lt;<span class="k">div</span> class=<span class="v">"product-card"</span>&gt;
-
-  &lt;<span class="k">div</span> class=<span class="v">"product-img"</span> style=<span class="v">"background: #D4CFC4;"</span>&gt;
-    Фото <span class="v">/* placeholder — замінити на &lt;img&gt; */</span>
-
-    &lt;<span class="k">div</span> class=<span class="v">"product-region"</span>&gt;Фуцзянь&lt;/<span class="k">div</span>&gt;
-
-    &lt;<span class="k">button</span> class=<span class="v">"product-wish"</span>
-            onclick=<span class="v">"toggleWish(this, name)"</span>&gt;
-      &lt;<span class="k">i</span> class=<span class="v">"hgi-stroke hgi-favourite"</span>&gt;&lt;/<span class="k">i</span>&gt;
-    &lt;/<span class="k">button</span>&gt;
-    <span class="v">/* .product-wish.liked → color: var(--terra) */</span>
-
-    &lt;<span class="k">div</span> class=<span class="v">"product-badge badge-new"</span>&gt;Новинка&lt;/<span class="k">div</span>&gt;
-    <span class="v">/* або badge-limited для "Обмежений" */</span>
-  &lt;/<span class="k">div</span>&gt;
-
-  &lt;<span class="k">div</span> class=<span class="v">"product-body"</span>&gt;
-    &lt;<span class="k">h4</span>&gt;Те Гуань Інь&lt;/<span class="k">h4</span>&gt;
-    &lt;<span class="k">p</span> class=<span class="v">"product-desc"</span>&gt;М'який улун із молочним ароматом.&lt;/<span class="k">p</span>&gt;
-
-    &lt;<span class="k">div</span> class=<span class="v">"product-footer"</span>&gt;
-      &lt;<span class="k">span</span> class=<span class="v">"product-price"</span>&gt;580 ₴&lt;/<span class="k">span</span>&gt;
-      &lt;<span class="k">button</span> class=<span class="v">"btn-add"</span>
-              onclick=<span class="v">"addToCart(name, this)"</span>&gt;
-        &lt;<span class="k">i</span> class=<span class="v">"hgi-stroke hgi-shopping-bag-add"</span>&gt;&lt;/<span class="k">i</span>&gt;
-        Кошик
-      &lt;/<span class="k">button</span>&gt;
-      <span class="v">/* .btn-add.in-cart → bg: green-800,</span>
-      <span class="v">   icon: hgi-checkmark-circle-02, text: "В кошику" */</span>
-    &lt;/<span class="k">div</span>&gt;
-  &lt;/<span class="k">div</span>&gt;
-
-&lt;/<span class="k">div</span>&gt;
-
-<span class="v">/* CSS */</span>
-.<span class="k">product-card</span> {
-  <span class="k">background</span>:     <span class="v">var(--cream-bright)</span>;
-  <span class="k">border-radius</span>:  <span class="v">20px</span>;
-  <span class="k">overflow</span>:       <span class="v">hidden</span>;
-  <span class="k">display</span>:        <span class="v">flex</span>;
-  <span class="k">flex-direction</span>: <span class="v">column</span>;
-}
-@media (hover: hover) {
-  .<span class="k">product-card</span>:hover { <span class="k">transform</span>: <span class="v">translateY(-6px)</span>; }
-}
-.<span class="k">product-img</span> {
-  <span class="k">aspect-ratio</span>: <span class="v">4/3</span>;  <span class="v">/* мобілка: 1/1 */</span>
-  <span class="k">position</span>:     <span class="v">relative</span>;
-}
-.<span class="k">product-wish</span> {
-  <span class="k">position</span>:  <span class="v">absolute</span>;  <span class="k">top</span>: <span class="v">12px</span>;  <span class="k">right</span>: <span class="v">12px</span>;
-  <span class="k">width</span>:     <span class="v">44px</span>;  <span class="k">height</span>: <span class="v">44px</span>;  <span class="k">border-radius</span>: <span class="v">50%</span>;
-  <span class="k">background</span>: <span class="v">rgba(253,252,249,0.9)</span>;
-  <span class="k">font-size</span>:  <span class="v">20px</span>;  <span class="k">color</span>: <span class="v">var(--gray-300)</span>;
-}
-.<span class="k">product-wish.liked</span> { <span class="k">color</span>: <span class="v">var(--terra)</span>; }
-@media (hover: hover) {
-  .<span class="k">product-wish</span>:hover { <span class="k">color</span>: <span class="v">var(--terra)</span>; }
-}
-.<span class="k">product-body</span> { <span class="k">padding</span>: <span class="v">20px</span>; <span class="k">flex</span>: <span class="v">1</span>; <span class="k">display</span>: <span class="v">flex</span>; <span class="k">flex-direction</span>: <span class="v">column</span>; }
-.<span class="k">product-price</span> { <span class="k">font-family</span>: <span class="v">'Inter'</span>; <span class="k">font-size</span>: <span class="v">20px</span>; <span class="k">font-weight</span>: <span class="v">900</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
-.<span class="k">product-footer</span> { <span class="k">margin-top</span>: <span class="v">auto</span>; <span class="k">display</span>: <span class="v">flex</span>; <span class="k">justify-content</span>: <span class="v">space-between</span>; <span class="k">align-items</span>: <span class="v">center</span>; }</div>
+      <div id="productCardSourceCode" class="ds-code-block scroll" data-src="sol-product-card">// loading components/sol-product-card.js…</div>
     </div>
+
   </div>
 </section>
 
@@ -2511,6 +2409,13 @@ function switchFooterPreview(type, btn) {
   }
 }
 
+function switchProductCardsPreview(type, btn) {
+  btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cardsPreviewDesktop').style.display = type === 'desktop' ? '' : 'none';
+  document.getElementById('cardsPreviewMobile').style.display  = type === 'desktop' ? 'none' : '';
+}
+
 function switchSearchPreview(type, btn) {
   btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -2770,6 +2675,49 @@ window.addEventListener('message', function(e){
   const mobile  = document.getElementById('footerIframeMobile');
   if (desktop) desktop.srcdoc = dsBuildSrcdoc(html, scripts, '', DS_LIVE_AUTOHEIGHT_PREP);
   if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(html, scripts, '', DS_LIVE_AUTOHEIGHT_PREP);
+})();
+
+/* sol-product-card preview: 4 картки з різними станами у grid.
+   Стан "в кошику" береться з sessionStorage.solCart, тож seed-имо preview-дані
+   у prep. Глобальні навігаційні fn — стаб. */
+const DS_LIVE_PRODUCT_CSS = `
+  body { padding: 32px 24px; }
+  .ds-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  @media (max-width: 768px) {
+    body { padding: 16px; }
+    .ds-cards-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+`;
+const DS_LIVE_PRODUCT_PREP = `
+<script>
+  sessionStorage.setItem('solCart', JSON.stringify([{name:'Мао Фен',qty:1},{name:'Да Хун Пао',qty:1}]));
+  sessionStorage.setItem('solWish', JSON.stringify(['Шен Пуер 2019','Да Хун Пао']));
+  window.goToProduct = window.addToCart = window.toggleWish = window.removeFromWish = function(){};
+  function reportHeight() {
+    var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+    try { parent.postMessage({ type: 'ds-iframe-autoheight', height: h }, '*'); } catch(e) {}
+  }
+  window.addEventListener('load', function() {
+    reportHeight();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reportHeight);
+    setTimeout(reportHeight, 300);
+    if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
+  });
+</scr` + `ipt>`;
+
+const DS_PRODUCT_CARDS_HTML = `<div class="ds-cards-grid">
+  <sol-product-card name="Те Гуань Інь"   region="Фуцзянь" desc="М'який улун із молочним ароматом і нотками орхідеї." price="580 ₴"   bg="#D4CFC4" badge="new"     show></sol-product-card>
+  <sol-product-card name="Шен Пуер 2019"  region="Юньнань" desc="Витриманий сирий пуер із трав'янистим смаком."        price="1 240 ₴" bg="#C8BFB0" badge="limited" show></sol-product-card>
+  <sol-product-card name="Мао Фен"        region="Аньхой"  desc="Класичний зелений чай із квітковим ароматом."           price="420 ₴"   bg="#CECDBC"                 show></sol-product-card>
+  <sol-product-card name="Да Хун Пао"     region="Фуцзянь" desc="Насичений улун із мінеральним характером."              price="890 ₴"   bg="#BDB5A4" badge="new"     show></sol-product-card>
+</div>`;
+
+(function initProductCardsPreviews(){
+  const scripts = ['sol-product-card'];
+  const desktop = document.getElementById('cardsIframeDesktop');
+  const mobile  = document.getElementById('cardsIframeMobile');
+  if (desktop) desktop.srcdoc = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, scripts, DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
+  if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, scripts, DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
 })();
 
 /* sol-search preview:
