@@ -287,7 +287,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-meta-flow { display: flex; flex-wrap: wrap; gap: 6px 24px; font-size: 13px; color: var(--gray-500); line-height: 1.9; margin-top: 0; }
 .ds-meta-flow span { white-space: nowrap; }
 @media (max-width: 768px) {
-  .ds-meta-flow { flex-direction: column; gap: 4px; }
+  .ds-meta-flow { flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.6; }
+  .ds-meta-flow span { white-space: normal; }
+}
+
+/* Пояснювальний параграф під заголовком компонента (Header, Footer, Inputs,
+   Product Cards тощо). Розмір синхронізований з .ds-section-desc для консистентності. */
+.ds-section-note { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+@media (max-width: 768px) {
+  .ds-section-note { font-size: 16px; line-height: 1.6; }
 }
 
 /* ── ACCORDION ── */
@@ -1487,7 +1495,7 @@ hover → green-800 fill</div>
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: -8px; margin-bottom: 32px; line-height: 1.7;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
+    <p class="ds-section-note" style="margin-top: -8px; margin-bottom: 32px;">Іконка в кнопці — необов'язкова. Будь-який клас може бути з іконкою або без. Виняток: <code class="ds-code">.btn-add</code> завжди йде з іконкою — <code class="ds-code">hgi-shopping-bag-add</code> (стан «Кошик») або <code class="ds-code">hgi-checkmark-circle-02</code> (стан «В кошику»).</p>
 
     <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Кнопки-іконки</div>
     <div class="icon-btn-row" style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 48px;">
@@ -1705,7 +1713,7 @@ hover → sand</div>
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-top: 48px; margin-bottom: 20px;">Web-component <code class="ds-code">&lt;sol-search&gt;</code> вбудований у <code class="ds-code">&lt;sol-nav&gt;</code>, але може використовуватись окремо. На десктопі — sand-pill 280px з clear-кнопкою. На мобілці — inline-pill, який розгортається на повну ширину коли nav має клас <code class="ds-code">search-active</code>.</p>
+    <p class="ds-section-note" style="margin-top: 48px;">Web-component <code class="ds-code">&lt;sol-search&gt;</code> вбудований у <code class="ds-code">&lt;sol-nav&gt;</code>, але може використовуватись окремо. На десктопі — sand-pill 280px з clear-кнопкою. На мобілці — inline-pill, який розгортається на повну ширину коли nav має клас <code class="ds-code">search-active</code>.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchSearchPreview('desktop', this)">Desktop</button>
@@ -2030,7 +2038,7 @@ hover → sand</div>
 <section id="cards" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Product Cards</h2>
-    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px;">Картки товарів у каталозі (sol-shop.html). Web-component <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
+    <p class="ds-section-note">Картки товарів у каталозі (sol-shop.html). Web-component <code class="ds-code">&lt;sol-product-card&gt;</code> приймає атрибути <code class="ds-code">name</code>, <code class="ds-code">region</code>, <code class="ds-code">desc</code>, <code class="ds-code">price</code>, <code class="ds-code">bg</code>, <code class="ds-code">badge</code> (<code class="ds-code">new</code>/<code class="ds-code">limited</code>), <code class="ds-code">liked</code>, <code class="ds-code">show</code>, <code class="ds-code">cart-fn</code>. Стан «в кошику» зчитується з <code class="ds-code">sessionStorage.solCart</code>.</p>
 
     <!-- Один responsive iframe: width:100%, без min-width — рендериться desktop або
          mobile layout залежно від ширини самого iframe (= ширини секції DS) -->
