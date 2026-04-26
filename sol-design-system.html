@@ -2566,7 +2566,7 @@ hover: sand</div>
       <div class="rule-card">
         <div class="rule-num">04</div>
         <div class="rule-title">Без border на інпутах</div>
-        <div class="rule-body">Інпути не мають border, outline, box-shadow. Різні стани передаються тільки через <span class="rule-code">background</span>: cream-bright → sand (focus) → rgba error (error).</div>
+        <div class="rule-body">Інпути не мають border, outline, box-shadow. Різні стани передаються тільки через <span class="rule-code">background</span>: cream-bright у нормі, sand при focus, rgba(232,74,46,0.1) при помилці.</div>
       </div>
       <div class="rule-card">
         <div class="rule-num">05</div>
@@ -2597,6 +2597,16 @@ hover: sand</div>
         <div class="rule-num">10</div>
         <div class="rule-title">Border-radius карток 20–24px</div>
         <div class="rule-body">Картки, панелі, dropdowns — <span class="rule-code">20px</span> або <span class="rule-code">24px</span>. Інпути — <span class="rule-code">12px</span>. Кнопки і пілюлі — <span class="rule-code">40px</span> (pill).</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">11</div>
+        <div class="rule-title">UI через Web Components</div>
+        <div class="rule-body">Кожен переиспользуваний UI-блок — окремий компонент у <span class="rule-code">components/</span>. Сторінки користуються тегами <span class="rule-code">&lt;sol-nav&gt;</span>, <span class="rule-code">&lt;sol-product-card&gt;</span> тощо — без копіювання markup. Кожен компонент сам інжектить свій CSS.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">12</div>
+        <div class="rule-title">Sessionstorage для стану кошика і вподобаних</div>
+        <div class="rule-body">Стан кошика — <span class="rule-code">sessionStorage.solCart</span>, вподобаних — <span class="rule-code">sessionStorage.solWish</span>. Компоненти зчитують і пишуть напряму. Без localStorage (зник після закриття браузера) — ще немає бекенду.</div>
       </div>
     </div>
   </div>
