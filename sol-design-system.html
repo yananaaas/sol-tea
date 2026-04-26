@@ -288,13 +288,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 }
 
 /* Пояснювальний параграф під заголовком компонента (Header, Footer, Inputs,
-   Product Cards тощо). Розмір синхронізований з .ds-section-desc для консистентності.
-   <strong> у середині — ключові терміни (Web-component, Header, Footer тощо),
-   стиль збігається з .ds-meta-flow strong. */
-.ds-section-note { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 32px; }
+   Product Cards тощо). Розмір ідентичний .ds-section-desc для консистентності.
+   margin-bottom 32px (замість 48 у desc) бо одразу після — preview-блок.
+   <strong> у середині — ключові терміни (Web-component, Header, Footer тощо). */
+.ds-section-note { font-size: 14px; color: var(--gray-500); line-height: 1.6; margin-bottom: 32px; }
 .ds-section-note strong, .ds-section-desc strong { font-weight: 600; color: var(--gray-800); }
 @media (max-width: 768px) {
-  .ds-section-note { font-size: 16px; line-height: 1.6; }
+  .ds-section-note { font-size: 16px; }
 }
 
 /* (FAQ accordion-demo CSS прибрано — sol-faq-item сам інжектить свій CSS у DS scope) */
@@ -1801,19 +1801,19 @@ color green-800</div>
         <button class="btn-primary">Купити зараз</button>
         <div class="ds-meta">.btn-primary
 bg green-800
-hover → black</div>
+hover: black</div>
       </div>
       <div class="btn-cell">
         <button class="btn-secondary">До колекцій <i class="hgi-stroke hgi-arrow-right-01"></i></button>
         <div class="ds-meta">.btn-secondary
 bg green-500
-hover → cream-bright</div>
+hover: cream-bright</div>
       </div>
       <div class="btn-cell">
         <button class="btn-outline-dark">Детальніше</button>
         <div class="ds-meta">.btn-outline-dark
 border green-800
-hover → green-800 fill</div>
+hover: green-800 fill</div>
       </div>
       <div class="btn-cell">
         <button class="btn-add-demo" id="btnAddDemo" onclick="toggleBtnAdd()"><i class="hgi-stroke hgi-shopping-bag-add"></i> Кошик</button>
@@ -1865,13 +1865,13 @@ next</div>
         <button class="btn-outline-cream">Переглянути</button>
         <div class="ds-meta" style="color:rgba(253,252,249,0.4);">.btn-outline-cream
 border cream-bright
-hover → cream-bright fill</div>
+hover: cream-bright fill</div>
       </div>
       <div class="btn-cell-dark">
         <button class="btn-filled-cream">Дізнатись більше</button>
         <div class="ds-meta" style="color:rgba(253,252,249,0.4);">.btn-filled-cream
 bg cream-bright, text green-800
-hover → sand</div>
+hover: sand</div>
       </div>
       <div></div>
       <div></div>
@@ -2263,18 +2263,18 @@ hover → sand</div>
     <h2 class="ds-section-title">Pagination</h2>
     <p class="ds-section-note"><strong>Пагінація</strong> в каталозі (sol-shop.html). Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <strong>Web-component</strong> <code class="ds-code">&lt;sol-pagination&gt;</code> приймає атрибути <code class="ds-code">current</code> і <code class="ds-code">total</code>. Показує: 1, last, current, current±1; решта — як крапки. Еміт події <code class="ds-code">page-change</code> з <code class="ds-code">detail: {page}</code>.</p>
 
-    <div style="display: flex; flex-direction: column; gap: 28px; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; gap: 24px; align-items: flex-start;">
       <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
-        <sol-pagination current="1" total="5"></sol-pagination>
-        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Перша сторінка:</strong> ← disabled</div>
+        <sol-pagination current="1" total="5" style="padding: 0;"></sol-pagination>
+        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Перша сторінка:</strong> кнопка «назад» disabled</div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
-        <sol-pagination current="3" total="10"></sol-pagination>
+        <sol-pagination current="3" total="10" style="padding: 0;"></sol-pagination>
         <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Середина:</strong> крапки з обох сторін</div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
-        <sol-pagination current="10" total="10"></sol-pagination>
-        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Остання сторінка:</strong> → disabled</div>
+        <sol-pagination current="10" total="10" style="padding: 0;"></sol-pagination>
+        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Остання сторінка:</strong> кнопка «вперед» disabled</div>
       </div>
     </div>
 
@@ -2411,7 +2411,7 @@ hover → sand</div>
       <span><strong>Background:</strong> <code class="ds-code">var(--cream-bright)</code></span>
       <span><strong>Border-radius:</strong> <code class="ds-code">20px</code></span>
       <span><strong>Padding:</strong> <code class="ds-code">28px</code> desktop / <code class="ds-code">22px</code> mobile</span>
-      <span><strong>Анімація:</strong> max-height 0 → 400px (0.35s)</span>
+      <span><strong>Анімація:</strong> max-height 0 до 400px (0.35s)</span>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
