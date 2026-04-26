@@ -283,9 +283,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
 .ds-live-mobile-wrap .ds-live-iframe { width: 100%; }
 
-/* Метадані під компонентом: десктоп — у рядок з flex-wrap, мобілка — стовпець */
+/* Метадані під компонентом: десктоп — у рядок з flex-wrap, мобілка — стовпець.
+   <strong> у середині — лейбли-префікси (Border-radius:, Source:, Атрибут тощо). */
 .ds-meta-flow { display: flex; flex-wrap: wrap; gap: 6px 24px; font-size: 13px; color: var(--gray-500); line-height: 1.9; margin-top: 0; }
 .ds-meta-flow span { white-space: nowrap; }
+.ds-meta-flow strong { font-weight: 600; color: var(--gray-800); }
 @media (max-width: 768px) {
   .ds-meta-flow { flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.6; }
   .ds-meta-flow span { white-space: normal; }
@@ -1310,14 +1312,14 @@ color green-800</div>
     </div>
 
     <div class="ds-meta-flow">
-      <span>Desktop: 80px, <code class="ds-code">padding: 0 48px</code></span>
-      <span>Mobile: 72px, <code class="ds-code">padding: 0 16px</code></span>
-      <span>Іконки: 44×44px, <code class="ds-code">font-size: 22px</code></span>
-      <span>Badge: 17×17px, <code class="ds-code">font-size: 10px</code></span>
+      <span><strong>Desktop:</strong> 80px, <code class="ds-code">padding: 0 48px</code></span>
+      <span><strong>Mobile:</strong> 72px, <code class="ds-code">padding: 0 16px</code></span>
+      <span><strong>Іконки:</strong> 44×44px, <code class="ds-code">font-size: 22px</code></span>
+      <span><strong>Badge:</strong> 17×17px, <code class="ds-code">font-size: 10px</code></span>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
-      <span>Атрибут <code class="ds-code">active</code></span>
+      <span><strong>Атрибут</strong> <code class="ds-code">active</code></span>
     </div>
     <div class="ds-meta-flow" style="margin-top: 12px; flex-direction: column; gap: 4px;">
       <span><code class="ds-code">home</code> — сторінка «Про нас» (sol-tea.html)</span>
@@ -1328,7 +1330,7 @@ color green-800</div>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
-      <span>Source: <code class="ds-code">components/sol-nav.js</code></span>
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-nav.js</code></span>
     </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
@@ -1364,14 +1366,14 @@ color green-800</div>
     </div>
 
     <div class="ds-meta-flow">
-      <span>Фон: <code class="ds-code">var(--black)</code></span>
-      <span>Заголовки колонок: 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code></span>
-      <span>Посилання: 14px DM Sans 300</span>
-      <span>Newsletter pill: green-500</span>
+      <span><strong>Фон:</strong> <code class="ds-code">var(--black)</code></span>
+      <span><strong>Заголовки колонок:</strong> 14px DM Sans 500, <code class="ds-code">var(--gray-300)</code></span>
+      <span><strong>Посилання:</strong> 14px DM Sans 300</span>
+      <span><strong>Newsletter pill:</strong> green-500</span>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
-      <span>Source: <code class="ds-code">components/sol-footer.js</code></span>
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-footer.js</code></span>
     </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
@@ -1733,12 +1735,12 @@ hover → sand</div>
     </div>
 
     <div class="ds-meta-flow">
-      <span>Атрибут <code class="ds-code">variant="shop"</code> — без overlay-панелі (для sol-shop.html)</span>
-      <span>Подія <code class="ds-code">filterProducts(query)</code> — глобальна функція пошуку</span>
+      <span><strong>Атрибут</strong> <code class="ds-code">variant="shop"</code> — без overlay-панелі (для sol-shop.html)</span>
+      <span><strong>Подія</strong> <code class="ds-code">filterProducts(query)</code> — глобальна функція пошуку</span>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
-      <span>Source: <code class="ds-code">components/sol-search.js</code></span>
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-search.js</code></span>
     </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
@@ -2047,15 +2049,15 @@ hover → sand</div>
     </div>
 
     <div class="ds-meta-flow">
-      <span>Border-radius: <code class="ds-code">20px</code></span>
-      <span>Image aspect: <code class="ds-code">4/3</code> desktop / <code class="ds-code">1/1</code> mobile</span>
-      <span>Hover: <code class="ds-code">translateY(-6px)</code> (тільки <code class="ds-code">@media (hover: hover)</code>)</span>
-      <span>Wish-active: <code class="ds-code">terra</code></span>
-      <span>In-cart кнопка: <code class="ds-code">green-800</code></span>
+      <span><strong>Border-radius:</strong> <code class="ds-code">20px</code></span>
+      <span><strong>Image aspect:</strong> <code class="ds-code">4/3</code> desktop / <code class="ds-code">1/1</code> mobile</span>
+      <span><strong>Hover:</strong> <code class="ds-code">translateY(-6px)</code> (тільки <code class="ds-code">@media (hover: hover)</code>)</span>
+      <span><strong>Wish-active:</strong> <code class="ds-code">terra</code></span>
+      <span><strong>In-cart кнопка:</strong> <code class="ds-code">green-800</code></span>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
-      <span>Source: <code class="ds-code">components/sol-product-card.js</code></span>
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-product-card.js</code></span>
     </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
