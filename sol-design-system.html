@@ -325,16 +325,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .review-stars { font-size: 14px; letter-spacing: 1px; }
 .review-text { font-size: 14px; line-height: 1.65; color: var(--gray-800); }
 
-/* ── TESTIMONIALS ── */
-.testimonials-demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
-.testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-.testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.testimonial-footer { display: flex; align-items: center; justify-content: space-between; }
-.testimonial-user { display: flex; align-items: center; gap: 12px; }
-.testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
-.testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
-.testimonial-handle { font-size: 12px; color: var(--gray-500); }
-.testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+/* (testimonials styles прибрані — sol-review-card сам інжектить свій CSS у iframe) */
 
 /* ── DESKTOP PREVIEW SCROLL ── */
 .ds-preview-scroll::-webkit-scrollbar { display: none; }
@@ -381,7 +372,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .spacing-grid { grid-template-columns: 1fr; }
   .brand-logo-grid { grid-template-columns: repeat(2, 1fr); }
   .search-input-wrap { max-width: 100%; }
-  .testimonials-demo-grid { grid-template-columns: 1fr; }
+  /* testimonials-demo-grid mobile rule прибрано (компонент responsive сам) */
   .sort-btn { padding: 12px 20px; }
   .cat-trigger { padding: 12px 20px; }
   .card-demo-grid .product-img { aspect-ratio: 1/1; }
@@ -1036,6 +1027,108 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   }
 
   customElements.define('sol-product-card', SolProductCard);
+})();
+</script>
+<script type="text/plain" id="src-sol-review-card">
+(function () {
+  function injectReviewCardStyles() {
+    if (document.getElementById('sol-review-card-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sol-review-card-styles';
+    style.textContent = `
+      sol-review-card { display: contents; }
+      sol-review-card[variant="marquee"] { display: flex; flex-shrink: 0; width: 360px; }
+
+      .testimonial { background: var(--cream-bright); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+      .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--black); flex: 1; }
+      .testimonial-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+      .testimonial-user { display: flex; align-items: center; gap: 12px; }
+      .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-800); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: var(--cream-bright); flex-shrink: 0; }
+      .testimonial-name { font-size: 14px; font-weight: 600; color: var(--black); }
+      .testimonial-handle { font-size: 12px; color: var(--gray-500); }
+      .testimonial-rating { background: var(--green-800); color: var(--cream-bright); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+      .testimonial--marquee { width: 100%; flex: 1; }
+      .testimonial--marquee .testimonial-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  const AVATAR_COLORS = ['#226F54', '#C4855A', '#4A4538', '#7A7060', '#7CC44A', '#B5AFA3'];
+
+  function escAttr(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+  }
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function getInitials(author) {
+    return String(author || '')
+      .trim()
+      .split(/\s+/)
+      .map(w => w[0] || '')
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  function formatRating(r) {
+    if (r == null || r === '') return '';
+    const num = Number(r);
+    if (!Number.isFinite(num)) return String(r);
+    return Number.isInteger(num) ? num.toFixed(1) : String(num);
+  }
+
+  class SolReviewCard extends HTMLElement {
+    static get observedAttributes() {
+      return ['text', 'author', 'handle', 'rating', 'color', 'index', 'variant'];
+    }
+
+    connectedCallback() {
+      injectReviewCardStyles();
+      this.render();
+    }
+
+    attributeChangedCallback() {
+      if (this.isConnected) this.render();
+    }
+
+    render() {
+      const text    = this.getAttribute('text')    || '';
+      const author  = this.getAttribute('author')  || '';
+      const handle  = this.getAttribute('handle')  || '';
+      const rating  = this.getAttribute('rating');
+      const variant = this.getAttribute('variant') || '';
+      const index   = parseInt(this.getAttribute('index') || '0', 10);
+      const color   = this.getAttribute('color')
+        || AVATAR_COLORS[((isNaN(index) ? 0 : index) % AVATAR_COLORS.length + AVATAR_COLORS.length) % AVATAR_COLORS.length];
+
+      const initials   = getInitials(author);
+      const ratingText = formatRating(rating);
+      const cardClass  = variant === 'marquee' ? 'testimonial testimonial--marquee' : 'testimonial';
+
+      this.innerHTML = `
+        <div class="${cardClass}">
+          <p class="testimonial-text">${escHtml(text)}</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-user">
+              <div class="testimonial-avatar" style="background:${escAttr(color)}">${escHtml(initials)}</div>
+              <div>
+                <div class="testimonial-name">${escHtml(author)}</div>
+                <div class="testimonial-handle">${escHtml(handle)}</div>
+              </div>
+            </div>
+            ${ratingText ? `<span class="testimonial-rating">★ ${escHtml(ratingText)}</span>` : ''}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  customElements.define('sol-review-card', SolReviewCard);
 })();
 </script>
 
@@ -2077,92 +2170,25 @@ hover → sand</div>
 <section id="reviews-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Review Cards</h2>
-    <p class="ds-section-desc"><strong>Marquee-компонент</strong> головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. Колір аватара — варіативний через inline style.</p>
+    <p class="ds-section-note"><strong>Marquee-компонент</strong> головної сторінки. Кожна картка: цитата клієнта зверху, аватар + ім'я + тег рейтингу знизу. <strong>Web-component</strong> <code class="ds-code">&lt;sol-review-card&gt;</code> приймає атрибути <code class="ds-code">text</code>, <code class="ds-code">author</code>, <code class="ds-code">handle</code>, <code class="ds-code">rating</code>, <code class="ds-code">color</code> (або <code class="ds-code">index</code> для авто-кольору з палітри). Атрибут <code class="ds-code">variant="marquee"</code> — фіксована ширина 360px і обмеження тексту 3 рядками для бігучого рядка.</p>
 
-    <div class="testimonials-demo-grid">
-
-      <div class="testimonial">
-        <p class="testimonial-text">Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user">
-            <div class="testimonial-avatar" style="background:#226F54">ОК</div>
-            <div>
-              <div class="testimonial-name">Олена Коваль</div>
-              <div class="testimonial-handle">@olenatea</div>
-            </div>
-          </div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <p class="testimonial-text">Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user">
-            <div class="testimonial-avatar" style="background:#C4855A">МД</div>
-            <div>
-              <div class="testimonial-name">Максим Дяченко</div>
-              <div class="testimonial-handle">@puermax</div>
-            </div>
-          </div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <p class="testimonial-text">Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень.</p>
-        <div class="testimonial-footer">
-          <div class="testimonial-user">
-            <div class="testimonial-avatar" style="background:#4A4538">МР</div>
-            <div>
-              <div class="testimonial-name">Марія Романюк</div>
-              <div class="testimonial-handle">@maria.tea</div>
-            </div>
-          </div>
-          <span class="testimonial-rating">★ 5.0</span>
-        </div>
-      </div>
-
+    <div class="ds-live-wrap">
+      <iframe id="reviewsIframe" class="ds-live-iframe ds-live-iframe-auto" style="width: 100%;" height="200" title="Live sol-review-card"></iframe>
     </div>
 
+    <div class="ds-meta-flow">
+      <span><strong>Border-radius:</strong> <code class="ds-code">20px</code></span>
+      <span><strong>Padding:</strong> <code class="ds-code">32px</code></span>
+      <span><strong>Avatar:</strong> 40×40, кольори з палітри</span>
+      <span><strong>Rating tag:</strong> <code class="ds-code">green-800</code></span>
+    </div>
+
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-review-card.js</code></span>
+    </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block scroll">.<span class="k">testimonial</span> {
-  <span class="k">background</span>:     <span class="v">var(--cream-bright)</span>;
-  <span class="k">border-radius</span>:  <span class="v">20px</span>;
-  <span class="k">padding</span>:        <span class="v">32px</span>;
-  <span class="k">display</span>:        <span class="v">flex</span>;
-  <span class="k">flex-direction</span>: <span class="v">column</span>;
-  <span class="k">gap</span>:            <span class="v">24px</span>;
-}
-.<span class="k">testimonial-text</span> {
-  <span class="k">font-size</span>:           <span class="v">15px</span>;
-  <span class="k">line-height</span>:         <span class="v">1.7</span>;
-  <span class="k">color</span>:               <span class="v">var(--black)</span>;
-  <span class="k">display</span>:             <span class="v">-webkit-box</span>;
-  <span class="k">-webkit-line-clamp</span>:  <span class="v">3</span>;
-  <span class="k">-webkit-box-orient</span>:  <span class="v">vertical</span>;
-  <span class="k">overflow</span>:            <span class="v">hidden</span>;
-}
-.<span class="k">testimonial-footer</span> {
-  <span class="k">display</span>:         <span class="v">flex</span>;
-  <span class="k">align-items</span>:     <span class="v">center</span>;
-  <span class="k">justify-content</span>: <span class="v">space-between</span>;
-}
-.<span class="k">testimonial-avatar</span> {
-  <span class="k">width</span>:         <span class="v">40px</span>;  <span class="k">height</span>: <span class="v">40px</span>;
-  <span class="k">border-radius</span>: <span class="v">50%</span>;
-  <span class="k">background</span>:    <span class="v">var(--green-800)</span>;  <span class="v">/* варіативний через inline style */</span>
-  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
-  <span class="k">font-size</span>:     <span class="v">15px</span>;  <span class="k">font-weight</span>: <span class="v">700</span>;
-}
-.<span class="k">testimonial-rating</span> {
-  <span class="k">background</span>:    <span class="v">var(--green-800)</span>;
-  <span class="k">color</span>:         <span class="v">var(--cream-bright)</span>;
-  <span class="k">border-radius</span>: <span class="v">20px</span>;
-  <span class="k">padding</span>:       <span class="v">5px 12px</span>;
-  <span class="k">font-size</span>:     <span class="v">12px</span>;  <span class="k">font-weight</span>: <span class="v">500</span>;
-}</div>
+      <div id="reviewSourceCode" class="ds-code-block scroll" data-src="sol-review-card">// loading components/sol-review-card.js…</div>
     </div>
   </div>
 </section>
@@ -2875,6 +2901,36 @@ const DS_PRODUCT_CARDS_HTML = `<div class="ds-cards-grid">
 (function initProductCardsPreview(){
   const iframe = document.getElementById('cardsIframe');
   if (iframe) iframe.srcdoc = dsBuildSrcdoc(DS_PRODUCT_CARDS_HTML, ['sol-product-card'], DS_LIVE_PRODUCT_CSS, DS_LIVE_PRODUCT_PREP);
+})();
+
+/* sol-review-card preview: 3 картки у grid + 1 marquee варіант */
+const DS_LIVE_REVIEWS_CSS = `
+  html, body { margin: 0; padding: 0; }
+  body { padding: 16px 0; }
+  .ds-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; margin-bottom: 32px; }
+  .ds-reviews-marquee { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+  .ds-reviews-marquee::-webkit-scrollbar { display: none; }
+  .ds-marquee-label { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-bottom: 12px; }
+  @media (max-width: 768px) {
+    .ds-reviews-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+`;
+const DS_LIVE_REVIEWS_HTML = `
+  <div class="ds-reviews-grid">
+    <sol-review-card text="Те Гуань Інь від Söl — перший улун, після якого я зрозуміла, що таке справжній чай. Тепер замовляю щомісяця." author="Олена Коваль" handle="@olenatea" rating="5" index="0"></sol-review-card>
+    <sol-review-card text="Замовляю пуер вже третій рік. Якість стабільна, пакування уважне, смак — бездоганний." author="Максим Дяченко" handle="@puermax" rating="5" index="1"></sol-review-card>
+    <sol-review-card text="Нарешті знайшла місце де купують рідкісні сорти і дають справжню консультацію. Söl — це інший рівень." author="Марія Романюк" handle="@maria.tea" rating="5" index="2"></sol-review-card>
+  </div>
+  <div class="ds-marquee-label">variant="marquee" — фіксована ширина 360px, текст обмежений 3 рядками</div>
+  <div class="ds-reviews-marquee">
+    <sol-review-card variant="marquee" text="Söl Tea — це не магазин, це досвід. Кожна посилка як подарунок собі: продумано до дрібниць, від обгортки до запаху." author="Ірина Лесик" handle="@iryna.tea" rating="5" index="3"></sol-review-card>
+    <sol-review-card variant="marquee" text="Купив набір на подарунок мамі. Вона тепер п'є чай тільки звідси. Ну і я разом з нею :)" author="Андрій Петренко" handle="@petrenko" rating="5" index="4"></sol-review-card>
+    <sol-review-card variant="marquee" text="Сезонні новинки — це окрема насолода. Вже три роки чекаю весняного зеленого і ніколи не розчаровуюсь." author="Світлана Гайдук" handle="@gaiduk_tea" rating="5" index="5"></sol-review-card>
+  </div>
+`;
+(function initReviewsPreview(){
+  const iframe = document.getElementById('reviewsIframe');
+  if (iframe) iframe.srcdoc = dsBuildSrcdoc(DS_LIVE_REVIEWS_HTML, ['sol-review-card'], DS_LIVE_REVIEWS_CSS, DS_LIVE_AUTOHEIGHT_PREP);
 })();
 
 /* sol-search preview:
