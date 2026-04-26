@@ -1943,16 +1943,19 @@ hover → sand</div>
     <h2 class="ds-section-title">Counter</h2>
     <p class="ds-section-note"><strong>Контрол вибору кількості</strong> в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. <strong>Web-component</strong> <code class="ds-code">&lt;sol-counter&gt;</code> приймає атрибути <code class="ds-code">value</code>, <code class="ds-code">min</code> (default 1), <code class="ds-code">max</code> (default Infinity). При досягненні межі — кнопка дизейблиться. Еміт події <code class="ds-code">change</code> з <code class="ds-code">detail: {value, delta}</code>.</p>
 
-    <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
-      <sol-counter value="1" min="1"></sol-counter>
-      <sol-counter value="3" min="1" max="10"></sol-counter>
-      <sol-counter value="10" min="1" max="10"></sol-counter>
-    </div>
-
-    <div class="ds-meta-flow" style="margin-top: 32px;">
-      <span><strong>Стан 1:</strong> value=1, min=1 → кнопка «–» disabled</span>
-      <span><strong>Стан 2:</strong> value=3, max=10 → активний</span>
-      <span><strong>Стан 3:</strong> value=10, max=10 → кнопка «+» disabled</span>
+    <div style="display: flex; gap: 60px; flex-wrap: wrap; align-items: flex-start;">
+      <div style="display: flex; flex-direction: column; gap: 14px; align-items: flex-start;">
+        <sol-counter value="1" min="1"></sol-counter>
+        <div style="font-size: 13px; color: var(--gray-500); line-height: 1.5;"><strong style="color: var(--gray-800); font-weight: 600;">Мінімум:</strong> value=1, min=1<br>кнопка «–» disabled</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; align-items: flex-start;">
+        <sol-counter value="3" min="1" max="10"></sol-counter>
+        <div style="font-size: 13px; color: var(--gray-500); line-height: 1.5;"><strong style="color: var(--gray-800); font-weight: 600;">Активний:</strong> value=3, max=10<br>обидві кнопки активні</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; align-items: flex-start;">
+        <sol-counter value="10" min="1" max="10"></sol-counter>
+        <div style="font-size: 13px; color: var(--gray-500); line-height: 1.5;"><strong style="color: var(--gray-800); font-weight: 600;">Максимум:</strong> value=10, max=10<br>кнопка «+» disabled</div>
+      </div>
     </div>
 
     <div class="ds-meta-flow" style="margin-top: 40px;">
