@@ -267,11 +267,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-qty-btn:disabled { opacity: 0.35; cursor: default; }
 .ds-qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
 
-/* ── NAV PREVIEW (used in inputs section for mobile-search-active demo) ── */
-.nav-pv-mobile { display: flex; align-items: center; gap: 0; padding: 0 16px; height: 72px; background: var(--cream); }
-.nav-pv-logo { flex-shrink: 0; display: flex; align-items: center; }
-.nav-pv-logo svg { height: 42px; width: 41px; display: block; }
-
 /* ── LIVE COMPONENT PREVIEW (iframe wrappers) ──
    Зовнішній .ds-live-wrap клипає кути:
    - overflow: hidden + border-radius клипає звичайні елементи;
@@ -1551,69 +1546,37 @@ hover → sand</div>
       </div>
     </div>
 
-    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Пошук (хедер)</div>
+    <div class="ds-sublabel" style="margin-top: 48px; margin-bottom: 16px;">Пошук (хедер) — <code class="ds-code">&lt;sol-search&gt;</code></div>
+    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px;">Web-component <code class="ds-code">&lt;sol-search&gt;</code> вбудований у <code class="ds-code">&lt;sol-nav&gt;</code>, але може використовуватись окремо. На десктопі — sand-pill 280px з clear-кнопкою. На мобілці — inline-pill, який розгортається на повну ширину коли nav має клас <code class="ds-code">search-active</code>.</p>
+
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchSearchPreview('desktop', this)">Desktop</button>
-      <button class="filter-pill" onclick="switchSearchPreview('mobile', this)">Mobile</button>
+      <button class="filter-pill" onclick="switchSearchPreview('mobile', this)">Mobile (search-active)</button>
     </div>
 
-    <div id="searchPreviewDesktop">
-      <div style="display: flex; flex-direction: column; gap: 16px; max-width: 280px;">
-        <div>
-          <div class="search-input-demo">
-            <i class="hgi-stroke hgi-search-01"></i>
-            <input class="search-input-inner" type="text" id="demoSearchInput" placeholder="Пошук чаю, інгредієнтів..." oninput="onDemoSearch(this)">
-            <button class="search-clear-btn" id="demoClearBtn" onclick="clearDemoSearch()">
-              <i class="hgi-stroke hgi-cancel-01"></i>
-            </button>
-          </div>
-          <div class="input-hint" style="margin-top: 8px;">Default — bg: sand · Focus → bg: gray-100 · X з'являється при введенні</div>
-        </div>
-        <div>
-          <div class="search-input-demo" style="background: var(--gray-100);">
-            <i class="hgi-stroke hgi-search-01"></i>
-            <div class="search-input-inner" style="color: var(--black);">Да Хун Пао</div>
-            <button class="search-clear-btn visible"><i class="hgi-stroke hgi-cancel-01"></i></button>
-          </div>
-          <div class="input-hint" style="margin-top: 8px;">Filled + X button — bg: gray-100</div>
-        </div>
+    <div id="searchPreviewDesktop" class="ds-live-wrap">
+      <div class="ds-live-scroll">
+        <iframe id="searchIframeDesktop" class="ds-live-iframe ds-live-iframe-auto desktop" height="80" title="Live sol-search — desktop"></iframe>
       </div>
     </div>
 
-    <div id="searchPreviewMobile" style="display: none;">
-      <div style="width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream);">
-        <!-- nav-pv-mobile in search-active state -->
-        <div class="nav-pv-mobile" style="padding: 0 16px;">
-          <div class="nav-pv-logo">
-            <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
-          </div>
-          <!-- nav-search-inline: flex:1, margin-left:12px, background:sand, border-radius:40px, padding:10px 14px -->
-          <div id="mobileSearchPill" style="flex: 1; margin-left: 12px; background: var(--sand); border-radius: 40px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; transition: background 0.2s;">
-            <i class="hgi-stroke hgi-search-01" style="font-size: 22px; color: var(--gray-500); flex-shrink: 0;"></i>
-            <input id="mobileSearchInput" type="text" placeholder="Пошук чаю, інгредієнтів..."
-              style="flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--black); min-width: 0;"
-              oninput="onMobileSearchInput(this)"
-              onfocus="document.getElementById('mobileSearchPill').style.background='var(--gray-100)'"
-              onblur="document.getElementById('mobileSearchPill').style.background='var(--sand)'">
-            <button id="mobileSearchClearBtn" style="display:none; background: none; border: none; padding: 0; color: var(--gray-500); font-size: 18px; align-items: center; cursor: pointer; flex-shrink: 0;" onclick="clearMobileSearch()"><i class="hgi-stroke hgi-cancel-01"></i></button>
-          </div>
-        </div>
-        <div class="input-hint" style="padding: 10px 16px 16px;">nav.search-active — .nav-right і бургер ховаються, .nav-search-inline заповнює nav</div>
+    <div id="searchPreviewMobile" style="display:none;">
+      <div class="ds-live-mobile-wrap">
+        <iframe id="searchIframeMobile" class="ds-live-iframe ds-live-iframe-auto" height="72" title="Live sol-search — mobile"></iframe>
       </div>
     </div>
 
+    <div class="ds-meta-flow">
+      <span>Атрибут <code class="ds-code">variant="shop"</code> — без overlay-панелі (для sol-shop.html)</span>
+      <span>Подія <code class="ds-code">filterProducts(query)</code> — глобальна функція пошуку</span>
+    </div>
+
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span>Source: <code class="ds-code">components/sol-search.js</code></span>
+    </div>
     <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block">.<span class="k">input</span> {
-  <span class="k">background</span>:    <span class="v">var(--cream-bright)</span>;
-  <span class="k">border</span>:        <span class="v">none</span>;
-  <span class="k">outline</span>:       <span class="v">none</span>;
-  <span class="k">border-radius</span>: <span class="v">40px</span>;
-  <span class="k">padding</span>:       <span class="v">17px 24px</span>;
-  <span class="k">font-size</span>:     <span class="v">16px</span>;  /* запобігає iOS Safari zoom */
-}
-.<span class="k">input</span>:focus { <span class="k">background</span>: <span class="v">var(--sand)</span>; }
-.<span class="k">input</span>.error { <span class="k">background</span>: <span class="v">rgba(232,74,46, 0.10)</span>; }</div>
+      <div id="searchSourceCode" class="ds-code-block scroll" data-src="sol-search">// loading components/sol-search.js…</div>
     </div>
   </div>
 </section>
@@ -2549,17 +2512,6 @@ function switchFooterPreview(type, btn) {
   }
 }
 
-function onMobileSearchInput(inp) {
-  const btn = document.getElementById('mobileSearchClearBtn');
-  btn.style.display = inp.value ? 'flex' : 'none';
-}
-function clearMobileSearch() {
-  const inp = document.getElementById('mobileSearchInput');
-  inp.value = '';
-  document.getElementById('mobileSearchClearBtn').style.display = 'none';
-  inp.focus();
-}
-
 function switchSearchPreview(type, btn) {
   btn.closest('div').querySelectorAll('.filter-pill').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -2598,17 +2550,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-/* Search demo */
-function onDemoSearch(input) {
-  const clearBtn = document.getElementById('demoClearBtn');
-  clearBtn.classList.toggle('visible', input.value.length > 0);
-}
-function clearDemoSearch() {
-  const input = document.getElementById('demoSearchInput');
-  input.value = '';
-  document.getElementById('demoClearBtn').classList.remove('visible');
-  input.focus();
-}
+/* (search demo functions removed — sol-search component handles all logic in iframe) */
 
 /* ────────────────────────────────────────────
    LIVE COMPONENT PREVIEWS (iframe srcdoc)
@@ -2628,6 +2570,8 @@ const DS_LIVE_BASE_CSS = `
      Wrap-клипання не працює у Safari для iframe (replaced element), тому
      найнадійніше — рендерити заокруглення на самому контенті. */
   nav, footer { border-radius: 20px; overflow: hidden; }
+  /* sol-search додає overlay і panel у body — у preview вони непотрібні */
+  .search-overlay, .search-panel { display: none !important; }
 `;
 
 /* Структурна CSS для sol-nav — сам компонент її не інжектить,
@@ -2818,6 +2762,30 @@ window.addEventListener('message', function(e){
   const mobile  = document.getElementById('footerIframeMobile');
   if (desktop) desktop.srcdoc = dsBuildSrcdoc(html, scripts, '', DS_LIVE_AUTOHEIGHT_PREP);
   if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(html, scripts, '', DS_LIVE_AUTOHEIGHT_PREP);
+})();
+
+/* sol-search preview:
+   Desktop — компонент сам по собі (показує .nav-search pill 280px) у flex-обгортці.
+   Mobile — обгортаємо у <nav class="search-active">, щоб inline-pill розгорнувся
+   на повну ширину (через селектори nav.search-active .nav-search-inline). */
+const DS_LIVE_SEARCH_DESKTOP_CSS = `
+  body { display: flex; align-items: center; padding: 14px 16px; height: 80px; }
+  .nav-spacer { display: none; }
+`;
+const DS_LIVE_SEARCH_MOBILE_CSS = `
+  nav { display: flex; align-items: center; gap: 4px; padding: 0 16px; height: 72px; background: var(--cream); }
+  nav, footer { border-radius: 0; }
+`;
+(function initSearchPreviews(){
+  const scripts = ['sol-search'];
+  const desktop = document.getElementById('searchIframeDesktop');
+  const mobile  = document.getElementById('searchIframeMobile');
+  if (desktop) desktop.srcdoc = dsBuildSrcdoc(
+    '<sol-search></sol-search>', scripts, DS_LIVE_SEARCH_DESKTOP_CSS, DS_LIVE_AUTOHEIGHT_PREP
+  );
+  if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(
+    '<nav class="search-active"><sol-search></sol-search></nav>', scripts, DS_LIVE_SEARCH_MOBILE_CSS, DS_LIVE_AUTOHEIGHT_PREP
+  );
 })();
 
 /* Regex-based JS syntax highlighter.
