@@ -2618,6 +2618,10 @@ const DS_LIVE_BASE_CSS = `
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--cream); }
   body { font-family: 'DM Sans', sans-serif; color: var(--black); overflow: hidden; }
+  /* DS preview: округлюємо корінні елементи компонентів зсередини iframe.
+     Wrap-клипання не працює у Safari для iframe (replaced element), тому
+     найнадійніше — рендерити заокруглення на самому контенті. */
+  nav, footer { border-radius: 20px; overflow: hidden; }
 `;
 
 /* Структурна CSS для sol-nav — сам компонент її не інжектить,
@@ -2817,27 +2821,38 @@ window.addEventListener('message', function(e){
    .c gray-500  → коментарі (нерелевантні для логіки, тому приглушені)
    .n gray-300  → числа (другорядне)
 
-   Порядок проходів критичний: РЯДКИ ПЕРШИМИ, потім коментарі.
-   Інакше regex `//[^\n]*` зловить хвіст рядка типу "http://..." як лайн-коментар.
-   Стеш через \x00...\x00 щоб уникнути перетинів між regex-проходами. */
+   Критично:
+   1) РЯДКИ першими (щоб // у "http://" не ловилось як лайн-коментар).
+   2) ВСІ спани стащуємо в tokens; плейсхолдери — лише ЛІТЕРИ (a-z),
+      щоб number/keyword regex не торкнувся ні плейсхолдерів,
+      ні вже згенерованих <span class="..."> атрибутів. */
 function dsHighlightJS(source) {
   const KEYWORDS = /\b(function|const|let|var|if|else|return|this|class|extends|new|typeof|instanceof|for|while|do|switch|case|default|break|continue|true|false|null|undefined|throw|try|catch|finally|async|await|static|get|set|of|in|import|from|export)\b/g;
   let s = source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const tokens = [];
-  function stash(s) { tokens.push(s); return '\x00' + (tokens.length - 1) + '\x00'; }
-  // 1. РЯДКИ — першими (щоб коментарі не з'їли URL типу http://)
-  s = s.replace(/`(?:\\[\s\S]|[^`\\])*`/g, m => stash('<span class="v">' + m + '</span>'));
-  s = s.replace(/"(?:\\[\s\S]|[^"\\])*"/g, m => stash('<span class="v">' + m + '</span>'));
-  s = s.replace(/'(?:\\[\s\S]|[^'\\])*'/g, m => stash('<span class="v">' + m + '</span>'));
+  function idxToLetters(n) {
+    let out = '';
+    do { out = String.fromCharCode(97 + (n % 26)) + out; n = Math.floor(n / 26); } while (n > 0);
+    return out;
+  }
+  function stash(html) {
+    tokens.push(html);
+    return '\x01' + idxToLetters(tokens.length - 1) + '\x02';
+  }
+  // 1. Рядки (template, double, single) — першими
+  s = s.replace(/`(?:\\[\s\S]|[^`\\])*`|"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'/g, m => stash('<span class="v">' + m + '</span>'));
   // 2. Коментарі (block + line) — після рядків
-  s = s.replace(/\/\*[\s\S]*?\*\//g, m => stash('<span class="c">' + m + '</span>'));
-  s = s.replace(/\/\/[^\n]*/g,       m => stash('<span class="c">' + m + '</span>'));
-  // 3. Числа
-  s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="n">$1</span>');
-  // 4. Keywords
-  s = s.replace(KEYWORDS, '<span class="k">$1</span>');
-  // Розгортаємо стеш
-  s = s.replace(/\x00(\d+)\x00/g, (_, i) => tokens[+i]);
+  s = s.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, m => stash('<span class="c">' + m + '</span>'));
+  // 3. Числа — стащуємо у плейсхолдер (інакше keyword `class` ловиться у <span class="n">)
+  s = s.replace(/\b\d+(?:\.\d+)?\b/g, m => stash('<span class="n">' + m + '</span>'));
+  // 4. Keywords — стащуємо у плейсхолдер
+  s = s.replace(KEYWORDS, m => stash('<span class="k">' + m + '</span>'));
+  // 5. Розгортаємо стеш
+  s = s.replace(/\x01([a-z]+)\x02/g, (_, letters) => {
+    let n = 0;
+    for (let i = 0; i < letters.length; i++) n = n * 26 + (letters.charCodeAt(i) - 97);
+    return tokens[n];
+  });
   return s;
 }
 
