@@ -721,7 +721,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <div class="nav-spacer"></div>
         <div class="nav-search-inline" id="navSearchInline">
           <i class="hgi-stroke hgi-search-01"></i>
-          <input type="text" id="navSearchInput" placeholder="Пошук чаю..."
+          <input type="text" id="navSearchInput" placeholder="Пошук чаю, інгредієнтів..."
             class="nav-search-inline-input"
             oninput="if(typeof onNavSearchInput==='function')onNavSearchInput(this.value)"
             onkeydown="if(event.key==='Enter'&&this.value.trim()&&typeof onNavSearchInput!=='function')window.location='sol-shop.html'">
@@ -2783,6 +2783,7 @@ const DS_LIVE_SEARCH_DESKTOP_CSS = `
   .nav-spacer { display: none; }
 `;
 const DS_LIVE_SEARCH_MOBILE_CSS = `
+  body { height: 72px; overflow: hidden; }
   nav { display: flex; align-items: center; gap: 0; padding: 0; height: 72px; background: var(--cream); border-radius: 0; }
   nav.search-active .nav-search-inline { margin-left: 0 !important; }
 `;

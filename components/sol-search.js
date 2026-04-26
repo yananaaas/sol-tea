@@ -219,7 +219,7 @@
         <div class="nav-spacer"></div>
         <div class="nav-search-inline" id="navSearchInline">
           <i class="hgi-stroke hgi-search-01"></i>
-          <input type="text" id="navSearchInput" placeholder="Пошук чаю..."
+          <input type="text" id="navSearchInput" placeholder="Пошук чаю, інгредієнтів..."
             class="nav-search-inline-input"
             oninput="if(typeof onNavSearchInput==='function')onNavSearchInput(this.value)"
             onkeydown="if(event.key==='Enter'&&this.value.trim()&&typeof onNavSearchInput!=='function')window.location='sol-shop.html'">
