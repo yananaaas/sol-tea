@@ -2784,8 +2784,9 @@ const DS_LIVE_SEARCH_DESKTOP_CSS = `
 `;
 const DS_LIVE_SEARCH_MOBILE_CSS = `
   body { height: 72px; overflow: hidden; }
-  nav { display: flex; align-items: center; gap: 0; padding: 0; height: 72px; background: var(--cream); border-radius: 0; }
-  nav.search-active .nav-search-inline { margin-left: 0 !important; }
+  nav { display: flex; align-items: center; gap: 0; padding: 0 16px; height: 72px; background: var(--cream); border-radius: 0; }
+  /* Logo placeholder — щоб геометрія pill 1:1 збігалась з реальним мобільним nav */
+  .ds-logo-ph { flex-shrink: 0; width: 41px; height: 42px; background: var(--green-800); border-radius: 8px; }
 `;
 (function initSearchPreviews(){
   const scripts = ['sol-search'];
@@ -2795,7 +2796,7 @@ const DS_LIVE_SEARCH_MOBILE_CSS = `
     '<sol-search></sol-search>', scripts, DS_LIVE_SEARCH_DESKTOP_CSS, DS_LIVE_AUTOHEIGHT_PREP
   );
   if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(
-    '<nav class="search-active"><sol-search></sol-search></nav>', scripts, DS_LIVE_SEARCH_MOBILE_CSS, DS_LIVE_AUTOHEIGHT_PREP
+    '<nav class="search-active"><span class="ds-logo-ph"></span><sol-search></sol-search></nav>', scripts, DS_LIVE_SEARCH_MOBILE_CSS, DS_LIVE_AUTOHEIGHT_PREP
   );
 })();
 
