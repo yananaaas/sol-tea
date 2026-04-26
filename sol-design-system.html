@@ -252,13 +252,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 @media (hover: hover) { .ds-gallery-arrow-demo:hover:not(:disabled) { background: var(--cream-bright); } }
 .ds-gallery-arrow-demo:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
-/* ── PAGINATION ── */
-.ds-pagination { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
-.ds-page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-@media (hover: hover) { .ds-page-btn:hover:not(.active) { background: var(--gray-100); } }
-.ds-page-btn.active { background: var(--green-800); color: var(--cream-bright); }
-.ds-page-btn:disabled { opacity: 0.4; cursor: default; }
-.ds-page-dots { color: var(--gray-300); font-size: 14px; width: 32px; text-align: center; flex-shrink: 0; letter-spacing: 2px; }
+/* (Pagination CSS прибрано — sol-pagination сам інжектить свій CSS у DS scope) */
 
 /* ── QTY CONTROL ── */
 .ds-qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
@@ -1292,6 +1286,87 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   customElements.define('sol-faq-item', SolFaqItem);
 })();
 </script>
+<script type="text/plain" id="src-sol-pagination">
+(function () {
+  function injectPaginationStyles() {
+    if (document.getElementById('sol-pagination-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sol-pagination-styles';
+    style.textContent = `
+      sol-pagination { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: nowrap; padding: 60px 0 100px; }
+
+      .page-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--sand); color: var(--gray-800); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+      @media (hover: hover) { .page-btn:hover { background: var(--gray-100); } }
+      .page-btn.active { background: var(--green-800); color: var(--cream-bright); }
+      .page-btn:disabled { opacity: 0.4; cursor: default; }
+      @media (hover: hover) { .page-btn:disabled:hover { background: var(--sand); } }
+      .page-dots { color: var(--gray-300); font-size: 14px; width: 32px; text-align: center; flex-shrink: 0; letter-spacing: 2px; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  class SolPagination extends HTMLElement {
+    static get observedAttributes() {
+      return ['current', 'total'];
+    }
+
+    connectedCallback() {
+      injectPaginationStyles();
+      this.render();
+    }
+
+    attributeChangedCallback() {
+      if (this.isConnected) this.render();
+    }
+
+    render() {
+      const current = parseInt(this.getAttribute('current') || '1', 10);
+      const total   = parseInt(this.getAttribute('total')   || '0', 10);
+
+      if (total < 1) {
+        this.innerHTML = '';
+        this.style.display = 'none';
+        return;
+      }
+      this.style.display = 'flex';
+
+      // Pages to show: 1, last, current ±1
+      const show = new Set([1, total, current]);
+      if (current > 1) show.add(current - 1);
+      if (current < total) show.add(current + 1);
+      const sorted = [...show].sort((a, b) => a - b);
+
+      const prevDisabled = current === 1;
+      const nextDisabled = current === total;
+
+      let html = `<button type="button" class="page-btn" data-page="${current - 1}" ${prevDisabled ? 'disabled' : ''}><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
+
+      let prev = 0;
+      for (const p of sorted) {
+        if (p - prev > 1) html += '<span class="page-dots">···</span>';
+        html += `<button type="button" class="page-btn${p === current ? ' active' : ''}" data-page="${p}">${p}</button>`;
+        prev = p;
+      }
+
+      html += `<button type="button" class="page-btn" data-page="${current + 1}" ${nextDisabled ? 'disabled' : ''}><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
+
+      this.innerHTML = html;
+
+      this.querySelectorAll('.page-btn:not([disabled])').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const page = parseInt(btn.dataset.page, 10);
+          this.dispatchEvent(new CustomEvent('page-change', {
+            bubbles: true,
+            detail: { page }
+          }));
+        });
+      });
+    }
+  }
+
+  customElements.define('sol-pagination', SolPagination);
+})();
+</script>
 
 <!-- SVG DEFS -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -2186,46 +2261,29 @@ hover → sand</div>
 <section id="pagination" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Pagination</h2>
-    <p class="ds-section-desc">Пагінація в каталозі. Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <code class="ds-code">flex-shrink: 0</code> — кнопки не деформуються.</p>
+    <p class="ds-section-note"><strong>Пагінація</strong> в каталозі (sol-shop.html). Кругла кнопка <code class="ds-code">40×40px</code>, sand фон. Активна — <code class="ds-code">green-800</code>. Три крапки — <code class="ds-code">color: gray-300</code>. <strong>Web-component</strong> <code class="ds-code">&lt;sol-pagination&gt;</code> приймає атрибути <code class="ds-code">current</code> і <code class="ds-code">total</code>. Показує: 1, last, current, current±1; решта — як крапки. Еміт події <code class="ds-code">page-change</code> з <code class="ds-code">detail: {page}</code>.</p>
 
-    <div class="ds-pagination" id="dsPagination"></div>
+    <div style="display: flex; flex-direction: column; gap: 28px; align-items: flex-start;">
+      <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+        <sol-pagination current="1" total="5"></sol-pagination>
+        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Перша сторінка:</strong> ← disabled</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+        <sol-pagination current="3" total="10"></sol-pagination>
+        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Середина:</strong> крапки з обох сторін</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+        <sol-pagination current="10" total="10"></sol-pagination>
+        <div style="font-size: 13px; color: var(--gray-500);"><strong style="color: var(--gray-800); font-weight: 600;">Остання сторінка:</strong> → disabled</div>
+      </div>
+    </div>
 
-    <div class="ds-code-wrap" style="margin-top: 40px;">
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-pagination.js</code></span>
+    </div>
+    <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block scroll">/* Pagination */
-.<span class="k">pagination</span> {
-  <span class="k">display</span>:     <span class="v">flex</span>;
-  <span class="k">align-items</span>: <span class="v">center</span>;
-  <span class="k">gap</span>:         <span class="v">6px</span>;
-  <span class="k">flex-wrap</span>:   <span class="v">nowrap</span>;
-}
-.<span class="k">page-btn</span> {
-  <span class="k">width</span>:         <span class="v">40px</span>;
-  <span class="k">height</span>:        <span class="v">40px</span>;
-  <span class="k">border-radius</span>: <span class="v">50%</span>;
-  <span class="k">border</span>:        <span class="v">none</span>;
-  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
-  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
-  <span class="k">font-family</span>:   <span class="v">'DM Sans', sans-serif</span>;
-  <span class="k">font-size</span>:     <span class="v">14px</span>;
-  <span class="k">font-weight</span>:   <span class="v">500</span>;
-  <span class="k">cursor</span>:        <span class="v">pointer</span>;
-  <span class="k">flex-shrink</span>:   <span class="v">0</span>;
-}
-.<span class="k">page-btn.active</span> {
-  <span class="k">background</span>: <span class="v">var(--green-800)</span>;
-  <span class="k">color</span>:      <span class="v">var(--cream-bright)</span>;
-}
-@media (hover: hover) {
-  .<span class="k">page-btn</span>:hover:not(.active) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
-}
-.<span class="k">page-dots</span> {
-  <span class="k">color</span>:          <span class="v">var(--gray-300)</span>;
-  <span class="k">width</span>:          <span class="v">32px</span>;
-  <span class="k">text-align</span>:     <span class="v">center</span>;
-  <span class="k">letter-spacing</span>: <span class="v">2px</span>;
-  <span class="k">flex-shrink</span>:    <span class="v">0</span>;
-}</div>
+      <div id="paginationSourceCode" class="ds-code-block scroll" data-src="sol-pagination">// loading components/sol-pagination.js…</div>
     </div>
   </div>
 </section>
@@ -2594,28 +2652,7 @@ function setPillActive(groupId, clickedEl) {
 
 /* Qty demo прибрано — sol-counter рендериться live у DS scope (див. реєстратор нижче) */
 
-/* Pagination demo */
-let dsCurrentPage = 3;
-const DS_TOTAL = 5;
-function dsPaginate(page) {
-  dsCurrentPage = Math.max(1, Math.min(DS_TOTAL, page));
-  dsRenderPagination();
-}
-function dsRenderPagination() {
-  const p = dsCurrentPage;
-  const show = new Set([1, p-1, p, p+1, DS_TOTAL].filter(n => n >= 1 && n <= DS_TOTAL));
-  const pages = Array.from(show).sort((a,b) => a-b);
-  let html = `<button class="ds-page-btn" ${p<=1?'disabled':''} onclick="dsPaginate(${p-1})"><i class="hgi-stroke hgi-arrow-left-01"></i></button>`;
-  let prev = 0;
-  for (const n of pages) {
-    if (n - prev > 1) html += `<span class="ds-page-dots">···</span>`;
-    html += `<button class="ds-page-btn${n===p?' active':''}" onclick="dsPaginate(${n})">${n}</button>`;
-    prev = n;
-  }
-  html += `<button class="ds-page-btn" ${p>=DS_TOTAL?'disabled':''} onclick="dsPaginate(${p+1})"><i class="hgi-stroke hgi-arrow-right-01"></i></button>`;
-  document.getElementById('dsPagination').innerHTML = html;
-}
-dsRenderPagination();
+/* (Pagination demo прибрано — sol-pagination сам рендериться і еміт 'page-change' події) */
 
 /* Btn-add main demo */
 function toggleBtnAdd() {
@@ -2902,6 +2939,15 @@ function registerComponentInDsScope(name) {
 }
 registerComponentInDsScope('sol-counter');
 registerComponentInDsScope('sol-faq-item');
+registerComponentInDsScope('sol-pagination');
+
+/* Реактивна пагінація: page-change → оновити current attribute */
+document.addEventListener('page-change', function(e) {
+  const target = e.target;
+  if (target.tagName && target.tagName.toLowerCase() === 'sol-pagination') {
+    target.setAttribute('current', e.detail.page);
+  }
+});
 
 /* componentNames — короткі ID компонентів (sol-nav, sol-search), а не шляхи.
    Source береться з інлайн-блоків <script type="text/plain" id="src-..."> на сторінці.
