@@ -265,23 +265,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .ds-qty-btn:disabled { opacity: 0.35; cursor: default; }
 .ds-qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
 
-/* ── NAV PREVIEW ── */
-.nav-pv { display: flex; align-items: center; gap: 32px; padding: 0 48px; height: 80px; background: var(--cream); }
+/* ── NAV PREVIEW (used in inputs section for mobile-search-active demo) ── */
 .nav-pv-mobile { display: flex; align-items: center; gap: 0; padding: 0 16px; height: 72px; background: var(--cream); }
 .nav-pv-logo { flex-shrink: 0; display: flex; align-items: center; }
 .nav-pv-logo svg { height: 42px; width: 41px; display: block; }
-.nav-pv-links { display: flex; gap: 36px; list-style: none; }
-.nav-pv-links a { font-size: 14px; color: var(--gray-800); text-decoration: none; white-space: nowrap; }
-.nav-pv-search { display: flex; align-items: center; gap: 10px; background: var(--sand); border-radius: 40px; padding: 14px 22px; width: 280px; flex-shrink: 0; }
-.nav-pv-search i { font-size: 20px; color: var(--gray-500); flex-shrink: 0; }
-.nav-pv-search span { font-size: 15px; color: var(--gray-500); }
-.nav-pv-spacer { flex: 1; }
-.nav-pv-right { display: flex; align-items: center; gap: 0; }
-.nav-pv-btn { background: none; border: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; position: relative; flex-shrink: 0; }
-.nav-pv-badge { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--cream-bright); padding: 0 4px; line-height: 1; }
-.nav-pv-badge.cart { background: var(--green-800); }
-.nav-pv-badge.wish { background: var(--terra); }
-.nav-pv-burger { display: none; }
+
+/* ── LIVE COMPONENT PREVIEW (iframe wrappers) ── */
+.ds-live-wrap { border-radius: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; background: var(--cream); margin-bottom: 20px; }
+.ds-live-wrap::-webkit-scrollbar { display: none; }
+.ds-live-iframe { display: block; border: 0; background: var(--cream); }
+.ds-live-iframe.desktop { width: 100%; min-width: 769px; }
+.ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; }
+.ds-live-mobile-wrap .ds-live-iframe { width: 100%; }
+
+/* Метадані під компонентом: десктоп — у рядок з flex-wrap, мобілка — стовпець */
+.ds-meta-flow { display: flex; flex-wrap: wrap; gap: 6px 24px; font-size: 13px; color: var(--gray-500); line-height: 1.9; margin-top: 0; }
+.ds-meta-flow span { white-space: nowrap; }
+@media (max-width: 768px) {
+  .ds-meta-flow { flex-direction: column; gap: 4px; }
+}
 
 /* ── ACCORDION ── */
 .accordion-demo { display: flex; flex-direction: column; gap: 12px; }
@@ -633,69 +635,46 @@ color green-800</div>
 <section id="nav-section" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Header</h2>
-    <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
+    <p class="ds-section-desc">Фіксований header з логотипом, пошуком та іконками. Web-component <code class="ds-code">&lt;sol-nav&gt;</code> рендерить однакову навігацію на всіх сторінках. На мобілці — бургер-меню замість посилань і пошук розгортається прямо в nav.</p>
 
     <div style="display: flex; gap: 8px; margin-bottom: 20px;">
       <button class="filter-pill active" onclick="switchNavPreview('desktop', this)">Desktop</button>
       <button class="filter-pill" onclick="switchNavPreview('mobile', this)">Mobile</button>
     </div>
 
-    <div id="navPreviewDesktop" class="ds-preview-scroll" style="border-radius: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px;">
-      <div style="min-width: 760px;">
-      <div class="nav-pv" style="padding: 0;">
-        <div class="nav-pv-logo">
-          <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
-        </div>
-        <ul class="nav-pv-links">
-          <li><a href="#">Про нас</a></li>
-          <li><a href="#" style="color:var(--black);font-weight:500;">Магазин</a></li>
-        </ul>
-        <div class="nav-pv-search">
-          <i class="hgi-stroke hgi-search-01"></i>
-          <span>Пошук чаю, інгредієнтів...</span>
-        </div>
-        <div class="nav-pv-spacer"></div>
-        <div class="nav-pv-right">
-          <button class="nav-pv-btn"><i class="hgi-stroke hgi-user-circle"></i></button>
-          <button class="nav-pv-btn">
-            <i class="hgi-stroke hgi-favourite"></i>
-            <span class="nav-pv-badge wish">2</span>
-          </button>
-          <button class="nav-pv-btn">
-            <i class="hgi-stroke hgi-shopping-bag-01"></i>
-            <span class="nav-pv-badge cart">3</span>
-          </button>
-          <button class="nav-pv-btn"><i class="hgi-stroke hgi-help-circle"></i></button>
-        </div>
-      </div>
+    <div id="navPreviewDesktop" class="ds-live-wrap">
+      <iframe id="navIframeDesktop" class="ds-live-iframe desktop" height="80" title="Live sol-nav — desktop"></iframe>
+    </div>
+
+    <div id="navPreviewMobile" style="display:none;">
+      <div class="ds-live-mobile-wrap">
+        <iframe id="navIframeMobile" class="ds-live-iframe" height="72" style="height: 72px; transition: height 0.28s cubic-bezier(0.4,0,0.2,1);" title="Live sol-nav — mobile"></iframe>
       </div>
     </div>
 
-    <div id="navPreviewMobile" style="display:none; margin-bottom: 20px;">
-      <div style="width: 375px; max-width: 100%; border-radius: 20px; overflow: hidden;">
-      <div class="nav-pv-mobile" style="padding: 0;">
-        <div class="nav-pv-logo">
-          <svg viewBox="0 0 242 249" style="color:var(--green-800)"><use href="#sol-logo"/></svg>
-        </div>
-        <div style="flex:1"></div>
-        <div class="nav-pv-right">
-          <button class="nav-pv-btn"><i class="hgi-stroke hgi-search-01"></i></button>
-          <button class="nav-pv-btn"><i class="hgi-stroke hgi-user-circle"></i></button>
-          <button class="nav-pv-btn">
-            <i class="hgi-stroke hgi-favourite"></i>
-            <span class="nav-pv-badge wish">2</span>
-          </button>
-          <button class="nav-pv-btn">
-            <i class="hgi-stroke hgi-shopping-bag-01"></i>
-            <span class="nav-pv-badge cart">3</span>
-          </button>
-          <button class="nav-pv-btn"><i class="hgi-stroke hgi-menu-01"></i></button>
-        </div>
-      </div>
-      </div>
+    <div class="ds-meta-flow">
+      <span>Desktop: 80px, <code class="ds-code">padding: 0 48px</code></span>
+      <span>Mobile: 72px, <code class="ds-code">padding: 0 16px</code></span>
+      <span>Іконки: 44×44px, <code class="ds-code">font-size: 22px</code></span>
+      <span>Badge: 17×17px, <code class="ds-code">font-size: 10px</code></span>
     </div>
 
-    <p style="font-size: 13px; color: var(--gray-500); margin-top: 0; line-height: 1.9;">Desktop: 80px, <code class="ds-code">padding: 0 48px</code><br>Mobile: 72px, <code class="ds-code">padding: 0 16px</code><br>Іконки: 44×44px, <code class="ds-code">font-size: 22px</code><br>Badge: 17×17px, <code class="ds-code">font-size: 10px</code></p>
+    <div class="ds-sublabel" style="margin-top: 40px; margin-bottom: 16px;">Атрибут <code class="ds-code">active</code></div>
+    <p style="font-size: 13px; color: var(--gray-500); line-height: 1.9; margin-bottom: 0;">Підсвічує активний пункт меню та (для FAQ) робить кнопку нерозкликабельною. Можливі значення:<br>
+      <code class="ds-code">home</code> — сторінка «Про нас» (sol-tea.html)<br>
+      <code class="ds-code">shop</code> — Магазин (sol-shop.html); також показує варіант пошуку <code class="ds-code">variant="shop"</code> (без overlay-панелі)<br>
+      <code class="ds-code">product</code> — сторінка товару (sol-product.html); підсвічує «Магазин»<br>
+      <code class="ds-code">faq</code> — Часті запитання (sol-faq.html); підсвічує іконку FAQ<br>
+      без атрибута — нейтральний стан (cart / checkout)
+    </p>
+
+    <div class="ds-code-wrap">
+      <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
+      <div class="ds-code-block">&lt;<span class="k">script</span> <span class="k">src</span>=<span class="v">"components/sol-search.js"</span>&gt;&lt;/<span class="k">script</span>&gt;
+&lt;<span class="k">script</span> <span class="k">src</span>=<span class="v">"components/sol-nav.js"</span>&gt;&lt;/<span class="k">script</span>&gt;
+
+&lt;<span class="k">sol-nav</span> <span class="k">active</span>=<span class="v">"shop"</span>&gt;&lt;/<span class="k">sol-nav</span>&gt;</div>
+    </div>
   </div>
 </section>
 
@@ -2222,6 +2201,166 @@ function clearDemoSearch() {
   document.getElementById('demoClearBtn').classList.remove('visible');
   input.focus();
 }
+
+/* ────────────────────────────────────────────
+   LIVE COMPONENT PREVIEWS (iframe srcdoc)
+   ──────────────────────────────────────────── */
+
+const DS_LIVE_BASE_CSS = `
+  :root {
+    --cream: #F5F0E8; --cream-bright: #FDFCF9; --sand: #E8E0CC;
+    --green-800: #226F54; --green-500: #7CC44A; --terra: #C4855A;
+    --black: #1C1A14; --gray-800: #4A4538; --gray-500: #7A7060;
+    --gray-300: #B5AFA3; --gray-100: #D9D3C7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--cream); }
+  body { font-family: 'DM Sans', sans-serif; color: var(--black); overflow: hidden; }
+`;
+
+/* Структурна CSS для sol-nav — сам компонент її не інжектить,
+   на сторінках вона лежить у <style> кожної page (sol-tea.html і т.д.).
+   Padding для nav-inner навмисно прибраний у DS-preview — логотип
+   вирівняний по лівому краю iframe, на одному рівні з заголовком секції. */
+const DS_LIVE_NAV_CSS = `
+  nav { position: static; background: var(--cream); height: 80px; }
+  .nav-inner { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; gap: 32px; padding: 0; }
+  .nav-logo { flex-shrink: 0; display: flex; align-items: center; }
+  .nav-logo a { display: flex; align-items: center; }
+  .nav-logo svg { height: 42px; width: 41px; display: block; }
+  .nav-links { display: flex; gap: 36px; list-style: none; flex-shrink: 0; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--gray-800); text-decoration: none; transition: color 0.2s; }
+  .nav-links a.active { color: var(--black); font-weight: 500; }
+  @media (hover: hover) { .nav-links a:hover { color: var(--green-800); } }
+  .nav-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); transition: background 0.2s; font-size: 22px; position: relative; }
+  @media (hover: hover) { .nav-icon-btn:hover { background: var(--sand); } }
+  .cart-badge, .wish-badge { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; border-radius: 20px; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: var(--cream-bright); padding: 0 4px; line-height: 1; }
+  .cart-badge { background: var(--green-800); }
+  .wish-badge { background: var(--terra); }
+  .cart-badge.visible, .wish-badge.visible { display: flex; }
+  .burger-btn { display: none; background: none; border: none; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; color: var(--black); font-size: 22px; flex-shrink: 0; }
+  @media (hover: hover) { .burger-btn:hover { background: var(--sand); } }
+  .nav-faq.active { color: var(--green-800); }
+
+  /* Ховаємо profile-panel і search-overlay/panel — у preview не використовуємо */
+  .profile-overlay, .profile-panel, .search-overlay, .search-panel { display: none !important; }
+
+  /* Mobile menu — щоб бургер реально відкривав dropdown.
+     У DS-preview зміщено right:16 → right:32, щоб тінь box-shadow (32px blur)
+     повністю влізала в iframe і не клипалась. */
+  .mobile-menu-overlay { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; }
+  .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+  .mobile-menu {
+    position: fixed; top: 76px; right: 32px; z-index: 201;
+    width: 240px; background: var(--sand);
+    border-radius: 20px; padding: 8px;
+    box-shadow: 0 8px 32px rgba(28,26,20,0.14);
+    transform: translateY(-8px) scale(0.97); opacity: 0; pointer-events: none;
+    transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .mobile-menu.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+  .mm-nav { display: flex; flex-direction: column; gap: 4px; }
+  .mm-item { display: flex; align-items: center; padding: 12px 18px; border-radius: 40px; text-decoration: none; color: var(--gray-800); transition: background 0.15s; }
+  @media (hover: hover) { .mm-item:hover { background: var(--gray-100); } }
+  .mm-item.active { background: var(--green-800); color: var(--cream-bright); }
+  .mm-item-title { font-size: 14px; font-weight: 500; }
+  .mm-footer { padding: 8px 18px 4px; border-top: 0.5px solid var(--gray-100); margin-top: 4px; }
+  .mm-footer-text { font-size: 11px; color: var(--gray-300); padding: 8px 0; }
+
+  @media (max-width: 768px) {
+    nav { height: 72px; }
+    .nav-inner { padding: 0; gap: 4px; }
+    .nav-links { display: none; }
+    .nav-faq { display: none; }
+    .nav-right { gap: 0; margin-left: auto; }
+    .burger-btn { display: flex; }
+  }
+`;
+
+/* Скрипт-префікс для nav-iframe:
+   - заповнює sessionStorage прикладом, щоб badges (cart 3 / wish 2) показувались;
+   - дає мінімальні toggleMobileMenu / toggleProfile (sol-nav викликає їх onclick);
+   - після load нейтралізує href та onclick="window.location.href=..." щоб preview не ходив по сторінках,
+     але зберігає hover та працюючий бургер. */
+const DS_LIVE_NAV_PREP = `
+<script>
+  sessionStorage.setItem('solCart', JSON.stringify([{name:'a',qty:1},{name:'b',qty:1},{name:'c',qty:1}]));
+  sessionStorage.setItem('solWish', JSON.stringify(['a','b']));
+
+  window.updateCartBadge = function() {
+    var cart = JSON.parse(sessionStorage.getItem('solCart') || '[]');
+    var total = cart.reduce(function(s,c){ return s + (c.qty || 1); }, 0);
+    var b = document.getElementById('cartBadge');
+    if (!b) return;
+    if (total > 0) { b.textContent = total; b.classList.add('visible'); }
+    else { b.classList.remove('visible'); }
+  };
+  window.updateWishBadge = function() {
+    var wish = JSON.parse(sessionStorage.getItem('solWish') || '[]');
+    var b = document.getElementById('wishBadge');
+    if (!b) return;
+    if (wish.length > 0) { b.textContent = wish.length; b.classList.add('visible'); }
+    else { b.classList.remove('visible'); }
+  };
+  window.toggleMobileMenu = function() {
+    var m = document.getElementById('mobileMenu');
+    var o = document.getElementById('mobileMenuOverlay');
+    if (m) m.classList.toggle('open');
+    if (o) o.classList.toggle('open');
+    var isOpen = m && m.classList.contains('open');
+    try { parent.postMessage({ type: 'ds-nav-resize', open: !!isOpen }, '*'); } catch (e) {}
+  };
+  window.toggleProfile = function() {};
+  window.openSearch = window.closeSearch = function(){};
+
+  window.addEventListener('load', function() {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      a.addEventListener('click', function(e){ e.preventDefault(); });
+    });
+    document.querySelectorAll('button[onclick]').forEach(function(b) {
+      var oc = b.getAttribute('onclick') || '';
+      if (oc.indexOf('window.location') !== -1) {
+        b.removeAttribute('onclick');
+        b.addEventListener('click', function(e){ e.preventDefault(); });
+      }
+    });
+  });
+</scr` + `ipt>`;
+
+function dsBuildSrcdoc(componentHtml, scriptPaths, extraCss, prepScript) {
+  const base = window.location.href.replace(/[^/]+$/, '');
+  const scripts = (scriptPaths || []).map(s => `<script src="${base}${s}"></scr` + 'ipt>').join('\n');
+  return `<!DOCTYPE html><html lang="uk"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css">
+<style>${DS_LIVE_BASE_CSS}${extraCss || ''}</style>
+</head><body>
+${prepScript || ''}
+${componentHtml}
+${scripts}
+</body></html>`;
+}
+
+(function initNavPreviews(){
+  const html    = '<sol-nav active="shop"></sol-nav>';
+  const scripts = ['components/sol-search.js', 'components/sol-nav.js'];
+  const desktop = document.getElementById('navIframeDesktop');
+  const mobile  = document.getElementById('navIframeMobile');
+  if (desktop) desktop.srcdoc = dsBuildSrcdoc(html, scripts, DS_LIVE_NAV_CSS, DS_LIVE_NAV_PREP);
+  if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(html, scripts, DS_LIVE_NAV_CSS, DS_LIVE_NAV_PREP);
+
+  // Динамічна висота mobile-iframe: 72px закрито → 320px коли бургер відкритий.
+  // Iframe постить 'ds-nav-resize' з parent при кожному toggleMobileMenu.
+  window.addEventListener('message', function(e){
+    if (!e.data || e.data.type !== 'ds-nav-resize') return;
+    if (!mobile) return;
+    mobile.style.height = (e.data.open ? 320 : 72) + 'px';
+  });
+})();
 </script>
 </body>
 </html>
