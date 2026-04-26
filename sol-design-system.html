@@ -303,16 +303,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .ds-section-note { font-size: 16px; line-height: 1.6; }
 }
 
-/* ── ACCORDION ── */
-.accordion-demo { display: flex; flex-direction: column; gap: 12px; }
-.faq-demo-item { background: var(--cream-bright); border-radius: 20px; overflow: hidden; }
-.faq-demo-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--black); line-height: 1.4; transition: color 0.2s; }
-.faq-demo-item.open .faq-demo-q { color: var(--green-800); border-radius: 0; }
-.faq-demo-q i { font-size: 22px; color: var(--gray-500); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), color 0.2s; }
-.faq-demo-item.open .faq-demo-q i { transform: rotate(45deg); color: var(--green-800); }
-.faq-demo-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
-.faq-demo-item.open .faq-demo-a { max-height: 400px; }
-.faq-demo-a-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
+/* (FAQ accordion-demo CSS прибрано — sol-faq-item сам інжектить свій CSS у DS scope) */
 
 /* ── REVIEW CARDS ── */
 .reviews-demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -1218,6 +1209,87 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   }
 
   customElements.define('sol-counter', SolCounter);
+})();
+</script>
+<script type="text/plain" id="src-sol-faq-item">
+(function () {
+  function injectFaqItemStyles() {
+    if (document.getElementById('sol-faq-item-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sol-faq-item-styles';
+    style.textContent = `
+      sol-faq-item { display: block; }
+
+      .faq-item { background: var(--cream-bright); border-radius: 20px; overflow: hidden; }
+      .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--black); line-height: 1.4; transition: color 0.2s; }
+      @media (hover: hover) { .faq-question:hover { color: var(--green-800); } }
+      .faq-question-icon { font-size: 22px; color: var(--gray-500); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), color 0.2s; }
+      .faq-item.open .faq-question-icon { transform: rotate(45deg); color: var(--green-800); }
+      .faq-item.open .faq-question { color: var(--green-800); }
+      .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+      .faq-item.open .faq-answer { max-height: 400px; }
+      .faq-answer-inner { padding: 0 28px 32px; font-size: 15px; font-weight: 300; color: var(--gray-800); line-height: 1.8; }
+
+      @media (max-width: 768px) {
+        .faq-question { padding: 22px; font-size: 15px; }
+        .faq-answer-inner { padding: 0 22px 24px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  class SolFaqItem extends HTMLElement {
+    static get observedAttributes() {
+      return ['question', 'answer', 'open'];
+    }
+
+    connectedCallback() {
+      injectFaqItemStyles();
+      this.render();
+    }
+
+    attributeChangedCallback() {
+      if (this.isConnected) this.render();
+    }
+
+    toggle() {
+      const item = this.querySelector('.faq-item');
+      if (!item) return;
+      item.classList.toggle('open');
+    }
+
+    render() {
+      const question = this.getAttribute('question') || '';
+      const answer   = this.getAttribute('answer')   || '';
+      const isOpen   = this.hasAttribute('open');
+
+      this.innerHTML = `
+        <div class="faq-item${isOpen ? ' open' : ''}">
+          <button type="button" class="faq-question" aria-expanded="${isOpen}">
+            ${escHtml(question)}
+            <i class="hgi-stroke hgi-add-01 faq-question-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">${escHtml(answer)}</div>
+          </div>
+        </div>
+      `;
+
+      this.querySelector('.faq-question').addEventListener('click', () => {
+        const item = this.querySelector('.faq-item');
+        const btn  = this.querySelector('.faq-question');
+        item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', item.classList.contains('open'));
+      });
+    }
+  }
+
+  customElements.define('sol-faq-item', SolFaqItem);
 })();
 </script>
 
@@ -2263,48 +2335,33 @@ hover → sand</div>
 <section id="accordion" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">FAQ</h2>
-    <p class="ds-section-desc">Accordion — головний компонент сторінки FAQ. Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
+    <p class="ds-section-note"><strong>Accordion-компонент</strong> головний на сторінці FAQ. <strong>Web-component</strong> <code class="ds-code">&lt;sol-faq-item&gt;</code> приймає атрибути <code class="ds-code">question</code>, <code class="ds-code">answer</code>, <code class="ds-code">open</code> (опційно — для відкритого стану за замовчуванням). Іконка <code class="ds-code">hgi-add-01</code> обертається на 45° при відкритті, колір змінюється на <code class="ds-code">var(--green-800)</code>. Анімація через <code class="ds-code">max-height</code>.</p>
 
-    <div class="accordion-demo">
-      <div class="faq-demo-item open">
-        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
-          Коли прийде моє замовлення?
-          <i class="hgi-stroke hgi-add-01 faq-demo-icon"></i>
-        </button>
-        <div class="faq-demo-a">
-          <div class="faq-demo-a-inner">Зазвичай доставка займає 1–3 робочих дні після підтвердження оплати. Нова Пошта — до відділення або кур'єром. Точний термін залежить від вашого міста.</div>
-        </div>
-      </div>
-      <div class="faq-demo-item">
-        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
-          Які способи оплати ви приймаєте?
-          <i class="hgi-stroke hgi-add-01 faq-demo-icon"></i>
-        </button>
-        <div class="faq-demo-a">
-          <div class="faq-demo-a-inner">Ми приймаємо оплату карткою онлайн через LiqPay (Visa, Mastercard, Apple Pay, Google Pay, Privat24) та при отриманні готівкою або карткою.</div>
-        </div>
-      </div>
-      <div class="faq-demo-item">
-        <button class="faq-demo-q" onclick="toggleFaqDemo(this)">
-          Чи можна повернути товар?
-          <i class="hgi-stroke hgi-add-01 faq-demo-icon"></i>
-        </button>
-        <div class="faq-demo-a">
-          <div class="faq-demo-a-inner">Так, повернення можливе протягом 14 днів з моменту отримання, якщо товар не відкривався і збережена упаковка. Для повернення напишіть нам на hello@sol-tea.com.</div>
-        </div>
-      </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <sol-faq-item open
+        question="Коли прийде моє замовлення?"
+        answer="Зазвичай доставка займає 1–3 робочих дні після підтвердження оплати. Нова Пошта — до відділення або кур'єром. Точний термін залежить від вашого міста."></sol-faq-item>
+      <sol-faq-item
+        question="Які способи оплати ви приймаєте?"
+        answer="Ми приймаємо оплату карткою онлайн через LiqPay (Visa, Mastercard, Apple Pay, Google Pay, Privat24) та при отриманні готівкою або карткою."></sol-faq-item>
+      <sol-faq-item
+        question="Чи можна повернути товар?"
+        answer="Так, повернення можливе протягом 14 днів з моменту отримання, якщо товар не відкривався і збережена упаковка. Для повернення напишіть нам на hello@sol-tea.com."></sol-faq-item>
     </div>
 
-    <div class="ds-code-wrap" style="margin-top: 40px;">
+    <div class="ds-meta-flow" style="margin-top: 32px;">
+      <span><strong>Background:</strong> <code class="ds-code">var(--cream-bright)</code></span>
+      <span><strong>Border-radius:</strong> <code class="ds-code">20px</code></span>
+      <span><strong>Padding:</strong> <code class="ds-code">28px</code> desktop / <code class="ds-code">22px</code> mobile</span>
+      <span><strong>Анімація:</strong> max-height 0 → 400px (0.35s)</span>
+    </div>
+
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-faq-item.js</code></span>
+    </div>
+    <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block scroll">.<span class="k">faq-item</span> { <span class="k">background</span>: <span class="v">var(--cream-bright)</span>; <span class="k">border-radius</span>: <span class="v">20px</span>; <span class="k">overflow</span>: <span class="v">hidden</span>; }
-.<span class="k">faq-question</span> { <span class="k">padding</span>: <span class="v">28px</span>; <span class="k">font-size</span>: <span class="v">16px</span>; <span class="k">font-weight</span>: <span class="v">600</span>; <span class="k">color</span>: <span class="v">var(--black)</span>; <span class="k">transition</span>: <span class="v">color 0.2s</span>; }
-.<span class="k">faq-question-icon</span> { <span class="k">font-size</span>: <span class="v">22px</span>; <span class="k">color</span>: <span class="v">var(--gray-500)</span>; <span class="k">transition</span>: <span class="v">transform 0.3s, color 0.2s</span>; }
-.<span class="k">faq-item.open .faq-question</span> { <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
-.<span class="k">faq-item.open .faq-question-icon</span> { <span class="k">transform</span>: <span class="v">rotate(45deg)</span>; <span class="k">color</span>: <span class="v">var(--green-800)</span>; }
-.<span class="k">faq-answer</span> { <span class="k">max-height</span>: <span class="v">0</span>; <span class="k">overflow</span>: <span class="v">hidden</span>; <span class="k">transition</span>: <span class="v">max-height 0.35s cubic-bezier(0.4,0,0.2,1)</span>; }
-.<span class="k">faq-item.open .faq-answer</span> { <span class="k">max-height</span>: <span class="v">400px</span>; }
-.<span class="k">faq-answer-inner</span> { <span class="k">padding</span>: <span class="v">0 28px 32px</span>; <span class="k">font-size</span>: <span class="v">15px</span>; <span class="k">font-weight</span>: <span class="v">300</span>; <span class="k">color</span>: <span class="v">var(--gray-800)</span>; }</div>
+      <div id="faqSourceCode" class="ds-code-block scroll" data-src="sol-faq-item">// loading components/sol-faq-item.js…</div>
     </div>
   </div>
 </section>
@@ -2665,11 +2722,7 @@ function switchSearchPreview(type, btn) {
   }
 }
 
-/* Accordion demo */
-function toggleFaqDemo(btn) {
-  const item = btn.closest('.faq-demo-item');
-  item.classList.toggle('open');
-}
+/* (Accordion demo прибрано — sol-faq-item сам биндить click toggle) */
 
 /* Color swatch — tap to reveal on touch devices */
 document.addEventListener('DOMContentLoaded', function() {
@@ -2848,6 +2901,7 @@ function registerComponentInDsScope(name) {
   document.head.appendChild(s);
 }
 registerComponentInDsScope('sol-counter');
+registerComponentInDsScope('sol-faq-item');
 
 /* componentNames — короткі ID компонентів (sol-nav, sol-search), а не шляхи.
    Source береться з інлайн-блоків <script type="text/plain" id="src-..."> на сторінці.
