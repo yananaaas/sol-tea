@@ -273,14 +273,19 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .nav-pv-logo svg { height: 42px; width: 41px; display: block; }
 
 /* ── LIVE COMPONENT PREVIEW (iframe wrappers) ──
-   Зовнішній .ds-live-wrap клипає кути (border-radius + overflow:hidden),
-   внутрішній .ds-live-scroll робить горизонтальний скрол на вузьких viewport. */
-.ds-live-wrap { border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; }
+   Зовнішній .ds-live-wrap клипає кути:
+   - overflow: hidden + border-radius клипає звичайні елементи;
+   - clip-path: inset(0 round 20px) клипає й iframe (Safari ігнорує border-radius
+     парента для replaced-елементів — clip-path обов'язковий);
+   - border-radius на самому iframe — fallback для випадків коли iframe виходить
+     за межі wrap (наприклад при горизонтальному скролі).
+   Внутрішній .ds-live-scroll робить горизонтальний скрол на вузьких viewport. */
+.ds-live-wrap { border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
 .ds-live-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .ds-live-scroll::-webkit-scrollbar { display: none; }
-.ds-live-iframe { display: block; border: 0; background: var(--cream); }
+.ds-live-iframe { display: block; border: 0; background: var(--cream); border-radius: 20px; }
 .ds-live-iframe.desktop { width: 100%; min-width: 769px; }
-.ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; }
+.ds-live-mobile-wrap { width: 400px; max-width: 100%; border-radius: 20px; overflow: hidden; background: var(--cream); margin-bottom: 20px; clip-path: inset(0 round 20px); -webkit-clip-path: inset(0 round 20px); }
 .ds-live-mobile-wrap .ds-live-iframe { width: 100%; }
 
 /* Метадані під компонентом: десктоп — у рядок з flex-wrap, мобілка — стовпець */
@@ -2805,24 +2810,28 @@ window.addEventListener('message', function(e){
   if (mobile)  mobile.srcdoc  = dsBuildSrcdoc(html, scripts, '', DS_LIVE_AUTOHEIGHT_PREP);
 })();
 
-/* Простий regex-based JS syntax highlighter:
-   .c — коментарі (gray-500, italic)
-   .v — рядки (terra), включно з template literals
-   .k — keywords (green-500)
-   .n — числа (gray-300)
+/* Regex-based JS syntax highlighter.
+   Логіка кольорів:
+   .k green-500 → синтаксична структура (function, const, class, return, if, this)
+   .v terra     → дані-рядки ('...', "...", `template literals`)
+   .c gray-500  → коментарі (нерелевантні для логіки, тому приглушені)
+   .n gray-300  → числа (другорядне)
+
+   Порядок проходів критичний: РЯДКИ ПЕРШИМИ, потім коментарі.
+   Інакше regex `//[^\n]*` зловить хвіст рядка типу "http://..." як лайн-коментар.
    Стеш через \x00...\x00 щоб уникнути перетинів між regex-проходами. */
 function dsHighlightJS(source) {
   const KEYWORDS = /\b(function|const|let|var|if|else|return|this|class|extends|new|typeof|instanceof|for|while|do|switch|case|default|break|continue|true|false|null|undefined|throw|try|catch|finally|async|await|static|get|set|of|in|import|from|export)\b/g;
   let s = source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const tokens = [];
   function stash(s) { tokens.push(s); return '\x00' + (tokens.length - 1) + '\x00'; }
-  // 1. Коментарі (block + line)
-  s = s.replace(/\/\*[\s\S]*?\*\//g, m => stash('<span class="c">' + m + '</span>'));
-  s = s.replace(/\/\/[^\n]*/g,        m => stash('<span class="c">' + m + '</span>'));
-  // 2. Рядки: backtick (з підтримкою escape), double, single
+  // 1. РЯДКИ — першими (щоб коментарі не з'їли URL типу http://)
   s = s.replace(/`(?:\\[\s\S]|[^`\\])*`/g, m => stash('<span class="v">' + m + '</span>'));
   s = s.replace(/"(?:\\[\s\S]|[^"\\])*"/g, m => stash('<span class="v">' + m + '</span>'));
   s = s.replace(/'(?:\\[\s\S]|[^'\\])*'/g, m => stash('<span class="v">' + m + '</span>'));
+  // 2. Коментарі (block + line) — після рядків
+  s = s.replace(/\/\*[\s\S]*?\*\//g, m => stash('<span class="c">' + m + '</span>'));
+  s = s.replace(/\/\/[^\n]*/g,       m => stash('<span class="c">' + m + '</span>'));
   // 3. Числа
   s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="n">$1</span>');
   // 4. Keywords
