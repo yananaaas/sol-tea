@@ -2835,13 +2835,14 @@ window.addEventListener('message', function(e){
    Стан "в кошику" береться з sessionStorage.solCart, тож seed-имо preview-дані
    у prep. Глобальні навігаційні fn — стаб. */
 const DS_LIVE_PRODUCT_CSS = `
-  /* Padding 0 з усіх сторін — картки сідають впритул до країв iframe.
-     Зовнішні відступи зверху і знизу керуються wrap-обгорткою (margin)
-     і margin-bottom попереднього текстового блоку — симетрично. */
-  body { padding: 0; }
+  html, body { margin: 0; padding: 0; }
   .ds-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  /* Безпечний fallback на min-height — у деяких контекстах iframe aspect-ratio
+     не computes коректно для grid+flex children, через що image area колапсує. */
+  .product-img { aspect-ratio: 4/3 !important; min-height: 180px !important; }
   @media (max-width: 768px) {
     .ds-cards-grid { grid-template-columns: 1fr; gap: 24px; }
+    .product-img { aspect-ratio: 1/1 !important; min-height: 280px !important; }
   }
 `;
 const DS_LIVE_PRODUCT_PREP = `
