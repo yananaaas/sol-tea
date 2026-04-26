@@ -2830,10 +2830,12 @@ window.addEventListener('message', function(e){
    Стан "в кошику" береться з sessionStorage.solCart, тож seed-имо preview-дані
    у prep. Глобальні навігаційні fn — стаб. */
 const DS_LIVE_PRODUCT_CSS = `
-  body { padding: 32px 24px; }
+  /* Padding 0 по горизонталі — картки починаються на рівні title секції DS.
+     Вертикальний padding лишається для дихання між картками і блоками вгорі/внизу. */
+  body { padding: 32px 0; }
   .ds-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
   @media (max-width: 768px) {
-    body { padding: 16px; }
+    body { padding: 16px 0; }
     .ds-cards-grid { grid-template-columns: 1fr; gap: 24px; }
   }
 `;
