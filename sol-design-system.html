@@ -1130,6 +1130,96 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   customElements.define('sol-review-card', SolReviewCard);
 })();
 </script>
+<script type="text/plain" id="src-sol-counter">
+(function () {
+  function injectCounterStyles() {
+    if (document.getElementById('sol-counter-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'sol-counter-styles';
+    style.textContent = `
+      sol-counter { display: inline-flex; }
+
+      .qty-ctrl { display: inline-flex; align-items: center; background: var(--sand); border-radius: 40px; padding: 4px; gap: 2px; }
+      .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gray-800); transition: background 0.15s; flex-shrink: 0; }
+      @media (hover: hover) { .qty-btn:hover { background: var(--gray-100); } }
+      .qty-btn:disabled { opacity: 0.35; cursor: default; }
+      @media (hover: hover) { .qty-btn:disabled:hover { background: transparent; } }
+      .qty-num { min-width: 28px; text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--black); }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function toInt(v, fallback) {
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  class SolCounter extends HTMLElement {
+    static get observedAttributes() {
+      return ['value', 'min', 'max'];
+    }
+
+    connectedCallback() {
+      injectCounterStyles();
+      this.render();
+    }
+
+    attributeChangedCallback() {
+      if (this.isConnected) this.render();
+    }
+
+    get value() {
+      return toInt(this.getAttribute('value'), toInt(this.getAttribute('min'), 1));
+    }
+
+    set value(v) {
+      this.setAttribute('value', String(v));
+    }
+
+    _step(delta) {
+      const min = toInt(this.getAttribute('min'), 1);
+      const maxAttr = this.getAttribute('max');
+      const max = maxAttr == null ? Infinity : toInt(maxAttr, Infinity);
+      const current = this.value;
+      const next = Math.min(max, Math.max(min, current + delta));
+      if (next === current) return;
+      this.setAttribute('value', String(next));
+      this.dispatchEvent(new CustomEvent('change', {
+        bubbles: true,
+        detail: { value: next, delta }
+      }));
+    }
+
+    render() {
+      const min = toInt(this.getAttribute('min'), 1);
+      const maxAttr = this.getAttribute('max');
+      const max = maxAttr == null ? Infinity : toInt(maxAttr, Infinity);
+      const value = this.value;
+      const minusDisabled = value <= min;
+      const plusDisabled = value >= max;
+
+      this.innerHTML = `
+        <div class="qty-ctrl">
+          <button type="button" class="qty-btn" data-action="decrement" ${minusDisabled ? 'disabled' : ''} aria-label="Зменшити">
+            <i class="hgi-stroke hgi-minus-sign"></i>
+          </button>
+          <span class="qty-num">${value}</span>
+          <button type="button" class="qty-btn" data-action="increment" ${plusDisabled ? 'disabled' : ''} aria-label="Збільшити">
+            <i class="hgi-stroke hgi-plus-sign"></i>
+          </button>
+        </div>
+      `;
+
+      const minus = this.querySelector('[data-action="decrement"]');
+      const plus = this.querySelector('[data-action="increment"]');
+      if (minus) minus.addEventListener('click', () => this._step(-1));
+      if (plus) plus.addEventListener('click', () => this._step(1));
+    }
+  }
+
+  customElements.define('sol-counter', SolCounter);
+})();
+</script>
 
 <!-- SVG DEFS -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -1851,55 +1941,26 @@ hover → sand</div>
 <section id="counter" class="ds-section">
   <div class="ds-section-inner">
     <h2 class="ds-section-title">Counter</h2>
-    <p class="ds-section-desc"><strong>Контрол вибору кількості</strong> в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. Мінімум 1 — кнопка «–» дизейблиться.</p>
+    <p class="ds-section-note"><strong>Контрол вибору кількості</strong> в кошику і чекауті. Sand фон, pill-форма, кнопки <code class="ds-code">32×32px</code>. <strong>Web-component</strong> <code class="ds-code">&lt;sol-counter&gt;</code> приймає атрибути <code class="ds-code">value</code>, <code class="ds-code">min</code> (default 1), <code class="ds-code">max</code> (default Infinity). При досягненні межі — кнопка дизейблиться. Еміт події <code class="ds-code">change</code> з <code class="ds-code">detail: {value, delta}</code>.</p>
 
     <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
-      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
-        <div class="ds-qty-ctrl">
-          <button class="ds-qty-btn" id="qtyMinus" onclick="dsQtyChange(-1)" disabled>
-            <i class="hgi-stroke hgi-minus-sign"></i>
-          </button>
-          <span class="ds-qty-num" id="qtyNum">1</span>
-          <button class="ds-qty-btn" id="qtyPlus" onclick="dsQtyChange(1)">
-            <i class="hgi-stroke hgi-plus-sign"></i>
-          </button>
-        </div>
-      </div>
+      <sol-counter value="1" min="1"></sol-counter>
+      <sol-counter value="3" min="1" max="10"></sol-counter>
+      <sol-counter value="10" min="1" max="10"></sol-counter>
     </div>
 
-    <div class="ds-code-wrap" style="margin-top: 40px;">
+    <div class="ds-meta-flow" style="margin-top: 32px;">
+      <span><strong>Стан 1:</strong> value=1, min=1 → кнопка «–» disabled</span>
+      <span><strong>Стан 2:</strong> value=3, max=10 → активний</span>
+      <span><strong>Стан 3:</strong> value=10, max=10 → кнопка «+» disabled</span>
+    </div>
+
+    <div class="ds-meta-flow" style="margin-top: 40px;">
+      <span><strong>Source:</strong> <code class="ds-code">components/sol-counter.js</code></span>
+    </div>
+    <div class="ds-code-wrap">
       <button class="ds-copy-btn" onclick="copyCode(this)" title="Скопіювати"><i class="hgi-stroke hgi-copy-01"></i></button>
-      <div class="ds-code-block scroll">/* Qty selector */
-.<span class="k">qty-ctrl</span> {
-  <span class="k">display</span>:       <span class="v">inline-flex</span>;
-  <span class="k">align-items</span>:   <span class="v">center</span>;
-  <span class="k">background</span>:    <span class="v">var(--sand)</span>;
-  <span class="k">border-radius</span>: <span class="v">40px</span>;
-  <span class="k">padding</span>:       <span class="v">4px</span>;
-  <span class="k">gap</span>:           <span class="v">2px</span>;
-}
-.<span class="k">qty-btn</span> {
-  <span class="k">width</span>:         <span class="v">32px</span>;
-  <span class="k">height</span>:        <span class="v">32px</span>;
-  <span class="k">border-radius</span>: <span class="v">50%</span>;
-  <span class="k">border</span>:        <span class="v">none</span>;
-  <span class="k">background</span>:    <span class="v">transparent</span>;
-  <span class="k">cursor</span>:        <span class="v">pointer</span>;
-  <span class="k">font-size</span>:     <span class="v">16px</span>;
-  <span class="k">color</span>:         <span class="v">var(--gray-800)</span>;
-}
-.<span class="k">qty-btn</span>:disabled { <span class="k">opacity</span>: <span class="v">0.35</span>; <span class="k">cursor</span>: <span class="v">default</span>; }
-@media (hover: hover) {
-  .<span class="k">qty-btn</span>:hover:not(:disabled) { <span class="k">background</span>: <span class="v">var(--gray-100)</span>; }
-}
-.<span class="k">qty-num</span> {
-  <span class="k">min-width</span>:    <span class="v">28px</span>;
-  <span class="k">text-align</span>:   <span class="v">center</span>;
-  <span class="k">font-family</span>:  <span class="v">'Inter', sans-serif</span>;
-  <span class="k">font-size</span>:    <span class="v">14px</span>;
-  <span class="k">font-weight</span>:  <span class="v">700</span>;
-  <span class="k">color</span>:        <span class="v">var(--black)</span>;
-}</div>
+      <div id="counterSourceCode" class="ds-code-block scroll" data-src="sol-counter">// loading components/sol-counter.js…</div>
     </div>
   </div>
 </section>
@@ -2471,15 +2532,7 @@ function setPillActive(groupId, clickedEl) {
   clickedEl.classList.add('active');
 }
 
-/* Qty selector demo */
-function dsQtyChange(delta) {
-  const numEl = document.getElementById('qtyNum');
-  const minusBtn = document.getElementById('qtyMinus');
-  let val = parseInt(numEl.textContent) + delta;
-  if (val < 1) val = 1;
-  numEl.textContent = val;
-  minusBtn.disabled = val <= 1;
-}
+/* Qty demo прибрано — sol-counter рендериться live у DS scope (див. реєстратор нижче) */
 
 /* Pagination demo */
 let dsCurrentPage = 3;
@@ -2781,6 +2834,17 @@ function getComponentSource(name) {
   const el = document.getElementById('src-' + name);
   return el ? el.textContent : '';
 }
+
+/* Виконує component source у DS document scope, реєструючи customElement.
+   Для атомарних компонентів які можна показувати без iframe (sol-counter і т.д.). */
+function registerComponentInDsScope(name) {
+  const src = getComponentSource(name);
+  if (!src) return;
+  const s = document.createElement('script');
+  s.textContent = src;
+  document.head.appendChild(s);
+}
+registerComponentInDsScope('sol-counter');
 
 /* componentNames — короткі ID компонентів (sol-nav, sol-search), а не шляхи.
    Source береться з інлайн-блоків <script type="text/plain" id="src-..."> на сторінці.
